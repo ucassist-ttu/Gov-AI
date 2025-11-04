@@ -1,13 +1,14 @@
 -- database: UCAssist.db
-CREATE TABLE tblUsers (
-    OrganizationName TEXT PRIMARY KEY,
+CREATE TABLE tblServices (
+    ID INT PRIMARY KEY,
+    OrganizationName TEXT NOT NULL,
     OrganizationDescription TEXT NOT NULL,
     Website TEXT NOT NULL,
     MinorityOwned TEXT NOT NULL,
     FaithBasedProvider TEXT NOT NULL,
     NonProfitProvider TEXT NOT NULL,
     ProviderLogo TEXT NOT NULL,
-    NameofSevice TEXT NOT NULL,
+    NameOfSevice TEXT NOT NULL,
     ServiceDescription TEXT NOT NULL,
     ProgramCriteria TEXT NOT NULL,
     Keywords TEXT NOT NULL,
@@ -16,5 +17,5 @@ CREATE TABLE tblUsers (
     EmailContact TEXT NOT NULL,
     ServiceAddress TEXT NOT NULL,
     CityStateZip TEXT NOT NULL,
-    Hoursofoperation TEXT NOT NULL
+    HoursOfOperation TEXT NOT NULL
 );
