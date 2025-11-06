@@ -1,3 +1,5 @@
+"""Normalize stored hours of operation strings into a consistent schedule format."""
+
 from google import genai
 from dotenv import load_dotenv
 import sqlite3
@@ -18,17 +20,20 @@ prompt = """
 
 
 def format_schedule(schedule: str) -> str:
+    """Return a normalized schedule string for the provided raw `schedule`."""
     return client.models.generate_content(
         model="gemini-2.5-flash-lite", contents=prompt.format(schedule=schedule)
     ).text
 
 
 def get_column(cursor: sqlite3.Cursor) -> list[str]:
+    """Fetch the `HoursOfOperation` column from `tblServices`."""
     cursor.execute("SELECT HoursOfOperation FROM tblServices")
     return [row[0] for row in cursor.fetchall()]
 
 
 def format_column(column: list[str]) -> list[str]:
+    """Apply `format_schedule` to each entry in `column`, returning the results."""
     new_column = []
     for i, schedule in enumerate(column):
         new_column.append(format_schedule(schedule))
@@ -37,6 +42,7 @@ def format_column(column: list[str]) -> list[str]:
 
 
 def overwrite_column(cursor: sqlite3.Cursor, column: list[str]) -> None:
+    """Overwrite `HoursOfOperation` values with the formatted `column` data."""
     for i, schedule in enumerate(column):
         cursor.execute(
             "UPDATE tblServices SET HoursOfOperation = ? WHERE id = ?",
@@ -45,6 +51,7 @@ def overwrite_column(cursor: sqlite3.Cursor, column: list[str]) -> None:
 
 
 def main() -> None:
+    """Prompt for a database path and normalize each schedule in `tblServices`."""
     with sqlite3.connect(input("Database path: ")) as connection:
         cursor = connection.cursor()
         overwrite_column(
