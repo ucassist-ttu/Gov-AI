@@ -1,0 +1,18 @@
+footer div {
+    background-color: #3E4450;
+}
+footer {
+    padding-top: 15px;
+    background-color: #606A76;
+    color: #EBE9EA;
+} 
+footer img {
+    height: 300px;
+    padding-left: 0;
+}  
+footer :nth-child(2) div, footer > :nth-child(2) {
+    background-color: #1E222E;
+}
+footer i {
+    padding: 5px;
+}
