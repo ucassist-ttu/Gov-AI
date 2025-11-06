@@ -2,14 +2,12 @@ const express = require('express')
 const cors = require('cors')
 const sqlite3 = require('sqlite3').verbose()
 
-const HTTP_PORT = 8000
+const HTTP_PORT = 5500
 const dbSource = 'UCAssist.db'
 const db = new sqlite3.Database(dbSource)
 
 var app = express()
-app.use(cors({ 
-    origin: "http://localhost",
-}))
+app.use(cors())
 
 // get all services 
 app.get('/services', (req, res, next) => {
@@ -17,7 +15,7 @@ app.get('/services', (req, res, next) => {
     db.all(strCommand, (err, result) => {
         if (err) {
             console.log(err)
-            res.status(500).json({
+            res.status(400).json({
                 status: "error",
                 message: err.message
             })
