@@ -1,0 +1,18 @@
+.crisis {
+    margin-top: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: #EBE9EA;
+    height: 65px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+.crisis h6 {
+    padding: 10px;
+    font-weight: bold;
+}
+.crisis a {
+    color: #EBE9EA;
+}
