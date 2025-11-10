@@ -12,8 +12,12 @@ app.use(cors())
 
 // get all services 
 app.get('/services', (req, res, next) => {
+
+    //Send SQL command to retrieve services
     let strCommand = "SELECT * FROM tblServices"
     db.all(strCommand, (err, result) => {
+
+        // Checks to see if the command was successful
         if (err) {
             console.log(err)
             res.status(400).json({
@@ -31,6 +35,8 @@ app.get('/services', (req, res, next) => {
 
 //Add a new service to the database
 app.post('/services', (req, res, next) => {
+
+    // Take in all values
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let strOrganizationName = req.body.organizationName;
     let strOrganizationDescription = req.body.organizationDescription;
@@ -103,8 +109,11 @@ app.post('/services', (req, res, next) => {
         return res.status(400).json({ error: "Hours of operation is required" });
     }
 
+    //Send SQL Insert command using parameterized queries
     let strCommand = `INSERT INTO tblServices (organizationName, organizationDescription, website, minorityOwned, faithBasedProvider, nonProfitProvider, providerLogo, nameofService, serviceDescription, programCriteria, keywords, countiesAvailable, telephoneContact, emailContact, serviceAddress, cityStateZip, hoursofOperation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     db.run(strCommand, [strOrganizationName, strOrganizationDescription, strWebsite, strMinorityOwned, strFaithBasedProvider, strNonProfitProvider, strProviderLogo, strNameofService, strServiceDescription, strProgramCriteria, strKeywords, strCountiesAvailable, strTelephoneContact, strEmailContact, strServiceAddress, strCityStateZip, strHoursofOperation], function (err) {
+        
+        // Checks to see if the command was successful
         if(err){
             console.log(err)
             res.status(400).json({
@@ -114,6 +123,31 @@ app.post('/services', (req, res, next) => {
         } else {
             res.status(201).json({
                 status:"success"
+            })
+        }
+    })
+})
+
+// delete a service
+app.delete('/services', (req, res, next) => {
+    let strID = req.body.id;
+
+    if (strID.length < 1 || strID < 1){
+        return res.status(400).json({ error: "A county is required" });
+    }
+
+    let strCommand = "DELETE FROM tblServices WHERE ID = ?"
+    db.all(strCommand, [strID], (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(400).json({
+                status: "error",
+                message: err.message
+            })
+        } else {
+            res.status(200).json({
+                status: "success",
+                message: result
             })
         }
     })
@@ -162,6 +196,21 @@ app.listen(HTTP_PORT,() => {
     //     serviceAddress: "123 Main Street",
     //     cityStateZip: "Springfield, OH 45502",
     //     hoursofOperation: "Mon–Fri 8am–5pm"
+    //   })
+    // })
+    //   .then(response => response.json())
+    //   .then(data => console.log('✅ Success:', data))
+    //   .catch(error => console.error('❌ Error:', error));
+// 
+// 
+// Delete a service
+    // fetch('http://localhost:5500/services', {
+    //   method: 'DELETE',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     id: "1"
     //   })
     // })
     //   .then(response => response.json())
