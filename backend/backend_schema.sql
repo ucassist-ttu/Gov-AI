@@ -1,6 +1,6 @@
 -- database: UCAssist.db
 CREATE TABLE tblServices (
-    ID INT PRIMARY KEY,
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
     OrganizationName TEXT NOT NULL,
     OrganizationDescription TEXT NOT NULL,
     Website TEXT NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE tblServices (
     FaithBasedProvider TEXT NOT NULL,
     NonProfitProvider TEXT NOT NULL,
     ProviderLogo TEXT NOT NULL,
-    NameOfSevice TEXT NOT NULL,
+    NameOfService TEXT NOT NULL,
     ServiceDescription TEXT NOT NULL,
     ProgramCriteria TEXT NOT NULL,
     Keywords TEXT NOT NULL,
