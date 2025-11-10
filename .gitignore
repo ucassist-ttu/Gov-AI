@@ -1,1 +1,3 @@
 .DS_Store
+backend/dummy.db
+backend/UCAssist.db
