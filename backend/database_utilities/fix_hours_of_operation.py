@@ -9,9 +9,9 @@ load_dotenv()
 client = genai.Client()
 prompt = """
     Convert provided schedule into this format: S: [start]-[end], M: [start]-[end], T: [start]-[end], W: [start]-[end], R: [start]-[end], F: [start]-[end], S: [start]-[end]
-    Where start and end are 24hr times (e.g. 00:00), or "closed" if no schedule for that day.
+    Where start and end are 24hr times (e.g. 00:00-23:59), or "closed" if there is no availability for that day.
 
-    If no schedule is provided, respond with N/A.
+    If no schedule is provided or if there is no availability, respond with N/A.
 
     Schedule: {schedule}
 
@@ -22,7 +22,7 @@ prompt = """
 def format_schedule(schedule: str) -> str:
     """Return a normalized schedule string for the provided raw `schedule`."""
     return client.models.generate_content(
-        model="gemini-2.5-flash-lite", contents=prompt.format(schedule=schedule)
+        model="gemini-2.5-flash", contents=prompt.format(schedule=schedule)
     ).text
 
 
@@ -37,7 +37,10 @@ def format_column(column: list[str]) -> list[str]:
     new_column = []
     for i, schedule in enumerate(column):
         new_column.append(format_schedule(schedule))
-        print(f"Formatted schedule {i+1}/{len(column)}")
+        print(
+            f"\r\033[94mFinished formatting schedule {i+1}/{len(column)}.\033[0m",
+            end="",
+        )
     return new_column
 
 
@@ -58,6 +61,7 @@ def main() -> None:
             cursor=cursor, column=format_column(column=get_column(cursor=cursor))
         )
         connection.commit()
+    print("\r\033[92mAll schedules formatted successfully!\033[0m")
 
 
 if __name__ == "__main__":
