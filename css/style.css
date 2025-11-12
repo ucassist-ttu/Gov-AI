@@ -26,3 +26,22 @@ body {
 main {
     flex: 1;
 }
+
+.page-header {
+    z-index: 501;
+    background-color: #1E222E;
+    color: #EBE9EA;
+    height: 70px;
+    margin-top: 75px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.page-header h1 {
+    margin-left: 12vw;
+    padding: 10px;
+}
+
+.rounded-bottom {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
