@@ -1,5 +1,4 @@
 .crisis {
-    position: relative;
     margin-top: 75px;
     margin-bottom: -12px;
     background-color: #E14848;
@@ -9,30 +8,15 @@
     justify-content: center;
     align-items: center;
 }
-.crisis h6 {
-    padding: 10px;
-    font-weight: bold;
-}
-.crisis a {
-    color: #EBE9EA;
-}
 
-.UCAssist-desc h3 {
-    padding: 30px;
+.UCAssist-desc h5 {
+    padding: 10px;
     color: #EBE9EA;
 }
 
 .carousel img {
     position: relative;
     z-index: -1;
-}
-.carousel-caption {
-    right: 5%;
-    text-align: right;
-    max-width: 300px;
-    left: auto;
-    padding:5px;
-    color: #EBE9EA;
 }
 
 .snap-link {
