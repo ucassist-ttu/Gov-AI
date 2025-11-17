@@ -27,21 +27,63 @@ main {
     flex: 1;
 }
 
-.page-header {
-    z-index: 501;
+.page-header{
+    /* background details */
+    width: 1280px;
+    height: 125px;
+    padding: 20px;
     background-color: #1E222E;
-    color: #EBE9EA;
-    height: 70px;
-    margin-top: 75px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-.page-header h1 {
-    margin-left: 12vw;
-    padding: 10px;
+    display: flex;
+    border-radius: 0 0 15px 15px;
+    /* font details */
+    align-items: center; /* centers vertically*/
+    font-weight: bold;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .rounded-bottom {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
 }
+
+.body-text{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.body-link{
+    text-decoration: underline;
+}
+.snap-title{
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}
+.snap-description{
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    }
