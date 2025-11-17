@@ -59,3 +59,20 @@ main {
     margin-left: 12vw;
     padding: 10px;
 }
+
+.crisis {
+    margin-top: 75px;
+    margin-bottom: -12px;
+    height: 65px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+nav img {
+    height: 40px;
+}
+
+footer img {
+    height: 300px;
+}
