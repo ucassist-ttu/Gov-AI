@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -165,7 +166,7 @@ footer {
 a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 100;
 }
 a:hover {
   text-decoration: underline;
@@ -193,6 +194,17 @@ a:hover {
   .qr-code {
     align-self: center;
   }
+}
+
+body, html {
+    font-family: 'Inter', sans-serif;
+}
+
+*{
+   color: #1E222E;
+   font-family: Inter !important;
+}
+
 /* ucdd main colors */
 .gold{
     background-color: #AA8A41;
@@ -240,19 +252,26 @@ body {
 main {
     flex: 1;
 }
-
-.page-header {
-    z-index: 501;
-    background-color: #1E222E;
-    color: #EBE9EA;
-    height: 70px;
-    margin-top: 75px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+.page{
+    padding-left:150px;
 }
-.page-header h1 {
-    margin-left: 12vw;
-    padding: 10px;
+.page-header{
+    /* background details */
+    height: 125px;
+    padding: 30px;
+    padding-left: 110px;
+    background-color: #1E222E;
+    display: flex;
+    border-radius: 0 0 30px 30px;
+    /* font details */
+    align-items: center; /* centers vertically*/
+    font-weight: bold;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
 .crisis {
@@ -285,4 +304,91 @@ footer img {
 
 .error-image {
     background-image: url('/assets/images/error-rodney-truitt-jf.png');
+}
+
+.body-text{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.body-link{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-decoration: underline;
+}
+.body-light{
+    font-style:light;
+}
+.snap-title{
+    color: #1E222E;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 20px;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    padding-top: 10px;
+}
+.snap-description{
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.snap-tab{
+    margin: 10px;
+    color: #1E222E;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+}
+.nav-tabs{
+    border-bottom: #fff;
+}
+.nav-tabs .nav-link{
+    width: 350px;
+    margin: 0px;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-link:hover {
+    color: #1E222E;
+    background-color: #EBE9EA;
+    border-width: 1px;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color:#FFF;
+    background-color: #1E222E;
+    border-color: #1E222E;
+}
+.tab-pane .div {
+    border-width: 100px;
+    border-left-color: #afbeee;
 }
