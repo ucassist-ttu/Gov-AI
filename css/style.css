@@ -3,8 +3,7 @@ body, html {
     font-family: 'Inter', sans-serif;
 }
 
-*
-{
+*{
    color: #1E222E;
    font-family: Inter !important;
 }
@@ -25,7 +24,6 @@ body, html {
 .light_grey{
     background-color: #EBE9EA;
 }
-
 body, html {
     height: 100%;
 }
@@ -37,11 +35,14 @@ body {
 main {
     flex: 1;
 }
-
+.page{
+    padding-left:110px;
+}
 .page-header{
     /* background details */
     height: 125px;
-    padding: 20px;
+    padding: 30px;
+    padding-left: 110px;
     background-color: #1E222E;
     display: flex;
     border-radius: 0 0 30px 30px;
@@ -55,7 +56,6 @@ main {
     font-weight: 700;
     line-height: normal;
 }
-
 .rounded-bottom {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
@@ -81,9 +81,9 @@ main {
 .snap-title{
     color: #1E222E;
     font-family: Inter;
-    font-size: 20px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 200;
+    font-size: 20px;
     line-height: normal;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -91,11 +91,12 @@ main {
     text-decoration-thickness: auto;
     text-underline-offset: auto;
     text-underline-position: from-font;
+    padding-top: 10px;
 }
 .snap-description{
     color: #1E222E;
     font-family: Inter;
-    font-size: 20px;
+    font-size: 40px;
     font-style: normal;
     font-weight: 300;
     line-height: normal;
@@ -105,6 +106,37 @@ main {
     color: #1E222E;
     font-size: 24px;
     font-style: normal;
-    font-weight: 300;
+    font-weight: 100;
     line-height: normal;
+}
+.nav-tabs{
+    border-bottom: #fff;
+}
+.nav-tabs .nav-link{
+    width: 350px;
+    margin: 0px;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-link:hover {
+    color: #1E222E;
+    background-color: #EBE9EA;
+    border-width: 1px;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color:#FFF;
+    background-color: #1E222E;
+    border-color: #1E222E;
+}
+.tab-pane .div {
+    border-width: 100px;
+    border-left-color: #afbeee;
 }
