@@ -36,7 +36,7 @@ main {
     flex: 1;
 }
 .page{
-    padding-left:110px;
+    padding-left:150px;
 }
 .page-header{
     /* background details */
@@ -65,7 +65,6 @@ main {
     display: flex;
     justify-content:flex-start;
     color: #1E222E;
-    text-align: center;
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
@@ -73,6 +72,14 @@ main {
     line-height: normal;
 }
 .body-link{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
     text-decoration: underline;
 }
 .body-light{
