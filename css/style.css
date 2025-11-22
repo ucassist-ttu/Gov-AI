@@ -23,18 +23,12 @@
     align-self: center;
   }
 }
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  background-color: white;
-  color: #333;
-  line-height: 1.5;
-}
 
-.header-image {
+
+.header-image-small {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 1000px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -46,7 +40,7 @@ body {
   text-align: center;
   padding: 0 16px;
 }
-.header-image img {
+.header-image-small img {
   position: absolute;
   top: 0;
   left: 0;
@@ -55,11 +49,11 @@ body {
   object-fit: cover;
   z-index: 0;
 }
-.header-image > * {
+.header-image-small > * {
   position: relative;
   z-index: 1;
 }
-.header-image::after {
+.header-image-small::after {
   content: "Photo by Toa Heftiba on Unsplash";
   position: absolute;
   bottom: 8px;
@@ -70,7 +64,7 @@ body {
   z-index: 2;
 }
 .form-header {
-  background-color: #1E222E;
+  background-color: var(--dark-navy);
   color: white;
   padding: 16px 24px;
   font-size: 24px;
@@ -123,7 +117,7 @@ textarea {
   min-height: 140px;
 }
 .submit-btn {
-  background-color: #1E222E;
+  background-color: var(--dark-navy);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -137,7 +131,7 @@ textarea {
   background-color: #444c5e;
 }
 footer {
-  background-color: #606A76;
+  background-color: var(--accent-blue);
   color: white;
   padding: 50px 60px;
   display: flex;
@@ -196,12 +190,8 @@ a:hover {
   text-decoration: underline;
 }
 
-body, html {
-    font-family: 'Inter', sans-serif;
-}
-
 *{
-   color: #1E222E;
+   color: var(--dark-navy);
    font-family: Inter !important;
 }
 
@@ -213,7 +203,7 @@ body, html {
     background-color: #3E4450;
 }
 .dark_navy{
-    background-color: #1E222E;
+    background-color: var(--dark-navy);
 }
 .accent_blue{
     background-color: #606A76;
@@ -240,14 +230,31 @@ body, html {
 .clr-light-grey {
     color: #EBE9EA;
 }
+/*variables for inside the CSS file: var(--colorName)*/
+:root {
+    --gold: #AA8A41;
+    --navy: #3E4450;
+    --dark-navy: #1E222E;
+    --accent-blue: #606A76;
+    --light-grey: #EBE9EA;
+    --red: #E14848;
+}
+
 
 body, html {
     height: 100%;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: white;
+    color: var(--dark-navy);
+    line-height: 1.5;
 }
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in body*/
 }
 main {
     flex: 1;
@@ -260,7 +267,7 @@ main {
     height: 125px;
     padding: 30px;
     padding-left: 110px;
-    background-color: #1E222E;
+    background-color: var(--dark-navy);
     display: flex;
     border-radius: 0 0 30px 30px;
     /* font details */
@@ -275,7 +282,6 @@ main {
 }
 
 .crisis {
-    margin-top: 75px;
     margin-bottom: -12px;
     height: 65px;
     display: flex; 
@@ -309,7 +315,7 @@ footer img {
 .body-text{
     display: flex;
     justify-content:flex-start;
-    color: #1E222E;
+    color: var(--dark-navy);
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
@@ -319,7 +325,7 @@ footer img {
 .body-link{
     display: flex;
     justify-content:flex-start;
-    color: #1E222E;
+    color: var(--dark-navy);
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
@@ -331,7 +337,7 @@ footer img {
     font-style:light;
 }
 .snap-title{
-    color: #1E222E;
+    color: var(--dark-navy);
     font-family: Inter;
     font-style: normal;
     font-weight: 200;
@@ -346,7 +352,7 @@ footer img {
     padding-top: 10px;
 }
 .snap-description{
-    color: #1E222E;
+    color: var(--dark-navy);
     font-family: Inter;
     font-size: 40px;
     font-style: normal;
@@ -355,7 +361,7 @@ footer img {
 }
 .snap-tab{
     margin: 10px;
-    color: #1E222E;
+    color: var(--dark-navy);
     font-size: 24px;
     font-style: normal;
     font-weight: 100;
@@ -374,19 +380,19 @@ footer img {
     font-weight: 100;
     border-top-left-radius: 0rem !important; 
     border-top-right-radius: 0rem !important;
-    border-right-color: #1E222E;
+    border-right-color: var(--dark-navy);
 }
 .nav-tabs .nav-link:hover {
-    color: #1E222E;
-    background-color: #EBE9EA;
+    color: var(--dark-navy);
+    background-color: var(--light-grey);
     border-width: 1px;
-    border-right-color: #1E222E;
+    border-right-color: var(--dark-navy);
 }
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color:#FFF;
-    background-color: #1E222E;
-    border-color: #1E222E;
+    background-color: var(--dark-navy);
+    border-color: var(--dark-navy);
 }
 .tab-pane .div {
     border-width: 100px;
