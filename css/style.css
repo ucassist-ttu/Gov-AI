@@ -1,29 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-@media (max-width: 720px) {
-  .header-image {
-    height: 280px;
-    font-size: 25.6px;
-  }
-  .form-container {
-    margin: 24px 16px 48px;
-    padding: 24px 28.8px;
-    max-width: 100%;
-  }
-  footer {
-    gap: 40px;
-    padding: 30px 20px;
-  }
-  .container,
-  .left,
-  .right {
-    flex-direction: column !important;
-    max-width: 100%;
-  }
-  .qr-code {
-    align-self: center;
-  }
-}
-
 
 .header-image-small {
   position: relative;
@@ -254,19 +229,19 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in body*/
+    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
 }
 main {
     flex: 1;
 }
 .page{
-    padding-left:150px;
+    padding-inline:clamp(10px, 7vh, 200px);
+    padding-bottom:clamp(10px, 10vh, 200px);
 }
 .page-header{
     /* background details */
-    height: 125px;
-    padding: 30px;
-    padding-left: 110px;
+    height: clamp(80px, 15vh,125px);
+    padding-left: clamp(10px, 7vh,125px); /*TODO: fix for smaller screens*/
     background-color: var(--dark-navy);
     display: flex;
     border-radius: 0 0 30px 30px;
@@ -275,7 +250,7 @@ main {
     font-weight: bold;
     color: #FFF;
     font-family: Inter;
-    font-size: 48px;
+    font-size: clamp(20px, 10vh, 48px);
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -315,6 +290,7 @@ footer img {
 .body-text{
     display: flex;
     justify-content:flex-start;
+    text-align: center;
     color: var(--dark-navy);
     font-family: Inter;
     font-size: 20px;
@@ -325,6 +301,7 @@ footer img {
 .body-link{
     display: flex;
     justify-content:flex-start;
+    text-align: center;
     color: var(--dark-navy);
     font-family: Inter;
     font-size: 20px;
@@ -342,6 +319,8 @@ footer img {
     font-style: normal;
     font-weight: 200;
     font-size: 20px;
+    display: flex;
+    text-align: center;
     line-height: normal;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -350,14 +329,6 @@ footer img {
     text-underline-offset: auto;
     text-underline-position: from-font;
     padding-top: 10px;
-}
-.snap-description{
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
 }
 .snap-tab{
     margin: 10px;

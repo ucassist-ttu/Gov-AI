@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNAP Benefits</title>
 
     <!-- bootstrap library and custom css link -->
@@ -24,30 +24,33 @@
             </div>
             <div class="body-text pt-1" > As a SNAP recipient, you can also take advantage of the following resources:</div>
 
-            <div class="d-flex align-items-start pt-5">
+            <div class=" row d-flex align-items-start pt-5">
                 <!--navigation tabs-->
-                <ul class="nav nav-tabs flex-column col-lg-3 col-md-6 col-sm-12" id="snap-pills-tabs" role="tablist" aria-orientation="vertical">
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link active snap-tab" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone">Phone & Wireless Plans</button>
-                    </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link snap-tab" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet">Internet Assistance</button>
-                    </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link snap-tab" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities">Utility & Health Programs</button>
-                    </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link snap-tab" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health">Family & Health Programs</button>
-                    </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link snap-tab" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts">Discounts & Memberships</button>
-                    </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link snap-tab" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button>
-                    </li>
-                </ul>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                    <ul class="nav nav-tabs" id="snap-pills-tabs" role="tablist" aria-orientation="vertical">
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link active snap-tab" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone">Phone & Wireless Plans</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet">Internet Assistance</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities">Utility & Health Programs</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health">Family & Health Programs</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts">Discounts & Memberships</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button>
+                        </li>
+                    </ul>
+                </div>
                 <!--tab content-->
-                <div class="tab-content ps-5">
+                <div class="tab-content col-12 col-sm-9 col-md-6 col-lg-6 col-xl-8">
+                    <!-- tab one: phone -->
                     <div class="tab-pane fade show active" id="snap-pills-content-phone" role="tabpanel" aria-labelledby="snap-pills-tab-phone">
                         <h4 class=" snap-title">TruConnect Lifeline Plan</h4>
                         <ul>
@@ -69,6 +72,7 @@
                             <li>1GB of high-speed data</li>
                         </ul>
                     </div>
+                    <!-- tab two:  internet-->
                     <div class="tab-pane fade" id="snap-pills-content-internet" role="tabpanel" aria-labelledby="snap-pills-tab-internet">
                         <h4 class=" snap-title">AT&T Access</h4>
                         <ul>
@@ -95,6 +99,7 @@
                             <li>Available for those receiving SNAP, Medicaid, SSI, public housing, or Veterans Pension and Survivors Benefits</li>
                         </ul>
                     </div>
+                    <!-- tab three: utilities  -->
                     <div class="tab-pane fade" id="snap-pills-content-utilities" role="tabpanel" aria-labelledby="snap-pills-tab-utilities">
                         <h4 class=" snap-title">Low Income Home Energy Assistance Program (LIHEAP)</h4>
                         <ul>
@@ -108,12 +113,14 @@
                             <li>Improves efficiency and reduces utility costs</li>
                         </ul>
                     </div>
+                    <!-- tab four: healthcare  -->
                     <div class="tab-pane fade" id="snap-pills-content-health" role="tabpanel" aria-labelledby="snap-pills-tab-health">
                         <h4 class=" snap-title">Children’s Health Insurance Program (CHIP)</h4>
                         <ul>
                             <li>Provides low-cost or free health coverage for children under 19 in families with low to moderate income</li>
                         </ul>
                     </div>
+                    <!-- tab five: discounts -->
                     <div class="tab-pane fade" id="snap-pills-content-discounts" role="tabpanel" aria-labelledby="snap-pills-tab-discounts">
                         <h4 class=" snap-title">Amazon Prime</h4>
                         <ul>
@@ -150,15 +157,14 @@
                             <li>SNAP benefits can be used to purchase seeds and plants at any retailer that accepts SNAP</li>
                         </ul>
                     </div>
+                    <!-- tab six: misc -->
                     <div class="tab-pane fade" id="snap-pills-content-misc" role="tabpanel" aria-labelledby="snap-pills-tab-misc">
                         <h4 class=" snap-title">Lifeline Program (Other Assistance)</h4>
                         <ul>
                             <li>Reduces monthly phone or internet costs for eligible households</li>
                         </ul>
                     </div>
-                </div>
-                <div style="margin-bottom: 200px;"></div>
-                
+                </div>               
             </div>
         </div>
 
