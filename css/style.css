@@ -247,6 +247,7 @@ main {
 .page-header{
     /* background details */
     height: clamp(80px, 15vh,125px);
+    width: 100%;
     padding-left: clamp(10px, 7vh,125px); /*TODO: fix for smaller screens*/
     background-color: var(--dark-navy);
     display: flex;
