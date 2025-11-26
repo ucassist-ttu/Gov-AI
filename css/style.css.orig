@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; 
+  padding-top: 80px;
+}
+.header-image {
+  position: relative;
+  width: 100vw;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  padding: 0 16px;
+}
+.header-image img {
+  position:relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  max-width: 100vw
+} 
+.header-image > * {
+  position: absolute;
+  z-index: 1;
+  max-width: 100vw;
+}
+.form-header {
+  background-color: #1E222E;
+  color: white;
+  padding: 16px 24px;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+}
+.progress-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 24px auto 32px auto;
+  max-width: 180px; 
+}
+.progress-step {
+  width: 24px;         
+  height: 24px;
+  line-height: 24px;
+  border-radius: 50%;
+  border: 2px solid #b59e75;
+  color: #b59e75;
+  font-weight: 600;
+  font-size: 14.4px;
+  text-align: center;
+  cursor: default;
+  user-select: none;
+  background-color: white;
+}
+.progress-step.active {
+  background-color: #b59e75;
+  color: white;
+  border-color: #b59e75;
+}
+.progress-line {
+  width: 30px;
+  height: 1.5px;
+  background-color: #b59e75;
+  flex: none;
+}
+.form-container {
+  max-width: 600px;
+  margin: 32px 0 64px 80px;
+  padding: 32px 0;
+  flex: 1;
+}
+.form-container p {
+  font-size: 17.6px;
+  margin-bottom: 24px;
+}
+.form-info {
+  margin-bottom: 24px;
+}
+.form-info strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #222;
+}
+.form-info small {
+  color: #555;
+}
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4.8px;
+}
+label.required::after {
+  content: " *";
+  color: #E14848;
+  font-weight: 700;
+  margin-left: 4px;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+input.form-control,
+textarea.form-control {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 6px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.file-upload {
+  border: 2px dashed #b59e75;
+  background-color: #f6f0e7;
+  color: #7a664b;
+  padding: 30px 15px;
+  text-align: center;
+  font-size: 14.4px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.file-upload:hover {
+  background-color: #e7dfc8;
+}
+.file-upload a {
+  color: #b59e75;
+  text-decoration: underline;
+  cursor: pointer;
+}
+<<<<<<< Updated upstream
+
+body, html {
+    font-family: 'Inter', sans-serif;
+}
+
+*{
+   color: #1E222E;
+   font-family: Inter !important;
+}
+
+/* ucdd main colors */
+.gold{
+    background-color: #AA8A41;
+}
+.navy{
+    background-color: #3E4450;
+}
+.dark_navy{
+    background-color: #1E222E;
+}
+.accent_blue{
+    background-color: #606A76;
+}
+.light_grey{
+    background-color: #EBE9EA;
+}
+.red{
+    background-color: #E14848;
+}
+
+.clr-gold {
+    color: #AA8A41;
+}
+.clr-navy {
+    color: #3E4450;
+}
+.clr-dark-navy {
+    color: #1E222E;
+}
+.clr-accent-blue {
+    color: #606A76;
+}
+.clr-light-grey {
+    color: #EBE9EA;
+}
+
+body, html {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    flex: 1;
+}
+.page{
+    padding-left:150px;
+}
+.page-header{
+    /* background details */
+    height: 125px;
+    padding: 30px;
+    padding-left: 110px;
+    background-color: #1E222E;
+    display: flex;
+    border-radius: 0 0 30px 30px;
+    /* font details */
+    align-items: center; /* centers vertically*/
+    font-weight: bold;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.crisis {
+    margin-top: 75px;
+    margin-bottom: -12px;
+    height: 65px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+nav img {
+    height: 40px;
+}
+
+footer img {
+    height: 300px;
+}
+
+.image-fade {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-position: top;
+    position: relative;
+
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+.error-image {
+    background-image: url('/assets/images/error-rodney-truitt-jf.png');
+}
+
+.body-text{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.body-link{
+    display: flex;
+    justify-content:flex-start;
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-decoration: underline;
+}
+.body-light{
+    font-style:light;
+}
+.snap-title{
+    color: #1E222E;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 20px;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    padding-top: 10px;
+}
+.snap-description{
+    color: #1E222E;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.snap-tab{
+    margin: 10px;
+    color: #1E222E;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: normal;
+}
+.nav-tabs{
+    border-bottom: #fff;
+}
+.nav-tabs .nav-link{
+    width: 350px;
+    margin: 0px;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-link:hover {
+    color: #1E222E;
+    background-color: #EBE9EA;
+    border-width: 1px;
+    border-right-color: #1E222E;
+}
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color:#FFF;
+    background-color: #1E222E;
+    border-color: #1E222E;
+}
+.tab-pane .div {
+    border-width: 100px;
+    border-left-color: #afbeee;
+}
+=======
+>>>>>>> Stashed changes
