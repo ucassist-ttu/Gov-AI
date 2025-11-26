@@ -435,6 +435,7 @@ main {
     background-color: var(--dark-navy);
     border-color: var(--dark-navy);
 }
+<<<<<<< Updated upstream
 .tab-pane .div {
     border-width: 100px;
     border-left-color: #afbeee;
@@ -476,3 +477,29 @@ main {
     color: #888;
 }
 >>>>>>> 6a02f325cc10bd487121e1fa90fd3f6236f34441
+=======
+@media (max-width: 720px) {
+  .header-image {
+    height: 280px;
+    font-size: 25.6px;
+  }
+  .form-container {
+    margin: 24px 16px 48px;
+    padding: 24px 28.8px;
+    max-width: 100%;
+  }
+  footer {
+    gap: 40px;
+    padding: 30px 20px;
+  }
+  .container,
+  .left,
+  .right {
+    flex-direction: column !important;
+    max-width: 100%;
+  }
+  .qr-code {
+    align-self: center;
+  }
+}
+>>>>>>> Stashed changes
