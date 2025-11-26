@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+body, html {
+    height: 100%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: white;
+    color: #333;
+=======
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 /*variables for inside the CSS file: var(--colorName)*/
 :root {
@@ -11,175 +19,177 @@
 :root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
 :root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
 
-.header-image-small {
-  position: relative;
-  width: 100%;
-  height: 1000px;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  padding: 0 16px;
-}
-.header-image-small img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-.header-image-small > * {
-  position: relative;
-  z-index: 1;
-}
-.header-image-small::after {
-  content: "Photo by Toa Heftiba on Unsplash";
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: normal;
-  z-index: 2;
-}
-.form-header {
-  background-color: var(--dark-navy);
-  color: white;
-  padding: 16px 24px;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: left;
-  margin: 0;
-  width: 100vw;
-}
-.form-container {
-  max-width: 100%;
-  margin: 32px auto 64px auto;
-  padding: 32px 48px;
-  border-radius: 6px;
-}
-.form-container p {
-  font-size: 17.6px;
-  margin-bottom: 24px;
-}
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-.required-asterisk {
-  color: #E14848;
-  margin-left: 4px;
-  font-weight: 700;
-}
-input[type="text"],
-input[type="email"] {
-  font-family: inherit;
-  width: 300px;
-  padding: 9.6px 16px;
-  font-size: 13px;
-  margin-bottom: 24px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-textarea {
-  font-family: inherit;
-  width: 100%;
-  padding: 9.6px 16px;
-  font-size: 16px;
-  margin-bottom: 24px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  box-sizing: border-box;
-  min-height: 140px;
-}
-.submit-btn {
-  background-color: var(--dark-navy);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 17.6px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.submit-btn:hover {
-  background-color: #444c5e;
-}
-footer {
-  background-color: var(--accent-blue);
-  color: white;
-  padding: 50px 60px;
-  display: flex;
-  justify-content: center;
-  gap: 80px;
-  flex-wrap: wrap;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-}
-.container {
-  display: flex;
-  justify-content: space-between;
-  max-width: 760px;
-  width: 100%;
-  flex-wrap: wrap;
-  gap: 50px;
-}
-.left,
-.right {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  flex: 1 1 300px;
-}
-.left-title,
-.right-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin: 0 0 20px 0;
-}
-.qr-code {
-  width: 180px;
-  height: 180px;
-  border: 3px solid white;
-  border-radius: 10px;
-  align-self: flex-start;
-}
-.info-item {
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-.icon {
-  color: white;
-  font-size: 22px;
-  flex-shrink: 0;
-  display: inline-block;
-}
-a {
-  color: white;
-  text-decoration: none;
-  font-weight: 100;
-}
-a:hover {
-  text-decoration: underline;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding-top: 80px;
 }
 
-*{
-   color: var(--dark-navy);
-   font-family: Inter !important;
+.header-image {
+    position: relative;
+    width: 100vw;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    padding: 0 16px;
 }
+
+    .header-image img {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        max-width: 100vw
+    }
+
+    .header-image > * {
+        position: absolute;
+        z-index: 1;
+        max-width: 100vw;
+    }
+
+.form-header {
+    background-color: #1E222E;
+    color: white;
+    padding: 16px 24px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: left;
+    width: 100%;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 24px auto 32px auto;
+    max-width: 180px;
+}
+
+.progress-step {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    border: 2px solid #b59e75;
+    color: #b59e75;
+    font-weight: 600;
+    font-size: 14.4px;
+    text-align: center;
+    cursor: default;
+    user-select: none;
+    background-color: white;
+}
+
+    .progress-step.active {
+        background-color: #b59e75;
+        color: white;
+        border-color: #b59e75;
+    }
+
+.progress-line {
+    width: 30px;
+    height: 1.5px;
+    background-color: #b59e75;
+    flex: none;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 32px 0 64px 80px;
+    padding: 32px 0;
+    flex: 1;
+}
+
+    .form-container p {
+        font-size: 17.6px;
+        margin-bottom: 24px;
+    }
+
+.form-info {
+    margin-bottom: 24px;
+}
+
+    .form-info strong {
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .form-info small {
+        color: #555;
+    }
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4.8px;
+}
+
+    label.required::after {
+        content: " *";
+        color: #E14848;
+        font-weight: 700;
+        margin-left: 4px;
+    }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+input.form-control,
+textarea.form-control {
+    font-family: inherit;
+    font-size: 16px;
+    padding: 6px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.file-upload {
+    border: 2px dashed #b59e75;
+    background-color: #f6f0e7;
+    color: #7a664b;
+    padding: 30px 15px;
+    text-align: center;
+    font-size: 14.4px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+}
+
+    .file-upload:hover {
+        background-color: #e7dfc8;
+    }
+
+    .file-upload a {
+        color: #b59e75;
+        text-decoration: underline;
+        cursor: pointer;
+    }
 
 /* ucdd main colors */
 .gold{
@@ -227,6 +237,7 @@ body, html {
     margin: 0;
     background-color: white;
     color: var(--dark-navy);
+>>>>>>> 6a02f325cc10bd487121e1fa90fd3f6236f34441
     line-height: 1.5;
 }
 
@@ -236,6 +247,14 @@ body {
     min-height: 100vh;
     padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
 }
+<<<<<<< HEAD
+
+.header-image {
+    position: relative;
+    width: 100vw;
+    height: 300px;
+    display: flex;
+=======
 main {
     flex: 1;
 }
@@ -266,8 +285,14 @@ main {
     margin-bottom: -12px;
     height: 65px;
     display: flex; 
+>>>>>>> 6a02f325cc10bd487121e1fa90fd3f6236f34441
     justify-content: center;
     align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    padding: 0 16px;
 }
 .header-crisis-wrapper {
   position: relative;
@@ -297,14 +322,26 @@ main {
   box-sizing: border-box;
 }
 
-nav img {
-    height: 40px;
-}
+    .header-image img {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        max-width: 100vw
+    }
 
-footer img {
-    height: 300px;
-}
+    .header-image > * {
+        position: absolute;
+        z-index: 1;
+        max-width: 100vw;
+    }
 
+<<<<<<< HEAD
+
+=======
 .image-fade {
     width: 100%;
     height: 350px;
@@ -398,6 +435,7 @@ footer img {
     background-color: var(--dark-navy);
     border-color: var(--dark-navy);
 }
+<<<<<<< Updated upstream
 .tab-pane .div {
     border-width: 100px;
     border-left-color: #afbeee;
@@ -438,3 +476,30 @@ footer img {
     transform: translateY(-50%);
     color: #888;
 }
+>>>>>>> 6a02f325cc10bd487121e1fa90fd3f6236f34441
+=======
+@media (max-width: 720px) {
+  .header-image {
+    height: 280px;
+    font-size: 25.6px;
+  }
+  .form-container {
+    margin: 24px 16px 48px;
+    padding: 24px 28.8px;
+    max-width: 100%;
+  }
+  footer {
+    gap: 40px;
+    padding: 30px 20px;
+  }
+  .container,
+  .left,
+  .right {
+    flex-direction: column !important;
+    max-width: 100%;
+  }
+  .qr-code {
+    align-self: center;
+  }
+}
+>>>>>>> Stashed changes
