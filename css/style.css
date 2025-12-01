@@ -455,5 +455,9 @@ footer img {
   border-right: 2px solid var(--light-grey);
   height: 80%;
   padding: 0px !important;
-
+}
+.divider-horizontal {
+  border-bottom: 2px solid var(--gold);
+  width: 70%;
+  padding: 0px !important;
 }
