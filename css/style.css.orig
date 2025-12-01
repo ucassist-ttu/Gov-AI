@@ -348,5 +348,19 @@ footer img {
     border-width: 100px;
     border-left-color: #afbeee;
 }
-=======
->>>>>>> Stashed changes
+
+.icon-circle {
+  height: 70px;
+  width: 70px;
+}
+.icon-circle img {
+  height: 45px;
+}
+.registration-image {
+  margin-top: -30px;
+  margin-bottom: -30px;
+}
+.dropbox-square {
+  height: 150px;
+  border: solid 4px #AA8A41;
+}
