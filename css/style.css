@@ -219,8 +219,6 @@ a:hover {
 .clr-light-grey {
     color: #EBE9EA;
 }
-
-
 body, html {
     height: 100%;
     font-family: 'Inter', sans-serif;
@@ -229,16 +227,15 @@ body, html {
     color: var(--dark-navy);
     line-height: 1.5;
 }
-
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
 }
-main {
+/* main {
     flex: 1;
-}
+} */
 .page{
     padding-top: 10vh;
     padding-inline:clamp(10px, 7vh, 200px);
@@ -262,7 +259,6 @@ main {
     font-weight: 700;
     line-height: normal;
 }
-
 .crisis {
     margin-bottom: -12px;
     height: 65px;
@@ -274,7 +270,6 @@ main {
   position: relative;
   overflow: visible; /* ensure crisis is not clipped by the wrapper */
 }
-
 /* make sure header stays above the crisis */
 .header-crisis-wrapper .page-header {
   position: relative;
@@ -297,15 +292,12 @@ main {
   padding-bottom: 8px;     /* moves text up/down a bit*/
   box-sizing: border-box;
 }
-
 nav img {
     height: 40px;
 }
-
 footer img {
     height: 300px;
 }
-
 .image-fade {
     width: 100%;
     height: 350px;
@@ -460,4 +452,32 @@ footer img {
   border-bottom: 2px solid var(--gold);
   width: 70%;
   padding: 0px !important;
+}
+.img-text-lg {
+  color: #EBE9EA;
+  text-align: center;
+  font-family: Inter;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  /* fix this */
+  width: 1110px;
+  height: 423px;
+  flex-direction: column;
+  justify-content: center;
+}
+.jumbotron-text{
+  font-size: 40px;
+  color:white;
+}
+.text-lg{
+  color: var(--dark-navy);
+  text-align: start;
+  font-family: Inter;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
