@@ -238,7 +238,7 @@ body {
 } */
 .page{
     padding-top: 10vh;
-    padding-inline:clamp(10px, 7vh, 200px);
+    padding-inline: clamp(10px, 7vh, 150px); /*150px; */
     padding-bottom:clamp(10px, 10vh, 200px);
 }
 .page-header{
@@ -354,6 +354,18 @@ footer img {
     text-decoration-thickness: auto;
     text-underline-offset: auto;
     text-underline-position: from-font;
+    padding-top: 10px;
+}
+.needHelp-title{
+    color: var(--dark-navy);
+    font-family: Inter;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    text-decoration-line: none;
     padding-top: 10px;
 }
 .snap-tab{
@@ -480,4 +492,13 @@ footer img {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+}
+
+p{
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.5;
 }
