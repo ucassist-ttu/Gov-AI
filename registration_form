@@ -7,7 +7,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -50,68 +50,122 @@
   <div class="progress-line"></div>
   <div class="progress-step">3</div>
 </div>
-
-  <main class="container my-5">
-    <div class="row">
+<main class="container my-5">
+  <div class="row">
       <div class="col-md-6">
 
-        <div class="form-info" role="region" aria-labelledby="public-info-title">
-          <strong id="public-info-title">Organization Information - Public</strong>
-          <small>This information will be displayed to customers searching for resources.</small>
-        </div>
+          <!-- Step 1: Organization Information - Public -->
+          <div id="step-1" class="form-step">
+              <div class="form-info" role="region" aria-labelledby="public-info-title">
+                  <strong id="public-info-title">Organization Information - Public</strong>
+                  <small>This information will be displayed to customers searching for resources.</small>
+              </div>
 
-         <form>
-          <label for="company" class="required" aria-label="Company Name">Company Name</label>
-          <input type="text" id="company" name="company" class="form-control" required aria-label="Company Name" aria-required="true" />
+              <form id="form-step-1">
+                  <label for="company" class="required" aria-label="Company Name">Company Name</label>
+                  <input type="text" id="company" name="company" class="form-control" required aria-label="Company Name" aria-required="true" />
 
-          <label for="description" class="required" aria-label="Organization Description">Organization Description</label>
-          <textarea id="description" name="description" class="form-control" placeholder="Please give a brief description of your company" required aria-label="Organization Description" aria-required="true"></textarea>
+                  <label for="description" class="required" aria-label="Organization Description">Organization Description</label>
+                  <textarea id="description" name="description" class="form-control" placeholder="Please give a brief description of your company" required aria-label="Organization Description" aria-required="true"></textarea>
 
-          <label for="phone" class="required" aria-label="Phone Number">Phone Number</label>
-          <input type="tel" id="phone" name="phone" class="form-control" required aria-label="Phone Number" aria-required="true" />
+                  <label for="phone" class="required" aria-label="Phone Number">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" class="form-control" required aria-label="Phone Number" aria-required="true" />
 
-          <label for="website" aria-label="Website / URL">Website / URL</label>
-          <input type="url" id="website" name="website" class="form-control" aria-label="Website / URL" />
+                  <label for="website" aria-label="Website / URL">Website / URL</label>
+                  <input type="url" id="website" name="website" class="form-control" aria-label="Website / URL" />
 
-          <label class="required" aria-label="Physical Address">Physical Address</label>
-          <input type="text" name="address1" class="form-control mb-3" placeholder="123 Anywhere St." required aria-label="Physical Address" aria-required="true" />
+                  <label class="required" aria-label="Physical Address">Physical Address</label>
+                  <input type="text" name="address1" class="form-control mb-3" placeholder="123 Anywhere St." required aria-label="Physical Address" aria-required="true" />
 
-          <div class="row g-2 mb-3">
-            <div class="col">
-              <label for="city" class="required visually-hidden" aria-label="City">City</label>
-              <input type="text" id="city" name="city" class="form-control" placeholder="City" required aria-label="City" aria-required="true" />
-            </div>
-            <div class="col">
-              <label for="state" class="required visually-hidden" aria-label="State">State</label>
-              <input type="text" id="state" name="state" class="form-control" placeholder="State" required aria-label="State" aria-required="true" />
-            </div>
-            <div class="col-4">
-              <label for="zip" class="required visually-hidden" aria-label="Zip Code">Zip Code</label>
-              <input type="text" id="zip" name="zip" class="form-control" placeholder="Zip Code" required aria-label="Zip Code" aria-required="true" />
-            </div>
+                  <div class="row g-2 mb-3">
+                      <div class="col">
+                          <label for="city" class="required visually-hidden" aria-label="City">City</label>
+                          <input type="text" id="city" name="city" class="form-control" placeholder="City" required aria-label="City" aria-required="true" />
+                      </div>
+                      <div class="col">
+                          <label for="state" class="required visually-hidden" aria-label="State">State</label>
+                          <input type="text" id="state" name="state" class="form-control" placeholder="State" required aria-label="State" aria-required="true" />
+                      </div>
+                      <div class="col-4">
+                          <label for="zip" class="required visually-hidden" aria-label="Zip Code">Zip Code</label>
+                          <input type="text" id="zip" name="zip" class="form-control" placeholder="Zip Code" required aria-label="Zip Code" aria-required="true" />
+                      </div>
+                  </div>
+
+                  <label for="attribute" aria-label="Attribute">Attribute <span style="font-weight: normal; font-style: italic;">Check All That Apply</span></label>
+                  <input type="text" id="attribute" name="attribute" class="form-control mb-3" aria-label="Attribute" />
+
+                  <label for="hours" class="required" aria-label="Hours of Operation">Hours of Operation</label>
+                  <input type="text" id="hours" name="hours" class="form-control" required aria-label="Hours of Operation" aria-required="true" />
+
+                  <label aria-label="Logo">Logo</label>
+                  <label for="upload" class="file-upload" tabindex="0" aria-label="Upload logo file">
+                      Drag and drop your file here<br />or <br />
+                      <a href="#" onclick="document.getElementById('upload').click(); return false;">upload from your computer</a>
+                  </label>
+                  <input type="file" id="upload" name="upload" style="display:none;" aria-label="Logo file upload" />
+
+                  <div class="d-flex gap-3 mt-3">
+                      <button type="submit" class="btn btn-dark fw-bold" id="nextBtnStep1">Next</button>
+                      <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+                  </div>
+              </form>
           </div>
 
-          <label for="attribute" aria-label="Attribute">Attribute <span style="font-weight: normal; font-style: italic;">Check All That Apply</span></label>
-          <input type="text" id="attribute" name="attribute" class="form-control mb-3" aria-label="Attribute" />
+          <!-- Step 2: Organization Information - Private -->
+          <div id="step-2" class="form-step" style="display:none;">
+              <div class="form-info" role="region" aria-labelledby="private-info-title">
+                  <strong id="private-info-title">Organization Information - Private</strong>
+                  <small>This information is for UCAssist staff to reach out to you and will not be displayed to the customers.</small>
+              </div>
 
-          <label for="hours" class="required" aria-label="Hours of Operation">Hours of Operation</label>
-          <input type="text" id="hours" name="hours" class="form-control" required aria-label="Hours of Operation" aria-required="true" />
+              <form id="form-step-2">
+                  <h5>Primary Contact</h5>
+                  <label for="primaryName" class="required">Name </label>
+                  <input type="text" id="primaryName" name="primaryName" class="form-control" required />
 
-          <label aria-label="Logo">Logo</label>
-          <label for="upload" class="file-upload" tabindex="0" aria-label="Upload logo file">
-            Drag and drop your file here<br />or <br />
-            <a href="#" onclick="document.getElementById('upload').click(); return false;">upload from your computer</a>
-          </label>
-          <input type="file" id="upload" name="upload" style="display:none;" aria-label="Logo file upload" />
+                  <label for="primaryEmail" class="required">Email </label>
+                  <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" required />
 
-          <div class="d-flex gap-3 mt-3">
-            <button type="submit" class="btn btn-dark fw-bold">Next</button>
-            <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+                  <label for="primaryPhone" class="required">Phone Number </label>
+                  <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control" required />
+
+                  <label for="primaryPosition">Organization Position</label>
+                  <input type="text" id="primaryPosition" name="primaryPosition" class="form-control" />
+
+                  <h5 class="mt-4">Secondary Contact</h5>
+                  <label for="secondaryName">Name</label>
+                  <input type="text" id="secondaryName" name="secondaryName" class="form-control" />
+
+                  <label for="secondaryEmail">Email</label>
+                  <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control" />
+
+                  <label for="secondaryPhone">Phone Number</label>
+                  <input type="tel" id="secondaryPhone" name="secondaryPhone" class="form-control" />
+
+                  <label for="secondaryPosition">Organization Position</label>
+                  <input type="text" id="secondaryPosition" name="secondaryPosition" class="form-control" />
+
+                  <div class="d-flex gap-3 mt-3">
+                      <button type="submit" class="btn btn-dark fw-bold" id="nextBtnStep2">Next</button>
+                      <button type="button" class="btn btn-light cancel-btn" id="backBtnStep2">Back</button>
+                  </div>
+              </form>
           </div>
-        </form>
+
+          <!-- Step 3: Register services -->
+          <div id="step 3" class="form-step" >
+              <div class="form-info" role="region" aria-labelledby="register-service">
+                  <strong id="register-service"> Register Services </strong>
+                  <small> Register all your services or resources</small>
+              </div>
+
+          </div>
+
+
       </div>
-    </div>
-  </main>
+  </div>
+</main>
 
   <script>
     // Keyboard accessibility for file upload label
@@ -122,6 +176,56 @@
       }
     });
   </script>
+
+  <script>
+  const step1Div = document.getElementById('step-1');
+  const step2Div = document.getElementById('step-2');
+  const progressSteps = document.querySelectorAll('.progress-step');
+
+  // Handle Step 1 Next button submission
+  document.getElementById('form-step-1').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Hide step 1 form and show step 2
+    step1Div.style.display = 'none';
+    step2Div.style.display = 'block';
+
+    // Update progress steps UI (activate step 2)
+    progressSteps.forEach((step, idx) => {
+      if (idx < 1) {
+        step.classList.add('active'); // step 1 completed/active 
+      } else {
+        step.classList.remove('active');
+      }
+      if (idx === 1) {
+        step.classList.add('active'); // step 2 active
+      }
+    });
+  });
+
+  // Step 2 Back button to go back to Step 1
+  document.getElementById('backBtnStep2').addEventListener('click', function() {
+    step2Div.style.display = 'none';
+    step1Div.style.display = 'block';
+
+    // Update progress steps UI (activate step 1)
+    progressSteps.forEach((step, idx) => {
+      if (idx === 0) {
+        step.classList.add('active');
+      } else {
+        step.classList.remove('active');
+      }
+    });
+  });
+
+  // Handle Step 2 Next button submit
+  document.getElementById('form-step-2').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    alert('Step 2 form submitted');
+  });
+  </script>
+
 
 <footer class="mt-auto accent_blue pt-3 clr-light-grey">
     <!--QR code and contact info -->
@@ -159,3 +263,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
+
