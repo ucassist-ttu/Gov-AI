@@ -1,75 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-/* Phone Breakpoint */
-@media screen and (min-width: 320px){
-    
-}
-/* Tablet Breakpoint */
-@media screen and (min-width: 768px) {
-  .large-text {
-    font-size: 40px;
-  }
-  .hero-text {
-    font-size: 75px;
-  }
-  .banner-image {
-    height: 500px;
-  }
-}
-/* Desktop Breakpoint */
-@media screen and (min-width: 1024px){
-    .search-container {
-    position: relative;
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: white;
+  color: #333;
+  line-height: 1.5;
 }
 
-.search-input {
-    height: 50px;
-    border-radius: 30px;
-    padding-left: 35px;
-    border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    color: #888;
-}
-.ai-search-bar{
-  display: flex;
-  align-items: stretch;
-  gap: 1rem;
-  background-color: #FFF;
-  border: 3px solid var(--gold);
-  border-radius: 30px;
-  box-shadow: 0 4px 10px 0 var(--dark-navy);
-}
-.search-input{
-  font-size: 1.6rem !important;
-  flex-grow: 1; /* stretches vertically*/
-  margin-top: 15px;
-  border: 0px !important;
-  outline: none !important;
-  box-shadow: none !important; 
-}
-}
-/*variables for inside the CSS file: var(--colorName)*/
-:root {
-    --gold: #AA8A41;
-    --navy: #3E4450;
-    --dark-navy: #1E222E;
-    --accent-blue: #606A76;
-    --light-grey: #EBE9EA;
-    --red: #E14848;
-}
-:root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
-:root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
-
-.header-image-small {
+.header-image {
   position: relative;
   width: 100%;
-  height: 1000px;
+  height: 400px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -81,7 +22,7 @@
   text-align: center;
   padding: 0 16px;
 }
-.header-image-small img {
+.header-image img {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,11 +31,11 @@
   object-fit: cover;
   z-index: 0;
 }
-.header-image-small > * {
+.header-image > * {
   position: relative;
   z-index: 1;
 }
-.header-image-small::after {
+.header-image::after {
   content: "Photo by Toa Heftiba on Unsplash";
   position: absolute;
   bottom: 8px;
@@ -105,17 +46,16 @@
   z-index: 2;
 }
 .page-tag {
-    /* margin-top: 75px; */
+    margin-top: 75px;
     margin-bottom: -12px;
     padding-left: 98px;
-    /* padding-block: 50px; */
     height: 75px;
     display: flex; 
     justify-content: center;
     align-items: center;
 }
 .form-header {
-  background-color: var(--dark-navy);
+  background-color: #1E222E;
   color: white;
   padding: 16px 24px;
   font-size: 24px;
@@ -168,7 +108,7 @@ textarea {
   min-height: 140px;
 }
 .submit-btn {
-  background-color: var(--dark-navy);
+  background-color: #1E222E;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -182,7 +122,7 @@ textarea {
   background-color: #444c5e;
 }
 footer {
-  background-color: var(--accent-blue);
+  background-color: #606A76;
   color: white;
   padding: 50px 60px;
   display: flex;
@@ -240,9 +180,37 @@ a {
 a:hover {
   text-decoration: underline;
 }
+@media (max-width: 720px) {
+  .header-image {
+    height: 280px;
+    font-size: 25.6px;
+  }
+  .form-container {
+    margin: 24px 16px 48px;
+    padding: 24px 28.8px;
+    max-width: 100%;
+  }
+  footer {
+    gap: 40px;
+    padding: 30px 20px;
+  }
+  .container,
+  .left,
+  .right {
+    flex-direction: column !important;
+    max-width: 100%;
+  }
+  .qr-code {
+    align-self: center;
+  }
+}
+
+body, html {
+    font-family: 'Inter', sans-serif;
+}
 
 *{
-   color: var(--dark-navy);
+   color: #1E222E;
    font-family: Inter !important;
 }
 
@@ -250,14 +218,11 @@ a:hover {
 .gold{
     background-color: #AA8A41;
 }
-.gold-light{
-  background-color: rgba(170, 138, 65, 0.6)
-}
 .navy{
     background-color: #3E4450;
 }
 .dark_navy{
-    background-color: var(--dark-navy);
+    background-color: #1E222E;
 }
 .accent_blue{
     background-color: #606A76;
@@ -286,34 +251,27 @@ a:hover {
 .clr-light-grey {
     color: #EBE9EA;
 }
+
 body, html {
     height: 100%;
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    background-color: white;
-    color: var(--dark-navy);
-    line-height: 1.5;
 }
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
 }
-/* main {
+main {
     flex: 1;
-} */
+}
 .page{
-    padding-top: 10vh;
-    padding-inline: clamp(10px, 7vh, 150px); /*150px; */
-    padding-bottom:clamp(10px, 10vh, 200px);
+    padding-left:150px;
 }
 .page-header{
     /* background details */
-    height: clamp(80px, 15vh,125px);
-    width: 100%;
-    padding-left: clamp(10px, 7vh,125px); /*TODO: fix for smaller screens*/
-    background-color: var(--dark-navy);
+    height: 125px;
+    padding: 30px;
+    padding-left: 110px;
+    background-color: #1E222E;
     display: flex;
     border-radius: 0 0 30px 30px;
     /* font details */
@@ -321,53 +279,32 @@ body {
     font-weight: bold;
     color: #FFF;
     font-family: Inter;
-    font-size: clamp(20px, 10vh, 48px);
+    font-size: 48px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
 }
+
 .crisis {
+    margin-top: 75px;
     margin-bottom: -12px;
     height: 65px;
     display: flex; 
     justify-content: center;
     align-items: center;
 }
-.header-crisis-wrapper {
-  position: relative;
-  overflow: visible; /* ensure crisis is not clipped by the wrapper */
-}
-/* make sure header stays above the crisis */
-.header-crisis-wrapper .page-header {
-  position: relative;
-  z-index: 3;
-  border-radius: 0 0 var(--header-curve) var(--header-curve);
-}
 
-/* put crisis behind header and behind the rounded corners */
-.header-crisis-wrapper .crisis {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - var(--header-curve));
-  height: clamp(80px,10vh,calc(var(--crisis-visible-height) + var(--header-curve))); 
-  z-index: 2; /* less than header (3) so header overlays it */
-  display: flex;
-  align-items: flex-end; 
-  justify-content: start;
-  padding-inline: clamp(10px, 0vh, 45px);
-  padding-bottom: 8px;     /* moves text up/down a bit*/
-  box-sizing: border-box;
-}
 nav img {
     height: 40px;
 }
+
 footer img {
     height: 300px;
 }
+
 .image-fade {
     width: 100%;
-    height: 350px;
+    height: 500px;
     background-size: cover;
     background-position: top;
     position: relative;
@@ -377,14 +314,13 @@ footer img {
 }
 
 .error-image {
-    background-image: url('/Gov-AI/assets/images/error-rodney-truitt-jf.png');
+    background-image: url('/assets/images/error-rodney-truitt-jf.png');
 }
 
 .body-text{
     display: flex;
     justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
+    color: #1E222E;
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
@@ -394,8 +330,7 @@ footer img {
 .body-link{
     display: flex;
     justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
+    color: #1E222E;
     font-family: Inter;
     font-size: 20px;
     font-style: normal;
@@ -407,13 +342,11 @@ footer img {
     font-style:light;
 }
 .snap-title{
-    color: var(--dark-navy);
+    color: #1E222E;
     font-family: Inter;
     font-style: normal;
     font-weight: 200;
     font-size: 20px;
-    display: flex;
-    text-align: start;
     line-height: normal;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -423,21 +356,17 @@ footer img {
     text-underline-position: from-font;
     padding-top: 10px;
 }
-.needHelp-title{
-    color: var(--dark-navy);
+.snap-description{
+    color: #1E222E;
     font-family: Inter;
+    font-size: 40px;
     font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    text-align: start;
+    font-weight: 300;
     line-height: normal;
-    text-decoration-line: none;
-    padding-top: 10px;
 }
 .snap-tab{
     margin: 10px;
-    color: var(--dark-navy);
+    color: #1E222E;
     font-size: 24px;
     font-style: normal;
     font-weight: 100;
@@ -456,26 +385,24 @@ footer img {
     font-weight: 100;
     border-top-left-radius: 0rem !important; 
     border-top-right-radius: 0rem !important;
-    border-right-color: var(--dark-navy);
+    border-right-color: #1E222E;
 }
 .nav-tabs .nav-link:hover {
-    color: var(--dark-navy);
-    background-color: var(--light-grey);
+    color: #1E222E;
+    background-color: #EBE9EA;
     border-width: 1px;
-    border-right-color: var(--dark-navy);
+    border-right-color: #1E222E;
 }
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color:#FFF;
-    background-color: var(--dark-navy);
-    border-color: var(--dark-navy);
+    background-color: #1E222E;
+    border-color: #1E222E;
 }
 .tab-pane .div {
     border-width: 100px;
     border-left-color: #afbeee;
-    margin-bottom: 200px;
 }
-
 .search-bar {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -483,11 +410,11 @@ footer img {
     padding-right: 20px;
     width: calc(100% - 80px);
     margin: 40px;
-    border: 2px solid var(--accent-blue);
-    color: var(--dark-navy);
+    border: 2px solid #606A76;
+    color: #1E222E;
 }
 .search-bar:focus {
-  border-color: var(--dark-navy);
+  border-color: #1E222E;
 }
 .background_filter_image {
   width: 100vw;
@@ -499,22 +426,22 @@ footer img {
   margin-right: 40px;
   margin-bottom: 40px;
   border-radius: 15px;
-  border: 2px solid var(--accent-blue);
+  border: 2px solid #606A76;
   overflow: hidden;
 }
 .filter-header {
-  background-color: var(--gold);
+  background-color: #AA8A41;
   padding: 10px;
   cursor: pointer;
 }
 .filter-content {
   background-color: white;
   padding: 10px;
-  border-top: 2px solid var(--accent-blue);
+  border-top: 2px solid #606A76;
   display: none;
 }
 .filter-content button {
-  background-color: var(--dark-navy);
+  background-color: #1E222E;
   color: white;
   border: none;
   margin-top: 5px;
@@ -538,7 +465,7 @@ footer img {
   margin: 5px;
   background-color: #D9D9D9;
   border-radius: 15px;
-  border: 2px solid var(--accent-blue);
+  border: 2px solid #606A76;
   padding: 10px;
   cursor: pointer;
 }
@@ -561,7 +488,7 @@ footer img {
   user-select: none;
 }
 .filter-option.selected {
-    background-color: var(--gold);
+    background-color: #AA8A41;
     color: white;
 }
 .filter-gap {
@@ -578,7 +505,7 @@ footer img {
   margin-left: 45px;
   margin-right: 45px;
   margin-bottom: 20px;
-  border: 2px solid var(--accent-blue);
+  border: 2px solid #606A76;
   padding: 20px;
   border-radius: 10px;
   background-color: #FFFFFF;
@@ -591,12 +518,12 @@ footer img {
 }
 .service p{
   font-size: 16px;
-  color: var(--navy);
+  color: #3E4450;
   overflow-wrap: break-word;
   white-space: normal;
 }
 .service button{
-  background-color: var(--dark-navy);
+  background-color: #1E222E;
   color: white;
   border: none;
   padding-top: 5px;
@@ -625,103 +552,17 @@ footer img {
 }
 .more_info li{
   font-size: 16px;
-  color: var(--navy);
+  color: #3E4450
 }
 .more_info a{
   font-size: 16px;
-  color: var(--navy);
+  color: #3E4450
 }
 .more_info p{
   font-size: 16px;
   margin-left: 15px;
-  color: var(--navy);
+  color: #3E4450;
   overflow-wrap: break-word;
   word-break: break-all;
   white-space: normal;
 }
-
-.icon-circle {
-  height: 70px;
-  width: 70px;
-}
-.icon-circle img {
-  height: 45px;
-}
-.registration-image {
-  margin-top: -30px;
-  margin-bottom: -30px;
-  background-image: url('/Gov-AI/assets/images/registration-landing-adrianna-geo.png');
-}
-.dropbox-square {
-  height: 150px;
-  border: solid 4px var(--gold);
-}
-
-.large-text {
-  font-size: 20px;
-}
-
-.hero-text {
-  font-size: 30px;
-}
-
-.banner-image {
-  width: 100%;
-  height: 500px;
-  background-size: cover;
-  background-position: center;
-}
-
-.btn-outline-success{
-  background-color: var(--light-grey);
-  color: var(--dark-navy);
-  outline-color: var(--dark-navy);
-}
-.divider-vertical {
-  border-right: 2px solid var(--light-grey);
-  height: 80%;
-  padding: 0px !important;
-}
-.divider-horizontal {
-  border-bottom: 2px solid var(--gold);
-  width: 70%;
-  padding: 0px !important;
-}
-.img-text-lg {
-  color: var(--light-grey);
-  text-align: center;
-  font-family: Inter;
-  font-size: 64px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  display: flex;
-  /* fix this */
-  width: 1110px;
-  height: 423px;
-  flex-direction: column;
-  justify-content: center;
-}
-.jumbotron-text{
-  font-size: 40px;
-  color:white;
-}
-.text-lg{
-  color: var(--dark-navy);
-  text-align: start;
-  font-family: Inter;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-p{
-  color: #000;
-  font-family: Inter;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 1.5;
-}
-
