@@ -108,7 +108,7 @@
     /* margin-top: 75px; */
     margin-bottom: -12px;
     padding-left: 98px;
-    padding-block: 50px;
+    /* padding-block: 50px; */
     height: 75px;
     display: flex; 
     justify-content: center;
@@ -483,11 +483,11 @@ footer img {
     padding-right: 20px;
     width: calc(100% - 80px);
     margin: 40px;
-    border: 2px solid #606A76;
-    color: #1E222E;
+    border: 2px solid var(--accent-blue);
+    color: var(--dark-navy);
 }
 .search-bar:focus {
-  border-color: #1E222E;
+  border-color: var(--dark-navy);
 }
 .background_filter_image {
   width: 100vw;
@@ -499,22 +499,22 @@ footer img {
   margin-right: 40px;
   margin-bottom: 40px;
   border-radius: 15px;
-  border: 2px solid #606A76;
+  border: 2px solid var(--accent-blue);
   overflow: hidden;
 }
 .filter-header {
-  background-color: #AA8A41;
+  background-color: var(--gold);
   padding: 10px;
   cursor: pointer;
 }
 .filter-content {
   background-color: white;
   padding: 10px;
-  border-top: 2px solid #606A76;
+  border-top: 2px solid var(--accent-blue);
   display: none;
 }
 .filter-content button {
-  background-color: #1E222E;
+  background-color: var(--dark-navy);
   color: white;
   border: none;
   margin-top: 5px;
@@ -538,7 +538,7 @@ footer img {
   margin: 5px;
   background-color: #D9D9D9;
   border-radius: 15px;
-  border: 2px solid #606A76;
+  border: 2px solid var(--accent-blue);
   padding: 10px;
   cursor: pointer;
 }
@@ -561,7 +561,7 @@ footer img {
   user-select: none;
 }
 .filter-option.selected {
-    background-color: #AA8A41;
+    background-color: var(--gold);
     color: white;
 }
 .filter-gap {
@@ -578,7 +578,7 @@ footer img {
   margin-left: 45px;
   margin-right: 45px;
   margin-bottom: 20px;
-  border: 2px solid #606A76;
+  border: 2px solid var(--accent-blue);
   padding: 20px;
   border-radius: 10px;
   background-color: #FFFFFF;
@@ -591,12 +591,12 @@ footer img {
 }
 .service p{
   font-size: 16px;
-  color: #3E4450;
+  color: var(--navy);
   overflow-wrap: break-word;
   white-space: normal;
 }
 .service button{
-  background-color: #1E222E;
+  background-color: var(--dark-navy);
   color: white;
   border: none;
   padding-top: 5px;
@@ -625,16 +625,16 @@ footer img {
 }
 .more_info li{
   font-size: 16px;
-  color: #3E4450
+  color: var(--navy);
 }
 .more_info a{
   font-size: 16px;
-  color: #3E4450
+  color: var(--navy);
 }
 .more_info p{
   font-size: 16px;
   margin-left: 15px;
-  color: #3E4450;
+  color: var(--navy);
   overflow-wrap: break-word;
   word-break: break-all;
   white-space: normal;
@@ -654,7 +654,7 @@ footer img {
 }
 .dropbox-square {
   height: 150px;
-  border: solid 4px #AA8A41;
+  border: solid 4px var(--gold);
 }
 
 .large-text {
@@ -688,7 +688,7 @@ footer img {
   padding: 0px !important;
 }
 .img-text-lg {
-  color: #EBE9EA;
+  color: var(--light-grey);
   text-align: center;
   font-family: Inter;
   font-size: 64px;
