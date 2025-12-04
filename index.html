@@ -94,7 +94,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Need Help?</h5>
                             <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
-                            <p class="card-text"><a href="/Gov-AI/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
+                            <p class="card-text"><a href="/Gov-AI/html/pages/error.html" class="text-dark">Click Here to start!</a></p>
                         </div>
                     </div>
                 </div>
@@ -123,10 +123,10 @@
     <div id="footer"></div>
 
     <script>
-        fetch('./partials/footer.html')
+        fetch('/Gov-AI/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('./partials/navbar.html')
+        fetch('/Gov-AI/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
