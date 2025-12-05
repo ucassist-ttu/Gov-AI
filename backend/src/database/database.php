@@ -13,3 +13,11 @@ function get_services(): string
 
     return json_encode(value: $rows->fetchAll(mode: PDO::FETCH_ASSOC)) ?: '';
 }
+
+function get_service(int $id): string
+{
+    $services = json_decode(json: get_services());
+    if ($services === '')
+        return '';
+    return json_encode(value: $services[$id]) ?? '';
+}
