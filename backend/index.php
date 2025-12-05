@@ -18,9 +18,14 @@ function get_services_from_user_input(string $user_input): array
         return [];
 
     $prompt = "Based on the user input, respond with exactly 3 services that most closely represent the user's needs. Respond with an integer array of service ids. Services: " . $services . ' User input: ' . $user_input;
-    $response = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true);
+    $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
 
-    return $response ?: [];
+    $services = [];
+    foreach ($ids as $id) {
+        $services[] = get_service(id: $id);
+    }
+
+    return $services;
 }
 
 $path = parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
@@ -34,12 +39,12 @@ if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 // Database endpoints
 
 if ($path === '/services' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    echo get_services();
+    echo json_encode(value: get_services());
     exit;
 }
 
 if ($path === '/service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    echo get_service(id: (int) $_GET['id']);
+    echo json_encode(value: get_service(id: (int) $_GET['id']));
     exit;
 }
 
