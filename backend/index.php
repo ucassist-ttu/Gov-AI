@@ -33,8 +33,13 @@ if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Database endpoints
 
-if ($path === '/get-services' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+if ($path === '/services' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     echo get_services();
+    exit;
+}
+
+if ($path === '/service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    echo get_service(id: (int) $_GET['id']);
     exit;
 }
 
@@ -46,6 +51,6 @@ if ($path === '/delete-service' && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
     exit;
 }
 
-if ($path === '/delete-service' && $_SERVER['REQUEST_METHOD'] === 'UPDATE') {
+if ($path === '/update-service' && $_SERVER['REQUEST_METHOD'] === 'UPDATE') {
     exit;
 }
