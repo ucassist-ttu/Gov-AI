@@ -1,25 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
-  .ai-search-bar {
-    display: flex;
-    flex-direction: row;
-    align-items: center; /* aligns  vertically*/
-    justify-content: center; /* aligns  horizontally*/
-    gap: 1rem;
-    padding-inline: 15px;
-    height: 80px;
-    background-color: #FFF;
-    border: 3px solid var(--gold);
-    border-radius: 30px;
-    box-shadow: 0 4px 10px 0 var(--dark-navy);
+  .jumbotron-text {
+    font-size: 20px;
+  }
+  .img-text-lg {
+    font-size: 30px;
   }
   .ai-search-bar .input,
   .ai-search-bar .bi{
     display: inline-flex;
     align-items: center;
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 5vh, 1.5rem);
   }
+  .ai-search-bar{
+    justify-content: center; /* aligns  horizontally*/
+    width: 100%;
+    height: 50px;
+    background-color: #FFF;
+    border: 3px solid var(--gold);
+    border-radius: 30px;
+    box-shadow: 0 4px 10px 0 var(--dark-navy);
+  }
+  .search-input{
+    font-size: 1.2rem !important;
+    /* flex-grow: 1; stretches vertically */
+    margin-top: 15px;
+    border: 0px !important;
+    outline: none !important;
+    box-shadow: none !important; 
+    color: var(--dark-navy);
+    /* width: 50%; */
+  } 
   .divider-vertical {
     display: flex;
     align-self: center;
@@ -27,18 +39,15 @@
     height: 80%;
 
   }
-  .search-input {
-    border: none;
-    color: var(--dark-navy);
-  }
+
 }
 /* Tablet Breakpoint */
 @media screen and (min-width: 768px) {
-  .large-text {
-    font-size: 40px;
+  .jumbotron-text {
+    font-size: 20px;
   }
-  .hero-text {
-    font-size: 75px;
+  .img-text-lg {
+    font-size: 30px;
   }
   .banner-image {
     height: 500px;
@@ -46,51 +55,69 @@
   .ai-search-bar{
     display: flex;
     align-items: start; /* aligns  vertically*/
-    gap: 1rem;
+    /* gap: 1rem; */
     background-color: #FFF;
     border: 3px solid var(--gold);
     border-radius: 30px;
     box-shadow: 0 4px 10px 0 var(--dark-navy);
+    width: 85%;
+    padding-inline: 15px;
+    flex-direction: row;
+    justify-content: center; /* aligns  horizontally*/
+    height: 80px;
   }
-  .search-input {
-    height: 50px;
-    border-radius: 30px;
-    padding-left: 35px;
-    border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    
-  }
-  .divider-vertical {
-    border-right: 2px solid var(--light-grey);
-    height: 80%;
-    padding: 0px !important;
+  .search-input{
+    font-size: 1.2rem !important;
+    flex-grow: 1; /* stretches vertically*/
+    margin-top: 15px;
+    border: 0px !important;
+    outline: none !important;
+    box-shadow: none !important; 
+    color: var(--dark-navy);
   }
 }
 /* Desktop Breakpoint */
 @media screen and (min-width: 1024px){
+  .header-image-big img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 60%;
+    object-fit: cover;
+    z-index: 0;
+  }
+  .img-text-lg {
+    color: var(--light-grey);
+    text-align: center;
+    font-family: Inter;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .jumbotron-text{
+    font-size: 40px;
+    color:white;
+  }
   .search-container {
     position: relative;
   }
   .ai-search-bar{
-    display: flex;
-    align-items: stretch;
-    gap: 1rem;
-    background-color: #FFF;
-    border: 3px solid var(--gold);
-    border-radius: 30px;
-    box-shadow: 0 4px 10px 0 var(--dark-navy);
+    height: 80px;
+  }
+  .search-input{
+    font-size: 1.6rem !important;
+    flex-grow: 1; /* stretches vertically*/
+    margin-top: 15px;
+    border: 0px !important;
+    outline: none !important;
+    box-shadow: none !important; 
+    color: var(--dark-navy);
   }
 }
-
-.search-input {
-    height: 50px;
-    border-radius: 30px;
-    padding-left: 35px;
-    border: none;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .search-icon {
     position: absolute;
     top: 50%;
@@ -106,14 +133,6 @@
   border: 3px solid var(--gold);
   border-radius: 30px;
   box-shadow: 0 4px 10px 0 var(--dark-navy);
-}
-.search-input{
-  font-size: 1.6rem !important;
-  flex-grow: 1; /* stretches vertically*/
-  margin-top: 15px;
-  border: 0px !important;
-  outline: none !important;
-  box-shadow: none !important; 
 }
 /*variables for inside the CSS file: var(--colorName)*/
 :root {
@@ -881,14 +900,6 @@ footer img {
   border: solid 4px var(--gold);
 }
 
-.large-text {
-  font-size: 20px;
-}
-
-.hero-text {
-  font-size: 30px;
-}
-
 .banner-image {
   width: 100%;
   height: 500px;
@@ -910,25 +921,6 @@ footer img {
   border-bottom: 2px solid var(--gold);
   width: 70%;
   padding: 0px !important;
-}
-.img-text-lg {
-  color: var(--light-grey);
-  text-align: center;
-  font-family: Inter;
-  font-size: 60px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  display: flex;
-  /* fix this */
-  width: 1110px;
-  height: 423px;
-  flex-direction: column;
-  justify-content: center;
-}
-.jumbotron-text{
-  font-size: 40px;
-  color:white;
 }
 .text-lg{
   color: var(--dark-navy);
