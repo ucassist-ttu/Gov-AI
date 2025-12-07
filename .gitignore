@@ -1,6 +1,1 @@
 .DS_Store
-backend/dummy.db
-backend/UCAssist.db
-
-node_modules/
-package-lock.json
