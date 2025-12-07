@@ -54,7 +54,70 @@
     height: 80%;
 
   }
-
+  .ai-results *{
+    color: white;
+  }
+  .ai-results{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+  }
+  .ai-results .page{
+    padding-inline: 50px;
+  }
+  .ai-results .img-text-lg{
+    line-height: 2.2rem;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    font-weight: bold;
+    padding-top: 20px;
+  }
+  .ai-company-name{
+    font-style: normal;
+    font-weight: 200;
+    font-size: 15px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    padding-top: 0px;
+  }
+  .ai-title{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    padding-top: 10px;
+  }
+  .ai-description{
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 15px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    padding-top: 10px;
+  }
+  .ai-link{
+    font-style: normal;
+    font-weight: 200;
+    font-size: 15px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+    padding-top: 10px;
+  } 
+  .ai-results .btn {
+    padding: 0px;
+  }
 }
 /* Tablet Breakpoint */
 @media screen and (min-width: 768px) {
@@ -98,6 +161,40 @@
     box-shadow: none !important; 
     color: var(--dark-navy);
   }
+  .ai-results{
+    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+  }
+  .ai-results .page{
+    padding-inline: 100px;
+  }
+  .ai-results .img-text-lg{
+    line-height: 2.2rem;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    font-weight: bold;
+  }
+  .ai-company-name{
+    font-size: 20px;
+    display: flex;
+    text-align: start;
+    line-height: normal;
+    padding-top: 0px;
+  }
+  .ai-title{
+    font-size: 25px;
+    /* line-height: normal; */
+    padding-top: 20px;
+  }
+  .ai-description{
+    font-size: 20px;
+    line-height: 1.7rem;
+    padding-top: 5px;
+  }
+  .ai-link{
+    font-size: 20px;
+    padding-bottom: 20px;
+    padding-top: 0px;
+  } 
 }
 /* Desktop Breakpoint */
 @media screen and (min-width: 1024px){
@@ -131,6 +228,36 @@
     box-shadow: none !important; 
     color: var(--dark-navy);
   }
+  .ai-results{
+    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+  }
+  .ai-results .page{
+    padding-inline: 20%;
+  }
+  .ai-results .img-text-lg{
+    text-align: start;
+    font-size: 35px;
+  }
+  .ai-company-name{
+    font-size: 20px;
+    padding-top: 0px;
+  }
+  .ai-title{
+    font-size: 25px;
+    /* line-height: normal; */
+    padding-top: 20px;
+  }
+  .ai-description{
+    font-size: 20px;
+    line-height: 2rem;
+    padding-top: 10px;
+  }
+  .ai-link{
+    font-size: 20px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    font-weight: 100;
+  } 
 }
 .search-icon {
     position: absolute;

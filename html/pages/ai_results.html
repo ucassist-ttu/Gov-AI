@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Assist</title>
+    <!-- bootstrap library and custom css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Gov-AI/css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    
+    <main class="ai-results">
+        <div class="page">
+            <!-- <div class="ai-search-bar mt-md-3 mt-lg-5">
+                <i class="bi bi-search ps-2"></i>
+                <div class="divider-vertical d-flex align-items-center"></div>
+                <input class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
+                submit button -->
+                <!-- <div class="d-flex justify-content-between"> -->
+                    <!-- TODO: extend button (stretch goal) -->
+                    <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
+                    <!-- <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/Gov-AI/html/pages/ai_results.html'">
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </span>
+                </div>
+            </div>  -->
+            <div class="img-text-lg">
+                Based on what you told us, here are three recommend resources...
+            </div>
+            <div id="suggestedResources">
+                <div class="flex-row">
+                    <h4 class="ai-title">1. Meal Prep</h4>
+                    <p class="ai-company-name">
+                        by Associates of Vietnam Veterans of America Chapter 1015
+                    </p>
+                </div>
+                <p class="ai-description">
+                    Connects you to trained counselors who provide 24/7, free, and confidential support for anyone experiencing thoughts of suicide or emotional distress.
+                </p>
+                <p class="btn ai-link">More Details</p>
+                <h4 class="ai-title">2. Food Assistance</h4>
+                <p class="ai-company-name">
+                    by Bread of Life Homeless Shelter and Clinic
+                </p>
+                <p class="ai-description">
+                    Free, 24/7 text-based mental health support from trained crisis counselors.
+                </p>
+                <p class="btn ai-link">More Details</p>
+                <h4 class="ai-title">3. Food and Shelter Program</h4>
+                <p class="ai-company-name">
+                    by Cannon County EMA Food and Shelter Program
+                </p>
+                <p class="ai-description">
+                    Offers compassionate listening and support for individuals coping with loss and grief.
+                </p>
+                <p class="btn ai-link">More Details</p>
+            </h4>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        fetch('/Gov-AI/partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('/Gov-AI/partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <!-- more bootsrap libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
