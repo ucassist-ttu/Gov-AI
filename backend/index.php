@@ -28,7 +28,7 @@ if ($path === '/service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'PUT') {
-    create_service(request_body(key: 'service'));
+    create_service(service: request_body(key: 'service'));
     exit;
 }
 
