@@ -1,32 +1,11 @@
 <?php declare(strict_types=1);
 
 require_once __DIR__ . '/src/database/database.php';
+require_once __DIR__ . '/src/helpers/api.php';
 require_once __DIR__ . '/src/helpers/gemini.php';
 require_once __DIR__ . '/src/helpers/loadenv.php';
 
 loadenv();
-
-function request_body(string $key): string
-{
-    return json_decode(json: file_get_contents(filename: 'php://input'), associative: true)[$key] ?? '';
-}
-
-function get_services_from_user_input(string $user_input): array
-{
-    $services = get_services();
-    if (!$services)
-        return [];
-
-    $prompt = "Based on the user input, respond with exactly 3 services that most closely represent the user's needs. Respond with an integer array of service ids. Services: " . $services . ' User input: ' . $user_input;
-    $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
-
-    $services = [];
-    foreach ($ids as $id) {
-        $services[] = get_service(id: $id);
-    }
-
-    return $services;
-}
 
 $path = parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 
@@ -49,6 +28,7 @@ if ($path === '/service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'PUT') {
+    create_service(request_body(key: 'service'));
     exit;
 }
 
