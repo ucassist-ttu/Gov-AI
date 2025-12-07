@@ -36,6 +36,7 @@ if ($path === '/delete-service' && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
     exit;
 }
 
-if ($path === '/update-service' && $_SERVER['REQUEST_METHOD'] === 'UPDATE') {
+if ($path === '/update-service' && $_SERVER['REQUEST_METHOD'] === 'PUT') {
+    update_service(service: request_body(key: 'service'));
     exit;
 }
