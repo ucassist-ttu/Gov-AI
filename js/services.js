@@ -308,8 +308,6 @@ async function getServices() {
         divPages.innerHTML = html;
     }
 
-
-
     // function updatePageControls(totalPages) {
     //     const pages = document.getElementById("pages");
     //     divPages.innerHTML = "";
