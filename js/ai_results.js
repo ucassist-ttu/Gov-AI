@@ -9,12 +9,19 @@ async function getAIRecommendations(userPrompt) {
                     user_input: userPrompt
                 })
             });
-            let aiData = await servResponse.json()
-            let strDiv = ``
+            //validation
+            if (!servResponse.ok) {
+                throw new Error(`HTTP error! status: ${servResponse.status}`);
+            }
 
-            aiData.forEach(element => {
-                console.log('aidata: ', element)
-            })
+            let aiData = await servResponse.json()
+            // let strDiv = ``
+
+            console.log(aiData)
+
+            // aiData.forEach(element => {
+            //     console.log('aidata: ', element)
+            // })
         } catch (objError){
             console.log('Error fetching objData', objError)
         }
