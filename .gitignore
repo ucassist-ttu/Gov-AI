@@ -2,6 +2,7 @@
 backend/dummy.db
 backend/UCAssist.db
 /backend/vendor/
+/backend/.env
 
 node_modules/
 package-lock.json
