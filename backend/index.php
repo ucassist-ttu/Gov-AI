@@ -6,6 +6,8 @@ require_once __DIR__ . '/src/helpers/loadenv.php';
 
 loadenv();
 
+var_dump(getenv('GOOGLE_API_KEY'));
+
 function request_body(string $key): string
 {
     return json_decode(json: file_get_contents(filename: 'php://input'), associative: true)[$key] ?? '';
