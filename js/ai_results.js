@@ -15,29 +15,39 @@ async function getAIRecommendations(userPrompt) {
             }
 
             let aiData = await servResponse.json()
-            // let strDiv = ``
+            let strDiv = ``
 
             console.log(aiData)
 
-            // aiData.forEach(element => {
-            //     console.log('aidata: ', element)
-            // })
+            let intCount = 0
+            aiData.forEach(element => {
+                intCount++
+                let strResourceName = element.NameOfSevice
+                let strCompany = element.OrganizationName
+                let strDescription = element.ServiceDescription
+                console.log(strResourceName)
+
+                strDiv += `<div class="flex-row">`
+                strDiv +=`     <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`
+                strDiv +=`    <p class="ai-company-name">`
+                strDiv +=`        by ${strCompany}`
+                strDiv +=`    </p>`
+                strDiv +=`</div>`
+                strDiv +=`<p class="ai-description">`
+                strDiv +=`      ${strDescription}`
+                strDiv +=`</p>`
+                strDiv +=`<p class="btn ai-link">More Details</p>`
+            })
+            document.querySelector('#suggestedResources').innerHTML += strDiv
         } catch (objError){
             console.log('Error fetching objData', objError)
         }
 }
 document.addEventListener("DOMContentLoaded", function() {
-    const btn = document.getElementById("btn-AI-search");
-    btn.addEventListener("click", function() {
-        const prompt = document.getElementById("txtAIPrompt").value;
-        getAIRecommendations(prompt);
-        console.log('prompt: ', prompt)
-    });
+    const prompt = sessionStorage.getItem("user_prompt"); // Get prompt
+    if (!prompt) {
+        console.log("No prompt found in sessionStorage.");
+        return;
+    }
+    else{ getAIRecommendations(prompt)}
 });
-
-
-// strDiv += `<div class="img-text-lg"><div>`
-// 
-// 
-// 
-//  
