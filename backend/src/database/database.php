@@ -56,3 +56,11 @@ function update_service(array $service): void
 
     $statement->execute(params: $params);
 }
+
+function delete_service(int $id): void
+{
+    global $services_table, $pdo;
+
+    $statement = $pdo->prepare(query: "DELETE FROM {$services_table} WHERE ID = :ID");
+    $statement->execute(params: [':ID' => $id]);
+}

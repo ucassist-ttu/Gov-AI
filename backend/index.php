@@ -33,6 +33,7 @@ if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'PUT') {
 }
 
 if ($path === '/delete-service' && $_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    delete_service(id: (int) request_body(key: 'id'));
     exit;
 }
 
