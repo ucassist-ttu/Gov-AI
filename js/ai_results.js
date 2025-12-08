@@ -1,6 +1,8 @@
 async function getAIRecommendations(userPrompt) {
+        let strDiv = document.querySelector('#suggestedResources');
+        strDiv.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
         try{
-            let servResponse = await fetch(`http://localhost:8000/prompt`, {
+            let servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -15,7 +17,9 @@ async function getAIRecommendations(userPrompt) {
             }
 
             let aiData = await servResponse.json()
-            let strDiv = ``
+            //clears away loading placeholder text
+            strDiv.innerHTML = ""; 
+            strDiv = ``
 
             console.log(aiData)
 
