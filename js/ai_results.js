@@ -17,6 +17,8 @@ async function getAIRecommendations(userPrompt) {
             }
 
             let aiData = await servResponse.json()
+            console.log(aiData);
+
             //clears away loading placeholder text
             strDiv.innerHTML = ""; 
             strDiv = ``
@@ -44,7 +46,7 @@ async function getAIRecommendations(userPrompt) {
             })
             document.querySelector('#suggestedResources').innerHTML += strDiv
         } catch (objError){
-            console.log('Error fetching objData', objError)
+            console.log('Error fetching aiData', objError)
         }
 }
 document.addEventListener("DOMContentLoaded", function() {
