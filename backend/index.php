@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 
+
 require_once __DIR__ . '/src/database/database.php';
 require_once __DIR__ . '/src/helpers/gemini.php';
 require_once __DIR__ . '/src/helpers/loadenv.php';
 
 loadenv();
+
 
 
 header("Access-Control-Allow-Origin: *");
