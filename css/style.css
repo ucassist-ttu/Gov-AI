@@ -68,10 +68,8 @@
   }
   .ai-results .img-text-lg{
     line-height: 2.2rem;
-    padding-top: 20px;
-    padding-bottom: 40px;
+    padding-top: 30px;
     font-weight: bold;
-    padding-top: 20px;
   }
   .ai-company-name{
     font-style: normal;
@@ -89,7 +87,7 @@
     display: flex;
     text-align: start;
     line-height: normal;
-    padding-top: 10px;
+    padding-top: 40px;
   }
   .ai-description{
     font-style: normal;
@@ -98,7 +96,7 @@
     display: flex;
     text-align: start;
     line-height: normal;
-    padding-top: 10px;
+    padding-top: 5px;
   }
   .ai-link{
     font-style: normal;
@@ -168,10 +166,6 @@
     padding-inline: 100px;
   }
   .ai-results .img-text-lg{
-    line-height: 2.2rem;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    font-weight: bold;
   }
   .ai-company-name{
     font-size: 20px;
@@ -183,17 +177,16 @@
   .ai-title{
     font-size: 25px;
     /* line-height: normal; */
-    padding-top: 20px;
+    padding-top: 75px;
   }
   .ai-description{
     font-size: 20px;
     line-height: 1.7rem;
-    padding-top: 5px;
+    padding-top: 15px;
   }
   .ai-link{
     font-size: 20px;
-    padding-bottom: 20px;
-    padding-top: 0px;
+    padding-top: 15px;
   } 
 }
 /* Desktop Breakpoint */
@@ -244,8 +237,7 @@
   }
   .ai-title{
     font-size: 25px;
-    /* line-height: normal; */
-    padding-top: 20px;
+    padding-top: 60px;
   }
   .ai-description{
     font-size: 20px;
@@ -254,8 +246,7 @@
   }
   .ai-link{
     font-size: 20px;
-    padding-bottom: 20px;
-    padding-top: 10px;
+    padding-top: 30px;
     font-weight: 100;
   } 
 }
