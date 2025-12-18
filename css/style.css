@@ -153,7 +153,6 @@
   .search-input{
     font-size: 1.2rem !important;
     flex-grow: 1; /* stretches vertically*/
-    margin-top: 15px;
     border: 0px !important;
     outline: none !important;
     box-shadow: none !important; 
@@ -215,7 +214,6 @@
   .search-input{
     font-size: 1.6rem !important;
     flex-grow: 1; /* stretches vertically*/
-    margin-top: 15px;
     border: 0px !important;
     outline: none !important;
     box-shadow: none !important; 
