@@ -69,9 +69,7 @@
   .ai-results .img-text-lg{
     line-height: 2.2rem;
     padding-top: 20px;
-    padding-bottom: 40px;
     font-weight: bold;
-    padding-top: 20px;
   }
   .ai-company-name{
     font-style: normal;
@@ -89,7 +87,7 @@
     display: flex;
     text-align: start;
     line-height: normal;
-    padding-top: 10px;
+    padding-top: 55px;
   }
   .ai-description{
     font-style: normal;
@@ -98,7 +96,7 @@
     display: flex;
     text-align: start;
     line-height: normal;
-    padding-top: 10px;
+    padding-top: 5px;
   }
   .ai-link{
     font-style: normal;
@@ -155,7 +153,6 @@
   .search-input{
     font-size: 1.2rem !important;
     flex-grow: 1; /* stretches vertically*/
-    margin-top: 15px;
     border: 0px !important;
     outline: none !important;
     box-shadow: none !important; 
@@ -170,7 +167,6 @@
   .ai-results .img-text-lg{
     line-height: 2.2rem;
     padding-top: 20px;
-    padding-bottom: 40px;
     font-weight: bold;
   }
   .ai-company-name{
@@ -183,17 +179,17 @@
   .ai-title{
     font-size: 25px;
     /* line-height: normal; */
-    padding-top: 20px;
+    padding-top: 60px;
   }
   .ai-description{
     font-size: 20px;
     line-height: 1.7rem;
-    padding-top: 5px;
+    padding-top: 10px;
   }
   .ai-link{
     font-size: 20px;
     padding-bottom: 20px;
-    padding-top: 0px;
+    padding-top: 15px;
   } 
 }
 /* Desktop Breakpoint */
@@ -222,7 +218,6 @@
   .search-input{
     font-size: 1.6rem !important;
     flex-grow: 1; /* stretches vertically*/
-    margin-top: 15px;
     border: 0px !important;
     outline: none !important;
     box-shadow: none !important; 
@@ -237,6 +232,7 @@
   .ai-results .img-text-lg{
     text-align: start;
     font-size: 35px;
+    padding-top: 50px;
   }
   .ai-company-name{
     font-size: 20px;
@@ -244,18 +240,13 @@
   }
   .ai-title{
     font-size: 25px;
-    /* line-height: normal; */
-    padding-top: 20px;
   }
   .ai-description{
     font-size: 20px;
     line-height: 2rem;
-    padding-top: 10px;
   }
   .ai-link{
     font-size: 20px;
-    padding-bottom: 20px;
-    padding-top: 10px;
     font-weight: 100;
   } 
 }
