@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNAP Benefits</title>
 
     <!-- bootstrap library and custom css link -->
@@ -11,174 +11,175 @@
 </head>
 
 <body>
-    <!-- temporary inclusion method for navbar -->
     <div id="navbar"></div>
-    <div id="pageHeader" class="page-header">
-        SNAP Resources
-    </div>
-    <div class="page">
-        <div class="row d-flex align-items-center pt-5 ">
-            <div class="col-auto body-text fw-bold" >Not sure if you qualify for SNAP?</div>
-            <div class="col-auto body-link p-2" id="lnkExternSNAP">Click Here</div>
+    
+    <main>
+        <div class="header-crisis-wrapper position-relative">
+            <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
+            <h1 class="fw-bold white">SNAP Benefits</h1>
         </div>
-        <div class="body-text pt-1" > As a SNAP recipient, you can also take advantage of the following resources:</div>
-
-        <div class="d-flex align-items-start pt-5">
-            <!--navigation tabs-->
-            <ul class="nav nav-tabs flex-column col-lg-3 col-md-6 col-sm-12" id="snap-pills-tabs" role="tablist" aria-orientation="vertical">
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link active snap-tab" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone">Phone & Wireless Plans</button>
-                </li>
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link snap-tab" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet">Internet Assistance</button>
-                </li>
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link snap-tab" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities">Utility & Health Programs</button>
-                </li>
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link snap-tab" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health">Family & Health Programs</button>
-                </li>
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link snap-tab" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts">Discounts & Memberships</button>
-                </li>
-                <li class="nav-item snap-description" role="presentation">
-                    <button type="button" class="nav-link snap-tab" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button>
-                </li>
-            </ul>
-            <!--tab content-->
-            <div class="tab-content ps-5">
-                <div class="tab-pane fade show active" id="snap-pills-content-phone" role="tabpanel" aria-labelledby="snap-pills-tab-phone">
-                    <h4 class=" snap-title">TruConnect Lifeline Plan</h4>
-                    <ul>
-                        <li>Free unlimited talk, text, and international calling</li>
-                        <li>4.5GB of data</li> 
-                        <li>a free SIM card</li>
-                    </ul>
-                    <h4 class=" snap-title">Assurance Wireless Cell Phone Plan</h4>
-                    <ul>
-                        <li>Free monthly calls, texts, and data, </li>
-                        <li>a free smartphone</li> 
-                        <li>$0 cell phone bill and no annual contract</li>
-                        <li>Eligibility based on household income or participation in SSI, SNAP, or Medicaid</li>
-                    </ul>
-                    <h4 class=" snap-title">Cricket Wirelessn</h4>
-                    <ul>
-                        <li>$15/month cell phone plan</li>
-                        <li>unlimited talk and text</li> 
-                        <li>1GB of high-speed data</li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="snap-pills-content-internet" role="tabpanel" aria-labelledby="snap-pills-tab-internet">
-                    <h4 class=" snap-title">AT&T Access</h4>
-                    <ul>
-                        <li>Low-cost wireless home internet service for households with at least one SNAP participant</li>
-                        <li>Includes free installation</li>
-                        <li>In-home Wi-Fi</li>
-                        <li>No annual contract</li>
-                        <li>Costs $10/month or less depending on available speed</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Comcast Internet Essentials</h4>
-                    <ul>
-                        <li>Internet service as low as $9.95 per month</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Spectrum Internet Assistance</h4>
-                    <ul>
-                        <li>Low-income internet option for households participating in NSLP, CEP for NSLP, or SSI (age 65+)</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Lifeline Program</h4>
-                    <ul>
-                        <li>Federal program reducing monthly phone or internet costs for households at or below 135% of the federal poverty level</li>
-                        <li>Available for those receiving SNAP, Medicaid, SSI, public housing, or Veterans Pension and Survivors Benefits</li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="snap-pills-content-utilities" role="tabpanel" aria-labelledby="snap-pills-tab-utilities">
-                    <h4 class=" snap-title">Low Income Home Energy Assistance Program (LIHEAP)</h4>
-                    <ul>
-                        <li>Federally funded grant program helping low-income households meet immediate energy needs</li>
-                        <li>Eligibility: income at or below 150% of U.S. Poverty Guidelines</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Weatherization Assistance Program (WAP)</h4>
-                    <ul>
-                        <li>Provides home energy improvements such as insulation, caulking, storm windows, and minor repairs</li>
-                        <li>Improves efficiency and reduces utility costs</li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="snap-pills-content-health" role="tabpanel" aria-labelledby="snap-pills-tab-health">
-                    <h4 class=" snap-title">Children’s Health Insurance Program (CHIP)</h4>
-                    <ul>
-                        <li>Provides low-cost or free health coverage for children under 19 in families with low to moderate income</li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="snap-pills-content-discounts" role="tabpanel" aria-labelledby="snap-pills-tab-discounts">
-                    <h4 class=" snap-title">Amazon Prime</h4>
-                    <ul>
-                        <li>$5.99 per month with a valid EBT or Medicaid card</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Walmart+</h4>
-                    <ul>
-                        <li>$6.47 per month or $49 per year with qualifying benefits</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Nashville Zoo</h4>
-                    <ul>
-                        <li>$50 annual membership</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Adventure Science Center</h4>
-                    <ul>
-                        <li>Discounted admission (check site for details)</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Huntsville Space Center</h4>
-                    <ul>
-                        <li>Discounted admission (check site for details)</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Nashville Farmers’ Market</h4>
-                    <ul>
-                        <li>SNAP participants receive $1 in Fresh Bucks tokens for every $1 spent using an EBT card</li>
-                    </ul>
-
-                    <h4 class=" snap-title">Seeds and Plants</h4>
-                    <ul>
-                        <li>SNAP benefits can be used to purchase seeds and plants at any retailer that accepts SNAP</li>
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="snap-pills-content-misc" role="tabpanel" aria-labelledby="snap-pills-tab-misc">
-                    <h4 class=" snap-title">Lifeline Program (Other Assistance)</h4>
-                    <ul>
-                        <li>Reduces monthly phone or internet costs for eligible households</li>
-                    </ul>
-                </div>
+        <div class="page">
+            <div class="row align-items-center">
+                <div class="col-auto body-text fw-bold" >Not sure if you qualify for SNAP?</div>
+                <div class="col-auto body-link p-2" id="lnkExternSNAP">Click Here</div>
             </div>
-            <div style="margin-bottom: 200px;"></div>
-            
-            <!-- temporary inclusion method for footer -->
-            <div id="footer"></div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <div id="navbar"></div>
-    <script>
-        //gets navbar
-        // fetch('../../partials/navbar.html')
-        //     .then(response => response.text())
-        //     .then(html => {
-        //         console.log(html)
-        //         document.getElementById('navbar').innerHTML = html;
-        // });
- 
+            <div class="body-text pt-1" > As a SNAP recipient, you can also take advantage of the following resources:</div>
 
-        //gets footer
-        // fetch('../../partials/footer.html')
-        //         .then(response => response.text())
-        //         .then(data => document.getElementById('footer').innerHTML = data);
-        
+            <div class=" row d-flex align-items-start pt-5">
+                <!--navigation tabs-->
+                <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                    <ul class="nav nav-tabs" id="snap-pills-tabs" role="tablist" aria-orientation="vertical">
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link active snap-tab" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone">Phone & Wireless Plans</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet">Internet Assistance</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities">Utility & Health Programs</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health">Family & Health Programs</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts">Discounts & Memberships</button>
+                        </li>
+                        <li class="nav-item snap-description" role="presentation">
+                            <button type="button" class="nav-link snap-tab" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--tab content-->
+                <div class="tab-content col-12 col-sm-9 col-md-6 col-lg-6 col-xl-8">
+                    <!-- tab one: phone -->
+                    <div class="tab-pane fade show active" id="snap-pills-content-phone" role="tabpanel" aria-labelledby="snap-pills-tab-phone">
+                        <h4 class=" snap-title">TruConnect Lifeline Plan</h4>
+                        <ul>
+                            <li>Free unlimited talk, text, and international calling</li>
+                            <li>4.5GB of data</li> 
+                            <li>a free SIM card</li>
+                        </ul>
+                        <h4 class=" snap-title">Assurance Wireless Cell Phone Plan</h4>
+                        <ul>
+                            <li>Free monthly calls, texts, and data, </li>
+                            <li>a free smartphone</li> 
+                            <li>$0 cell phone bill and no annual contract</li>
+                            <li>Eligibility based on household income or participation in SSI, SNAP, or Medicaid</li>
+                        </ul>
+                        <h4 class=" snap-title">Cricket Wirelessn</h4>
+                        <ul>
+                            <li>$15/month cell phone plan</li>
+                            <li>unlimited talk and text</li> 
+                            <li>1GB of high-speed data</li>
+                        </ul>
+                    </div>
+                    <!-- tab two:  internet-->
+                    <div class="tab-pane fade" id="snap-pills-content-internet" role="tabpanel" aria-labelledby="snap-pills-tab-internet">
+                        <h4 class=" snap-title">AT&T Access</h4>
+                        <ul>
+                            <li>Low-cost wireless home internet service for households with at least one SNAP participant</li>
+                            <li>Includes free installation</li>
+                            <li>In-home Wi-Fi</li>
+                            <li>No annual contract</li>
+                            <li>Costs $10/month or less depending on available speed</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Comcast Internet Essentials</h4>
+                        <ul>
+                            <li>Internet service as low as $9.95 per month</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Spectrum Internet Assistance</h4>
+                        <ul>
+                            <li>Low-income internet option for households participating in NSLP, CEP for NSLP, or SSI (age 65+)</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Lifeline Program</h4>
+                        <ul>
+                            <li>Federal program reducing monthly phone or internet costs for households at or below 135% of the federal poverty level</li>
+                            <li>Available for those receiving SNAP, Medicaid, SSI, public housing, or Veterans Pension and Survivors Benefits</li>
+                        </ul>
+                    </div>
+                    <!-- tab three: utilities  -->
+                    <div class="tab-pane fade" id="snap-pills-content-utilities" role="tabpanel" aria-labelledby="snap-pills-tab-utilities">
+                        <h4 class=" snap-title">Low Income Home Energy Assistance Program (LIHEAP)</h4>
+                        <ul>
+                            <li>Federally funded grant program helping low-income households meet immediate energy needs</li>
+                            <li>Eligibility: income at or below 150% of U.S. Poverty Guidelines</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Weatherization Assistance Program (WAP)</h4>
+                        <ul>
+                            <li>Provides home energy improvements such as insulation, caulking, storm windows, and minor repairs</li>
+                            <li>Improves efficiency and reduces utility costs</li>
+                        </ul>
+                    </div>
+                    <!-- tab four: healthcare  -->
+                    <div class="tab-pane fade" id="snap-pills-content-health" role="tabpanel" aria-labelledby="snap-pills-tab-health">
+                        <h4 class=" snap-title">Children’s Health Insurance Program (CHIP)</h4>
+                        <ul>
+                            <li>Provides low-cost or free health coverage for children under 19 in families with low to moderate income</li>
+                        </ul>
+                    </div>
+                    <!-- tab five: discounts -->
+                    <div class="tab-pane fade" id="snap-pills-content-discounts" role="tabpanel" aria-labelledby="snap-pills-tab-discounts">
+                        <h4 class=" snap-title">Amazon Prime</h4>
+                        <ul>
+                            <li>$5.99 per month with a valid EBT or Medicaid card</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Walmart+</h4>
+                        <ul>
+                            <li>$6.47 per month or $49 per year with qualifying benefits</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Nashville Zoo</h4>
+                        <ul>
+                            <li>$50 annual membership</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Adventure Science Center</h4>
+                        <ul>
+                            <li>Discounted admission (check site for details)</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Huntsville Space Center</h4>
+                        <ul>
+                            <li>Discounted admission (check site for details)</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Nashville Farmers’ Market</h4>
+                        <ul>
+                            <li>SNAP participants receive $1 in Fresh Bucks tokens for every $1 spent using an EBT card</li>
+                        </ul>
+
+                        <h4 class=" snap-title">Seeds and Plants</h4>
+                        <ul>
+                            <li>SNAP benefits can be used to purchase seeds and plants at any retailer that accepts SNAP</li>
+                        </ul>
+                    </div>
+                    <!-- tab six: misc -->
+                    <div class="tab-pane fade" id="snap-pills-content-misc" role="tabpanel" aria-labelledby="snap-pills-tab-misc">
+                        <h4 class=" snap-title">Lifeline Program (Other Assistance)</h4>
+                        <ul>
+                            <li>Reduces monthly phone or internet costs for eligible households</li>
+                        </ul>
+                    </div>
+                </div>               
+            </div>
+        </div>
+
+        <div id="footer"></div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        fetch('/Gov-AI/partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('/Gov-AI/partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
 </body>
 </html>

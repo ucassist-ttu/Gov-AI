@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Assist</title>
+    <!-- bootstrap library and custom css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Gov-AI/css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    
+    <main>
+
+        <div class="header-crisis-wrapper position-relative">
+            <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
+            <h1 class="fw-bold white">Provider Registration</h1>
+        </div>
+        <figure class="position-relative z-0">
+            <div class="banner-image registration-image">
+            <figcaption class="position-absolute top-50 start-50 translate-middle text-center w-100">
+                <div class="fw-bold clr-light-grey img-text-lg w-100 ">Want to help the people of the Upper Cumberland?</div>
+                <!-- <div class="fw-bold fs-5 fs-md-1 clr-light-grey text-nowrap hero-text">Add your organization to the database.</div> -->
+            </figcaption>
+            </div>
+        </figure>
+        <div class="jumbotron rounded-bottom gold text-center UCAssist-desc">
+            <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">Our goal is to provide the citizens of the Upper Cumberland the most comprehensive resource list possible.</h5>
+        </div>
+        <div class="page">   
+        <div class="text-center container-fluid d-flex justify-content-center align-items-center mt-5">
+            <div class="w-75 w-md-50">
+            <div class="position-relative border border-dark border-3 rounded p-1 p-md-5">
+                <div class="position-absolute top-0 start-50 translate-middle rounded-circle border border-dark border-2 ps-2 py-3 dark_navy icon-circle d-flex justify-content-center align-items-center">
+                    <img src="/Gov-AI/assets/icons/edit_document.png" class="img-fluid" alt="Edit Icon" />
+                </div>
+                <h5 class="fw-bold mt-5 mt-md-4 mb-4">Registration Forms</h5>
+                <p class="mb-4">Register your organization and offered services using our online form. Once submitted, the form will be routed to our staff for approval.</p>
+                <a href="/Gov-AI/html/pages/error.html"><h5 class="fw-bold text-dark text-decoration-underline">Register Now</h5></a>
+            </div>
+            </div>
+        </div>
+        
+        <div class="text-center container-fluid d-flex justify-content-center align-items-center mt-5">
+            <div class="w-75 w-md-50">
+            <div class="position-relative border border-dark border-3 rounded p-1 p-md-5">
+                <div class="position-absolute top-0 start-50 translate-middle rounded-circle border border-dark border-2 p-2 dark_navy icon-circle d-flex justify-content-center align-items-center">
+                    <img src="/Gov-AI/assets/icons/upload_document.png" class="img-fluid" alt="Edit Icon" />
+                </div>
+                <h5 class="fw-bold mt-5 mt-md-4 mb-4">Form not working?</h5>
+                <p class="mb-4">Fill out this PDF to register your organization and the resources you would like to provide.</p>
+                <p class="mb-4">These can be uploaded below, emailed to <a href="mailto:info@ucassist.org" class="text-decoration-underline text-dark">info@ucassist.org</a>, <br />or mailed to:</p>
+                <p class="mb-4">
+                    UC Assist<br />
+                    Upper Cumberland Development District<br />
+                    1104 England Drive<br />
+                    Cookeville, TN 38501<br />
+                </p>
+                <a href="/Gov-AI/html/pages/error.html"><h5 class="fw-bold text-dark text-decoration-underline">Downlaod Files Here</h5></a>
+                <label for="fileUpload" class="dropbox-square d-flex justify-content-center align-items-center rounded mb-4 w-75 w-md-50 gold-light mx-auto mt-5" style="cursor:pointer;">
+                    <span class="fw-bold text-center clr-gold mx-4">Drag and drop your files here or <br />upload from computer</span>
+                    <input type="file" id="fileUpload" multiple class="d-none">
+                </label>
+            </div>
+            </div>  
+        </div>
+
+        <div class="text-center container-fluid d-flex justify-content-center align-items-center mt-5 mb-5">
+            <div class="w-75 w-md-50">
+            <div class="position-relative border border-dark border-3 rounded p-1 p-md-5">
+                <div class="position-absolute top-0 start-50 translate-middle rounded-circle border border-dark border-2 ps-2 py-3 dark_navy icon-circle d-flex justify-content-center align-items-center">
+                    <img src="/Gov-AI/assets/icons/edit_document.png" class="img-fluid" alt="Edit Icon" />
+                </div>
+                <h5 class="fw-bold mt-5 mt-md-4 mb-4">Changes to your services or organization?</h5>
+                <p class="mb-4">Fill out our <a href="/Gov-AI/html/pages/error.html" class="text-decoration-underline text-dark">Provider Request Change</a> form to kepp us updated.</p>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        fetch('./../../partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('./../../partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <!-- more bootsrap libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
