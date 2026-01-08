@@ -21,3 +21,22 @@ function get_services_from_user_input(string $user_input): array
 
     return $services;
 }
+
+function get_similar_services(int $id): array
+{
+    $services = json_encode(value: get_services());
+    if (!$services)
+        return [];
+
+    $service = json_encode(value: get_service(id: $id));
+    $prompt = 'Respond with only an integer array of the three most similar services in the database for the following service: ' . $service . '. Database: ' . $services;
+
+    $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
+
+    $services = [];
+    foreach ($ids as $id) {
+        $services[] = get_service(id: $id);
+    }
+
+    return $services;
+}

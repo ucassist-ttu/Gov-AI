@@ -15,6 +15,12 @@ if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+if ($path === '/recommendations' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    header(header: 'Content-Type: application/json');
+    echo json_encode(value: get_similar_services(id: request_body(key: 'service_id')));
+    exit;
+}
+
 // Database endpoints
 
 if ($path === '/services' && $_SERVER['REQUEST_METHOD'] === 'GET') {
