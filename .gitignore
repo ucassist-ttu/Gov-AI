@@ -1,1 +1,10 @@
 .DS_Store
+backend/dummy.db
+backend/UCAssist.db
+/backend/vendor/
+/backend/.env
+/backend/service-account.json
+
+
+node_modules/
+package-lock.json
