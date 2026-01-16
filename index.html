@@ -15,7 +15,7 @@
     <main>
         <!-- crisis banner -->
         <div class="jumbotron crisis text-center rounded-bottom z-3 position-relative red clr-light-grey align-items-center justify-content-center">
-            <h6 class="fw-bold">If you are experiencing an emergengy please call 911. <a href="/Gov-AI/html/pages/error.html" class="text-light">Click here for the Crisis Hotlines.</a></h6>
+            <h6 class="fw-bold">If you are experiencing an emergengy please call 911. <a href="/Gov-AI/html/pages/crisis.html" class="text-light">Click here for the Crisis Hotlines.</a></h6>
         </div>
 
         <!-- carousel -->
@@ -32,7 +32,7 @@
                         <h1 class="img-text-lg mt-5 mt-md-0">Let Us Assist You in Finding the Right Help</h1>
                         <p class="text-light jumbotron-text pt-2"><!--<a href="/Gov-AI/html/pages/services.html" --> Explore Available Resources Here</a></p>
                         <!-- search bar -->
-                        <div class="ai-search-bar mt-md-3 mt-lg-5">
+                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
                             <i class="bi bi-search ps-2"></i>
                             <div class="divider-vertical d-flex align-items-center"></div>
                             <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
@@ -93,7 +93,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Need Help?</h5>
                             <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
-                            <p class="card-text"><a href="/Gov-AI/html/pages/error.html" class="text-dark">Click Here to start!</a></p>
+                            <p class="card-text"><a href="/Gov-AI/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
                         </div>
                     </div>
                 </div>
@@ -109,9 +109,9 @@
                     <!-- Card Content -->
                     <div class="col-md-8">
                         <div class="card-body">
-                            <h5 class="card-title">Get Your Message Out!</h5>
-                            <p class="card-text">Are you a service provider? Want to get your services out to more people?Check out our registration page to find out more.</p>
-                            <p class="card-text"><a href="/Gov-AI/html/pages/error.html" class="text-dark">Enroll Now!</a></p>
+                            <h5 class="card-title">Are You A Service Provider?</h5>
+                            <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                            <p class="card-text"><a href="/Gov-AI/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></p>
                         </div>
                     </div>
                 </div>
@@ -122,10 +122,10 @@
     <div id="footer"></div>
 
     <script>
-        fetch('./partials/footer.html')
+        fetch('/Gov-AI/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('./partials/navbar.html')
+        fetch('/Gov-AI/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
