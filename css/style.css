@@ -2,8 +2,8 @@
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
   nav img {
-    height: auto;
-    max-width: 180px;
+    height: 40px;
+    max-width: 220px;
   }
   .jumbotron-text {
     font-size: 20px;
@@ -121,6 +121,7 @@
 @media screen and (min-width: 768px) {
   nav img {
     height: 40px;
+    max-width: none;
   }
   .jumbotron-text {
     font-size: 20px;
@@ -250,6 +251,9 @@
     font-weight: 100;
   } 
 }
+nav {
+  min-height: var(--bs-navbar-height);
+}
 .search-icon {
     position: absolute;
     top: 50%;
@@ -274,7 +278,7 @@
     --accent-blue: #606A76;
     --light-grey: #EBE9EA;
     --red: #E14848;
-    --bs-navbar-height: 40px;
+    --bs-navbar-height: 9vh;
 }
 :root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
 :root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
@@ -527,7 +531,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
+    /*padding-top: var(--bs-navbar-height, 80px); makes sure navbar doesn't block anything in*/
 }
 main {
     flex: 1 0 auto;
@@ -560,7 +564,7 @@ main {
 }
 .crisis {
     margin-bottom: -12px;
-    height: 65px;
+    height: 8vh;
     display: flex; 
     justify-content: center;
     align-items: center;
