@@ -14,26 +14,39 @@
     
     <main class="ai-results">
         <div class="page">
-            <!-- <div class="ai-search-bar mt-md-3 mt-lg-5">
-                <i class="bi bi-search ps-2"></i>
-                <div class="divider-vertical d-flex align-items-center"></div>
-                <input class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
-                submit button -->
-                <!-- <div class="d-flex justify-content-between"> -->
-                    <!-- TODO: extend button (stretch goal) -->
-                    <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
-                    <!-- <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/Gov-AI/html/pages/ai_results.html'">
-                        <i class="bi bi-arrow-right-circle-fill"></i>
-                    </span>
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="/Gov-AI/index.html" class="ts-5 rounded-pill p-2 border text-decoration-none text-nowrap me-4">Return Home</a>
+                <div id="btnPrintAIResults">
+                    <i class="bi bi-printer-fill "></i>
+                    <a href="#" class=" ts-5 mt-5 p-2 text-decoration-none text-nowrap">Print Page</a>
                 </div>
-            </div>  -->
-            <a href="/Gov-AI/index.html" class="ts-5 rounded-pill mt-5 p-2 border text-decoration-none text-nowrap">Return Home</a>
+            </div>
 
             <div class="img-text-lg">
                 Based on what you told us, here are three recommend resources...
             </div>
             <div id="suggestedResources" class="suggested-resources">
-
+                <!-- resource one -->
+                <div class="flex-row">
+                    <h4 class="ai-title">1. Meal Prep </h4>
+                    <p class="ai-company-name">by Associates of Vietnam Veterans of America Chapter 1015</p>
+                </div>
+                <p class="ai-description">Provide meals for Vietnam Veterans monthly meetings; National Vietnam Veterans Day; Veterans Day; Memorial Day; Gun & Knife Show; Spaghetti...</p>
+                <a href="/Gov-AI/html/pages/ai_results.html" class="btn ai-link">More Details</a>
+                <!-- resource two -->
+                 <div class="flex-row">
+                    <h4 class="ai-title">2. Food Assistance</h4>
+                    <p class="ai-company-name">by Bread of Life Homeless Shelter and Clinic</p>
+                </div>
+                <p class="ai-description">The Bread of Life feeds the hungry. We provide three free meals a day, seven days a week, 52 weeks per year to anyone in the community needing so...</p>
+                <a href="/Gov-AI/html/pages/ai_results.html" class="btn ai-link">More Details</a>
+                <!-- resource three -->
+                 <div class="flex-row">
+                    <h4 class="ai-title">3. Food and Shelter Program</h4>
+                    <p class="ai-company-name">by Cannon County EMA Food and Shelter Prog...</p>
+                </div>
+                <p class="ai-description">Provides emergency food and shelter for Cannon County, houses families that have suffered losses due to fire and natural disasters.</p>
+                <a href="/Gov-AI/html/pages/ai_results.html" class="btn ai-link">More Details</a>
             </div>
         </div>
     </main>
