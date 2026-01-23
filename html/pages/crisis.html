@@ -7,7 +7,7 @@
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -26,8 +26,8 @@
         <!-- page content -->
         <div class="page">
             <div class="row d-flex justify-content-between pt-5">
-                <!--navigation tabs-->
-                <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                <!--navigation tabs--> <!--col-12 col-md-6 col-lg-6 col-xl-4-->
+                <div class="col">
                     <ul class="nav nav-tabs" id="crisis-pills-tabs" role="tablist" aria-orientation="vertical">
                         <li class="nav-item snap-description" role="presentation">
                             <button type="button" class="nav-link active snap-tab" id="crisis-pills-tab-mental" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-mental" role="tab" aria-controls="crisis-pills-content-mental">Mental Health & Emotional Support</button>
@@ -140,10 +140,10 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
-        fetch('../../partials/footer.html')
+        fetch('/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('../../partials/navbar.html')
+        fetch('/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>

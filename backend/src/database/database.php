@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 $services_table = 'tblServices';
-$pdo = new PDO(dsn: 'sqlite:' . __DIR__ . '/../../UCAssist.db');
+$pdo = new PDO(dsn: 'sqlite:' . __DIR__ . '//UCAssist.db');
 
 function get_services(): array
 {
