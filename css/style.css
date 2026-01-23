@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
+  :root{
+    --bs-navbar-height: 25px !important;
+  }
+  /*HOMEPAGE CSS*/
   nav img {
     height: auto;
     max-width: 180px;
@@ -116,9 +120,72 @@
   .ai-results .btn {
     padding: 0px;
   }
+  /*CRISIS CSS*/
+  .nav-tabs{
+    border-bottom: #fff;
+    margin-right: 0px !important;
+  }
+  .nav-tabs .nav-link{
+    width: 300px;
+    margin-top: 0px;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-color: var(--dark-navy);
+  }
+  .nav-tabs .nav-link:hover {
+    color: var(--dark-navy);
+    background-color: var(--light-grey);
+    border-width: 1px;
+    border-right-color: var(--dark-navy);
+  }
+  .nav-tabs .nav-item.show .nav-link,
+  .nav-tabs .nav-link.active {
+    color:#FFF;
+    background-color: var(--dark-navy);
+    border-color: var(--dark-navy);
+  }
+  .header-crisis-wrapper {
+    overflow: visible; /* ensure crisis is not clipped by the wrapper */
+    
+  }
+  /* make sure header stays above the crisis */
+  .header-crisis-wrapper .header-crisis {
+    position: fixed;
+    z-index: 3;
+    border-radius: 0 0 var(--header-curve) var(--header-curve);
+    text-align: center;
+  }
+  .crisis {
+    margin-bottom: -12px; /*overlap onto images*/
+    height: 10vh;
+    display: flex; 
+    padding-top: 105px;
+  }
+  /* put crisis behind header and behind the rounded corners */
+  .header-crisis-wrapper .crisis {
+    position: absolute;
+    z-index: 2; /* less than header (3) so header overlays it */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: start;
+    padding-inline: clamp(10px, 0vh, 45px);
+    padding-bottom: 8px;     /* moves text up/down a bit*/
+    box-sizing: border-box;
+  }
+  .content{
+    margin-inline: 2vw;
+  }
 }
 /* Tablet Breakpoint */
 @media screen and (min-width: 768px) {
+  :root{
+    --bs-navbar-height: 35px !important;
+  }
   nav img {
     height: 40px;
   }
@@ -164,8 +231,6 @@
   .ai-results .page{
     padding-inline: 100px;
   }
-  .ai-results .img-text-lg{
-  }
   .ai-company-name{
     font-size: 20px;
     display: flex;
@@ -187,9 +252,20 @@
     font-size: 20px;
     padding-top: 15px;
   } 
+  /*CRISIS PAGE*/
+  .nav-tabs .nav-link{
+    border-color: transparent;
+    border-right-color: var(--dark-navy);
+  }
+   .crisis {
+    padding-top: 80px !important;
+  }
 }
 /* Desktop Breakpoint */
 @media screen and (min-width: 1024px){
+  :root{
+    --bs-navbar-height: 40px !important;
+  }
   .img-text-lg {
     color: var(--light-grey);
     text-align: center;
@@ -272,10 +348,10 @@
     --accent-blue: #606A76;
     --light-grey: #EBE9EA;
     --red: #E14848;
-    --bs-navbar-height: 40px;
+    --bs-navbar-height: 35px;
+    --header-curve: 30px; /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
+    --crisis-visible-height: 60px; /* how much of the crisis bar should show under the curve */
 }
-:root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
-:root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
 .header-image-big {
   position: relative;
   width: 100%;
@@ -525,16 +601,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: var(--bs-navbar-height, 80px); /* makes sure navbar doesn't block anything in*/
+    padding-top: 45px;
 }
 main {
     flex: 1 0 auto;
     width: 100%;
-    padding-top: var(--bs-navbar-height, 80px);
+    padding-top: var(--bs-navbar-height, 71.69px);
     min-height: calc(100vh - var(--bs-navbar-height, 80px));
 }
 .page{
-    padding-top: 10vh;
     padding-inline: clamp(10px, 7vh, 150px); /*150px; */
     padding-bottom:clamp(10px, 10vh, 200px);
 }
@@ -556,39 +631,7 @@ main {
     font-weight: 700;
     line-height: normal;
 }
-.crisis {
-    margin-bottom: -12px;
-    height: 65px;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-}
-.header-crisis-wrapper {
-  position: relative;
-  overflow: visible; /* ensure crisis is not clipped by the wrapper */
-}
-/* make sure header stays above the crisis */
-.header-crisis-wrapper .page-header {
-  position: relative;
-  z-index: 3;
-  border-radius: 0 0 var(--header-curve) var(--header-curve);
-}
 
-/* put crisis behind header and behind the rounded corners */
-.header-crisis-wrapper .crisis {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - var(--header-curve));
-  height: clamp(80px,10vh,calc(var(--crisis-visible-height) + var(--header-curve))); 
-  z-index: 2; /* less than header (3) so header overlays it */
-  display: flex;
-  align-items: flex-end; 
-  justify-content: start;
-  padding-inline: clamp(10px, 0vh, 45px);
-  padding-bottom: 8px;     /* moves text up/down a bit*/
-  box-sizing: border-box;
-}
 footer img {
     height: 300px;
 }
@@ -670,33 +713,7 @@ footer img {
     font-weight: 100;
     line-height: normal;
 }
-.nav-tabs{
-    border-bottom: #fff;
-}
-.nav-tabs .nav-link{
-    width: 350px;
-    margin: 0px;
-    padding: 16px;
-    display: flex;
-    justify-content: flex-start !important;
-    text-align: center !important;
-    font-weight: 100;
-    border-top-left-radius: 0rem !important; 
-    border-top-right-radius: 0rem !important;
-    border-right-color: var(--dark-navy);
-}
-.nav-tabs .nav-link:hover {
-    color: var(--dark-navy);
-    background-color: var(--light-grey);
-    border-width: 1px;
-    border-right-color: var(--dark-navy);
-}
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active {
-    color:#FFF;
-    background-color: var(--dark-navy);
-    border-color: var(--dark-navy);
-}
+
 .tab-pane .div {
     border-width: 100px;
     border-left-color: #afbeee;
