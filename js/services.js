@@ -1,3 +1,5 @@
+let arrCounties = []
+let arrServiceType = []
 async function getServices() {
         try{
             //Get the list of services from api
@@ -93,6 +95,7 @@ async function getServices() {
                     strDiv += `<ul>`
                     strCounties.forEach(county => {
                         strDiv += `<li>${county}</li>`
+                        arrCounties.push(county)
                     })
                     strDiv += `</ul>`
                 }
@@ -130,6 +133,11 @@ async function getServices() {
         } catch (objError){
             console.log('Error fetching objData', objError)
         }
+        uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+        uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+        console.log(uniqueServiceTypes)
+        createCountyFilter(uniqueCounties)
+        //createServiceFilter(uniqueServiceTypes)
     }
 
     getServices()
@@ -140,9 +148,11 @@ async function getServices() {
         if (typeof strKeywords === 'string') {
             strKeywords = JSON.parse(strKeywords);
         }
-
         // Returns keywords seperated by a ','
         if (Array.isArray(strKeywords)) {
+            strKeywords.forEach(tag => {
+                arrServiceType.push(tag)
+            })
             return strKeywords.join(', ');
         }
     }
@@ -159,3 +169,167 @@ async function getServices() {
             return strCounties;
         }
     }
+
+// Creates the checkboxes
+function createCheckbox(labelText, container) {
+  const value = labelText.toLowerCase().replace(/\s+/g, "-");
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "checkbox";
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.className = "form-check-input";
+  input.id = `${value}-checkbox`;
+  input.value = labelText.toLowerCase();
+
+  const label = document.createElement("label");
+  label.className = "form-check-label";
+  label.htmlFor = input.id;
+  label.textContent = labelText;
+
+  wrapper.appendChild(input);
+  wrapper.appendChild(label);
+  container.appendChild(wrapper);
+}
+// Creates the checkboxes for the county filter
+function createCountyFilter(counties) {
+  const VISIBLE_COUNT = 6;
+  const container = document.getElementById("divCounties");
+  const moreContainer = document.getElementById("divMoreCounties");
+  moreContainer.style.display = "none";
+
+  counties.forEach((county, index) => {
+      if (index < VISIBLE_COUNT) {
+        createCheckbox(county, container);
+      } else {
+        createCheckbox(county, moreContainer);
+      }
+    });
+
+  container.appendChild(moreContainer);
+}
+
+// Opens the Counties filter options
+document.querySelector("#btnCounties").addEventListener("click", () => {
+    if (document.querySelector('#divOuterCounties').style.display === 'none') {
+        document.querySelector('#divOuterCounties').style.display = 'block';
+        document.querySelector('#btnCounties').innerHTML = `Counties <i class="bi bi-caret-up-fill"></i>`;
+        if (document.querySelector('#divMoreCounties').style.display === 'none') {
+            document.querySelector('#btnShowMoreCounties').innerHTML = `+ Show ${uniqueCounties.length - 6} More Counties`;
+        } else {
+            document.querySelector('#btnShowMoreCounties').innerHTML = `- Show Fewer Counties`;
+        }
+    } else {
+        document.querySelector('#divOuterCounties').style.display = 'none';
+        document.querySelector('#btnCounties').innerHTML = `Counties <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the service type filter options
+document.querySelector("#btnServiceType").addEventListener("click", () => {
+    if (document.querySelector('#divServiceType').style.display === 'none') {
+            document.querySelector('#divServiceType').style.display = 'block';
+            document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divServiceType').style.display = 'none';
+        document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the organization name filter options
+document.querySelector("#btnOrganizationName").addEventListener("click", () => {
+    if (document.querySelector('#divOrganizationName').style.display === 'none') {
+            document.querySelector('#divOrganizationName').style.display = 'block';
+            document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOrganizationName').style.display = 'none';
+        document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Shows more Counties
+document.querySelector("#btnShowMoreCounties").addEventListener("click", () => {
+    if (document.querySelector('#divMoreCounties').style.display === 'none') {
+            document.querySelector('#divMoreCounties').style.display = 'block';
+            document.querySelector('#btnShowMoreCounties').innerHTML = `- Show Fewer Counties`;
+    } else {
+        document.querySelector('#divMoreCounties').style.display = 'none';
+        document.querySelector('#btnShowMoreCounties').innerHTML = `+ Show ${uniqueCounties.length - 6} More Counties`;
+    }
+});
+
+// Opens the filter side bar
+document.querySelector("#btnFilterSort").addEventListener("click", () => {
+    document.getElementById("mySidenav").style.width = "375px";
+    overlay.classList.add("active");
+});
+
+// Closes the filter side bar
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  overlay.classList.remove("active");
+}
+
+// Closes the filter when the overlay is clicked
+overlay.addEventListener("click", () => {
+  document.getElementById("mySidenav").style.width = "0";
+  overlay.classList.remove("active");
+})
+
+// let strLatitude
+// let strLongitude
+
+// document.querySelector("#btnUserLocation").addEventListener("click", () => {
+//     if (!navigator.geolocation) {
+//       alert("Geolocation is not supported by your browser.");
+//       return;
+//     }
+//     navigator.geolocation.getCurrentPosition(pos => {
+//         const { latitude, longitude } = pos.coords;
+//         getLocation(latitude, longitude)
+//     })
+// })
+
+// async function getLocation(latitude, longitude) {
+//     try {
+//         let servResponse = await fetch(`http://34.171.137.8:8000/get-location?latitude=${latitude}&longitude=${longitude}`)
+//         let servData = await servResponse.json()
+//         console.log(servData)
+//     } catch (objError){
+//         console.log('Error fetching objData', objError)
+//     }
+// }
+
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => {
+    //     let { latitude, longitude } = position.coords;
+
+    //     strLatitude = latitude
+    //     strLongitude = longitude
+
+    //     console.log("Latitude:", strLatitude);
+    //     console.log("Longitude:", longitude);
+
+    //     console.log(`Your location is ${strLatitude}, ${longitude}`)
+    //     getLocation()
+    //   },
+    //   (error) => {
+    //     console.error(error);
+    //     alert("Unable to retrieve your location.");
+    //   }
+    // );
+//   });
+
+
+
+//   async function getLocation() {
+//             try{
+//                 let locResponse = await fetch(`https://api.open-meteo.com/v1/search?latitude=${strLatitude}&longitude=${strLongitude}&language=en&format=json`)
+//                 let locData = await locResponse.json()
+//                 console.log(locData)
+//             } catch (objError){
+//                 console.log('Error fetching objData', objError)
+//             }
+//         }
+//         getLocation()

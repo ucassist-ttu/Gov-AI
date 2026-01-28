@@ -11,10 +11,36 @@
 </head>
 <body class="white">
     <div id="navbar"></div>
-    
     <main>
+        <div id="overlay"></div>
         <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
             <h1 class="fw-bold white">Find Services</h1>
+        </div>
+        <div id="mySidenav" class="sidenav">
+            <h3>Filter & Sort</h3>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <hr />
+            <!-- <div class="geolocation-input">
+                <input id="txtUserLocation" class="geolocation-input" placeholder="Enter county or ZIP code" type="text" aria-label="Input for group code">
+                <button id="btnUserLocation" class="btn btn-link"><i class="bi bi-geo-alt"></i>Use my location</button>
+            </div> -->
+            <a id="btnCounties" href="#">Counties <i class="bi bi-caret-down-fill"></i></a>
+            <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
+                <hr />
+                <div id="divCounties" class="form-check">
+                </div>
+                <div id="divMoreCounties" style="display:none">
+                </div>
+                <button id="btnShowMoreCounties" class="btn btn-link"></button>
+            </div>
+            <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
+            <div id="divServiceType" style="display: none;">
+                <div id="divMoreServiceTypes" style="display:none">
+                </div>
+                <button id="btnShowMoreServices" class="btn btn-link">+ Show 8 More Counties</button>
+            </div>
+            <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
+            <div id="divOrganizationName" style="display: none;"><p>This is a test</p></div>
         </div>
         <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -40,199 +66,9 @@
                 </div>
                 
         <div id="divServiceMain"> 
-            <!-- <input class="search-bar rounded" placeholder="Search"> -->
-            <!-- <div class="filter"> -->
-                <!-- <div id="divFilter" class="filter-header">
-                    <h3 class="white text-center">Filters<i class="bi bi-caret-down-fill"></i></h3>
-                </div>
-                <div class="filter-content" style="display:none;">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div id="divServiceFilter" class="specific_filter">
-                                <h3 class="text-center">Service Type <!-- <i class="bi bi-caret-down-fill filter-i"></i></h3>
-
-                                <div style="display:none;">
-                                    <hr />
-                                    <div class="filter-options scrollable-filter">
-                                        <div class="col-6 text-center">
-                                            <div>
-                                                <p class="filter-option" data-value="Abuse">Abuse</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Clothing">Clothing</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Community Development">Community Development</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Special Needs">Special Needs</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Eduaction">Education</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Employment">Employment</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Toiletries">Toiletries</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Housing">Housing</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="In Home Services">In Home Services</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Mental Health">Mental Health</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Pregnancy">Pregnancy</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Small Buisness">Small Buisness</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Transportation">Transportation</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Veterans">Veterans</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Youth Services">Youth Services</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Recreation">Recreation</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 text-center">
-                                            <div>
-                                                <p class="filter-option" data-value="Child Care">Child Care</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Crisis Hotlines">Crisis Hotlines</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Disabilities">Disabilities</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Drivers ED/DUI Classes">Drivers ED/DUI Classes</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Emergency Shelter">Emergency Shelter</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Food">Food</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Health Care">Health Care</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Housing - Financial Assistance">Housing - Financial Assistance</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Legal">Legal</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Parenting">Parenting</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Seniors">Seniors</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Substance Abuse & Adiction">Substance Abuse & Adiction</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Utilities - Financial Assistance">Utilities - Financial Assistance</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Wellness/Support Groups">Wellness / Support Groups</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Animals">Animals</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div id="divCountiesFilter" class="specific_filter">
-                                <h4 class="text-center">Counties <i class="bi bi-caret-down-fill filter-i"></i></h4>
-                                <div style="display:none;">
-                                    <hr />
-                                    <div class="filter-options scrollable-filter">
-                                        <div class="col-6 text-center">
-                                            <div>
-                                                <p class="filter-option" data-value="Cannon">Cannon</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Cumberland">Cumberland</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Fentress">Fentress</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Macon">Macon</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Pickett">Pickett</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Smith">Smith</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Warren">Warren</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 text-center">
-                                            <div>
-                                                <p class="filter-option" data-value="Clay">Clay</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="DeKalb">DeKalb</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Jackson">Jackson</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Overton">Overton</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Putnam">Putnam</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="Van Buren">Van Buren</p>
-                                            </div>
-                                            <div>
-                                                <p class="filter-option" data-value="White">White</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div id="divProviderFilter" class="specific_filter">
-                                <h4 class="text-center">Provider Criteria <i class="bi bi-caret-down-fill filter-i"></i></h4>
-                                <div style="display:none;">
-                                    <hr />
-                                    <h2>Test</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-around">
-                        <div class="col-11 col-md-5">
-                            <button id="btnFilter" class="col-12"><h4>Apply Filters</h4></button>
-                        </div>
-                        <div class="col-11 col-md-5">
-                            <button id="btnResetFilter" class="col-12"><h4>Reset Filters</h4></button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <div class="filter-gap"></div>
+            <div id="divFilterButtons" class="filter">
+                <button id="btnFilterSort">Filter & Sort <i class="bi bi-sliders"></i></button>
+            </div>
             <div id="divServices"></div>
             <div id="divPages" class="text-center mt-4"></div>
         </div>

@@ -708,45 +708,43 @@ footer img {
   height: 350px;
   object-fit: cover;
 }
-.filter {
+.filter{
   margin-left: 40px;
-  margin-right: 40px;
-  margin-bottom: 40px;
-  border-radius: 15px;
-  border: 2px solid #606A76;
-  overflow: hidden;
-}
-.filter-header {
-  background-color: #AA8A41;
-  padding: 10px;
-  cursor: pointer;
-}
-.filter-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
   background-color: white;
-  padding: 10px;
-  border-top: 2px solid #606A76;
-  display: none;
 }
-.filter-content button {
-  background-color: #1E222E;
-  color: white;
+@media (max-width: 768px) {
+  .filter {
+    margin-left: 25px;
+  }
+}
+.filter button {
+  background-color: white;
+  color: var(--dark-navy);
   border: none;
-  margin-top: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
   font-weight: 700;
   font-size: 17.6px;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
+  border: 3px solid var(--light-grey);
   transition: background-color 0.3s ease;
 }
-.filter-content button:hover {
-  background-color: #444c5e;
+.filter button i{
+  padding: 5px;
+  color: inherit;
 }
-.filter-i {
-  color: black !important;
+.filter button:hover {
+  background-color: var(--navy);
+  color: white;
+  border: 3px solid var(--navy);
+}
+.filter button:hover i {
+  color: white;
 }
 .specific_filter {
   margin: 5px;
@@ -780,13 +778,6 @@ footer img {
 }
 .filter-gap {
   margin-bottom: 40px;
-}
-.filter i {
-  font-size: 24px;
-  font-weight: 10px;
-  color: white;
-  padding-left: 10px;
-  padding-top: 5px;
 }
 .service {
   margin-left: 120px;
@@ -915,14 +906,7 @@ footer img {
   height: 350px;
   object-fit: cover;
 }
-.filter {
-  margin-left: 40px;
-  margin-right: 40px;
-  margin-bottom: 40px;
-  border-radius: 15px;
-  border: 2px solid var(--accent-blue);
-  overflow: hidden;
-}
+
 .filter-header {
   background-color: var(--gold);
   padding: 10px;
@@ -987,13 +971,6 @@ footer img {
 }
 .filter-gap {
   margin-bottom: 40px;
-}
-.filter i {
-  font-size: 24px;
-  font-weight: 10px;
-  color: white;
-  padding-left: 10px;
-  padding-top: 5px;
 }
 .more_info{
   background-color: var(--light-grey);
@@ -1072,4 +1049,122 @@ p{
   font-style: normal;
   font-weight: 300;
   line-height: 1.5;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 75px;
+  right: 0;
+  background-color: white;
+  overflow-x: hidden;
+  padding-top: 20px;
+  transition: top 0.3s ease;
+  z-index:1001;
+}
+.sidenav h3 {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+  transition: 0.3s;
+}
+.geolocation-input input{
+  margin: 10px 20px 0px 20px;
+  font-size: 18px;
+  border: 2px solid var(--dark-navy);
+  border-radius: 10px;
+  padding: 10px;
+  width: 335px;
+}
+.sidenav .btn.btn-link  {
+  margin-left: 15px;
+  font-size: 15px;
+  color: var(--dark-navy)
+}
+.sidenav i {
+  font-size: 18px;
+  margin-right: 5px;
+  color: inherit;
+}
+.sidenav a {
+  padding-left: 35px;
+  padding-top: 10px;
+  text-decoration: none;
+  color: var(--dark-navy);
+  font-size: 20px;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: var(--accent-blue);
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 25px;
+}
+.checkbox:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  width: 325px;
+  border-radius: 4px;
+}
+.checkbox input[type="checkbox"] {
+  margin-top: 1px;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--dark-navy);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.checkbox input[type="checkbox"]:checked {
+  background-color: var(--gold);
+}
+.checkbox label {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block;
+  font-size: 17px;
+  line-height: 15px;
+  color: var(--dark-navy);
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 375px);
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.outer-layer {
+  padding-right: 25px;
+}
+.outer-layer hr{
+  margin: 1px;
 }
