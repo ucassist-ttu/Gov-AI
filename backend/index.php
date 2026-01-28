@@ -1,12 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . '/src/database/database.php';
-require_once __DIR__ . '/src/helpers/api.php';
-require_once __DIR__ . '/src/helpers/gemini.php';
-require_once __DIR__ . '/src/helpers/loadenv.php';
-
-loadenv();
-
 $path = parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 
 if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
