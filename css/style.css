@@ -1052,9 +1052,10 @@ p{
 }
 
 .sidenav {
- height: calc(100vh - 75px);
-  overflow-y: auto;
+  height: calc(100vh - 75px);
   width: 0;
+  display:flex;
+  flex-direction: column;
   position: fixed;
   top: 75px;
   right: 0;
@@ -1064,12 +1065,25 @@ p{
   transition: top 0.3s ease;
   z-index:1001;
 }
+.sidenav-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+.sidenav-footer {
+  flex-shrink: 0;
+  margin-bottom: 15px;
+}
 .sidenav h3 {
-  padding: 8px 8px 8px 32px;
+  margin-bottom: 0;
+  padding: 5px 5px 5px 32px;
   text-decoration: none;
   font-size: 25px;
   display: block;
   transition: 0.3s;
+}
+.sidenav hr{
+  margin: 0px;
+  padding: 0px;
 }
 .geolocation-input input{
   margin: 10px 20px 0px 20px;
@@ -1084,6 +1098,36 @@ p{
   font-size: 15px;
   color: var(--dark-navy)
 }
+.sidenav .btn.btn-primary  {
+  padding: 8px;
+  margin-top: 10px;
+  background-color: var(--dark-navy);
+  border: 2px solid var(--dark-navy);
+  color: white;
+  font-size: 19px;
+  margin-left: 14px; 
+  margin-right: 14px;
+}
+.sidenav .btn.btn-primary:hover {
+  background-color: var(--accent-blue);
+  color: white;
+  border: 2px solid var(--accent-blue);
+}
+.sidenav .btn.btn-secondary  {
+  padding: 8px;
+  margin-top: 10px;
+  background-color: white;
+  color: var(--dark-navy);
+  border: 2px solid var(--dark-navy);
+  font-size: 19px;
+  margin-left: 15px; 
+  margin-right: 14px;
+}
+.sidenav .btn.btn-secondary:hover {
+  background-color: var(--accent-blue);
+  color: white;
+  border: 2px solid var(--accent-blue);
+}
 .sidenav i {
   font-size: 18px;
   margin-right: 5px;
@@ -1091,7 +1135,7 @@ p{
 }
 .sidenav a {
   padding-left: 35px;
-  padding-top: 10px;
+  padding-top: 5px;
   text-decoration: none;
   color: var(--dark-navy);
   font-size: 20px;
@@ -1108,17 +1152,17 @@ p{
   gap: 10px;
   padding-left: 25px;
 }
-.checkbox:hover {
+/* .checkbox:hover {
   background-color: rgba(0, 0, 0, 0.05);
-  width: 325px;
+  width: 320px;
   border-radius: 4px;
-}
+} */
 .checkbox input[type="checkbox"] {
   margin-top: 1px;
   appearance: none;
   -webkit-appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   border: 2px solid var(--dark-navy);
   border-radius: 4px;
   cursor: pointer;
@@ -1131,7 +1175,7 @@ p{
   margin-bottom: 5px;
   display: block;
   font-size: 17px;
-  line-height: 15px;
+  line-height: 18px;
   color: var(--dark-navy);
   font-weight: 400;
   cursor: pointer;

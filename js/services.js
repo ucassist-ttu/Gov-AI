@@ -1,5 +1,6 @@
 let arrCounties = []
 let arrServiceType = []
+let arrOrgName = []
 async function getServices() {
         try{
             //Get the list of services from api
@@ -23,6 +24,7 @@ async function getServices() {
                 // Uses organization name if service does not have a logo
                 else{
                     strDiv += `<h3>Offered by: ${element.OrganizationName}</h3>`
+                    arrOrgName.push(element.OrganizationName)
                 }
 
                 // Displays tags and service description
@@ -135,8 +137,10 @@ async function getServices() {
         }
         uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
         uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+        uniqueOrgNames = [...new Set(arrOrgName.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
         createCountyFilter(uniqueCounties)
         createServiceFilter(uniqueServiceTypes)
+        createOrgNamesFilter(uniqueOrgNames)
     }
 
     getServices()
@@ -227,6 +231,24 @@ function createServiceFilter(services) {
   container.appendChild(moreContainer);
 }
 
+// Creates the checkboxes for the organization names filter
+function createOrgNamesFilter(names) {
+  const VISIBLE_COUNT = 6;
+  const container = document.getElementById("divOrgName");
+  const moreContainer = document.getElementById("divMoreOrgNames");
+  moreContainer.style.display = "none";
+
+  names.forEach((name, index) => {
+      if (index < VISIBLE_COUNT) {
+        createCheckbox(name, container);
+      } else {
+        createCheckbox(name, moreContainer);
+      }
+    });
+
+  container.appendChild(moreContainer);
+}
+
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -261,11 +283,16 @@ document.querySelector("#btnServiceType").addEventListener("click", () => {
 
 // Opens the organization name filter options
 document.querySelector("#btnOrganizationName").addEventListener("click", () => {
-    if (document.querySelector('#divOrganizationName').style.display === 'none') {
-            document.querySelector('#divOrganizationName').style.display = 'block';
+    if (document.querySelector('#divOuterOrgName').style.display === 'none') {
+            document.querySelector('#divOuterOrgName').style.display = 'block';
             document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
+            if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
+                document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
+            } else {
+                document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
+            }
     } else {
-        document.querySelector('#divOrganizationName').style.display = 'none';
+        document.querySelector('#divOuterOrgName').style.display = 'none';
         document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
     }
 });
@@ -292,6 +319,17 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
     }
 });
 
+// Shows more organization names
+document.querySelector("#btnShowMoreOrgNames").addEventListener("click", () => {
+    if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
+            document.querySelector('#divMoreOrgNames').style.display = 'block';
+            document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
+    } else {
+        document.querySelector('#divMoreOrgNames').style.display = 'none';
+        document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
+    }
+});
+
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";
@@ -308,6 +346,11 @@ function closeNav() {
 overlay.addEventListener("click", () => {
   document.getElementById("mySidenav").style.width = "0";
   overlay.classList.remove("active");
+})
+
+// Closes the filter side bar when btnSeeResults is clicked
+document.querySelector("#btnSeeResults").addEventListener("click", () => {
+    closeNav()
 })
 
 // let strLatitude
