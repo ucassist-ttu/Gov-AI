@@ -990,6 +990,9 @@ p{
 }
 
 /*CRISIS CSS*/
+  .nav{
+    display: grid;
+  }
   .nav-tabs{
     border-bottom: #fff;
     padding: 0px !important;
@@ -999,7 +1002,7 @@ p{
     width: 300px;
     margin-top: 0px;
     padding: 16px;
-    display: flex;
+    display:flex;
     justify-content: flex-start !important;
     text-align: center !important;
     font-weight: 100;
@@ -1020,14 +1023,9 @@ p{
       border-right-color: var(--dark-navy); 
     }
   }
-  .nav-tabs .nav-link:hover {
-    color: var(--dark-navy);
-    background-color: var(--light-grey);
-    border-width: 1px;
-    border-right-color: var(--dark-navy);
-  }
   .nav-tabs .nav-item.show .nav-link,
-  .nav-tabs .nav-link.active {
+  .nav-tabs .nav-link.active,
+  .nav-tabs .nav-link:hover  {
     color:#FFF;
     background-color: var(--dark-navy);
     border-color: var(--dark-navy);
@@ -1061,7 +1059,7 @@ p{
     .crisis {
       right: 50%;
       transform: translateX(50%);
-      padding-inline: clamp(10px, 0vh, 45px); 
+      padding-inline: clamp(10px, 10vh, 45px); 
     }
   }
   .index-crisis { /* OG min 320 overlap onto images*/
