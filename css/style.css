@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* @import "../node_modules/bootstrap/scss/bootstrap"; */
+
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
   :root{
@@ -120,66 +122,7 @@
   .ai-results .btn {
     padding: 0px;
   }
-  /*CRISIS CSS*/
-  .nav-tabs{
-    border-bottom: #fff;
-    margin-right: 0px !important;
-  }
-  .nav-tabs .nav-link{
-    width: 300px;
-    margin-top: 0px;
-    padding: 16px;
-    display: flex;
-    justify-content: flex-start !important;
-    text-align: center !important;
-    font-weight: 100;
-    border-top-left-radius: 0rem !important; 
-    border-top-right-radius: 0rem !important;
-    border-color: var(--dark-navy);
-  }
-  .nav-tabs .nav-link:hover {
-    color: var(--dark-navy);
-    background-color: var(--light-grey);
-    border-width: 1px;
-    border-right-color: var(--dark-navy);
-  }
-  .nav-tabs .nav-item.show .nav-link,
-  .nav-tabs .nav-link.active {
-    color:#FFF;
-    background-color: var(--dark-navy);
-    border-color: var(--dark-navy);
-  }
-  .header-crisis-wrapper {
-    overflow: visible; /* ensure crisis is not clipped by the wrapper */
-    
-  }
-  /* make sure header stays above the crisis */
-  .header-crisis-wrapper .header-crisis {
-    position: fixed;
-    z-index: 3;
-    border-radius: 0 0 var(--header-curve) var(--header-curve);
-    text-align: center;
-  }
-  .crisis {
-    margin-bottom: -12px; /*overlap onto images*/
-    height: 10vh;
-    display: flex; 
-    padding-top: 105px;
-  }
-  /* put crisis behind header and behind the rounded corners */
-  .header-crisis-wrapper .crisis {
-    position: absolute;
-    z-index: 2; /* less than header (3) so header overlays it */
-    display: flex;
-    align-items: flex-end; 
-    justify-content: start;
-    padding-inline: clamp(10px, 0vh, 45px);
-    padding-bottom: 8px;     /* moves text up/down a bit*/
-    box-sizing: border-box;
-  }
-  .content{
-    margin-inline: 2vw;
-  }
+  
 }
 /* Tablet Breakpoint */
 @media screen and (min-width: 768px) {
@@ -252,19 +195,11 @@
     font-size: 20px;
     padding-top: 15px;
   } 
-  /*CRISIS PAGE*/
-  .nav-tabs .nav-link{
-    border-color: transparent;
-    border-right-color: var(--dark-navy);
-  }
-   .crisis {
-    padding-top: 80px !important;
-  }
 }
 /* Desktop Breakpoint */
 @media screen and (min-width: 1024px){
   :root{
-    --bs-navbar-height: 40px !important;
+    --bs-navbar-height: 35px !important;
   }
   .img-text-lg {
     color: var(--light-grey);
@@ -351,66 +286,33 @@
     --bs-navbar-height: 35px;
     --header-curve: 30px; /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
     --crisis-visible-height: 60px; /* how much of the crisis bar should show under the curve */
-}
-.header-image-big {
-  position: relative;
-  width: 100%;
-  height: 10px;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  padding: 0 16px;
+    --small: 320px;
+    --medium: 768px;
+    --large: 1024px;
 }
 
-.header-image-small {
+.header-image-big {
+  width: 105vw;
+  height:65vh;
   position: relative;
-  width: 100%;
-  height: 1000px;
   background-size: cover;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  padding: 0 16px;
+  display: inline-flex;
 }
-.header-image-small img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+@media screen and (min-width: 768px){
+  .header-image-big{
+    height:80vh;
+  } 
 }
-.header-image-small > * {
-  position: relative;
-  z-index: 1;
-}
-.header-image-small::after {
-  content: "Photo by Toa Heftiba on Unsplash";
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: normal;
-  z-index: 2;
+@media screen and (min-width: 1024px){
+  .header-image-big{
+    height:80vh;
+  } 
 }
 .page-tag {
-    /* margin-top: 75px; */
     margin-bottom: -12px;
     padding-left: 98px;
-    /* padding-block: 50px; */
+    padding-block: 35px;
     height: 75px;
     display: flex; 
     justify-content: center;
@@ -1104,3 +1006,106 @@ p{
   font-weight: 300;
   line-height: 1.5;
 }
+
+/*CRISIS CSS*/
+  .nav-tabs{
+    border-bottom: #fff;
+    padding: 0px !important;
+
+  }
+  .nav-tabs .nav-link{
+    width: 300px;
+    margin-top: 0px;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-color: transparent; 
+    border-top-color: var(--dark-navy); 
+    border-bottom-color: var(--dark-navy); 
+  }
+  @media screen and (min-width: 350px) {
+    .nav-tabs .nav-link {
+      font-size: 20px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .nav-tabs .nav-link {
+      border-color: transparent; 
+      border-right-color: var(--dark-navy); 
+    }
+  }
+  .nav-tabs .nav-link:hover {
+    color: var(--dark-navy);
+    background-color: var(--light-grey);
+    border-width: 1px;
+    border-right-color: var(--dark-navy);
+  }
+  .nav-tabs .nav-item.show .nav-link,
+  .nav-tabs .nav-link.active {
+    color:#FFF;
+    background-color: var(--dark-navy);
+    border-color: var(--dark-navy);
+  }
+  .header-crisis-wrapper {
+    overflow: visible; /* ensure crisis is not clipped by the wrapper */
+    
+  }
+  /* make sure header stays above the crisis */
+  .header-crisis-wrapper .header-crisis {
+    position: fixed;
+    z-index: 3;
+    border-radius: 0 0 var(--header-curve) var(--header-curve);
+    text-align: center;
+  }
+  .crisis {
+    margin-bottom: -12px; /*overlap onto images*/
+    display: flex; 
+    padding-top: clamp(105px,0vh,80px);
+    position: relative;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+  }
+  @media screen and (min-width: 768px) {
+    .crisis {
+      padding-top: 80px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    .crisis {
+      right: 50%;
+      transform: translateX(50%);
+      width: 70vw;
+      padding-top: 0px !important;
+    }
+  }
+  .index-crisis { /* OG min 320 overlap onto images*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    z-index: 10;
+    background-color: var(--red);
+    width: 20vw;
+    min-width: 180px;
+    height: 7vh;
+    min-height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  /* put crisis behind header and behind the rounded corners */
+  .header-crisis-wrapper .crisis {
+    position: absolute;
+    z-index: 2; /* less than header (3) so header overlays it */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: start;
+    padding-inline: clamp(10px, 0vh, 45px);
+    padding-bottom: 8px;     /* moves text up/down a bit*/
+    box-sizing: border-box;
+  }

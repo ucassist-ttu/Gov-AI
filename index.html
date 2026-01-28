@@ -11,113 +11,117 @@
 </head>
 <body>
     <div id="navbar"></div>
-    
-    <main>
-        <!-- crisis banner -->
-        <div class="jumbotron crisis text-center rounded-bottom z-3 position-relative red clr-light-grey align-items-center justify-content-center">
-            <h6 class="fw-bold">If you are experiencing an emergengy please call 911. <a href="/html/pages/crisis.html" class="text-light">Click here for the Crisis Hotlines.</a></h6>
-        </div>
 
-        <!-- carousel -->
-        <!-- carousel is set to fade and the main caption is copied across all images (for now)-->
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <!-- this image is cropped wrong -->
-                    <img class="d-block responsive-header position-relative w-100" src="\assets\images\upperCumberland5.png" alt="First slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess Falls, Sparta, TN</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1 class="img-text-lg mt-5 mt-md-0">Let Us Assist You in Finding the Right Help</h1>
-                        <p class="text-light jumbotron-text pt-2"><!--<a href="/html/pages/services.html" --> Explore Available Resources Here</a></p>
-                        <!-- search bar -->
-                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
-                            <i class="bi bi-search ps-2"></i>
-                            <div class="divider-vertical d-flex align-items-center"></div>
-                            <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
-                            <!-- submit button -->
-                            <div class="d-flex justify-content-between">
-                                <!-- TODO: extend button (stretch goal) -->
-                                <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
-                                <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/html/pages/ai_results.html'"> <!--onclick="window.location.href='/html/pages/ai_results.html'"-->
-                                    <i class="bi bi-arrow-right-circle-fill"></i>
-                                </span>
+    <main>
+
+        <div class="position-relative">
+            <!-- crisis tag -->
+            <div class="index-crisis">
+                <h6 class=""><a href="/html/pages/crisis.html" class="fw-bold">Crisis Hotline</a></h6>
+            </div>
+
+            <!-- carousel -->
+            <!-- carousel is set to fade and the main caption is copied across all images (for now)-->
+            <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <!-- this image is cropped wrong -->
+                        <!-- background image -->
+                        <img class="responsive-header header-image-big" src="\assets\images\upperCumberland5.png" alt="First slide">
+                        <!-- location tag -->
+                        <div class="carousel-caption d-none d-md-block text-end fw-light">
+                            <h5>Burgess Falls, Sparta, TN</h5>
+                        </div>
+                        <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                            <h1 class="img-text-lg mt-5 mt-md-0">Let Us Assist You in Finding the Right Help</h1>
+                            <!-- <p class="text-light jumbotron-text pt-2"><a href="/html/pages/services.html"> Explore Available Resources Here</a></p> -->
+                            <!-- search bar -->
+                            <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
+                                <i class="bi bi-search ps-2"></i>
+                                <div class="divider-vertical d-flex align-items-center"></div>
+                                <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
+                                <!-- submit button -->
+                                <div class="d-flex justify-content-between">
+                                    <!-- TODO: extend button (stretch goal) -->
+                                    <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/html/pages/ai_results.html'"> <!--onclick="window.location.href='/html/pages/ai_results.html'"-->
+                                        <i class="bi bi-arrow-right-circle-fill"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!--
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="\assets\images\upperCumberland5.png" alt="Second slide">
+                        <div class="carousel-caption d-none d-md-block text-end fw-light">
+                            <h5>Burgess Falls,</h5>
+                        </div>
+                        <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                            <h1>Let Us Assist You in Finding the Right Help</h1>
+                            <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="\assets\images\upperCumberland5.png" alt="Third slide">
+                        <div class="carousel-caption d-none d-md-block text-end fw-light">
+                            <h5>Burgess</h5>
+                        </div>
+                        <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                            <h1>Let Us Assist You in Finding the Right Help</h1>
+                            <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
+                        </div>
+                    </div>
+                    -->
                 </div>
-                <!--
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="\assets\images\upperCumberland5.png" alt="Second slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess Falls,</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1>Let Us Assist You in Finding the Right Help</h1>
-                        <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="\assets\images\upperCumberland5.png" alt="Third slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1>Let Us Assist You in Finding the Right Help</h1>
-                        <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
-
         <!-- UCAssist description -->
-        <div class="jumbotron rounded-bottom UCAssist-desc gold text-center">
+        <!-- <div class="rounded-bottom UCAssist-desc gold text-center">
             <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">The UCAssist program, run by the Upper Cumberland Development District, helps people find the support they need. Our goal is to make accessing local resources simple and convenient.</h5>        </div>
-        <div class="p-5" style="margin: 10px;">
-            <!-- Snap Link -->
-            <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
-                <span><a href="/html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
-            </div>
+        <div class="p-5" style="margin: 10px;"> -->
+        
+        <!-- Snap Link -->
+        <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
+            <span>Are you a SNAP benefits recipient?   <a href="/html/pages/snap.html" class="text-dark">Click here to see additional resources that are available to you!</a></span>
+        </div>
 
-            <!-- Services Link -->
-            <div class="card mx-5 mb-3 border-0 home-card">
-                <div class="row g-0">
-                    <!-- Left Image -->
-                    <div class="col-md-4">
-                        <img src="\assets\images\need-help-brett-jordan.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <!-- Card Content -->
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Need Help?</h5>
-                            <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
-                            <p class="card-text"><a href="/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
-                        </div>
-                    </div>
+        <!-- Services Page Link -->
+        <div class="card mx-5 mb-3 border-0 home-card">
+            <div class="row g-0">
+                <!-- Left Image -->
+                <div class="col-md-4">
+                    <img src="\assets\images\need-help-brett-jordan.png" class="img-fluid rounded-start" alt="...">
                 </div>
-            </div>
-
-            <!-- Provider Link -->
-            <div class="card mx-5 mb-3 border-0 home-card">
-                <div class="row g-0">
-                    <!-- Left Image -->
-                    <div class="col-md-4">
-                        <img src="\assets\images\provider-link-erika-giraud.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <!-- Card Content -->
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Are You A Service Provider?</h5>
-                            <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
-                            <p class="card-text"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></p>
-                        </div>
+                <!-- Card Content -->
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Need Help?</h5>
+                        <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
+                        <p class="card-text"><a href="/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+
+        <!-- Provider Page Link -->
+        <div class="card mx-5 mb-3 border-0 home-card">
+            <div class="row g-0">
+                <!-- Left Image -->
+                <div class="col-md-4">
+                    <img src="\assets\images\provider-link-erika-giraud.png" class="img-fluid rounded-start" alt="...">
+                </div>
+                <!-- Card Content -->
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Are You A Service Provider?</h5>
+                        <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                        <p class="card-text"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
     <div id="footer"></div>
 
