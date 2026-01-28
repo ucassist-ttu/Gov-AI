@@ -3,7 +3,7 @@ let arrServiceType = []
 async function getServices() {
         try{
             //Get the list of services from api
-            let servResponse = await fetch(`http://34.171.137.8:8000/services`)
+            let servResponse = await fetch(`http://34.171.184.135:8000/services`)
             let servData = await servResponse.json()
             let strDiv = ``
 
@@ -135,9 +135,8 @@ async function getServices() {
         }
         uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
         uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-        console.log(uniqueServiceTypes)
         createCountyFilter(uniqueCounties)
-        //createServiceFilter(uniqueServiceTypes)
+        createServiceFilter(uniqueServiceTypes)
     }
 
     getServices()
@@ -210,6 +209,24 @@ function createCountyFilter(counties) {
   container.appendChild(moreContainer);
 }
 
+// Creates the checkboxes for the service types filter
+function createServiceFilter(services) {
+  const VISIBLE_COUNT = 6;
+  const container = document.getElementById("divServiceType");
+  const moreContainer = document.getElementById("divMoreServiceTypes");
+  moreContainer.style.display = "none";
+
+  services.forEach((service, index) => {
+      if (index < VISIBLE_COUNT) {
+        createCheckbox(service, container);
+      } else {
+        createCheckbox(service, moreContainer);
+      }
+    });
+
+  container.appendChild(moreContainer);
+}
+
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -228,11 +245,16 @@ document.querySelector("#btnCounties").addEventListener("click", () => {
 
 // Opens the service type filter options
 document.querySelector("#btnServiceType").addEventListener("click", () => {
-    if (document.querySelector('#divServiceType').style.display === 'none') {
-            document.querySelector('#divServiceType').style.display = 'block';
+    if (document.querySelector('#divOuterServiceTypes').style.display === 'none') {
+            document.querySelector('#divOuterServiceTypes').style.display = 'block';
             document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-up-fill"></i>`;
+            if (document.querySelector('#divMoreServiceTypes').style.display === 'none') {
+                document.querySelector('#btnShowMoreServices').innerHTML = `+ Show ${uniqueServiceTypes.length - 6} More Service Types`;
+            } else {
+                document.querySelector('#btnShowMoreServices').innerHTML = `- Show Fewer Service Types`;
+            }
     } else {
-        document.querySelector('#divServiceType').style.display = 'none';
+        document.querySelector('#divOuterServiceTypes').style.display = 'none';
         document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-down-fill"></i>`;
     }
 });
@@ -256,6 +278,17 @@ document.querySelector("#btnShowMoreCounties").addEventListener("click", () => {
     } else {
         document.querySelector('#divMoreCounties').style.display = 'none';
         document.querySelector('#btnShowMoreCounties').innerHTML = `+ Show ${uniqueCounties.length - 6} More Counties`;
+    }
+});
+
+// Shows more service types
+document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
+    if (document.querySelector('#divMoreServiceTypes').style.display === 'none') {
+            document.querySelector('#divMoreServiceTypes').style.display = 'block';
+            document.querySelector('#btnShowMoreServices').innerHTML = `- Show Fewer Service Types`;
+    } else {
+        document.querySelector('#divMoreServiceTypes').style.display = 'none';
+        document.querySelector('#btnShowMoreServices').innerHTML = `+ Show ${uniqueServiceTypes.length - 6} More Service Types`;
     }
 });
 

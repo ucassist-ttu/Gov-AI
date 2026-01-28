@@ -1052,7 +1052,8 @@ p{
 }
 
 .sidenav {
-  height: 100%;
+ height: calc(100vh - 75px);
+  overflow-y: auto;
   width: 0;
   position: fixed;
   top: 75px;
