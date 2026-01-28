@@ -311,7 +311,7 @@
 }
 .page-tag {
     margin-bottom: -12px;
-    padding-left: 98px;
+    padding-left: 75px;
     padding-block: 35px;
     height: 75px;
     display: flex; 
@@ -514,24 +514,6 @@ main {
 .page{
     padding-inline: clamp(10px, 7vh, 150px); /*150px; */
     padding-bottom:clamp(10px, 10vh, 200px);
-}
-.page-header{
-    /* background details */
-    height: clamp(80px, 15vh,125px);
-    width: 100%;
-    padding-left: clamp(10px, 7vh,125px); /*TODO: fix for smaller screens*/
-    background-color: var(--dark-navy);
-    display: flex;
-    border-radius: 0 0 30px 30px;
-    /* font details */
-    align-items: center; /* centers vertically*/
-    font-weight: bold;
-    color: #FFF;
-    font-family: Inter;
-    font-size: clamp(20px, 10vh, 48px);
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
 }
 
 footer img {
@@ -1054,33 +1036,32 @@ p{
     overflow: visible; /* ensure crisis is not clipped by the wrapper */
     
   }
-  /* make sure header stays above the crisis */
-  .header-crisis-wrapper .header-crisis {
-    position: fixed;
-    z-index: 3;
-    border-radius: 0 0 var(--header-curve) var(--header-curve);
-    text-align: center;
+  /* put crisis behind header and behind the rounded corners */
+  .header-crisis-wrapper .crisis {
+    position: absolute;
+    z-index: 2; /* less than header (3) so header overlays it */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: start;
+    padding-bottom: 8px;     /* moves text up/down a bit*/
+    box-sizing: border-box;
   }
+
   .crisis {
     margin-bottom: -12px; /*overlap onto images*/
     display: flex; 
-    padding-top: clamp(105px,0vh,80px);
+    padding-top: clamp(30px,0vh,80px);
+    padding-inline-start: 80px;
     position: relative;
     justify-content: center;
     z-index: 10;
     text-align: center;
   }
-  @media screen and (min-width: 768px) {
-    .crisis {
-      padding-top: 80px !important;
-    }
-  }
   @media (max-width: 767px) {
     .crisis {
       right: 50%;
       transform: translateX(50%);
-      width: 70vw;
-      padding-top: 0px !important;
+      padding-inline: clamp(10px, 0vh, 45px); 
     }
   }
   .index-crisis { /* OG min 320 overlap onto images*/
@@ -1097,15 +1078,4 @@ p{
     align-items: center;
     justify-content: center;
     text-align: center;
-  }
-  /* put crisis behind header and behind the rounded corners */
-  .header-crisis-wrapper .crisis {
-    position: absolute;
-    z-index: 2; /* less than header (3) so header overlays it */
-    display: flex;
-    align-items: flex-end; 
-    justify-content: start;
-    padding-inline: clamp(10px, 0vh, 45px);
-    padding-bottom: 8px;     /* moves text up/down a bit*/
-    box-sizing: border-box;
   }
