@@ -1082,6 +1082,8 @@ p{
   transition: 0.3s;
 }
 .sidenav hr{
+  background-color: var(--accent-blue);
+  height: 3px;
   margin: 0px;
   padding: 0px;
 }
@@ -1211,5 +1213,7 @@ p{
   padding-right: 25px;
 }
 .outer-layer hr{
+  background-color: var(--dark-navy);
+  height: 1px;
   margin: 1px;
 }

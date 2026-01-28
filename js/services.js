@@ -14,7 +14,8 @@ async function getServices() {
                 let strCounties = getCountyList(element)
 
                 //Initialize card and add name of service
-                strDiv += `<div class="service" data-tags="${strTagList}" data-counties="${strCounties}">`
+                strDiv += `<div id="divOuterService">`
+                strDiv += `<div class="service" data-organization="${element.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
                 strDiv += `<h2>${element.NameOfService}</h2>`
 
                 //Checks to see if service provider has a logo and uses it if so
@@ -109,6 +110,7 @@ async function getServices() {
 
                 // Blue service divider
                 strDiv += `<hr class="hr-blue"/>`
+                strDiv += `</div>`
             });
 
             // Adds the service to divServices
@@ -352,6 +354,100 @@ overlay.addEventListener("click", () => {
 document.querySelector("#btnSeeResults").addEventListener("click", () => {
     closeNav()
 })
+
+// Removes all filters when btnClearFilter is clicked
+document.querySelector("#btnClearFilter").addEventListener("click", () => {
+    selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+    selectedCheckboxes.forEach(box => {
+        box.checked = false;
+    });
+    const outerServices = document.querySelectorAll("#divOuterService");
+    outerServices.forEach(outer => {
+        outer.style.display = "block";
+    });
+})
+
+function getSelectedCheckboxes(containerId) {
+    return Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+    ).map(el => el.value);
+}
+
+document.getElementById('divAllFilter').addEventListener('change', (e) => {
+    if (e.target && e.target.matches('input[type="checkbox"]')) {
+        const selectedCounties = getSelectedCheckboxes("divOuterCounties");
+        const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes");
+        const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName");
+
+        // Loop through each outer container
+        const outerServices = document.querySelectorAll("#divOuterService");
+        outerServices.forEach(outer => {
+            const card = outer.querySelector(".service");
+
+            const counties = card.dataset.counties.toLowerCase().split(",").map(c => c.trim());
+            const serviceType = card.dataset.tags.toLowerCase().split(",").map(c => c.trim());
+            const orgName = card.dataset.organization.toLowerCase().split(",").map(c => c.trim());
+
+            let countyMatch = true;
+            if (selectedCounties.length > 0) {
+                countyMatch = selectedCounties.some(county => counties.includes(county.toLowerCase()));
+            }
+            let serviceMatch = true;
+            if (selectedServiceTypes.length > 0) {
+                serviceMatch = selectedServiceTypes.some(service => serviceType.includes(service.toLowerCase()));
+            }
+            let orgMatch = true;
+            if (selectedOrgNames.length > 0) {
+                orgMatch = selectedOrgNames.some(org => orgName.includes(org.toLowerCase()));
+            }
+
+            outer.style.display = (countyMatch && serviceMatch && orgMatch) ? "block" : "none";
+        });
+    }
+});
+
+
+
+
+    // function applyFilters() {
+
+    //     const selectedTags = getSelected("divServiceFilter");
+    //     const selectedCounties = getSelected("divCountiesFilter");
+    //     console.log(selectedTags)
+    //     console.log(selectedCounties)
+
+    //     const cards = document.querySelectorAll(".service");
+
+    //     cards.forEach(card => {
+
+    //         const tags = card.dataset.tags.split(",").map(t => t.trim());
+    //         const counties = card.dataset.counties.split(",").map(c => c.trim());
+
+    //         // ✔ TAG MATCH
+    //         let tagMatch = true;  // default (no tag filters applied)
+    //         if (selectedTags.length > 0) {
+    //             tagMatch = selectedTags.some(tag => tags.includes(tag));
+    //         }
+
+    //         // ✔ COUNTY MATCH
+    //         let countyMatch = true; // default (no county filters applied)
+    //         if (selectedCounties.length > 0) {
+    //             countyMatch = selectedCounties.some(cty => counties.includes(cty));
+    //         }
+
+    //         // ✔ MUST MATCH BOTH GROUPS
+    //         if (tagMatch && countyMatch) {
+    //             card.style.display = "block";
+    //         } else {
+    //             card.style.display = "none";
+    //         }
+    //     });
+    // }
+
+
+
+
+
 
 // let strLatitude
 // let strLongitude
