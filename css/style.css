@@ -254,6 +254,19 @@
 nav {
   min-height: var(--bs-navbar-height);
 }
+.map-container {
+  height: 70vh;
+}
+.btnMap {
+  height: 50px;
+  width: 50px;
+}
+#mapCollapse {
+  max-width: 40%;
+}
+.mapServiceCard {
+  border-color: #AA8A41 !important;
+}
 .search-icon {
     position: absolute;
     top: 50%;
