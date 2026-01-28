@@ -1,8 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . '/loadenv.php';
-loadenv();
-
 function email(string $to, string $subject, string $body): void
 {
   $api_key = getenv(name: 'MAILGUN_API_KEY');
@@ -32,5 +29,9 @@ function email(string $to, string $subject, string $body): void
     use_include_path: false,
     context: $stream_context
   );
-  echo json_encode(value: $response, flags: JSON_PRETTY_PRINT);
+}
+
+function get_email_addresses(): array
+{
+  return file(filename: 'email_addresses.txt', flags: FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 }
