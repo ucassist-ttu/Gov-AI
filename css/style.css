@@ -441,6 +441,9 @@ a {
   text-decoration: none;
   font-weight: 100;
 }
+h4 a{
+  color: var(--dark-navy)
+}
 a:hover {
   text-decoration: underline;
 }
@@ -561,13 +564,12 @@ footer img {
     font-style:light;
 }
 .snap-title{
+    text-align: start;
     color: var(--dark-navy);
     font-family: Inter;
     font-style: normal;
     font-weight: 200;
     font-size: 20px;
-    display: flex;
-    text-align: start;
     line-height: normal;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -1048,19 +1050,6 @@ p{
       position: sticky;
       top: 0.5rem;
       z-index: 5;
-    }
-  }
-  @media (max-width: 767px) {
-    .tab-content {
-      margin-top: 1.5rem;
-    }
-    .tab-pane h4 {
-      font-size: 1.05rem;
-      margin-top: 1.25rem;
-    }
-    .tab-pane p {
-      font-size: 0.95rem;
-      line-height: 1.5;
     }
   }
   .header-crisis-wrapper {
