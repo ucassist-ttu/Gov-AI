@@ -1023,12 +1023,45 @@ p{
       border-right-color: var(--dark-navy); 
     }
   }
+  @media (max-width: 767px) {
+    .nav-tabs {
+      display: flex;
+      flex-direction: column;
+      border: none;
+    }
+
+    .nav-tabs .nav-link {
+      width: 100%;
+      padding: 1rem;
+      text-align: left;
+    }
+  }
   .nav-tabs .nav-item.show .nav-link,
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-link:hover  {
     color:#FFF;
     background-color: var(--dark-navy);
     border-color: var(--dark-navy);
+  }
+  @media (max-width: 767px) {
+    .nav-tabs .nav-link.active {
+      position: sticky;
+      top: 0.5rem;
+      z-index: 5;
+    }
+  }
+  @media (max-width: 767px) {
+    .tab-content {
+      margin-top: 1.5rem;
+    }
+    .tab-pane h4 {
+      font-size: 1.05rem;
+      margin-top: 1.25rem;
+    }
+    .tab-pane p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
   }
   .header-crisis-wrapper {
     overflow: visible; /* ensure crisis is not clipped by the wrapper */
