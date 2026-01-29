@@ -13,7 +13,7 @@
     <div id="navbar"></div>
 
     <main>
-        <div id="overlay"></div>
+
         <div class="position-relative">
             <!-- crisis tag -->
             <div class="index-crisis rounded-bottom">
@@ -41,59 +41,49 @@
                                 <!-- submit button -->
                                 <div class="d-flex justify-content-between">
                                     <!-- TODO: extend button (stretch goal) -->
-                                    <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit"><!--onclick="window.location.href='/html/pages/ai_results.html'">-->
+                                    <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/html/pages/ai_results.html'"> <!--onclick="window.location.href='/html/pages/ai_results.html'"-->
                                         <i class="bi bi-arrow-right-circle-fill"></i>
-                                    </button>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
             <!-- <div id="countyCarousel"></div> -->
+
         </div>
         <!-- UCAssist description -->
-        <!-- <div class="rounded-bottom UCAssist-desc gold text-center">
+        <div class="rounded-bottom UCAssist-desc gold text-center">
             <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">The UCAssist program, run by the Upper Cumberland Development District, helps people find the support they need. Our goal is to make accessing local resources simple and convenient.</h5>        </div>
-        <div class="p-5" style="margin: 10px;"> -->
+        <div class="p-5" style="margin: 10px;">
         
         <!-- Snap Link -->
-        <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
+        <div class="snap-link text-center pb-5 fs-5" style="margin-bottom: px;">
             <span>Are you a SNAP benefits recipient?   <a href="/html/pages/snap.html" class="text-dark">Click here to see additional resources that are available to you!</a></span>
         </div>
-
-        <!-- Services Page Link -->
-        <div class="card mx-5 mb-3 border-0 home-card">
-            <div class="row g-0">
-                <!-- Left Image -->
-                <div class="col-md-4">
-                    <img src="\assets\images\need-help-brett-jordan.png" class="img-fluid rounded-start" alt="...">
+        <div class="card-group">
+            <!-- Services Page Link -->
+            <div class="card mx-3 mb-3 border-0 home-card">
+                <img src="\assets\images\ucdd.webp"  class="card-img-top rounded-0" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">Need Help?</h5>
+                <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
                 </div>
-                <!-- Card Content -->
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Need Help?</h5>
-                        <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
-                        <p class="card-text"><a href="/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
-                    </div>
+                <div class="card-footer">
+                <small class="text-muted"><a href="/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></small>
+                </div>
+            </div>
+            <!-- Provider Page Link -->
+            <div class="card mx-3 mb-3 border-0 rounded-0 home-card">
+                <img src="assets\images\UCHRA-Public-Transportation-Ribbon-Cutting-scaled.webp" class="card-img-top " alt="...">
+                <div class="card-body">
+                <h5 class="card-title">Are You A Service Provider?</h5>
+                <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                </div>
+                <div class="card-footer">
+                <small class="text-muted"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></small>
                 </div>
             </div>
         </div>
-
-        <!-- Provider Page Link -->
-        <div class="card mx-5 mb-3 border-0 home-card">
-            <div class="row g-0">
-                <!-- Left Image -->
-                <div class="col-md-4">
-                    <img src="\assets\images\provider-link-erika-giraud.png" class="img-fluid rounded-start" alt="...">
-                </div>
-                <!-- Card Content -->
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Are You A Service Provider?</h5>
-                        <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
-                        <p class="card-text"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </main>

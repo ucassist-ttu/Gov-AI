@@ -1285,3 +1285,8 @@ p{
   height: 1px;
   margin: 1px;
 }
+
+.card-img-top{
+  height: 25vh;
+  width: auto;
+}
