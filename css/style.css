@@ -1287,6 +1287,6 @@ p{
 }
 
 .card-img-top{
-  height: 25vh;
+  height: auto;
   width: auto;
 }
