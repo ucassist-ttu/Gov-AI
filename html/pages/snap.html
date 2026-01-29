@@ -7,7 +7,7 @@
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -15,16 +15,17 @@
     
     <main>
         <div class="header-crisis-wrapper position-relative">
-            <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
+            <div class="page-tag rounded-bottom z-3 position-relative dark_navy justify-content-start">
             <h1 class="fw-bold white">SNAP Benefits</h1>
         </div>
-        <div class="page">
-            <div class="row align-items-center">
+        <div class="page mt-5">
+            <div class="row align-items-center position-relative">
                 <div class="col-auto body-text fw-bold" >Not sure if you qualify for SNAP?</div>
-                <div class="col-auto body-link p-2" id="lnkExternSNAP">Click Here</div>
+                <div class="col-auto p-3" id="lnkExternSNAP">
+                <a class="body-link" href="">Check Here</a>
+                </div>
             </div>
-            <div class="body-text pt-1" > As a SNAP recipient, you can also take advantage of the following resources:</div>
-
+            <div class="body-text" > As a SNAP recipient, you can also take advantage of the resources below.</div>
             <div class=" row d-flex align-items-start pt-5">
                 <!--navigation tabs-->
                 <div class="col-12 col-md-6 col-lg-6 col-xl-4">
@@ -50,7 +51,7 @@
                     </ul>
                 </div>
                 <!--tab content-->
-                <div class="tab-content col-12 col-sm-9 col-md-6 col-lg-6 col-xl-8">
+                <div class="tab-content ps-s-4 pt-s-5 col col-12 col-sm-9 col-md-6 col-lg-6 col-xl-8">
                     <!-- tab one: phone -->
                     <div class="tab-pane fade show active" id="snap-pills-content-phone" role="tabpanel" aria-labelledby="snap-pills-tab-phone">
                         <h4 class=" snap-title">TruConnect Lifeline Plan</h4>
@@ -58,7 +59,12 @@
                             <li>Free unlimited talk, text, and international calling</li>
                             <li>4.5GB of data</li> 
                             <li>a free SIM card</li>
+                            <div class="column d-flex ">
+                                <i class="bi bi-laptop-fill pe-3"></i>
+                                <a>visit them at UCPublicTransit.com</a>
+                            </div>
                         </ul>
+    
                         <h4 class=" snap-title">Assurance Wireless Cell Phone Plan</h4>
                         <ul>
                             <li>Free monthly calls, texts, and data, </li>
@@ -66,7 +72,7 @@
                             <li>$0 cell phone bill and no annual contract</li>
                             <li>Eligibility based on household income or participation in SSI, SNAP, or Medicaid</li>
                         </ul>
-                        <h4 class=" snap-title">Cricket Wirelessn</h4>
+                        <h4 class=" snap-title">Cricket Wireless</h4>
                         <ul>
                             <li>$15/month cell phone plan</li>
                             <li>unlimited talk and text</li> 
@@ -174,10 +180,10 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
-        fetch('../../partials/footer.html')
+        fetch('/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('../../partials/navbar.html')
+        fetch('/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>

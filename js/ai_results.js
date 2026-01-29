@@ -2,7 +2,7 @@ async function getAIRecommendations(userPrompt) {
         let strDiv = document.querySelector('#suggestedResources');
         strDiv.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
         try{
-            let servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
+            let servResponse = await fetch(`34.171.184.135:8000/prompt`, { //calls ai api
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -55,3 +55,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     else{ getAIRecommendations(prompt)}
 });
+// document.querySelector("#btnHome").addEventListener("click", (e) => {
+//     let strAlert 
+//     strAlert+=`<div class="alert alert-success" role="alert">
+//             <h4 class="alert-heading">Well done!</h4>
+//             <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+//             <hr>
+//             <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+//            </div>`
+    
+// })

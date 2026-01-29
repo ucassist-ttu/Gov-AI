@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     btn.addEventListener("click", async function() {
         const prompt = document.getElementById("txtAIPrompt").value;
-        sessionStorage.setItem("user_prompt", prompt); // Store prompt
+        sessionStorage.setItem("user_prompt", prompt); // Stores prompt
         window.location.href = "/html/pages/ai_results.html"; // carries to ai_results page
     });
 });
