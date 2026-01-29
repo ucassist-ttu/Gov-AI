@@ -11,12 +11,6 @@
     height: auto;
     max-width: 180px;
   }
-  .jumbotron-text {
-    font-size: 20px;
-  }
-  .img-text-lg {
-    font-size: 30px;
-  }
   .responsive-header{
     height: 50vh;
     width: 100%;
@@ -132,19 +126,10 @@
   nav img {
     height: 40px;
   }
-  .jumbotron-text {
-    font-size: 20px;
-  }
   .responsive-header{
     height: 100vh;         /* 50% of viewport height */
     width: auto;
     object-fit: cover;
-  }
-  .img-text-lg {
-    font-size: 30px;
-  }
-  .banner-image {
-    height: 500px;
   }
   .ai-search-bar{
     display: flex;
@@ -200,21 +185,6 @@
 @media screen and (min-width: 1024px){
   :root{
     --bs-navbar-height: 35px !important;
-  }
-  .img-text-lg {
-    color: var(--light-grey);
-    text-align: center;
-    font-family: Inter;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .jumbotron-text{
-    font-size: 40px;
-    color:white;
   }
   .search-container {
     position: relative;
@@ -317,6 +287,37 @@
     display: flex; 
     justify-content: center;
     align-items: center;
+}
+
+.img-text-lg {
+  color: var(--light-grey);
+  text-align: center;
+  font-family: Inter;
+  font-size: 3.75rem;/*60px;*/
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  flex-direction: column;
+  justify-content: center;
+}
+@media screen and (max-width:767px) {
+  .img-text-lg{
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width:1024px){
+  .background_filter_image .img-text-lg{
+    font-size: 1.5rem;
+  }
+}
+.jumbotron-text{
+  font-size: 2rem;
+  color:white;
+}
+@media screen and (max-width:768px) {
+  .jumbotron-text {
+    font-size: 1.25rem;
+  }
 }
 .form-header {
   background-color: var(--dark-navy);
@@ -945,10 +946,16 @@ footer img {
 
 .banner-image {
   width: 100%;
-  height: 500px;
+  height: 60vh;
   background-size: cover;
   background-position: center;
 }
+
+/* @media screen and (min-width:768) {
+  .banner-image {
+    height: 60vh;
+  }
+} */
 
 .btn-outline-success{
   background-color: var(--light-grey);
