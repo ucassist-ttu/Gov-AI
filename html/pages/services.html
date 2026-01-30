@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Assist</title>
+    <!-- bootstrap library and custom css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="white">
+    <div id="navbar"></div>
+    <main>
+        <div id="overlay"></div>
+        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
+            <h1 class="fw-bold white">Find Services</h1>
+        </div>
+        <div id="mySidenav" class="sidenav">
+            <h3>Filter & Sort</h3>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <hr />
+            <div id="divAllFilter" class="sidenav-scroll form-check">
+                <!-- <div class="geolocation-input">
+                    <input id="txtUserLocation" class="geolocation-input" placeholder="Enter county or ZIP code" type="text" aria-label="Input for group code">
+                    <button id="btnUserLocation" class="btn btn-link"><i class="bi bi-geo-alt"></i>Use my location</button>
+                </div> -->
+                <a id="btnCounties" href="#">Counties <i class="bi bi-caret-down-fill"></i></a>
+                <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
+                    <hr />
+                    <div id="divCounties" class="form-check">
+                    </div>
+                    <div id="divMoreCounties" style="display:none">
+                    </div>
+                    <button id="btnShowMoreCounties" class="btn btn-link"></button>
+                </div>
+                <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
+                <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;">
+                    <hr />
+                    <div id="divServiceType" class="form-check">
+                    </div>
+                    <div id="divMoreServiceTypes" style="display:none">
+                    </div>
+                    <button id="btnShowMoreServices" class="btn btn-link"></button>
+                </div>
+                <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
+                <div id="divOuterOrgName" class="form-check outer-layer" style="display: none;">
+                    <hr />
+                    <div id="divOrgName" class="form-check">
+                    </div>
+                    <div id="divMoreOrgNames" style="display:none">
+                    </div>
+                    <button id="btnShowMoreOrgNames" class="btn btn-link"></button>
+                </div>
+            </div>
+            <div class="sidenav-footer">
+                <hr />
+                <button id="btnClearFilter" class="btn btn-secondary col-5">Clear Filters</button>
+                <button id="btnSeeResults" class="btn btn-primary col-5">See Results</button>
+            </div>
+        </div>
+        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="\assets\images\error-rodney-truitt-jf.png" class="background_filter_image z-0" alt="...">
+                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
+                        <!-- search bar -->
+                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
+                            <i class="bi bi-search ps-2"></i>
+                            <div class="divider-vertical d-flex align-items-center"></div>
+                            <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
+                            <!-- submit button -->
+                            <div class="d-flex justify-content-between">
+                                <!-- TODO: extend button (stretch goal) -->
+                                <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
+                                <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='../../html/pages/ai_results.html'"> <!--onclick="window.location.href='../../html/pages/ai_results.html'"-->
+                                    <i class="bi bi-arrow-right-circle-fill"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                
+        <div id="divServiceMain"> 
+            <div id="divFilterButtons" class="filter">
+                <button id="btnFilterSort">Filter & Sort <i class="bi bi-sliders"></i></button>
+            </div>
+            <div id="divServices"></div>
+            <div id="divPages" class="text-center mt-4"></div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        fetch('/partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('/partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <!-- more bootsrap libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="/js/services.js"></script>
+</body>
+</html>
