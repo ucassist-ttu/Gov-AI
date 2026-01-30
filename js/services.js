@@ -332,6 +332,7 @@ document.querySelector("#btnShowMoreOrgNames").addEventListener("click", () => {
     }
 });
 
+
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";

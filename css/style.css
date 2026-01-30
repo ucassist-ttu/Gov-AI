@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* @import "../node_modules/bootstrap/scss/bootstrap"; */
+
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
+  :root{
+    --bs-navbar-height: 25px !important;
+  }
+  /*HOMEPAGE CSS*/
   nav img {
-    height: 40px;
-    max-width: 220px;
-  }
-  .jumbotron-text {
-    font-size: 20px;
-  }
-  .img-text-lg {
-    font-size: 30px;
+    height: auto;
+    max-width: 180px;
   }
   .responsive-header{
     height: 50vh;
@@ -68,7 +68,7 @@
   }
   .ai-results .img-text-lg{
     line-height: 2.2rem;
-    padding-top: 20px;
+    padding-top: 30px;
     font-weight: bold;
   }
   .ai-company-name{
@@ -87,7 +87,7 @@
     display: flex;
     text-align: start;
     line-height: normal;
-    padding-top: 55px;
+    padding-top: 40px;
   }
   .ai-description{
     font-style: normal;
@@ -116,26 +116,20 @@
   .ai-results .btn {
     padding: 0px;
   }
+  
 }
 /* Tablet Breakpoint */
 @media screen and (min-width: 768px) {
+  :root{
+    --bs-navbar-height: 35px !important;
+  }
   nav img {
     height: 40px;
-    max-width: none;
-  }
-  .jumbotron-text {
-    font-size: 20px;
   }
   .responsive-header{
     height: 100vh;         /* 50% of viewport height */
     width: auto;
     object-fit: cover;
-  }
-  .img-text-lg {
-    font-size: 30px;
-  }
-  .banner-image {
-    height: 500px;
   }
   .ai-search-bar{
     display: flex;
@@ -165,11 +159,6 @@
   .ai-results .page{
     padding-inline: 100px;
   }
-  .ai-results .img-text-lg{
-    line-height: 2.2rem;
-    padding-top: 20px;
-    font-weight: bold;
-  }
   .ai-company-name{
     font-size: 20px;
     display: flex;
@@ -180,35 +169,22 @@
   .ai-title{
     font-size: 25px;
     /* line-height: normal; */
-    padding-top: 60px;
+    padding-top: 75px;
   }
   .ai-description{
     font-size: 20px;
     line-height: 1.7rem;
-    padding-top: 10px;
+    padding-top: 15px;
   }
   .ai-link{
     font-size: 20px;
-    padding-bottom: 20px;
     padding-top: 15px;
   } 
 }
 /* Desktop Breakpoint */
 @media screen and (min-width: 1024px){
-  .img-text-lg {
-    color: var(--light-grey);
-    text-align: center;
-    font-family: Inter;
-    font-size: 60px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .jumbotron-text{
-    font-size: 40px;
-    color:white;
+  :root{
+    --bs-navbar-height: 35px !important;
   }
   .search-container {
     position: relative;
@@ -233,7 +209,6 @@
   .ai-results .img-text-lg{
     text-align: start;
     font-size: 35px;
-    padding-top: 50px;
   }
   .ai-company-name{
     font-size: 20px;
@@ -241,13 +216,16 @@
   }
   .ai-title{
     font-size: 25px;
+    padding-top: 60px;
   }
   .ai-description{
     font-size: 20px;
     line-height: 2rem;
+    padding-top: 10px;
   }
   .ai-link{
     font-size: 20px;
+    padding-top: 30px;
     font-weight: 100;
   } 
 }
@@ -291,73 +269,71 @@ nav {
     --accent-blue: #606A76;
     --light-grey: #EBE9EA;
     --red: #E14848;
-    --bs-navbar-height: 9vh;
-}
-:root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
-:root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
-.header-image-big {
-  position: relative;
-  width: 100%;
-  height: 10px;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  padding: 0 16px;
+    --bs-navbar-height: 35px;
+    --header-curve: 30px; /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
+    --crisis-visible-height: 60px; /* how much of the crisis bar should show under the curve */
+    --small: 320px;
+    --medium: 768px;
+    --large: 1024px;
 }
 
-.header-image-small {
+.header-image-big {
+  width: 105vw;
+  height:65vh;
   position: relative;
-  width: 100%;
-  height: 1000px;
   background-size: cover;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  padding: 0 16px;
+  display: inline-flex;
 }
-.header-image-small img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+@media screen and (min-width: 768px){
+  .header-image-big{
+    height:80vh;
+  } 
 }
-.header-image-small > * {
-  position: relative;
-  z-index: 1;
-}
-.header-image-small::after {
-  content: "Photo by Toa Heftiba on Unsplash";
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: normal;
-  z-index: 2;
+@media screen and (min-width: 1024px){
+  .header-image-big{
+    height:80vh;
+  } 
 }
 .page-tag {
-    /* margin-top: 75px; */
     margin-bottom: -12px;
-    padding-left: 98px;
-    /* padding-block: 50px; */
+    padding-left: 75px;
+    padding-block: 35px;
     height: 75px;
     display: flex; 
     justify-content: center;
     align-items: center;
+}
+
+.img-text-lg {
+  color: var(--light-grey);
+  text-align: center;
+  font-family: Inter;
+  font-size: 3.75rem;/*60px;*/
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  flex-direction: column;
+  justify-content: center;
+}
+@media screen and (max-width:767px) {
+  .img-text-lg{
+    font-size: 2rem;
+  }
+}
+@media screen and (max-width:1024px){
+  .background_filter_image .img-text-lg{
+    font-size: 1.5rem;
+  }
+}
+.jumbotron-text{
+  font-size: 2rem;
+  color:white;
+}
+@media screen and (max-width:768px) {
+  .jumbotron-text {
+    font-size: 1.25rem;
+  }
 }
 .form-header {
   background-color: var(--dark-navy);
@@ -482,6 +458,9 @@ a {
   text-decoration: none;
   font-weight: 100;
 }
+h4 a, p a{ /*crisis, needHelp telephone links*/
+  color: var(--dark-navy)
+}
 a:hover {
   text-decoration: underline;
 }
@@ -544,70 +523,19 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /*padding-top: var(--bs-navbar-height, 80px); makes sure navbar doesn't block anything in*/
+    padding-top: 45px;
 }
 main {
     flex: 1 0 auto;
     width: 100%;
-    padding-top: var(--bs-navbar-height, 80px);
+    padding-top: var(--bs-navbar-height, 71.69px);
     min-height: calc(100vh - var(--bs-navbar-height, 80px));
 }
 .page{
-    padding-top: 10vh;
     padding-inline: clamp(10px, 7vh, 150px); /*150px; */
     padding-bottom:clamp(10px, 10vh, 200px);
 }
-.page-header{
-    /* background details */
-    height: clamp(80px, 15vh,125px);
-    width: 100%;
-    padding-left: clamp(10px, 7vh,125px); /*TODO: fix for smaller screens*/
-    background-color: var(--dark-navy);
-    display: flex;
-    border-radius: 0 0 30px 30px;
-    /* font details */
-    align-items: center; /* centers vertically*/
-    font-weight: bold;
-    color: #FFF;
-    font-family: Inter;
-    font-size: clamp(20px, 10vh, 48px);
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-.crisis {
-    margin-bottom: -12px;
-    height: 8vh;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-}
-.header-crisis-wrapper {
-  position: relative;
-  overflow: visible; /* ensure crisis is not clipped by the wrapper */
-}
-/* make sure header stays above the crisis */
-.header-crisis-wrapper .page-header {
-  position: relative;
-  z-index: 3;
-  border-radius: 0 0 var(--header-curve) var(--header-curve);
-}
 
-/* put crisis behind header and behind the rounded corners */
-.header-crisis-wrapper .crisis {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - var(--header-curve));
-  height: clamp(80px,10vh,calc(var(--crisis-visible-height) + var(--header-curve))); 
-  z-index: 2; /* less than header (3) so header overlays it */
-  display: flex;
-  align-items: flex-end; 
-  justify-content: start;
-  padding-inline: clamp(10px, 0vh, 45px);
-  padding-bottom: 8px;     /* moves text up/down a bit*/
-  box-sizing: border-box;
-}
 footer img {
     height: 300px;
 }
@@ -623,7 +551,7 @@ footer img {
 }
 
 .error-image {
-    background-image: url('../../assets/images/error-rodney-truitt-jf.png');
+    background-image: url('/assets/images/error-rodney-truitt-jf.png');
 }
 
 .body-text{
@@ -652,14 +580,19 @@ footer img {
 .body-light{
     font-style:light;
 }
+.darker-image{
+  background-color:rgba(0,0,0,0.8)
+}
+.overlay-dark {
+  background-color: rgba(black, 0.4);
+}
 .snap-title{
+    text-align: start;
     color: var(--dark-navy);
     font-family: Inter;
     font-style: normal;
     font-weight: 200;
     font-size: 20px;
-    display: flex;
-    text-align: start;
     line-height: normal;
     text-decoration-line: underline;
     text-decoration-style: solid;
@@ -689,37 +622,23 @@ footer img {
     font-weight: 100;
     line-height: normal;
 }
-.nav-tabs{
-    border-bottom: #fff;
-}
-.nav-tabs .nav-link{
-    width: 350px;
-    margin: 0px;
-    padding: 16px;
-    display: flex;
-    justify-content: flex-start !important;
-    text-align: center !important;
-    font-weight: 100;
-    border-top-left-radius: 0rem !important; 
-    border-top-right-radius: 0rem !important;
-    border-right-color: var(--dark-navy);
-}
-.nav-tabs .nav-link:hover {
-    color: var(--dark-navy);
-    background-color: var(--light-grey);
-    border-width: 1px;
-    border-right-color: var(--dark-navy);
-}
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active {
-    color:#FFF;
-    background-color: var(--dark-navy);
-    border-color: var(--dark-navy);
-}
 .tab-pane .div {
     border-width: 100px;
     border-left-color: #afbeee;
 }
+/* .search-bar { Olivias Maybe?
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% - 80px);
+    margin: 40px;
+    border: 2px solid #606A76;
+    color: #1E222E;
+}
+.search-bar:focus {
+  border-color: #1E222E;
+} */
 .background_filter_image {
   width: 100vw;
   height: 350px;
@@ -918,12 +837,26 @@ footer img {
   word-break: break-all;
   white-space: normal;
 }
+
+
+/* .search-bar { Olivia's
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100% - 80px);
+    margin: 40px;
+    border: 2px solid var(--accent-blue);
+    color: var(--dark-navy);
+}
+.search-bar:focus {
+  border-color: var(--dark-navy);
+} */
 .background_filter_image {
   width: 100vw;
   height: 350px;
   object-fit: cover;
 }
-
 .filter-header {
   background-color: var(--gold);
   padding: 10px;
@@ -1020,7 +953,7 @@ footer img {
 .registration-image {
   margin-top: -30px;
   margin-bottom: -30px;
-  background-image: url('../../assets/images/registration-landing-adrianna-geo.png');
+  background-image: url('/assets/images/registration-landing-adrianna-geo.png');
 }
 .dropbox-square {
   height: 150px;
@@ -1029,10 +962,16 @@ footer img {
 
 .banner-image {
   width: 100%;
-  height: 500px;
+  height: 60vh;
   background-size: cover;
   background-position: center;
 }
+
+/* @media screen and (min-width:768) {
+  .banner-image {
+    height: 60vh;
+  }
+} */
 
 .btn-outline-success{
   background-color: var(--light-grey);
@@ -1068,6 +1007,134 @@ p{
   line-height: 1.5;
 }
 
+/*CRISIS CSS*/
+  .nav{
+    display: grid;
+  }
+  .nav-tabs{
+    border-bottom: #fff;
+    padding: 0px !important;
+
+  }
+  .nav-tabs .nav-link{
+    width: 300px;
+    margin-top: 0px;
+    padding: 16px;
+    display:flex;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    font-weight: 100;
+    border-top-left-radius: 0rem !important; 
+    border-top-right-radius: 0rem !important;
+    border-color: transparent; 
+    border-top-color: var(--dark-navy); 
+    border-bottom-color: var(--dark-navy); 
+  }
+  @media screen and (min-width: 350px) {
+    .nav-tabs .nav-link {
+      font-size: 20px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .nav-tabs .nav-link {
+      border-color: transparent; 
+      border-right-color: var(--dark-navy); 
+    }
+  }
+  @media (max-width: 767px) {
+    .nav-tabs {
+      display: flex;
+      flex-direction: column;
+      border: none;
+    }
+
+    .nav-tabs .nav-link {
+      width: 100%;
+      padding: 1rem;
+      text-align: left;
+    }
+  }
+  .nav-tabs .nav-item.show .nav-link,
+  .nav-tabs .nav-link.active,
+  .nav-tabs .nav-link:hover  {
+    color:#FFF;
+    background-color: var(--dark-navy);
+    border-color: var(--dark-navy);
+  }
+  @media (max-width: 767px) {
+    .nav-tabs .nav-link.active {
+      position: sticky;
+      top: 0.5rem;
+      z-index: 5;
+    }
+  }
+  .header-crisis-wrapper {
+    overflow: visible; /* ensure crisis is not clipped by the wrapper */
+    
+  }
+  /* put crisis behind header and behind the rounded corners */
+  .header-crisis-wrapper .crisis {
+    position: absolute;
+    z-index: 2; /* less than header (3) so header overlays it */
+    display: flex;
+    align-items: flex-end; 
+    justify-content: start;
+    padding-bottom: 8px;     /* moves text up/down a bit*/
+    box-sizing: border-box;
+  }
+
+  .crisis {
+    margin-bottom: -12px; /*overlap onto images*/
+    display: flex; 
+    padding-top: clamp(30px,0vh,80px);
+    padding-inline-start: 80px;
+    position: relative;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+  }
+  @media (max-width: 767px) {
+    .crisis {
+      right: 50%;
+      transform: translateX(50%);
+      padding-inline: clamp(10px, 10vh, 45px); 
+    }
+  }
+  .index-crisis { /* OG min 320 overlap onto images*/
+    position: absolute;
+    right: 0rem;
+    top: 0rem;
+    z-index: 10;
+    background-color: var(--red);
+    width: 20vw;
+    min-width: 180px;
+    height: 7vh;
+    min-height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+#carouselExampleControls {
+  position: relative;
+}
+
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none; /* carousel controls still work */
+}
+
+.ai-search-bar {
+  pointer-events: auto; /* but search bar is clickable */
+}
 .sidenav {
   height: calc(100vh - 75px);
   width: 0;
@@ -1233,4 +1300,9 @@ p{
   background-color: var(--dark-navy);
   height: 1px;
   margin: 1px;
+}
+
+.card-img-top{
+  height: auto;
+  width: auto;
 }
