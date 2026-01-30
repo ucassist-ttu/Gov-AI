@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UC Assist</title>
+    <!-- bootstrap library and custom css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+    
+    <main class="ai-results">
+        <div class="page">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="../..index.html" class="ts-5 rounded-pill p-2 border text-decoration-none text-nowrap me-4">Return Home</a>
+                <div id="btnPrintAIResults">
+                    <i class="bi bi-printer-fill "></i>
+                    <a href="#" class=" ts-5 mt-5 p-2 text-decoration-none text-nowrap">Print Page</a>
+                </div>
+            </div>
+
+            <div class="img-text-lg">
+                Based on what you told us, here are three recommend resources...
+            </div>
+            <div id="suggestedResources" class="suggested-resources">
+                <!-- resource one -->
+                <div class="flex-row">
+                    <h4 class="ai-title">1. Meal Prep </h4>
+                    <p class="ai-company-name">by Associates of Vietnam Veterans of America Chapter 1015</p>
+                </div>
+                <p class="ai-description">Provide meals for Vietnam Veterans monthly meetings; National Vietnam Veterans Day; Veterans Day; Memorial Day; Gun & Knife Show; Spaghetti...</p>
+                <a href="../..html/pages/ai_results.html" class="btn ai-link">More Details</a>
+                <!-- resource two -->
+                 <div class="flex-row">
+                    <h4 class="ai-title">2. Food Assistance</h4>
+                    <p class="ai-company-name">by Bread of Life Homeless Shelter and Clinic</p>
+                </div>
+                <p class="ai-description">The Bread of Life feeds the hungry. We provide three free meals a day, seven days a week, 52 weeks per year to anyone in the community needing so...</p>
+                <a href="../..html/pages/ai_results.html" class="btn ai-link">More Details</a>
+                <!-- resource three -->
+                 <div class="flex-row">
+                    <h4 class="ai-title">3. Food and Shelter Program</h4>
+                    <p class="ai-company-name">by Cannon County EMA Food and Shelter Prog...</p>
+                </div>
+                <p class="ai-description">Provides emergency food and shelter for Cannon County, houses families that have suffered losses due to fire and natural disasters.</p>
+                <a href="../..html/pages/ai_results.html" class="btn ai-link">More Details</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        fetch('../..partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('../..partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <!-- more bootsrap libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="../..js/ai_results.js"></script>
+</body>
+</html>
