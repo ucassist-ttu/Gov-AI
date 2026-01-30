@@ -756,6 +756,40 @@ footer img {
 .service-header .btn.btn-link:hover {
   color: var(--accent-blue);
 }
+@media print {
+    @page {
+        margin: 0.5in;
+    }
+    body * {
+        visibility: hidden;
+    }
+    #divService,
+    #divService * {
+        visibility: visible;
+    }
+    body {
+      overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+    #divService {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #btnReturn,
+    #btnPrintPage {
+        display: none !important;
+    }
+    .service-header {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+}
+
 .service-header i{
   margin-right: 5px;
 }
@@ -854,6 +888,13 @@ footer img {
   padding-left: 10px;
   padding-top: 5px;
 }
+.service ul {
+    column-count: 2;
+    column-gap: 1rem;
+    padding-left: 1rem;
+    margin-left: 15px;
+}
+
 .more_info{
   background-color: #FFFFFF;
   overflow-wrap: break-all;

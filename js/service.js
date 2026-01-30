@@ -22,6 +22,12 @@ async function getServiceInformaion () {
                 window.location.href = "services.html";
             }
         })
+        document.addEventListener("click", (e) => {
+            if (e.target.closest("#btnPrintPage")) {
+                window.print();
+            }
+        });
+
         //Initialize card and add name of service
         strDiv += `<div id="divOuterService">`
         strDiv += `<div id="divSpecificID" class="service" data-id="${servData.ID}" data-organization="${servData.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
@@ -41,7 +47,7 @@ async function getServiceInformaion () {
         strDiv += `<p>${servData.ServiceDescription}</p>`
 
         // Creates a more_info section with no display
-        strDiv += `<div class="more_info mb-4">`
+        strDiv += `<div class="more_info">`
         strDiv += `<hr class="hr-gold"/>`
         strDiv += `<div class="row with-divider">`
         strDiv+= `<div class="col-12 col-md-6">`
