@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 async function getServices() {
         try{
             let servResponse = await fetch(`http://34.171.137.8:8000/services`)
@@ -45,6 +46,8 @@ async function getServices() {
                     strDiv += `<p>Go to <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`;
                 }
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 let arrCounties = []
 let arrServiceType = []
 let arrOrgName = []
@@ -107,6 +110,9 @@ async function getServices() {
                 }
 
                 //Checks to see if a service has a website
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
                 if (element.Website != 'N/A') {
                     let strurl = element.Website.trim();
@@ -115,6 +121,7 @@ async function getServices() {
                         ? strurl
                         : "https://" + strurl;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                     strDiv += `<p>Visit their website <a href="${strhref}" target="_blank"><u>${strurl}</u></a></p>`;
                 }
@@ -151,6 +158,8 @@ async function getServices() {
     }
     getServices()
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
                     strDiv += `<p><i class="bi bi-display"></i> <a href="${strhref}" target="_blank"><u>${strurl}</u></a></p>`;
                 }
                 strDiv += `</div>`
@@ -232,6 +241,9 @@ async function getServices() {
     getServices()
 
     // Gets the list of tags for each service
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
     function getTagList(service) {
         strKeywords = service.Keywords
@@ -239,11 +251,14 @@ async function getServices() {
             strKeywords = JSON.parse(strKeywords);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (Array.isArray(strKeywords)) {
             return strKeywords.join(', ');
         }
     }
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
         // Returns keywords seperated by a ','
         if (Array.isArray(strKeywords)) {
             strKeywords.forEach(tag => {
@@ -254,6 +269,9 @@ async function getServices() {
     }
 
     // Gets  the list of counties for each services
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
     function getCountyList(service) {
         strCounties = service.CountiesAvailable
@@ -261,6 +279,11 @@ async function getServices() {
             strCounties = JSON.parse(strCounties);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+        // Returns an array of strCounties
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
 
         // Returns an array of strCounties
@@ -269,6 +292,7 @@ async function getServices() {
             return strCounties;
         }
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     document.querySelector("#divFilter").addEventListener("click", (e) => {
 
@@ -339,6 +363,8 @@ async function getServices() {
         ).map(el => el.dataset.value);
     }
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 
 // Creates the checkboxes
 function createCheckbox(labelText, container) {
@@ -572,6 +598,9 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
 });
 
 
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 
 
@@ -610,6 +639,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     //     });
     // }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // let currentPage = 1;
     // const itemsPerPage = 10;
@@ -735,6 +765,8 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     //     }
     // }
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 
 
 
@@ -796,4 +828,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
 //             }
 //         }
 //         getLocation()
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f

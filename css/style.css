@@ -2,6 +2,7 @@
 /* Phone Breakpoint */
 @media screen and (min-width: 320px){
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 }
 /* Tablet Breakpoint */
@@ -12,6 +13,8 @@
   .hero-text {
     font-size: 75px;
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   nav img {
     height: 40px;
     max-width: 220px;
@@ -144,11 +147,15 @@
   }
   .img-text-lg {
     font-size: 30px;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   }
   .banner-image {
     height: 500px;
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 /* Desktop Breakpoint */
@@ -166,6 +173,8 @@
 }
 
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   .ai-search-bar{
     display: flex;
     align-items: start; /* aligns  vertically*/
@@ -283,6 +292,9 @@
 nav {
   min-height: var(--bs-navbar-height);
 }
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .search-icon {
     position: absolute;
@@ -301,6 +313,7 @@ nav {
   box-shadow: 0 4px 10px 0 var(--dark-navy);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .search-input{
   font-size: 1.6rem !important;
   flex-grow: 1; /* stretches vertically*/
@@ -310,6 +323,8 @@ nav {
   box-shadow: none !important; 
 }
 }
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 /*variables for inside the CSS file: var(--colorName)*/
@@ -325,16 +340,22 @@ nav {
 :root { --header-curve: 30px; } /* adjust to match your .page-header border-radius bottom (30px in your CSS) */
 :root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .header-image-small {
   position: relative;
   width: 100%;
   height: 1000px;
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .header-image-big {
   position: relative;
   width: 100%;
   height: 10px;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   background-size: cover;
   background-position: center;
@@ -348,7 +369,10 @@ nav {
   padding: 0 16px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 
 .header-image-small {
   position: relative;
@@ -365,6 +389,9 @@ nav {
   text-align: center;
   padding: 0 16px;
 }
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .header-image-small img {
   position: absolute;
@@ -587,16 +614,22 @@ body {
     /*padding-top: var(--bs-navbar-height, 80px); makes sure navbar doesn't block anything in*/
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* main {
     flex: 1;
 } */
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 main {
     flex: 1 0 auto;
     width: 100%;
     padding-top: var(--bs-navbar-height, 80px);
     min-height: calc(100vh - var(--bs-navbar-height, 80px));
 }
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .page{
     padding-top: 10vh;
@@ -655,9 +688,12 @@ main {
   box-sizing: border-box;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 nav img {
     height: 40px;
 }
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 footer img {
@@ -773,6 +809,7 @@ footer img {
     border-left-color: #afbeee;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .search-bar {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -788,11 +825,14 @@ footer img {
 }
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .background_filter_image {
   width: 100vw;
   height: 350px;
   object-fit: cover;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .filter {
   margin-left: 40px;
@@ -819,6 +859,8 @@ footer img {
   border: none;
   margin-top: 5px;
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .filter{
   margin-left: 40px;
   margin-top: 10px;
@@ -834,6 +876,9 @@ footer img {
   background-color: white;
   color: var(--dark-navy);
   border: none;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   padding-top: 5px;
   padding-bottom: 5px;
@@ -841,6 +886,7 @@ footer img {
   padding-right: 10px;
   font-weight: 700;
   font-size: 17.6px;
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-radius: 4px;
   cursor: pointer;
@@ -852,6 +898,8 @@ footer img {
 .filter-i {
   color: black !important;
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   border-radius: 10px;
   cursor: pointer;
   border: 3px solid var(--light-grey);
@@ -868,6 +916,9 @@ footer img {
 }
 .filter button:hover i {
   color: white;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 }
 .specific_filter {
@@ -904,6 +955,7 @@ footer img {
   margin-bottom: 40px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .filter i {
   font-size: 24px;
   font-weight: 10px;
@@ -917,21 +969,29 @@ footer img {
   margin-bottom: 20px;
   border: 2px solid #606A76;
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .service {
   margin-left: 120px;
   margin-right: 120px;
   /* margin-bottom: 20px; */
   /* border: 2px solid #606A76; */
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   padding: 20px;
   border-radius: 10px;
   background-color: #FFFFFF;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .service h2{
   font-size: 26px;
 }
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 @media (max-width: 768px) {
   .service {
     margin-left: 25px;
@@ -985,6 +1045,9 @@ footer img {
   border-radius: 10px;
   padding:5px;
 }
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .service h3{
   font-size: 18px;
@@ -1023,7 +1086,10 @@ footer img {
   background-color: #FFFFFF;
   overflow-wrap: break-all;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   display: none;
 }
 .more_info i {
@@ -1031,6 +1097,9 @@ footer img {
   font-weight: 10px;
   color: #3E4450;
   padding: 10px;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 }
 .more_info li{
@@ -1050,6 +1119,7 @@ footer img {
   white-space: normal;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 .search-bar {
@@ -1067,11 +1137,14 @@ footer img {
 }
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .background_filter_image {
   width: 100vw;
   height: 350px;
   object-fit: cover;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .filter {
   margin-left: 40px;
@@ -1081,6 +1154,9 @@ footer img {
   border: 2px solid var(--accent-blue);
   overflow: hidden;
 }
+=======
+
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
 
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
@@ -1123,7 +1199,11 @@ footer img {
   border: 2px solid var(--accent-blue);
   padding: 10px;
 <<<<<<< HEAD
+<<<<<<< HEAD
   cursor: pointer;
+=======
+  /* cursor: pointer; */
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
   /* cursor: pointer; */
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
@@ -1153,6 +1233,7 @@ footer img {
 .filter-gap {
   margin-bottom: 40px;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .filter i {
   font-size: 24px;
@@ -1212,6 +1293,10 @@ footer img {
 .more_info{
   background-color: var(--light-grey);
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
+.more_info{
+  background-color: var(--light-grey);
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
   overflow-wrap: break-all;
 }
 .more_info li{
@@ -1248,6 +1333,7 @@ footer img {
   border: solid 4px var(--gold);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .large-text {
   font-size: 20px;
@@ -1256,6 +1342,8 @@ footer img {
 .hero-text {
   font-size: 30px;
 }
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 
@@ -1282,6 +1370,7 @@ footer img {
   padding: 0px !important;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .img-text-lg {
   color: var(--light-grey);
   text-align: center;
@@ -1303,6 +1392,8 @@ footer img {
 }
 =======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 .text-lg{
   color: var(--dark-navy);
   text-align: start;
@@ -1321,7 +1412,10 @@ p{
   font-weight: 300;
   line-height: 1.5;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 }
 
 .sidenav {
@@ -1489,5 +1583,8 @@ p{
   background-color: var(--dark-navy);
   height: 1px;
   margin: 1px;
+<<<<<<< HEAD
+>>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
+=======
 >>>>>>> 3f0d1cc3f2ee3f2a8f63db0c8e2c4ab2e6613d5f
 }
