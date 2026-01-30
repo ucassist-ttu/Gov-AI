@@ -15,7 +15,7 @@ async function getServices() {
 
                 //Initialize card and add name of service
                 strDiv += `<div id="divOuterService">`
-                strDiv += `<div class="service" data-organization="${element.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
+                strDiv += `<div class="service" data-id="${element.ID}" data-organization="${element.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
                 strDiv += `<h2>${element.NameOfService}</h2>`
 
                 //Checks to see if service provider has a logo and uses it if so
@@ -120,18 +120,21 @@ async function getServices() {
             document.querySelectorAll('.service button').forEach(button => {
                 button.addEventListener('click', () => {
                     const serviceCard = button.closest('.service');
-                    const moreInfoDiv = serviceCard.querySelector('.more_info');
 
-                    // Toggles the display of show_more section
-                    if (moreInfoDiv.style.display === 'none') {
-                        moreInfoDiv.style.display = 'block';
-                        button.innerHTML = `Show Less<i class="bi bi-caret-up-fill"></i>`;
-                        serviceCard.classList.toggle('is-expanded');
-                    } else {
-                        moreInfoDiv.style.display = 'none';
-                        button.innerHTML = 'Show More<i class="bi bi-caret-down-fill"></i>';
-                        serviceCard.classList.toggle('is-expanded');
-                    }
+                    let serviceId = serviceCard.dataset.id
+                    callServicePage(serviceId)
+                    // const moreInfoDiv = serviceCard.querySelector('.more_info');
+
+                    // // Toggles the display of show_more section
+                    // if (moreInfoDiv.style.display === 'none') {
+                    //     moreInfoDiv.style.display = 'block';
+                    //     button.innerHTML = `Show Less<i class="bi bi-caret-up-fill"></i>`;
+                    //     serviceCard.classList.toggle('is-expanded');
+                    // } else {
+                    //     moreInfoDiv.style.display = 'none';
+                    //     button.innerHTML = 'Show More<i class="bi bi-caret-down-fill"></i>';
+                    //     serviceCard.classList.toggle('is-expanded');
+                    // }
                 });
             });
         } catch (objError){
@@ -160,6 +163,10 @@ async function getServices() {
             })
             return strKeywords.join(', ');
         }
+    }
+
+    function callServicePage (page_id) {
+        window.location.href = `service.html?id=${page_id}`;
     }
 
     // Gets  the list of counties for each services
