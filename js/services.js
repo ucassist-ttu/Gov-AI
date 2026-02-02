@@ -46,8 +46,7 @@ getServices()
 function createServiceCard(arrCards) {
     arrCards.forEach(service => {
         let strDiv = ''
-        let strTagList = ''
-        let arrTagList = getTagList(service)
+        let strTagList = getTagList(service)
         let strCounties = getCountyList(service)
 
         //Initialize card and add name of service
@@ -65,17 +64,7 @@ function createServiceCard(arrCards) {
         }
 
         // Displays tags and service description
-        let x = 0;
-        arrTagList.forEach(tag => {
-            if (x == 0) {
-                strTagList += tag
-            }
-            else {
-                strTagList = strTagList + ", " + tag
-            }
-            x += 1
-        });
-        strDiv += `<p class="mb-3">Tags: ${strTagList}</p>`
+        strDiv += `<p class="mb-3">Tags: ${strTagList.join(', ')}</p>`
         strDiv += `<p>${service.ServiceDescription}</p>`
 
         // Learn more button
