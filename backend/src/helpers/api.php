@@ -7,9 +7,11 @@ function request_body(string $key): mixed
 
 function get_services_from_user_input(string $user_input): array
 {
+  
   $services = json_encode(value: get_services());
   if (!$services)
     return [];
+<<<<<<< Updated upstream
 
   $prompt = "Based on the user input, respond with exactly 3 services that most closely represent the user's needs. Respond with an integer array of service ids. Services: " . $services . ' User input: ' . $user_input;
   $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
@@ -20,6 +22,25 @@ function get_services_from_user_input(string $user_input): array
   }
 
   return $services;
+=======
+  
+  $prompt = "You will be provided with a database of services and a prompt from the user. Use the user's request to search the database and identify the three services that would best assist the user with the issue they are having. Respond with only a valid, unformatted array of json objects containing the 'id', 'service_name', and a 'reason_for_selection' of why you believe that service would be helpful to them. Do not include any markdown formatting in your response. Services: " . $services . ' User input: ' . $user_input;
+  $attempts = 0;
+  while ($attempts < 3) {
+    $services = gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt);
+    $services = json_decode(json: $services, associative: true);
+    if ($services) {
+      break;
+    }
+    $attempts++;
+  }
+
+  $ids = [];
+  foreach ($services as $service) {
+    $ids[] = get_service(id: $service['id']);
+  }
+  return $ids;
+>>>>>>> Stashed changes
 }
 
 function get_similar_services(int $id): array
