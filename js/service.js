@@ -14,7 +14,7 @@ async function getServiceInformaion () {
         let strDiv = ``
 
         strDiv += `<div class="service-header d-flex justify-content-between">
-                        <button id="btnReturn" class="btn btn-secondary col-5 col-lg-3">Back</button>
+                        <button id="btnReturn" class="btn btn-secondary col-5 col-lg-3">View Services</button>
                         <button id="btnPrintPage" class="btn btn-link col-5 col-lg-3"><i class="bi bi-file-earmark-arrow-down"></i>Download PDF</button>
                     </div>`
         document.addEventListener("click", (e) => {
@@ -116,13 +116,7 @@ async function getServiceInformaion () {
             strDiv += `</ul>`
         }
         strDiv += `</div>`
-
-        // Show more button
-        //strDiv += `<button>Show More<i class="bi bi-caret-down-fill"></i></button>`
         strDiv += `</div>`
-
-        // Blue service divider
-        // strDiv += `<hr class="hr-blue"/>`
         strDiv += `</div>`
         document.querySelector('#divService').innerHTML += strDiv
          document.querySelector('#divSpecificID').classList.toggle('is-expanded');
@@ -159,10 +153,6 @@ function getCountyList(service) {
         return strCounties;
     }
 }
-
-// document.querySelector("#btnReturn").addEventListener("click", () => {
-//     console.log("Button clicked")
-// });
 
 function returnToServiceList () {
     window.location.href = `services.html`;
