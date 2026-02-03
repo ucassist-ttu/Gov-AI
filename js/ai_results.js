@@ -63,11 +63,11 @@ document.addEventListener("DOMContentLoaded", function() {
     else{ getAIRecommendations(prompt)}
 });
 document.querySelector("#btnHome").addEventListener("click", (e) => {
-    swal("Warning!", {
-        title: "Warning!",
-        text: "If you leave before printing, you will lose your recommended resources. Are you sure you want to leave?",
+    swal("Wait!", {
+        title: "Before you go",
+        text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
         icon: "warning",
-        buttons: true,
+        buttons: ["Leave page", "Stay and print"],
     })
     .then((travelHome) => {
         if (travelHome) {
