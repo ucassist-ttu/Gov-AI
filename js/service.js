@@ -115,11 +115,47 @@ async function getServiceInformaion () {
             })
             strDiv += `</ul>`
         }
+        strDiv += `<h3 id="btnRelatedServices" class="mb-1"><b>More Like This</b><i class="bi bi-caret-down-fill"></i></h3>`
+        strDiv += `<div id="related_services" style="display: none">`
+        strDiv += `<div class="row with-divider">`
+
+        strDiv+= `<div class="col-12 col-md-3">`
+        strDiv += `<p>Hellow</p>`
+        strDiv += `</div>`
+
+        strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+        strDiv += `<div class="service-divider-vertical"></div>`
+        strDiv += `</div>`
+
+        strDiv +=`<div class="col-12 col-md-3">`
+        strDiv += `<p>Hellow</p>`
+        strDiv += `</div>`
+
+        strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+        strDiv += `<div class="service-divider-vertical"></div>`
+        strDiv += `</div>`
+
+        strDiv +=`<div class="col-12 col-md-3">`
+        strDiv += `<p>Hellow</p>`
+        strDiv += `</div>`
+        
+         strDiv += `<p>Hellow</p>`
         strDiv += `</div>`
         strDiv += `</div>`
         strDiv += `</div>`
         document.querySelector('#divService').innerHTML += strDiv
-         document.querySelector('#divSpecificID').classList.toggle('is-expanded');
+        //document.querySelector('#divSpecificID').classList.toggle('is-expanded');
+        document.querySelector('#btnRelatedServices').addEventListener('click', () => {
+            if (document.querySelector('#related_services').style.display === 'none') {
+                document.querySelector('#related_services').style.display = 'block';
+                document.querySelector('#btnRelatedServices').innerHTML = `<b>Fewer Like This</b><i class="bi bi-caret-up-fill"></i>`;
+            } else {
+                document.querySelector('#related_services').style.display = 'none';
+                document.querySelector('#btnRelatedServices').innerHTML = `<b>More Like This</b><i class="bi bi-caret-down-fill"></i>`;
+            }
+        })
+
+
     } catch (objError){
         console.log('Error fetching objData', objError)
     }

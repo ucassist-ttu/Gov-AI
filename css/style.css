@@ -1008,7 +1008,6 @@ footer img {
   margin-bottom: 40px;
 }
 .more_info{
-  background-color: var(--light-grey);
   overflow-wrap: break-all;
 }
 .more_info li{
@@ -1026,6 +1025,12 @@ footer img {
   overflow-wrap: break-word;
   word-break: break-all;
   white-space: normal;
+}
+.related-services {
+  max-height: 300px;      /* adjust as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;     /* prevents scrollbar overlap */
 }
 
 .icon-circle {
