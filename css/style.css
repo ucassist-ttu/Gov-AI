@@ -821,7 +821,7 @@ footer img {
 }
 .hr-gold {
   border: none;
-  height: 1px;
+  height: 2px;
   background-color: var(--gold);
   opacity: 1; 
 }
@@ -928,6 +928,7 @@ footer img {
 }
 .recomendedServices{
   margin-left: 15px;
+  margin-right: 15px;
   display: flex;
   flex-direction: column;
 }
@@ -935,11 +936,31 @@ footer img {
   margin-bottom: 10px;
   word-break: keep-all;
 }
-.recomendedServices button{
-  margin-bottom: 20px;
-}
 .recomendedServices i{
+  color: inherit;
+}
+.recomendedServices button {
+  border-radius: 10px;
+  background-color: white;
+  color: var(--dark-navy);
+  border: 2px solid var(--dark-navy);
+}
+.recomendedServices button:hover {
+  background-color: var(--accent-blue);
   color: white;
+  border: 2px solid var(--accent-blue);
+}
+.recomendedServices hr{
+  display: none;
+  border: none;
+  height: 2px;
+  background-color: var(--gold);
+  opacity: 1; 
+}
+@media (max-width: 768px) {
+  .recomendedServices hr {
+    display: block;
+  }
 }
 
 /* .search-bar { Olivia's

@@ -195,9 +195,10 @@ function printRecomendedServices () {
     strDiv += `<h5>${arrRecomendedServices[0].NameOfService}</h5>`
     strDiv += `<h6>Offered by: ${arrRecomendedServices[0].OrganizationName}</h6>`
     strDiv += `<button id="btnService${arrRecomendedServices[0].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<hr />`
     strDiv += `</div>`
 
-    strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+    strDiv +=`<div class="col-12 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
     strDiv += `<div class="service-divider-vertical"></div>`
     strDiv += `</div>`
 
@@ -205,6 +206,7 @@ function printRecomendedServices () {
     strDiv += `<h5>${arrRecomendedServices[1].NameOfService}</h5>`
     strDiv += `<h6>Offered by: ${arrRecomendedServices[1].OrganizationName}</h6>`
     strDiv += `<button id="btnService${arrRecomendedServices[1].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<hr />`
     strDiv += `</div>`
 
     strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
