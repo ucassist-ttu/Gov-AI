@@ -716,7 +716,7 @@ footer img {
   margin-bottom: 40px;
 }
 .service-header {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 120px;
   margin-right: 120px;
   background-color: white;
@@ -729,7 +729,6 @@ footer img {
 }
 .service-header .btn.btn-secondary{
   border-radius: 10px;
-  margin-bottom: 20px;
   padding: 8px;
   background-color: white;
   color: var(--dark-navy);
@@ -743,7 +742,6 @@ footer img {
 }
 .service-header .btn.btn-link{
   border-radius: 10px;
-  margin-bottom: 20px;
   padding: 8px;
   background-color: white;
   color: var(--dark-navy);
@@ -766,6 +764,12 @@ footer img {
     #divService,
     #divService * {
         visibility: visible;
+    }
+    #btnRelatedServices * {
+        visibility: hidden;
+    }
+    #related_services * {
+        visibility: hidden;
     }
     body {
       overflow: hidden;
@@ -922,7 +926,21 @@ footer img {
   word-break: break-all;
   white-space: normal;
 }
-
+.recomendedServices{
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.recomendedServices h6{
+  margin-bottom: 10px;
+  word-break: keep-all;
+}
+.recomendedServices button{
+  margin-bottom: 20px;
+}
+.recomendedServices i{
+  color: white;
+}
 
 /* .search-bar { Olivia's
     padding-top: 10px;
