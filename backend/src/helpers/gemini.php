@@ -4,6 +4,7 @@ function gemini(string $google_api_key, string $prompt): string
 {
   $headers = ["x-goog-api-key: {$google_api_key}", 'Content-Type: application/json'];
   $body = json_encode(value: ['contents' => ['parts' => ['text' => $prompt]]]);
+  echo "gemini.php-prompt: ", $prompt;
   $stream_context = stream_context_create(options: [
     'http' => [
       'method' => 'POST',
@@ -12,7 +13,7 @@ function gemini(string $google_api_key, string $prompt): string
     ]
   ]);
   set_time_limit(seconds: 120);
-  $response = file_get_contents(filename: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent', use_include_path: false, context: $stream_context);
+  $response = file_get_contents(filename: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent', use_include_path: false, context: $stream_context);
   if ($response === false) {
     exit;
   }
