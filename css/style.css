@@ -1348,7 +1348,21 @@ p{
   margin-right: 5px;
   color: inherit;
 }
+.stickytitle {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding-right: 25px;
+  padding-left: 2
+}
+.stickytitle hr{
+  margin-left: 25px;
+  height: 1px;
+}
 .sidenav a {
+  position: sticky;
+  top: 0;
+  background-color: white;
   padding-left: 35px;
   padding-top: 5px;
   text-decoration: none;
