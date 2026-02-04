@@ -46,6 +46,7 @@
     color: var(--dark-navy);
     width: 100% !important;
     margin-bottom: 0px !important;
+    padding: 0px !important;
   } 
   .divider-vertical {
     display: flex;
@@ -1436,3 +1437,11 @@ p{
 }
 
 /*I Need Section*/
+.iNeedPills{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 9px 9px 9px 9px;
+}
