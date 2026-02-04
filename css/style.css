@@ -517,6 +517,9 @@ a:hover {
 .red{
     background-color: #E14848;
 }
+.bckg-white{
+    background-color: #FFFFFF;
+}
 .white{
     color: #FFFFFF;
 }
@@ -1331,7 +1334,7 @@ p{
   width: auto;
 }
 
-/* SWEET ALERT CUSTOMIZATION */
+/*SWEET ALERT CUSTOMIZATION*/
 .swal-button {
   padding: 7px 19px;
   border-radius: 3px;
@@ -1347,4 +1350,4 @@ p{
   text-shadow: 0px -1px 0px var(--gold);
 }
 
-
+/*I Need Section*/
