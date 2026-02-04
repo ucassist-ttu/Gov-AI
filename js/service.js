@@ -2,14 +2,12 @@ let arrRecomendedServices = []
 
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get('id');
-console.log(serviceId)
 
 async function getServiceInformaion () {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`http://34.171.184.135:8000/service?id=${serviceId}`)
         let servData = await servResponse.json()
-        console.log(servData)
 
         let strTagList = getTagList(servData)
         let strCounties = getCountyList(servData)
@@ -170,22 +168,24 @@ function getCountyList(service) {
     }
 }
 
+// Navagates to the services page
 function returnToServiceList () {
     window.location.href = `services.html`;
 }
 
+//Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
         let servResponse = await fetch(`http://34.171.184.135:8000/recommendations?id=${serviceId}`)
         let servData = await servResponse.json()
         arrRecomendedServices = servData
-        console.log(arrRecomendedServices)
         printRecomendedServices ()
     } catch (objError){
         console.log('Error fetching objData', objError)
     }
 }
 
+// Prints the recommended services 
 function printRecomendedServices () {
     let strDiv = ''
     strDiv += `<div class="recomendedServices">`
