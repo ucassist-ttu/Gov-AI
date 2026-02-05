@@ -25,32 +25,38 @@
                     <input id="txtUserLocation" class="geolocation-input" placeholder="Enter county or ZIP code" type="text" aria-label="Input for group code">
                     <button id="btnUserLocation" class="btn btn-link"><i class="bi bi-geo-alt"></i>Use my location</button>
                 </div> -->
-                <a id="btnCounties" href="#">Counties <i class="bi bi-caret-down-fill"></i></a>
-                <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
+                <div class="stickytitle">
+                    <a id="btnCounties" href="#">Counties <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
+                </div>
+                <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
                     <div id="divCounties" class="form-check">
                     </div>
                     <div id="divMoreCounties" style="display:none">
                     </div>
                     <button id="btnShowMoreCounties" class="btn btn-link"></button>
                 </div>
-                <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
-                <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;">
+                <div class="stickytitle">
+                    <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
-                    <div id="divServiceType" class="form-check">
-                    </div>
-                    <div id="divMoreServiceTypes" style="display:none">
-                    </div>
-                    <button id="btnShowMoreServices" class="btn btn-link"></button>
                 </div>
-                <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
                 <div id="divOuterOrgName" class="form-check outer-layer" style="display: none;">
-                    <hr />
                     <div id="divOrgName" class="form-check">
                     </div>
                     <div id="divMoreOrgNames" style="display:none">
                     </div>
                     <button id="btnShowMoreOrgNames" class="btn btn-link"></button>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;">
+                    <div id="divServiceType" class="form-check">
+                    </div>
+                    <div id="divMoreServiceTypes" style="display:none">
+                    </div>
+                    <button id="btnShowMoreServices" class="btn btn-link"></button>
                 </div>
             </div>
             <div class="sidenav-footer">
@@ -65,19 +71,19 @@
                     <img src="\assets\images\error-rodney-truitt-jf.png" class="background_filter_image z-0" alt="...">
                     <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
                         <!-- search bar -->
-                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
+                        <!-- <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
                             <i class="bi bi-search ps-2"></i>
                             <div class="divider-vertical d-flex align-items-center"></div>
                             <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
-                            <!-- submit button -->
+                            submit button
                             <div class="d-flex justify-content-between">
-                                <!-- TODO: extend button (stretch goal) -->
-                                <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
-                                <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/html/pages/ai_results.html'"> <!--onclick="window.location.href='../../html/pages/ai_results.html'"-->
+                                TODO: extend button (stretch goal)
+                                <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span>
+                                <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/html/pages/ai_results.html'"> <!--onclick="window.location.href='../../html/pages/ai_results.html'"
                                     <i class="bi bi-arrow-right-circle-fill"></i>
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 </div>

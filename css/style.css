@@ -1047,7 +1047,7 @@ footer img {
   margin-bottom: 40px;
 }
 .service-header {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: 120px;
   margin-right: 120px;
   background-color: white;
@@ -1060,7 +1060,6 @@ footer img {
 }
 .service-header .btn.btn-secondary{
   border-radius: 10px;
-  margin-bottom: 20px;
   padding: 8px;
   background-color: white;
   color: var(--dark-navy);
@@ -1074,7 +1073,6 @@ footer img {
 }
 .service-header .btn.btn-link{
   border-radius: 10px;
-  margin-bottom: 20px;
   padding: 8px;
   background-color: white;
   color: var(--dark-navy);
@@ -1097,6 +1095,12 @@ footer img {
     #divService,
     #divService * {
         visibility: visible;
+    }
+    #btnRelatedServices * {
+        visibility: hidden;
+    }
+    #related_services * {
+        visibility: hidden;
     }
     body {
       overflow: hidden;
@@ -1148,7 +1152,7 @@ footer img {
 }
 .hr-gold {
   border: none;
-  height: 1px;
+  height: 2px;
   background-color: var(--gold);
   opacity: 1; 
 }
@@ -1253,7 +1257,42 @@ footer img {
   word-break: break-all;
   white-space: normal;
 }
-
+.recomendedServices{
+  margin-left: 15px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.recomendedServices h6{
+  margin-bottom: 10px;
+  word-break: keep-all;
+}
+.recomendedServices i{
+  color: inherit;
+}
+.recomendedServices button {
+  border-radius: 10px;
+  background-color: white;
+  color: var(--dark-navy);
+  border: 2px solid var(--dark-navy);
+}
+.recomendedServices button:hover {
+  background-color: var(--accent-blue);
+  color: white;
+  border: 2px solid var(--accent-blue);
+}
+.recomendedServices hr{
+  display: none;
+  border: none;
+  height: 2px;
+  background-color: var(--gold);
+  opacity: 1; 
+}
+@media (max-width: 768px) {
+  .recomendedServices hr {
+    display: block;
+  }
+}
 
 /* .search-bar { Olivia's
     padding-top: 10px;
@@ -1339,7 +1378,6 @@ footer img {
   margin-bottom: 40px;
 }
 .more_info{
-  background-color: var(--light-grey);
   overflow-wrap: break-all;
 }
 .more_info li{
@@ -1357,6 +1395,12 @@ footer img {
   overflow-wrap: break-word;
   word-break: break-all;
   white-space: normal;
+}
+.related-services {
+  max-height: 300px;      /* adjust as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;     /* prevents scrollbar overlap */
 }
 
 .icon-circle {
@@ -1635,7 +1679,21 @@ p{
   margin-right: 5px;
   color: inherit;
 }
+.stickytitle {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding-right: 25px;
+  padding-left: 2
+}
+.stickytitle hr{
+  margin-left: 25px;
+  height: 1px;
+}
 .sidenav a {
+  position: sticky;
+  top: 0;
+  background-color: white;
   padding-left: 35px;
   padding-top: 5px;
   text-decoration: none;
