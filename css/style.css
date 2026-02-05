@@ -401,6 +401,17 @@ textarea {
 }
 
 /*registration_form*/
+.main-container { 
+  max-width: 760px; 
+  margin-left: 50px; 
+}
+
+/*hours text box*/
+.day-label {
+  width: 90px;
+  margin-bottom: 1px;
+}
+
 /* progress step*/
 .progress-steps {
   width: 220px;
@@ -477,8 +488,8 @@ label.required::after {
 input.form-control,
 select.form-select,
 textarea.form-control {
-  border: 1.5px solid var(--accent-blue);
-  border-radius: 6px;
+  border: 2px solid var(--accent-blue);
+  border-radius: 4px;
   padding: 8px 12px;
   font-size: 16px;
   color: var(--dark-navy);
@@ -486,6 +497,7 @@ textarea.form-control {
   font-family: inherit;
   resize: vertical;
   min-height: 48px;
+  width: 100%
 }
 textarea.form-control {
   min-height: 128px;
@@ -510,6 +522,39 @@ input.form-control-sm {
 /* Fieldset inputs layout */
 fieldset > .row > div > input.form-control {
   min-width: 0;
+  margin-bottom: 2px;
+}
+
+.accent-btn {
+    border: 2px solid var(--accent-blue) !important;
+}
+
+/* Hover effect: Grey background */
+.accent-btn:hover {
+    color: var(--accent-blue) !important;
+    background-color: var(--clr-accent-blue) !important; 
+    color: var(--clr-light-grey) !important; 
+}
+
+.dropdown-btn {
+    cursor: pointer;
+    border: 2px solid var(--accent-blue);
+    padding: 8px 12px;
+    position: relative;
+}
+
+/* Styles for the caret-down icons inside dropdown buttons */
+.dropdown-btn i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Styles for the outer dropdown containers*/
+#divOuterCountiesReg,
+#divOuterKeywordsReg {
+    display: none;
 }
 
 /* Invalid feedback */
