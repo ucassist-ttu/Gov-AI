@@ -13,7 +13,7 @@
   - Body: JSON `{"service": {<service fields>}}`.
   - Behavior: Creates a pending service request, emails approval links, and returns an empty response body.
 - `POST /request-update-service`
-  - Body: JSON `{"service": {<service fields including ID>}}`.
+  - Body: JSON `{"service": {<service fields>}}`.
   - Behavior: Creates a pending update request, emails approval links, and returns an empty response body.
 - `POST /request-delete-service`
   - Body: JSON `{"id": <int>}`.
