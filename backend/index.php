@@ -37,38 +37,65 @@ try {
     }
 
     if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        header(header: 'Content-Type: text/html; charset=UTF-8');
         $service_request = get_service_request(id: $_GET['uuid']);
-        create_service(service: json_decode(json: $service_request['Body'], associative: true));
+        if ($service_request) {
+            create_service(service: json_decode(json: $service_request['Body'], associative: true));
+            delete_service_request(id: $_GET['uuid']);
+            echo service_request_success_page(message: 'Serivce successfully created!');
+        } else {
+            echo service_request_success_page(message: 'Sorry, the service creation request has expired.');
+        }
+        clean_service_requests();
         exit;
     }
 
     if ($path === '/delete-service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        header(header: 'Content-Type: text/html; charset=UTF-8');
         $service_request = get_service_request(id: $_GET['uuid']);
-        delete_service(id: (int) $service_request['Body']);
+        if ($service_request) {
+            delete_service(id: (int) $service_request['Body']);
+            delete_service_request(id: $_GET['uuid']);
+            echo service_request_success_page(message: 'Serivce successfully deleted!');
+        } else {
+            echo service_request_success_page(message: 'Sorry, the service deletion request has expired.');
+        }
+        clean_service_requests();
         exit;
     }
 
     if ($path === '/update-service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        header(header: 'Content-Type: text/html; charset=UTF-8');
         $service_request = get_service_request(id: $_GET['uuid']);
-        update_service(service: json_decode(json: $service_request['Body'], associative: true));
+        if ($service_request) {
+            update_service(service: json_decode(json: $service_request['Body'], associative: true));
+            delete_service_request(id: $_GET['uuid']);
+            echo service_request_success_page(message: 'Serivce successfully updated!');
+        } else {
+            echo service_request_success_page(message: 'Sorry, the service update request has expired.');
+        }
+        clean_service_requests();
         exit;
     }
 
     if ($path === '/request-create-service' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
         request_service_creation(service: request_body(key: 'service'));
+        clean_service_requests();
         exit;
     }
 
     if ($path === '/request-update-service' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
         request_service_update(service: request_body(key: 'service'));
+        clean_service_requests();
         exit;
     }
 
     if ($path === '/request-delete-service' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
         request_service_deletion(id: request_body(key: 'id'));
+        clean_service_requests();
         exit;
     }
 } catch (Exception $exception) {
