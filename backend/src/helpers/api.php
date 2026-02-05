@@ -26,7 +26,6 @@ function get_services_from_user_input(string $user_input): array
   foreach ($services as $service) {
     $ids[] = get_service(id: $service['id']);
   }
-
   return $ids;
 }
 

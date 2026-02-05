@@ -1,179 +1,122 @@
 let arrCounties = []
 let arrServiceType = []
 let arrOrgName = []
+let arrFilteredServices = []
+let arrAllServices = []
+
 async function getServices() {
-        try{
-            //Get the list of services from api
-            let servResponse = await fetch(`http://34.171.184.135:8000/services`)
-            let servData = await servResponse.json()
-            let strDiv = ``
+    try{
+        //Get the list of services from api
+        let servResponse = await fetch(`http://34.171.184.135:8000/services`)
+        let servData = await servResponse.json()
+        arrAllServices = servData
+        renderSidebarServices(servData)
 
-            //Create each service card
-            servData.forEach(element => {
-                let strTagList = getTagList(element)
-                let strCounties = getCountyList(element)
+        // Get all of the counties, service types, and organization names for filtering
+        servData.forEach(element => {
+            let strTagList = getTagList(element)
+            let strCounties = getCountyList(element)
 
-                //Initialize card and add name of service
-                strDiv += `<div id="divOuterService">`
-                strDiv += `<div class="service" data-organization="${element.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
-                strDiv += `<h2>${element.NameOfService}</h2>`
-
-                //Checks to see if service provider has a logo and uses it if so
-                if (element.ProviderLogo != 'N/A'){
-                    strDiv += `<h3>Offered by: <img src="${element.ProviderLogo}" alt="${element.OrganizationName}"></h3>`
-                }
-                // Uses organization name if service does not have a logo
-                else{
-                    strDiv += `<h3>Offered by: ${element.OrganizationName}</h3>`
-                    arrOrgName.push(element.OrganizationName)
-                }
-
-                // Displays tags and service description
-                strDiv += `<p class="mb-3">Tags: ${strTagList}</p>`
-                strDiv += `<p>${element.ServiceDescription}</p>`
-
-                // Creates a more_info section with no display
-                strDiv += `<div class="more_info mb-4" style="display: none;">`
-                strDiv += `<hr class="hr-gold"/>`
-                strDiv += `<div class="row with-divider">`
-                strDiv+= `<div class="col-12 col-md-6">`
-
-                // Next steps section
-                strDiv += `<h3 class="mb-1"><b>Next Steps:</b></h3>`
-
-                // Checks to see if service has a telephone contact
-                if (element.TelephoneContact != 'N/A'){
-                    let telNumber = element.TelephoneContact.replace(/[^\d+]/g, '');
-                    strDiv += `<p><i class="bi bi-telephone"></i> <a href="tel:${telNumber}"><u>${element.TelephoneContact}</u></a></p>`
-                }
-
-                // Checks to see if service has an email contact
-                if (element.EmailContact != 'N/A'){
-                    strDiv += `<p><i class="bi bi-envelope"></i> <a href="mailto:${element.EmailContact}"><u>${element.EmailContact}</u></a></p>`
-                }
-
-                // Checks to see if a service has an address
-                if (element.ServiceAddress != 'N/A') {
-                    let straddress = `${element.ServiceAddress} ${element.CityStateZip}`.trim();
-                    let strencoded = encodeURIComponent(straddress);
-                    strDiv += `<p><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`;
-                }
-
-                //Checks to see if a service has a website
-                if (element.Website != 'N/A') {
-                    let strurl = element.Website.trim();
-
-                    let strhref = strurl.startsWith("http://") || strurl.startsWith("https://")
-                        ? strurl
-                        : "https://" + strurl;
-
-                    strDiv += `<p><i class="bi bi-display"></i> <a href="${strhref}" target="_blank"><u>${strurl}</u></a></p>`;
-                }
-                strDiv += `</div>`
-
-                // Hours of operation section
-                if (element.HoursOfOperation != 'N/A') {
-
-                    // Veritcal divider
-                    strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
-                    strDiv += `<div class="service-divider-vertical"></div>`
-                    strDiv += `</div>`
-
-                    strDiv +=`<div class="col-12 col-md-5">`
-                    strDiv += `<h3 class="mb-1"><b>Hours:</b></h3>`
-                    strDiv += `<p>${element.HoursOfOperation}</p>`
-                    strDiv += `</div>`
-                }
-                strDiv += `</div>`
-
-                // Checks to see if a service has any program criteria
-                if (element.ProgramCriteria != 'N/A') {
-                    strDiv += `<h3 class="mb-1"><b>Service Criteria:</b></h3>`
-                    strDiv += `<p>${element.ProgramCriteria}</p>`
-                }
-
-                // Lists counties available
-                if (element.CountiesAvailable != 'N/A') {
-                    strDiv += `<h3 class="mb-1"><b>Offered In:</b></h3>`
-                    strDiv += `<ul>`
-                    strCounties.forEach(county => {
-                        strDiv += `<li>${county}</li>`
-                        arrCounties.push(county)
-                    })
-                    strDiv += `</ul>`
-                }
-                strDiv += `</div>`
-
-                // Show more button
-                strDiv += `<button>Show More<i class="bi bi-caret-down-fill"></i></button>`
-                strDiv += `</div>`
-
-                // Blue service divider
-                strDiv += `<hr class="hr-blue"/>`
-                strDiv += `</div>`
-            });
-
-            // Adds the service to divServices
-            document.querySelector('#divServices').innerHTML += strDiv
-
-            // Logic for show more info button
-            document.querySelectorAll('.service button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const serviceCard = button.closest('.service');
-                    const moreInfoDiv = serviceCard.querySelector('.more_info');
-
-                    // Toggles the display of show_more section
-                    if (moreInfoDiv.style.display === 'none') {
-                        moreInfoDiv.style.display = 'block';
-                        button.innerHTML = `Show Less<i class="bi bi-caret-up-fill"></i>`;
-                        serviceCard.classList.toggle('is-expanded');
-                    } else {
-                        moreInfoDiv.style.display = 'none';
-                        button.innerHTML = 'Show More<i class="bi bi-caret-down-fill"></i>';
-                        serviceCard.classList.toggle('is-expanded');
-                    }
-                });
-            });
-        } catch (objError){
-            console.log('Error fetching objData', objError)
-        }
-        uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-        uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-        uniqueOrgNames = [...new Set(arrOrgName.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-        createCountyFilter(uniqueCounties)
-        createServiceFilter(uniqueServiceTypes)
-        createOrgNamesFilter(uniqueOrgNames)
-    }
-
-    getServices()
-
-    // Gets the list of tags for each service
-    function getTagList(service) {
-        strKeywords = service.Keywords
-        if (typeof strKeywords === 'string') {
-            strKeywords = JSON.parse(strKeywords);
-        }
-        // Returns keywords seperated by a ','
-        if (Array.isArray(strKeywords)) {
-            strKeywords.forEach(tag => {
+            arrOrgName.push(element.OrganizationName)
+            strTagList.forEach(tag => {
                 arrServiceType.push(tag)
-            })
-            return strKeywords.join(', ');
-        }
+            });
+            strCounties.forEach(county => {
+                arrCounties.push(county)
+            });
+        });
+    } catch (objError){
+        console.log('Error fetching objData', objError)
     }
 
-    // Gets  the list of counties for each services
-    function getCountyList(service) {
-        strCounties = service.CountiesAvailable
-        if (typeof strCounties === 'string') {
-            strCounties = JSON.parse(strCounties);
+    // Remove all duplicate instances from each array
+    uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    uniqueOrgNames = [...new Set(arrOrgName.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    
+    // Create the filters
+    createCountyFilter(uniqueCounties)
+    createServiceFilter(uniqueServiceTypes)
+    createOrgNamesFilter(uniqueOrgNames)
+}
+
+getServices()
+
+// Create the service cards for each page
+function createServiceCard(arrCards) {
+    arrCards.forEach(service => {
+        let strDiv = ''
+        let strTagList = getTagList(service)
+        let strCounties = getCountyList(service)
+
+        //Initialize card and add name of service
+        strDiv += `<div id="divOuterService">`
+        strDiv += `<div class="service" data-id="${service.ID}" data-organization="${service.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
+        strDiv += `<h2>${service.NameOfService}</h2>`
+
+        //Checks to see if service provider has a logo and uses it if so
+        if (service.ProviderLogo != 'N/A'){
+            strDiv += `<h3>Offered by: <img src="${service.ProviderLogo}" alt="${service.OrganizationName}"></h3>`
+        }
+        // Uses organization name if service does not have a logo
+        else{
+            strDiv += `<h3>Offered by: ${service.OrganizationName}</h3>`
         }
 
-        // Returns an array of strCounties
-        if (Array.isArray(strCounties)) {
-            return strCounties;
-        }
+        // Displays tags and service description
+        strDiv += `<p class="mb-3">Tags: ${strTagList.join(', ')}</p>`
+        strDiv += `<p>${service.ServiceDescription}</p>`
+
+        // Learn more button
+        strDiv += `<button>Learn More <i class="bi bi-caret-right-fill"></i></button>`
+        strDiv += `</div>`
+
+        // Blue service divider
+        strDiv += `<hr class="hr-blue"/>`
+        strDiv += `</div>`
+        document.querySelector('#divServices').innerHTML += strDiv
+
+        // Logic for the Learn More button
+        document.querySelectorAll('.service button').forEach(button => {
+            button.addEventListener('click', () => {
+                const serviceCard = button.closest('.service');
+
+                let serviceId = serviceCard.dataset.id
+                callServicePage(serviceId)
+            });
+        })
+    })
+}
+
+// Gets the list of tags for each service
+function getTagList(service) {
+    strKeywords = service.Keywords
+    if (typeof strKeywords === 'string') {
+        strKeywords = JSON.parse(strKeywords);
     }
+    // Returns keywords seperated by a ','
+    if (Array.isArray(strKeywords)) {
+        return strKeywords;
+    }
+}
+
+// Shows more information on a service by calling service.html  
+function callServicePage (page_id) {
+    window.location.href = `service.html?id=${page_id}`;
+}
+
+// Gets  the list of counties for each services
+function getCountyList(service) {
+    strCounties = service.CountiesAvailable
+    if (typeof strCounties === 'string') {
+        strCounties = JSON.parse(strCounties);
+    }
+
+    // Returns an array of strCounties
+    if (Array.isArray(strCounties)) {
+        return strCounties;
+    }
+}
 
 // Creates the checkboxes
 function createCheckbox(labelText, container) {
@@ -197,6 +140,7 @@ function createCheckbox(labelText, container) {
   wrapper.appendChild(label);
   container.appendChild(wrapper);
 }
+
 // Creates the checkboxes for the county filter
 function createCountyFilter(counties) {
   const VISIBLE_COUNT = 6;
@@ -347,8 +291,7 @@ function closeNav() {
 
 // Closes the filter when the overlay is clicked
 overlay.addEventListener("click", () => {
-  document.getElementById("mySidenav").style.width = "0";
-  overlay.classList.remove("active");
+  closeNav()
 })
 
 // Closes the filter side bar when btnSeeResults is clicked
@@ -362,92 +305,103 @@ document.querySelector("#btnClearFilter").addEventListener("click", () => {
     selectedCheckboxes.forEach(box => {
         box.checked = false;
     });
-    const outerServices = document.querySelectorAll("#divOuterService");
-    outerServices.forEach(outer => {
-        outer.style.display = "block";
-    });
+    arrFilteredServices = []
+    renderSidebarServices(arrAllServices)
 })
 
+// Returns an array of all selected check boxed from a container
 function getSelectedCheckboxes(containerId) {
     return Array.from(
         document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
     ).map(el => el.value);
 }
 
+// Applys the filter anytime a checkbox is updated
 document.getElementById('divAllFilter').addEventListener('change', (e) => {
-    if (e.target && e.target.matches('input[type="checkbox"]')) {
-        const selectedCounties = getSelectedCheckboxes("divOuterCounties");
-        const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes");
-        const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName");
+    if (!e.target.matches('input[type="checkbox"]')) return;
+    const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
+    const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
+    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
-        // Loop through each outer container
-        const outerServices = document.querySelectorAll("#divOuterService");
-        outerServices.forEach(outer => {
-            const card = outer.querySelector(".service");
+    //Reset the FilteredServices
+    arrFilteredServices = [];
 
-            const counties = card.dataset.counties.toLowerCase().split(",").map(c => c.trim());
-            const serviceType = card.dataset.tags.toLowerCase().split(",").map(c => c.trim());
-            const orgName = card.dataset.organization.toLowerCase().split(",").map(c => c.trim());
+    // Loop through all services
+    arrAllServices.forEach(service => {
+        let strCounties = getCountyList(service)
+        let strTags = getTagList(service)
 
-            let countyMatch = true;
-            if (selectedCounties.length > 0) {
-                countyMatch = selectedCounties.some(county => counties.includes(county.toLowerCase()));
-            }
-            let serviceMatch = true;
-            if (selectedServiceTypes.length > 0) {
-                serviceMatch = selectedServiceTypes.some(service => serviceType.includes(service.toLowerCase()));
-            }
-            let orgMatch = true;
-            if (selectedOrgNames.length > 0) {
-                orgMatch = selectedOrgNames.some(org => orgName.includes(org.toLowerCase()));
-            }
+        // Normalize arrays to lowercase for case-insensitive comparison
+        const counties = (strCounties).map(c => c.toLowerCase());
+        const tags = (strTags).map(t => t.toLowerCase());
+        const org = (service.OrganizationName || "").toLowerCase();
 
-            outer.style.display = (countyMatch && serviceMatch && orgMatch) ? "block" : "none";
+        // Check each filter; if filter list is empty, treat as "match all"
+        const countyMatch = selectedCounties.length === 0 || selectedCounties.some(c => counties.includes(c.toLowerCase()));
+        const serviceMatch = selectedServiceTypes.length === 0 || selectedServiceTypes.some(s => tags.includes(s.toLowerCase()));
+        const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
+
+        // Only push if all filters match
+        if (countyMatch && serviceMatch && orgMatch) {
+        arrFilteredServices.push(service);
+        }
+    });
+
+    currentPage = 0
+    renderSidebarServices(arrFilteredServices)
+})
+
+
+// Adds the page number at the bottom of the page and displays 10 services at a time
+let currentPage = 0
+function renderSidebarServices(arrServices) {
+    const sidebarBody = document.querySelector("#divServices");
+
+    sidebarBody.innerHTML = "";
+
+    const start = currentPage * 10;
+    const end = start + 10;
+
+    const pageItems = arrServices.slice(start, end);
+    createServiceCard(pageItems)
+
+    // Pagination controls
+    if (arrServices.length > 10) {
+        const controls = document.createElement("div");
+        controls.className = "d-flex justify-content-around align-items-center mt-3";
+
+        const prevBtn = document.createElement("button");
+        prevBtn.className = "btn btn-sm btn-outline-secondary";
+        prevBtn.innerHTML = '<i class="bi bi-chevron-left"></i>';
+        prevBtn.disabled = currentPage === 0;
+
+        const nextBtn = document.createElement("button");
+        nextBtn.className = "btn btn-sm btn-outline-secondary";
+        nextBtn.innerHTML = '<i class="bi bi-chevron-right"></i>';
+        nextBtn.disabled = end >= arrServices.length;
+
+        const pageIndicator = document.createElement("small");
+        pageIndicator.className = "text-muted";
+        pageIndicator.textContent = `Page ${currentPage + 1} of ${Math.ceil(
+        arrServices.length / 10
+        )}`;
+
+        prevBtn.addEventListener("click", () => {
+        currentPage--;
+        renderSidebarServices(arrServices);
         });
+
+        nextBtn.addEventListener("click", () => {
+        currentPage++;
+        renderSidebarServices(arrServices);
+        });
+
+        controls.appendChild(prevBtn);
+        controls.appendChild(pageIndicator);
+        controls.appendChild(nextBtn);
+        sidebarBody.appendChild(controls);
     }
-});
-
-
-
-
-    // function applyFilters() {
-
-    //     const selectedTags = getSelected("divServiceFilter");
-    //     const selectedCounties = getSelected("divCountiesFilter");
-    //     console.log(selectedTags)
-    //     console.log(selectedCounties)
-
-    //     const cards = document.querySelectorAll(".service");
-
-    //     cards.forEach(card => {
-
-    //         const tags = card.dataset.tags.split(",").map(t => t.trim());
-    //         const counties = card.dataset.counties.split(",").map(c => c.trim());
-
-    //         // ✔ TAG MATCH
-    //         let tagMatch = true;  // default (no tag filters applied)
-    //         if (selectedTags.length > 0) {
-    //             tagMatch = selectedTags.some(tag => tags.includes(tag));
-    //         }
-
-    //         // ✔ COUNTY MATCH
-    //         let countyMatch = true; // default (no county filters applied)
-    //         if (selectedCounties.length > 0) {
-    //             countyMatch = selectedCounties.some(cty => counties.includes(cty));
-    //         }
-
-    //         // ✔ MUST MATCH BOTH GROUPS
-    //         if (tagMatch && countyMatch) {
-    //             card.style.display = "block";
-    //         } else {
-    //             card.style.display = "none";
-    //         }
-    //     });
-    // }
-
-
-
-
+}
 
 
 // let strLatitude
