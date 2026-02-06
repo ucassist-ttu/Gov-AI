@@ -61,7 +61,7 @@ async function getServices() {
 function markerClick(e) {
     for (let i = 0; i < allServices.length; i++) {
         if (e.target == allServices[i].marker) {
-            console.log(allServices[i].service)
+            console.log(getCountyList(allServices[i].service))
         }
     }
 }
@@ -69,30 +69,54 @@ function markerClick(e) {
 // -- Pushes service data to global variables
 
 function loadServices() {
-    getServices().then(servData => {
-        let i = 0;
+  getServices().then(servData => {
+    let i = 0;
 
-        servData.forEach(element => {
-            try {
-                if (!geocodes[i]) return;
+    servData.forEach(element => {
+        try {
+            if (!geocodes[i]) return;
+            let marker = L.marker(geocodes[i]).addTo(map);
+            marker.on('click', markerClick);
 
-                let marker = L.marker(geocodes[i]).addTo(map);
-                marker.on('click', markerClick);
+            const mapItem = new MapItem ({
+              service: element,
+              marker: marker
+            })
 
-                const mapItem = new MapItem ({
-                  service: element,
-                  marker: marker
-                })
-
-                allServices.push(mapItem);
-                i++;
-            } catch (err) {
-                console.error("Error creating marker", err);
-            }
-        });
-
-        loadServicesIntoSidebar(allServices);
+            allServices.push(mapItem);
+            i++;
+        } catch (err) {
+            console.error("Error creating marker", err);
+        }
+    });  
+    loadServicesIntoSidebar(allServices);
+  });
+  // -- HTML variables --
+  // recalculates map's size when resizing
+  document.getElementById("mapCollapse")
+    .addEventListener("shown.bs.collapse", () => {
+      map.invalidateSize();
     });
+    
+  document.getElementById("mapCollapse")
+  .addEventListener("hidden.bs.collapse", () => {
+    map.invalidateSize();
+  });
+
+  // -- Map variables --
+
+  map = L.map('map', {
+    zoomSnap: 0,
+    zoomDelta: 0.2
+  }).setView([36.162838, -85.501640], 9);
+  map.setMinZoom(9)
+  
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    noWrap: true,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+
+  loadAndMaskCounties()
 }
 
 // -- Takes a service and returns a structured div --
@@ -221,7 +245,9 @@ async function loadAndMaskCounties() {
     // set event handlers for each county layer
     onEachFeature: (feature, layer) => {
       layer.on({
-        click: () => zoomToCounty(layer),
+        click: () => {
+          zoomToCounty(layer, feature)
+        },
         // set styling when mouse over
         mouseover: () => {
           layer.setStyle({ fillOpacity: 0.35 }); // highlight selected county
@@ -239,8 +265,12 @@ async function loadAndMaskCounties() {
   }).addTo(map)
 
   // set zoom to upper cumberland
-  const bounds = countiesLayer.getBounds();
-  map.fitBounds(bounds, { padding: [20, 20] });
+  const bounds = countiesLayer.getBounds().pad(0.2);
+  map.fitBounds(bounds);
+
+  map.setMaxBounds(bounds);
+  map.options.maxBoundsViscosity = 1;
+
 
   // sets the area to be masked (whole map)
   const world = [
@@ -270,14 +300,15 @@ async function loadAndMaskCounties() {
 
 // -- Takes a leaflet layer object and fits the bounds of the map to the bounds of the layer --
 
-function zoomToCounty(layer) {
+function zoomToCounty(layer, feature) {
   if (selectedCounty) countiesLayer.resetStyle(selectedCounty)
   
   if (selectedCounty == layer) {
     const bounds = countiesLayer.getBounds();
-    map.fitBounds(bounds, { padding: [20, 20] });
+    map.fitBounds(bounds.pad(0.2));
     countiesLayer.resetStyle(selectedCounty)
     selectedCounty = null;
+    loadServicesIntoSidebar(allServices)
     return;
   }
 
@@ -285,6 +316,8 @@ function zoomToCounty(layer) {
 
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
   map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
+  
+  loadServicesIntoSidebar(filterServicesByCounties(feature.properties.NAME))
 }
 
 // -- takes a service and returns an array of county names --
@@ -302,47 +335,19 @@ function getCountyList(service) {
 // -- takes an array of county strings and returns an array of the filtered global array --
 function filterServicesByCounties(counties) {
   let filteredServices = []
-  allServices.forEach(mapItem => {
-    let countiesAvailable = getCountyList(mapItem.service)
+  for (let i = 0; i < allServices.length; i++) {
+    let countiesAvailable = getCountyList(allServices[i].service)
     countiesAvailable.forEach(county => {
-      if (county in counties) {
-        filteredServices.push(mapItem)
+      if (counties.includes(county) && !filteredServices.includes(allServices[i])) {
+        filteredServices.push(allServices[i])
       }
     })
-  })
+  }
   return filteredServices
 }
 
 
 // -- wait until the inline script has added the Pinmap to the DOM --
-document.addEventListener('DOMContentLoaded', (event) => {
-  loadAndMaskCounties()
+window.addEventListener('load', (event) => {
   loadServices()
-  console.log(filterServicesByCounties(["Putnam"]))
-
-  // -- HTML variables --
-  // recalculates map's size when resizing
-  document.getElementById("mapCollapse")
-    .addEventListener("shown.bs.collapse", () => {
-      map.invalidateSize();
-    });
-
-  document.getElementById("mapCollapse")
-    .addEventListener("hidden.bs.collapse", () => {
-      map.invalidateSize();
-    });
-
-  // -- Map variables --
-
-  map = L.map('map', {
-      zoomSnap: 0,
-      zoomDelta: 0.2
-  }).setView([36.162838, -85.501640], 9);
-  map.setMinZoom(9)
-
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      noWrap: true,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  }).addTo(map);
-
 });
