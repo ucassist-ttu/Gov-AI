@@ -1,3 +1,5 @@
+let strHeader = null;
+
 async function getAIRecommendations(userPrompt) {
     let AIContainer = document.querySelector('#suggestedResources');
     AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
@@ -23,7 +25,7 @@ async function getAIRecommendations(userPrompt) {
         let txtHTML = "";
         let intCount = 1  // for numbering the services on the html
 
-        aiData.services.forEach(element => {
+        aiData.forEach(element => {
             let strResourceName = element.NameOfService
             let strCompany = element.OrganizationName
             let strDescription = element.ServiceDescription
@@ -39,6 +41,7 @@ async function getAIRecommendations(userPrompt) {
             txtHTML +=`      ${strDescription}`
             txtHTML +=`</p>`
             txtHTML +=`<p class="btn ai-link">More Details</p>`
+            intCount ++;
         })
         AIContainer.innerHTML += txtHTML
     } catch (objError){

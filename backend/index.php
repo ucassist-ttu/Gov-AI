@@ -12,6 +12,9 @@ loadenv();
 $path = parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 
 try {
+    header(header: 'Access-Control-Allow-Origin: *');
+    header(header: 'Access-Control-Allow-Methods: *');
+    header(header: 'Access-Control-Allow-Headers: *');
     if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
         echo json_encode(value: get_services_from_user_input(user_input: request_body(key: 'user_input')));

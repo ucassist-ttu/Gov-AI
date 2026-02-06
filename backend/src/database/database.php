@@ -5,7 +5,7 @@ $service_requests_table = 'tblServiceRequests';
 $pdo = new PDO(dsn: 'sqlite:' . __DIR__ . '/UCAssist.db');
 
 $columns = ['ID', 'OrganizationName', 'OrganizationDescription', 'Website', 'MinorityOwned',
-    'FaithBasedProvider', 'NonProfitProvider', 'ProviderLogo', 'NameOfSevice',
+    'FaithBasedProvider', 'NonProfitProvider', 'ProviderLogo', 'NameOfService',
     'ServiceDescription', 'ProgramCriteria', 'Keywords', 'CountiesAvailable',
     'TelephoneContact', 'EmailContact', 'ServiceAddress', 'CityStateZip', 'HoursOfOperation'];
 
