@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <title>Registration Form</title>
+</head>
+
+<body>
+  <header>
+    <div id="navbar"></div>
+     <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
+            <h1 class="fw-bold white">Registration Form</h1>
+        </div>
+  </header>
+
+  <!-- Progress bar -->
+  <nav aria-label="Progress" class="mb-4 w-100">
+    <div class="progress-steps" role="list" aria-label="progress steps">
+    <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1">1</div>
+    <div class="progress-line"></div>
+    <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 2">2</div>
+    <div class="progress-line"></div>
+    <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3">3</div>
+    </div>
+  </nav>
+
+  <main class="my-5 container text-start main-container">
+
+    <!-- Step 1: Organization Information - Public -->
+    <section id="step-1" class="form-step" aria-labelledby="public-info-title">
+      <div class="form-info mb-4" role="region" aria-labelledby="public-info-title">
+        <strong id="public-info-title" class="d-block mb-1">Organization Information - Public</strong>
+        <small class="text-muted">
+          This information will be displayed to customers searching for resources.
+        </small>
+      </div>
+
+      <form id="form-step-1" novalidate>
+        <div class="mb-3">
+          <label for="company" class="form-label required">Company Name</label>
+          <input type="text" id="company" name="company" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Company Name is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label required">Organization Description</label>
+          <textarea id="description" name="description" class="form-control" placeholder="Please give a brief description of your company" required aria-required="true" rows="4"></textarea>
+          <div class="invalid-feedback">Organization Description is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label required">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Phone Number is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="website" class="form-label">Website / URL</label>
+          <input type="url" id="website" name="website" class="form-control" />
+        </div>
+        
+        <fieldset class="mb-3">
+          <label for="physicalAddress" class="form-label required">Physical Address</label>
+          <input type="text" name="address1" id="physicalAddress" class="form-control mb-2" placeholder="123 Anywhere St." required aria-required="true" />
+          <div class="invalid-feedback">Physical Address is required.</div>
+          <div class="row g-2">
+            <div class="col-auto flex-grow-1">
+              <input type="text" id="cityPublic" name="cityPublic" class="form-control" placeholder="City" required aria-required="true" />
+            </div>
+            <div class="col-auto" style="min-width: 80px;">
+              <input type="text" id="statePublic" name="statePublic" class="form-control" placeholder="State" required aria-required="true" />
+            </div>
+          </div>
+          <input type="text" id="zipPublic" name="zipPublic" class="form-control mt-2" placeholder="Zip Code" required aria-required="true" />
+        </fieldset>
+
+        <div class="mb-3">
+          <label for="attribute" class="form-label">Attribute <small class="text-muted fst-italic">Check All That Apply</small></label>
+          <input type="text" id="attribute" name="attribute" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="hours" class="form-label required">Hours of Operation</label>
+          <input type="text" id="hours" name="hours" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Hours of Operation is required.</div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Logo <small class="text-muted fst-italic">(Please keep in mind the logo will be placed on a dark navy background)</small></label>
+          <label for="upload" class="file-upload d-block p-3 text-center" tabindex="0" role="button" aria-label="Upload logo file">
+            Drag and drop your file here<br />or <br />
+            <a href="#" onclick="document.getElementById('upload').click(); return false;">upload from your computer</a>
+          </label>
+          <input type="file" id="upload" name="upload" class="d-none" accept="image/*" aria-label="Logo file upload" />
+            <div id="logo-preview" class="mt-3 text-center" style="display: none;">
+            <img id="logo-image" src="" alt="Logo Preview" class="img-fluid" style="max-width: 200px; max-height: 200px;" />
+            <br />
+            <button type="button" id="clear-logo" class="btn btn-sm btn-outline-secondary accent-btn mt-2">Remove Image</button>
+         </div>
+        </div>
+
+        <div class="d-flex gap-3 mt-3">
+          <button type="submit" class="submit-btn">Next</button>
+          <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Step 2: Organization Information - Private -->
+    <section id="step-2" class="form-step d-none" aria-labelledby="private-info-title">
+      <div class="form-info mb-4" role="region" aria-labelledby="private-info-title">
+        <strong id="private-info-title" class="d-block mb-1">Organization Information - Private</strong>
+        <small class="text-muted">
+          This information is for UCAssist staff to reach out to you and will not be displayed to the customers.
+        </small>
+      </div>
+
+      <form id="form-step-2" novalidate>
+        <h5 class="mb-3">Primary Contact</h5>
+        <div class="mb-3">
+          <label for="primaryName" class="form-label required">Name</label>
+          <input type="text" id="primaryName" name="primaryName" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Primary contact name is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="primaryEmail" class="form-label required">Email</label>
+          <input type="email" id="primaryEmail" name="primaryEmail" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Primary contact email is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="primaryPhone" class="form-label required">Phone Number</label>
+          <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Primary contact phone number is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="primaryPosition" class="form-label">Organization Position</label>
+          <input type="text" id="primaryPosition" name="primaryPosition" class="form-control" />
+        </div>
+
+        <h5 class="mb-3 mt-4">Secondary Contact</h5>
+
+        <div class="mb-3">
+          <label for="secondaryName" class="form-label">Name</label>
+          <input type="text" id="secondaryName" name="secondaryName" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="secondaryEmail" class="form-label">Email</label>
+          <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="secondaryPhone" class="form-label">Phone Number</label>
+          <input type="tel" id="secondaryPhone" name="secondaryPhone" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="secondaryPosition" class="form-label">Organization Position</label>
+          <input type="text" id="secondaryPosition" name="secondaryPosition" class="form-control" />
+        </div>
+
+        <div class="d-flex gap-3 mt-3">
+          <button type="submit" class="submit-btn">Next</button>
+          <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </section>
+    
+    <!-- Step 3: Register Services -->
+<section id="step-3" class="form-step d-none" aria-labelledby="register-services-title">
+  <div class="form-info mb-4" role="region" aria-labelledby="register-services-title">
+    <strong id="register-services-title" class="d-block mb-1">Register Services</strong>
+    <small class="text-muted">
+      Register all of your services or resources your organization offers.<br />Once you register your services you will be able to edit them using our edit service form from the previous page.
+    </small>
+  </div>
+
+  <form id="form-step-3" aria-label="Register Services Form" novalidate>
+    <div id="services-container">
+      <div class="service-block mb-4" data-service="1">
+        <label class="form-label">Service 1</label>
+
+        <div class="mb-3">
+          <label for="serviceName" class="form-label required">Service Name</label>
+          <input type="text" id="serviceName" name="serviceName" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Service Name is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="serviceDescription" class="form-label required">Service Description</label>
+          <textarea id="serviceDescription" name="serviceDescription" class="form-control" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4"></textarea>
+          <div class="invalid-feedback">Service Description is required.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="serviceCriteria" class="form-label">Service Criteria <small class="text-muted fst-italic">This will be displayed to the customer.</small></label>
+          <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+    <label class="form-label required">Counties Offered In </label>
+    <div id="btnCountiesReg" class="form-control dropdown-btn">
+        Check All That Apply <i class="bi bi-caret-down-fill"></i>
+    </div>
+    <div id="divOuterCountiesReg" class="form-check outer-layer">
+        <hr />
+        <div id="divCountiesReg" class="form-check">
+        </div>
+    </div>
+    <div class="invalid-feedback">At least one county must be selected.</div>
+</div>
+<div class="mb-3">
+    <label class="form-label required">Keywords </label>
+    <div id="btnKeywordsReg" class="form-control dropdown-btn">
+        Check All That Apply <i class="bi bi-caret-down-fill"></i>
+    </div>
+    <div id="divOuterKeywordsReg" class="form-check outer-layer">
+        <hr />
+        <div id="divKeywordsReg" class="form-check">
+        </div>
+    </div>
+    <div class="invalid-feedback">At least one keyword must be selected.</div>
+</div>
+
+        <div class="checkbox mb-3" style="padding-left: 0;">
+          <input type="checkbox" class="form-check-input" id="separatePhone" name="separatePhone" />
+          <label for="separatePhone" class="form-check-label">Separate phone number for this service?</label>
+        </div>
+
+        <div class="mb-3">
+          <label for="servicePhone" class="form-label required">Phone Number</label>
+          <input type="tel" id="servicePhone" name="servicePhone" class="form-control" required aria-required="true" />
+          <div class="invalid-feedback">Phone Number is required.</div>
+        </div>
+
+        <div class="checkbox mb-3" style="padding-left: 0;">
+          <input type="checkbox" class="form-check-input" id="separateAddress" name="separateAddress" />
+          <label for="separateAddress" class="form-check-label">Separate address for this service?</label>
+        </div>
+
+        <div class="mb-3">
+          <label for="serviceAddress" class="form-label">Physical Address</label>
+          <input type="text" class="form-control mb-2 w-100" placeholder="123 Anywhere St." />
+          <input type="text" class="form-control mb-2 w-50" placeholder="City" />
+          <input type="text" class="form-control w-25" placeholder="Zip Code" />
+        </div>
+
+        <div class="checkbox mb-3" style="padding-left: 0;">
+          <input type="checkbox" class="form-check-input" id="hoursDiffer" name="hoursDiffer" />
+          <label for="hoursDiffer" class="form-check-label">
+            Do service hours of operation differ from organization hours of operation?<br />
+            <small class="fst-italic" style="font-weight: normal;">ex: 8am - 2pm</small>
+          </label>
+        </div>
+
+        <div class="mb-3" id="serviceHoursContainer" style="display:none;">
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursMonday" class="form-label me-3 day-label">Monday</label>
+            <input type="text" id="hoursMonday" name="hoursMonday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursTuesday" class="form-label me-3 day-label">Tuesday</label>
+            <input type="text" id="hoursTuesday" name="hoursTuesday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursWednesday" class="form-label me-3 day-label">Wednesday</label>
+            <input type="text" id="hoursWednesday" name="hoursWednesday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursThursday" class="form-label me-3 day-label">Thursday</label>
+            <input type="text" id="hoursThursday" name="hoursThursday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursFriday" class="form-label me-3 day-label">Friday</label>
+            <input type="text" id="hoursFriday" name="hoursFriday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursSaturday" class="form-label me-3 day-label">Saturday</label>
+            <input type="text" id="hoursSaturday" name="hoursSaturday" class="form-control w-50" />
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <label for="hoursSunday" class="form-label me-3 day-label">Sunday</label>
+            <input type="text" id="hoursSunday" name="hoursSunday" class="form-control w-50" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn">+ Add Another Service</button>
+
+    <div class="d-flex gap-3">
+      <button type="submit" class="submit-btn">Submit</button>
+      <button type="button" class="btn btn-light cancel-btn">Cancel</button>
+    </div>
+  </form>
+</section>
+  </main>
+   <div id="footer"></div>
+
+    <script>
+        fetch('/partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('/partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="/js/registration_form.js"></script>
+</body>
+</html>

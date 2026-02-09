@@ -7,130 +7,164 @@
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/Gov-AI/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div id="navbar"></div>
-    
+
     <main>
-        <!-- crisis banner -->
-        <div class="jumbotron crisis text-center rounded-bottom z-3 position-relative red clr-light-grey align-items-center justify-content-center">
-            <h6 class="fw-bold">If you are experiencing an emergengy please call 911. <a href="/Gov-AI/html/pages/crisis.html" class="text-light">Click here for the Crisis Hotlines.</a></h6>
-        </div>
 
-        <!-- carousel -->
-        <!-- carousel is set to fade and the main caption is copied across all images (for now)-->
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <!-- this image is cropped wrong -->
-                    <img class="d-block responsive-header position-relative w-100" src="assets\images\upperCumberland5.png" alt="First slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess Falls, Sparta, TN</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1 class="img-text-lg mt-5 mt-md-0">Let Us Assist You in Finding the Right Help</h1>
-                        <p class="text-light jumbotron-text pt-2"><!--<a href="/Gov-AI/html/pages/services.html" --> Explore Available Resources Here</a></p>
-                        <!-- search bar -->
-                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
-                            <i class="bi bi-search ps-2"></i>
-                            <div class="divider-vertical d-flex align-items-center"></div>
-                            <input id="txtAIPrompt" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
-                            <!-- submit button -->
-                            <div class="d-flex justify-content-between">
-                                <!-- TODO: extend button (stretch goal) -->
-                                <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
-                                <button id="btn-AI-search" class="btn search-btn fs-3" aria-label="Submit" onclick="window.location.href='/Gov-AI/html/pages/ai_results.html'"> <!--onclick="window.location.href='/Gov-AI/html/pages/ai_results.html'"-->
-                                    <i class="bi bi-arrow-right-circle-fill"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="assets\images\upperCumberland5.png" alt="Second slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess Falls,</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1>Let Us Assist You in Finding the Right Help</h1>
-                        <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="d-block w-100" src="assets\images\upperCumberland5.png" alt="Third slide">
-                    <div class="carousel-caption d-none d-md-block text-end fw-light">
-                        <h5>Burgess</h5>
-                    </div>
-                    <div class="carousel-caption d-flex flex-column h-100 align-items-center justify-content-center">
-                        <h1>Let Us Assist You in Finding the Right Help</h1>
-                        <p><a href="#" class="text-light">Explore Available Resources Here</a></p>
-                    </div>
-                </div>
-                -->
+        <div class="position-relative">
+            <!-- crisis tag -->
+            <div class="index-crisis rounded-bottom">
+                <h6 class=""><a href="/html/pages/crisis.html" class="fw-bold">Crisis Hotline</a></h6>
             </div>
-        </div>
 
+            <!-- carousel -->
+            <div id="countyCarousel"></div>
+
+        </div>
         <!-- UCAssist description -->
-        <div class="jumbotron rounded-bottom UCAssist-desc gold text-center">
-            <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">The UCAssist program, run by the Upper Cumberland Development District, helps people find the support they need. Our goal is to make accessing local resources simple and convenient.</h5>        </div>
-        <div class="p-5" style="margin: 10px;">
-            <!-- Snap Link -->
-            <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
-                <span><a href="/Gov-AI/html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
-            </div>
+        <div class="rounded-bottom UCAssist-desc gold text-center">
+            <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">The UCAssist program, run by the Upper Cumberland Development District, helps people find the support they need. Our goal is to make accessing local resources simple and convenient.</h5>
+        </div>
 
-            <!-- Services Link -->
-            <div class="card mx-5 mb-3 border-0 home-card">
-                <div class="row g-0">
-                    <!-- Left Image -->
-                    <div class="col-md-4">
-                        <img src="assets\images\need-help-brett-jordan.png" class="img-fluid rounded-start" alt="...">
+        <!-- I need: -->
+        <div id="iNeed"></div>
+        <!-- <div class="rounded-bottom UCAssist-desc accent_blue">
+            <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">
+                <a class="justify-content-start">I need:</a>
+                <div id="iNeed" class="row pt-3 justify-content-between">
+                    <span class=" col iNeedPills">
+                        <i class="bi bi-person rounded-start p-2 gold white"></i>
+                        <div class="bckg-white clr-dark-navy fw-light p-2 pe-3 ps-3 rounded-end">food</div>
+                    </span>
+                    <span class=" col iNeedPills">
+                        <i class="bi bi-person rounded-start p-2 gold white"></i>
+                        <div class="bckg-white clr-dark-navy fw-light p-2 pe-3 ps-3 rounded-end">housing</div>
+                    </span>
+                    <span class="col iNeedPills">
+                        <i class="bi bi-person rounded-start p-2 gold white"></i>
+                        <div class="bckg-white clr-dark-navy fw-light p-2 pe-3 ps-3 rounded-end">transportation</div>
+                    </span>
+                    <span class="col iNeedPills">
+                        <i class="bi bi-person rounded-start p-2 gold white"></i>
+                        <div class="bckg-white clr-dark-navy fw-light p-2 pe-3 ps-3 rounded-end">food</div>
+                    </span>
+                </div>   
+            </h5>
+        </div> -->
+        <!-- <div class="p-5" style="margin: 10px;">
+        <div id="wrapperHumanServicesHumanMinds" class="pt-5">
+            <div id="frmHumanServicesHumanMind" class="row justify-content-center">
+                <div class="card m-2 col-12 col-md-5" style="width: 18rem;">
+                    <img src="\assets\images\placeholder-img.webp" class="card-img-top pt-3" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
-                    <!-- Card Content -->
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Need Help?</h5>
-                            <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
-                            <p class="card-text"><a href="/Gov-AI/html/pages/needHelp.html" class="text-dark">Click Here to start!</a></p>
-                        </div>
+                </div>
+                <div class="card m-2 col-12 col-md-5" style="width: 18rem;">
+                    <img src="\assets\images\placeholder-img.webp" class="card-img-top pt-3" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card m-2 col-12 col-md-5" style="width: 18rem;">
+                    <img src="\assets\images\placeholder-img.webp" class="card-img-top pt-3" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card m-2 col-12 col-md-5" style="width: 18rem;">
+                    <img src="\assets\images\placeholder-img.webp" class="card-img-top pt-3" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
             </div>
+        </div> -->
+        
+        <!-- PinMap -->
+        <div class="position-relative mx-1 mx-md-5 mt-5 rounded shadow map-container">
+            <div id="map" class="w-100 h-100 rounded"></div>
+            <div class="position-absolute top-0 end-0 d-flex flex-row h-100 justify-content-end" style="z-index: 1000;">
+                <button class="btn btnMap btn-light m-3" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
+                    <i class="bi bi-list text-dark"></i>
+                </button>
+                <div class="collapse h-100" id="mapCollapse">
+                    <div class="card card-body w-100 h-100 overflow-auto"></div>
+                </div>
+            </div>
+        </div>
 
-            <!-- Provider Link -->
-            <div class="card mx-5 mb-3 border-0 home-card">
-                <div class="row g-0">
-                    <!-- Left Image -->
-                    <div class="col-md-4">
-                        <img src="assets\images\provider-link-erika-giraud.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <!-- Card Content -->
-                    <div class="col-md-8">
+        <div class="wrapper" id="serviceInfo"></div>
+
+        <div class="mt-5"></div>
+        <div class="row mt-5">
+            <div class="card-group justify-content-evenly">
+                <!-- Services Page Link -->
+                <div class="col-12 col-md-5">
+                    <div class="card mx-3 mb-3 border-0 home-card col-sm-12">
+                        <img src="\assets\images\ucdd.webp"  class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Are You A Service Provider?</h5>
-                            <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
-                            <p class="card-text"><a href="/Gov-AI/html/pages/registration_landing.html" class="text-dark">Enroll Now!</a></p>
+                        <h4 class="card-title">Need Help?</h4>
+                        <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
+                        </div>
+                        <div class="card-footer">
+                        <p class="text-muted"><a href="/html/pages/needHelp.html" class="text-dark">See more!</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Provider Page Link -->
+                <div class="col-12 col-md-5">
+                    <div class="card mx-3 mb-3 border-0 rounded-0 home-card">
+                        <img src="assets\images\UCHRA-Public-Transportation-Ribbon-Cutting-scaled.webp" class="card-img-top " alt="...">
+                        <div class="card-body">
+                        <h4 class="card-title">Are You A Service Provider?</h4>
+                        <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                        </div>
+                        <div class="card-footer">
+                        <p class="text-muted"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!<a></small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
     <div id="footer"></div>
 
     <script>
-        fetch('/Gov-AI/partials/footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('/Gov-AI/partials/navbar.html')
+        fetch('/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
+        fetch('/partials/indexCarousel.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('countyCarousel').innerHTML = data);
+        fetch('/partials/iNeed.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('iNeed').innerHTML = data);
+        fetch('/partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
     </script>
-    <!-- more bootsrap libraries -->
+    <!-- more libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="/Gov-AI/js/index.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="/js/pinmap.js"></script>
+    <script src="/js/iNeed.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 </html>

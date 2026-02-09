@@ -1,8 +1,8 @@
+.env
 .DS_Store
 backend/dummy.db
 backend/UCAssist.db
 /backend/vendor/
-/backend/.env
 /backend/service-account.json
 
 
