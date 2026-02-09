@@ -31,7 +31,7 @@
 ### Service object shape
 
 All service bodies must include these fields (matching `tblServices` columns):
-`ID`, `OrganizationName`, `OrganizationDescription`, `Website`, `MinorityOwned`, `FaithBasedProvider`, `NonProfitProvider`, `ProviderLogo`, `NameOfSevice`, `ServiceDescription`, `ProgramCriteria`, `Keywords`, `CountiesAvailable`, `TelephoneContact`, `EmailContact`, `ServiceAddress`, `CityStateZip`, `HoursOfOperation`.
+`ID`, `OrganizationName`, `OrganizationDescription`, `Website`, `MinorityOwned`, `FaithBasedProvider`, `NonProfitProvider`, `ProviderLogo`, `NameOfService`, `ServiceDescription`, `ProgramCriteria`, `Keywords`, `CountiesAvailable`, `TelephoneContact`, `EmailContact`, `ServiceAddress`, `CityStateZip`, `HoursOfOperation`.
 
 ### Service request workflow
 
