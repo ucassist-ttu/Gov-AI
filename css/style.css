@@ -1465,6 +1465,11 @@ footer img {
   margin-bottom: -30px;
   background-image: url('/assets/images/registration-landing-adrianna-geo.png');
 }
+.referral-image {
+  margin-top: -30px;
+  margin-bottom: -30px;
+  background-image: url('/assets/images/referral-form.png');
+}
 .dropbox-square {
   height: 150px;
   border: solid 4px var(--gold);
