@@ -12,9 +12,10 @@ var map = null;
 
 // temporary geocode variable
 let geocodes = [
+    [0, 0],
+    [0, 0],
     [35.827681355002, -86.07134699457],
     [36.547651968101, -85.505520538483],
-    [35.956764219755, -85.033665113544],
     [35.956764219755, -85.033665113544],
     [35.952943369458, -85.812418421547],
     [36.429184470621, -84.931849164913],
@@ -24,8 +25,10 @@ let geocodes = [
     [36.57176665495, -85.133106940821],
     [36.136266648459, -85.487149440991],
     [36.257682753761, -85.970036766074],
+    [0, 0],
     [35.681457381861, -85.774497703979],
     [35.95809112807, -85.476827422985],
+    [36.150279379955, -85.500613844216],
     [36.150279379955, -85.500613844216],
     [35.82417488809, -86.077090362361],
     [36.555323520735, -85.507341135937],
@@ -77,7 +80,7 @@ function loadServices() {
             if (!geocodes[i]) return;
             let marker = L.marker(geocodes[i]).addTo(map);
             marker.on('click', markerClick);
-
+            console.log(`${element.CityStateZip} ${element.ServiceAddress} ${geocodes[i]}`)
             const mapItem = new MapItem ({
               service: element,
               marker: marker
@@ -88,7 +91,7 @@ function loadServices() {
         } catch (err) {
             console.error("Error creating marker", err);
         }
-    });  
+    });
     loadServicesIntoSidebar(allServices);
   });
   // -- HTML variables --
