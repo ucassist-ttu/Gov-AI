@@ -46,6 +46,7 @@
     color: var(--dark-navy);
     width: 100% !important;
     margin-bottom: 0px !important;
+    padding: 0px !important;
   } 
   .divider-vertical {
     display: flex;
@@ -1847,3 +1848,17 @@ p{
 }
 
 /*I Need Section*/
+.pill {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.pill i,
+.pill-text {
+  display: flex;
+  font-size: 1.5em;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+}
