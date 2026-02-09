@@ -1741,11 +1741,17 @@ p{
 }
 
 /*I Need Section*/
-.iNeedPills{
+.pill {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.pill i,
+.pill-text {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  font-size: 1.5em;
   align-items: center;
-  padding: 1rem;
-  border-radius: 9px 9px 9px 9px;
+  padding: 0.2rem 0.5rem;
 }

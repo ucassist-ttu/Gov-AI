@@ -31,7 +31,7 @@ async function getServiceInformaion () {
         //Initialize card and add name of service
         strDiv += `<div id="divOuterService">`
         strDiv += `<div id="divSpecificID" class="service" data-id="${servData.ID}" data-organization="${servData.OrganizationName}" data-tags="${strTagList}" data-counties="${strCounties}">`
-        strDiv += `<h2>${servData.NameOfService}</h2>`
+        strDiv += `<h2> ${servData.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
         if (servData.ProviderLogo != 'N/A'){

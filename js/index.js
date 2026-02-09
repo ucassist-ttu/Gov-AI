@@ -1,21 +1,34 @@
+console.log("[index.js] Delegated search listener active");
 
-const btn = document.getElementById("btn-AI-search");
-btn.addEventListener("click", async function(e) {
-    e.preventDefault();
+document.addEventListener("click", async function (e) {
 
-    const prompt = document.getElementById("txtAIPrompt").value;
-    if(prompt.length < 1){
-        swal({
-            title: "Uh Oh!",
-            text: "Please enter a search prompt.",
-            icon: "error"
-        });
-    }
-    else{
-        sessionStorage.setItem("user_prompt", prompt); // Stores prompt
-        window.location.href = "/html/pages/ai_results.html"; // carries to ai_results page
-    }
+  const searchBtn = e.target.closest("#btn-AI-search");
+  if (!searchBtn) return;
+
+  e.preventDefault();
+
+  const input = document.getElementById("txtAIPrompt");
+
+  if (!input) {
+    console.warn("[index.js] txtAIPrompt not found");
+    return;
+  }
+
+  const prompt = input.value.trim();
+
+  if (prompt.length < 1) {
+    swal({
+      title: "Uh Oh!",
+      text: "Please enter a search prompt.",
+      icon: "error"
+    });
+    return;
+  }
+
+  sessionStorage.setItem("user_prompt", prompt);
+  window.location.href = "/html/pages/ai_results.html";
 });
+
 
 
 // //SIDE BAR AI
