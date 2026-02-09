@@ -335,6 +335,8 @@ nav {
     font-size: 1.25rem;
   }
 }
+
+/*
 .form-header {
   background-color: var(--dark-navy);
   color: white;
@@ -344,6 +346,7 @@ nav {
   text-align: left;
   margin: 0;
   width: 100vw;
+  
 }
 .form-container {
   max-width: 100%;
@@ -387,7 +390,7 @@ textarea {
   resize: vertical;
   box-sizing: border-box;
   min-height: 140px;
-}
+}   */
 
 .page-tag {
     /* margin-top: 75px; */
@@ -409,7 +412,6 @@ textarea {
 /*hours text box*/
 .day-label {
   width: 90px;
-  margin-bottom: 1px;
 }
 
 /* progress step*/
@@ -691,6 +693,53 @@ a.custom-link:hover {
   font-weight: bold;
 }
 
+/*referral_form*/
+.carousel-referral {
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  max-width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Photo credit text box at bottom right of image */
+.index-referral {
+  position: absolute;
+  bottom: 10px;
+  top: auto;
+  background-color: transparent;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 400;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  padding: 0 10px;
+  right: 0;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Photo credit link styling */
+.index-referral a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Main container padding and max-width  */
+.container-referral {
+  padding: 2rem 1rem;
+  max-width: 700px;
+}
 
 .submit-btn {
   background-color: var(--dark-navy);

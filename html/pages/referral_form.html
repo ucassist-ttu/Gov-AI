@@ -1,54 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
   <title>Service Referral Form</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 
-<body>
-    <div id="navbar"></div> 
-    
-    <section class="header-image" role="banner" aria-label="Service referral image and headline">
-        <img src="/assets/images/referral-form.png" alt="Image for service referral" />
-        <div class="header-text">Know a service provider we should add?</div>
-    </section>
+<body class="white">
+    <div id="navbar"></div>
+      <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="\assets\images\referral-form.png" class="background_filter_image z-0" alt="...">
+                <div class="carousel-referral"> <h1> Know a service provider we should add? </h1> </div>
+      <div class="index-referral">
+        Photo by Toa Heftiba on <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <div class="form-header" aria-label="Service Referral Form header">Service Referral Form</div>
+<div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start py-3 px-4">
+  <h1 class="fw-bold white m-0">Registration Form</h1>
+</div>
 
-    <main class="form-container" role="main">
-        <p>Share their details below, and we’ll contact them.</p>
+<main class="container-referral">
+  <p>Share their details below, and we’ll contact them.</p>
 
-        <form>
-            <label for="firstName">First Name <span class="required-asterisk">*</span></label>
-            <input type="text" id="firstName" name="firstName" required />
+  <form novalidate>
+  <div class="mb-3">
+    <label for="firstName" class="form-label required">First Name</label>
+    <input type="text" id="firstName" name="firstName" class="form-control" required aria-required="true" />
+    <div class="invalid-feedback">First Name is required.</div>
+  </div>
 
-            <label for="lastName">Last Name <span class="required-asterisk">*</span></label>
-            <input type="text" id="lastName" name="lastName" required />
+  <div class="mb-3">
+    <label for="lastName" class="form-label required">Last Name </label>
+    <input type="text" id="lastName" name="lastName" class="form-control" required aria-required="true" />
+    <div class="invalid-feedback">Last Name is required.</div>
+  </div>
 
-            <label for="email">Email <span class="required-asterisk">*</span></label>
-            <input type="email" id="email" name="email" required />
+  <div class="mb-3">
+    <label for="email" class="form-label required">Email </label>
+    <input type="email" id="email" name="email" class="form-control" required aria-required="true" />
+    <div class="invalid-feedback">Email is required.</div>
+  </div>
 
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone" name="phone" />
+  <div class="mb-3">
+    <label for="phone" class="form-label required">Phone Number</label>
+    <input type="tel" id="phone" name="phone" class="form-control" required aria-required="true" />
+    <div class="invalid-feedback">Phone Number is required.</div>
+  </div>
 
-            <label for="providerName">Provider Name</label>
-            <input type="text" id="providerName" name="providerName" />
+  <div class="mb-3">
+    <label for="organization" class="form-label required">Organization</label>
+    <input type="text" id="organization" name="organization" class="form-control" required aria-required="true"/>
+    <div class="invalid-feedback">Organization is required.</div>
+  </div>
 
-            <label for="contactInfo">Contact Info</label>
-            <input type="text" id="contactInfo" name="contactInfo" />
+  <div class="mb-3">
+    <label for="contactInfo" class="form-label required">Contact Info</label>
+    <input type="text" id="contactInfo" name="contactInfo" class="form-control" required aria-required="true"/>
+    <div class="invalid-feedback">Contact Information is required.</div>
+  </div>
 
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>
+  <div class="mb-3">
+    <label for="message" class="form-label">Message</label>
+    <textarea id="message" rows="4" class="form-control" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>
+  </div>
 
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
-    </main>
-
-    <div id="footer"></div>
+  <div class="d-flex gap-3 mt-3">
+    <button type="submit" class="submit-btn">Next</button>
+  </div>
+</form>
+</main>                 
+<div id="footer"></div>
 
     <script>
         fetch('/partials/footer.html')
@@ -60,6 +91,7 @@
     </script>
     <!-- more bootsrap libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    
+    <script src="/js/referral_form.js"></script>
 </body>
 </html>
+                  
