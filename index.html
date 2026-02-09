@@ -31,6 +31,7 @@
         </div>
 
         <!-- I need: -->
+        <div id="iNeed"></div>
         <!-- <div class="rounded-bottom UCAssist-desc accent_blue">
             <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">
                 <a class="justify-content-start">I need:</a>
@@ -45,7 +46,7 @@
                 
             </h5>
         </div> -->
-        <div class="p-5" style="margin: 10px;">
+        <!-- <div class="p-5" style="margin: 10px;">
         <div id="wrapperHumanServicesHumanMinds" class="pt-5">
             <div class="mb-2 page-tag rounded-bottom z-3 position-relative justify-content-start">
                     <h1 class="fw-bold ">Human Services Human Minds</h1>
@@ -84,7 +85,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <!-- PinMap -->
         <div class="position-relative mx-1 mx-md-5 mt-5 rounded shadow map-container">
@@ -144,6 +145,9 @@
         fetch('/partials/indexCarousel.html')
             .then(response => response.text())
             .then(data => document.getElementById('countyCarousel').innerHTML = data);
+        fetch('/partials/iNeed.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('iNeed').innerHTML = data);
         fetch('/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
@@ -154,6 +158,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="/js/pinmap.js"></script>
+    <script src="/js/iNeed.js"></script>
     <script src="/js/index.js"></script>
 </body>
 </html>
