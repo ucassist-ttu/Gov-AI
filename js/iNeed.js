@@ -140,23 +140,23 @@ function createCard(service, category) {
 
     switch (category) {
       case "food":
-        imgPhoto = "/assets/images/iNeedFood.jpg";
+        imgPhoto = "assets/images/iNeedFood.jpg";
         break;
 
       case "housing":
-        imgPhoto = "/assets/images/iNeedHousing.jpg";
+        imgPhoto = "assets/images/iNeedHousing.jpg";
         break;
 
       case "childcare":
-        imgPhoto = "/assets/images/iNeedChildCare.jpg";
+        imgPhoto = "assets/images/iNeedChildCare.jpg";
         break;
 
       case "transportation":
-        imgPhoto = "/assets/images/iNeedTransportation.jpg";
+        imgPhoto = "assets/images/iNeedTransportation.jpg";
         break;
 
       default:
-        imgPhoto = "/assets/images/placeholder-img.webp";
+        imgPhoto = "assets/images/placeholder-img.webp";
     }
   }
 
