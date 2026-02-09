@@ -145,7 +145,7 @@ getServiceInformaion ()
 function getTagList(service) {
     strKeywords = service.Keywords
     if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
+        strKeywords = JSON.parse(strKeywords.replace(/'/g, '"'));
     }
     // Returns keywords seperated by a ','
     if (Array.isArray(strKeywords)) {
@@ -159,7 +159,7 @@ function getTagList(service) {
 function getCountyList(service) {
     strCounties = service.CountiesAvailable
     if (typeof strCounties === 'string') {
-        strCounties = JSON.parse(strCounties);
+        strCounties = JSON.parse(strCounties.replace(/'/g, '"'));
     }
 
     // Returns an array of strCounties
@@ -176,7 +176,11 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetch(`http://34.171.184.135:8000/recommendations?id=${serviceId}`)
+        let servResponse = await fetch(`http://34.171.184.135:8000/recommendations`, { //calls ai api
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({"service_id": serviceId})
+        })
         let servData = await servResponse.json()
         arrRecomendedServices = servData
         printRecomendedServices ()

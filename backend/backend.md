@@ -6,7 +6,7 @@
   - Body: JSON `{"user_input": "<text>"}`.
   - Response: Array of up to 3 service objects chosen by Gemini using the provided user input.
 - `POST /recommendations`
-  - Body: JSON `{"service_id": <int>}` (0-based array index from `/services`).
+  - Body: JSON `{"service_id": <int>}`.
   - Response: Array of 3 service objects Gemini considers most similar to the given service.
   - Response: Single service for that id.
 - `POST /request-create-service`
