@@ -1,13 +1,13 @@
+let arrRecomendedServices = []
+
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get('id');
-console.log(serviceId)
 
 async function getServiceInformaion () {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`http://34.171.184.135:8000/service?id=${serviceId}`)
         let servData = await servResponse.json()
-        console.log(servData)
 
         let strTagList = getTagList(servData)
         let strCounties = getCountyList(servData)
@@ -115,11 +115,25 @@ async function getServiceInformaion () {
             })
             strDiv += `</ul>`
         }
-        strDiv += `</div>`
+        strDiv += `<h3 id="btnRelatedServices" class="mb-1"><b>More Like This</b><i class="bi bi-caret-down-fill"></i></h3>`
+        strDiv += `<div id="related_services" style="display: none">`
         strDiv += `</div>`
         strDiv += `</div>`
         document.querySelector('#divService').innerHTML += strDiv
-         document.querySelector('#divSpecificID').classList.toggle('is-expanded');
+        document.querySelector('#btnRelatedServices').addEventListener('click', () => {
+            if (arrRecomendedServices.length == 0) {
+                getRecommendedServices ()
+            }
+            if (document.querySelector('#related_services').style.display === 'none') {
+                document.querySelector('#related_services').style.display = 'block';
+                document.querySelector('#btnRelatedServices').innerHTML = `<b>Fewer Like This</b><i class="bi bi-caret-up-fill"></i>`;
+            } else {
+                document.querySelector('#related_services').style.display = 'none';
+                document.querySelector('#btnRelatedServices').innerHTML = `<b>More Like This</b><i class="bi bi-caret-down-fill"></i>`;
+            }
+        })
+
+
     } catch (objError){
         console.log('Error fetching objData', objError)
     }
@@ -154,6 +168,67 @@ function getCountyList(service) {
     }
 }
 
+// Navagates to the services page
 function returnToServiceList () {
     window.location.href = `services.html`;
+}
+
+//Get the list of recommended services from api
+async function getRecommendedServices () {
+    try{
+        let servResponse = await fetch(`http://34.171.184.135:8000/recommendations?id=${serviceId}`)
+        let servData = await servResponse.json()
+        arrRecomendedServices = servData
+        printRecomendedServices ()
+    } catch (objError){
+        console.log('Error fetching objData', objError)
+    }
+}
+
+// Prints the recommended services 
+function printRecomendedServices () {
+    let strDiv = ''
+    strDiv += `<div class="recomendedServices">`
+    strDiv += `<div class="row with-divider">`
+
+    strDiv+= `<div class="col-12 col-md-3">`
+    strDiv += `<h5>${arrRecomendedServices[0].NameOfService}</h5>`
+    strDiv += `<h6>Offered by: ${arrRecomendedServices[0].OrganizationName}</h6>`
+    strDiv += `<button id="btnService${arrRecomendedServices[0].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<hr />`
+    strDiv += `</div>`
+
+    strDiv +=`<div class="col-12 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+    strDiv += `<div class="service-divider-vertical"></div>`
+    strDiv += `</div>`
+
+    strDiv +=`<div class="col-12 col-md-3">`
+    strDiv += `<h5>${arrRecomendedServices[1].NameOfService}</h5>`
+    strDiv += `<h6>Offered by: ${arrRecomendedServices[1].OrganizationName}</h6>`
+    strDiv += `<button id="btnService${arrRecomendedServices[1].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<hr />`
+    strDiv += `</div>`
+
+    strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+    strDiv += `<div class="service-divider-vertical"></div>`
+    strDiv += `</div>`
+
+    strDiv +=`<div class="col-12 col-md-3">`
+    strDiv += `<h5>${arrRecomendedServices[2].NameOfService}</h5>`
+    strDiv += `<h6>Offered by: ${arrRecomendedServices[2].OrganizationName}</h6>`
+    strDiv += `<button id="btnService${arrRecomendedServices[2].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `</div>`
+    strDiv += `</div>`
+    strDiv += `</div>`
+    document.querySelector('#related_services').innerHTML += strDiv
+
+    document.querySelector(`#btnService${arrRecomendedServices[0].ID}`).addEventListener('click', () => {
+        window.location.href = `service.html?id=${arrRecomendedServices[0].ID}`;
+    });
+    document.querySelector(`#btnService${arrRecomendedServices[1].ID}`).addEventListener('click', () => {
+        window.location.href = `service.html?id=${arrRecomendedServices[1].ID}`;
+    });
+    document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
+        window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
+    });
 }

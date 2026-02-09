@@ -7,23 +7,10 @@ function request_body(string $key): mixed
 
 function get_services_from_user_input(string $user_input): array
 {
-  
   $services = json_encode(value: get_services());
   if (!$services)
     return [];
-<<<<<<< Updated upstream
 
-  $prompt = "Based on the user input, respond with exactly 3 services that most closely represent the user's needs. Respond with an integer array of service ids. Services: " . $services . ' User input: ' . $user_input;
-  $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
-
-  $services = [];
-  foreach ($ids as $id) {
-    $services[] = get_service(id: $id);
-  }
-
-  return $services;
-=======
-  
   $prompt = "You will be provided with a database of services and a prompt from the user. Use the user's request to search the database and identify the three services that would best assist the user with the issue they are having. Respond with only a valid, unformatted array of json objects containing the 'id', 'service_name', and a 'reason_for_selection' of why you believe that service would be helpful to them. Do not include any markdown formatting in your response. Services: " . $services . ' User input: ' . $user_input;
   $attempts = 0;
   while ($attempts < 3) {
@@ -40,7 +27,6 @@ function get_services_from_user_input(string $user_input): array
     $ids[] = get_service(id: $service['id']);
   }
   return $ids;
->>>>>>> Stashed changes
 }
 
 function get_similar_services(int $id): array
@@ -60,4 +46,23 @@ function get_similar_services(int $id): array
   }
 
   return $services;
+}
+
+function service_request_success_page(string $message): string
+{
+  return "
+  <!DOCTYPE html>
+  <html lang='en'>
+    <head>
+      <meta charset='UTF-8'>
+      <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+      <title>{$message}</title>
+    </head>
+    <body style='margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;'>
+      <div>
+        <h1>{$message}</h1>
+        <a href='https://ucassist-ttu.github.io/Gov-AI/'>Click here to return to website</a>
+      </div>
+    </body>
+</html>";
 }

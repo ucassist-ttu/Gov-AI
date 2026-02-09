@@ -1,3 +1,5 @@
+let strHeader = null;
+
 async function getAIRecommendations(userPrompt) {
     let AIContainer = document.querySelector('#suggestedResources');
     AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
