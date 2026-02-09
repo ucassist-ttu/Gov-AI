@@ -1,59 +1,90 @@
+let strHeader = null;
+
 async function getAIRecommendations(userPrompt) {
-        let strDiv = document.querySelector('#suggestedResources');
-        strDiv.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
-        try{
-            let servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    user_input: userPrompt
-                })
-            });
-            //validation
-            if (!servResponse.ok) {
-                throw new Error(`HTTP error! status: ${servResponse.status}`);
-            }
+    let AIContainer = document.querySelector('#suggestedResources');
+    AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
+    try{
+        const servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({user_input: userPrompt})
+        });
 
-            let aiData = await servResponse.json()
-            console.log(aiData);
+        //validation
+        if (!servResponse.ok) {
+            throw new Error(`HTTP error! status: ${servResponse.status}`);
+        }
 
-            //clears away loading placeholder text
-            strDiv.innerHTML = ""; 
-            strDiv = ``
+        const aiData = await servResponse.json()
+        AIContainer.innerHTML = ""; //clears away loading placeholder text
+        // AIContainer = ``;
 
-            console.log(aiData)
+        // console.log(userPrompt)
+        console.log(aiData);
+        
+        let txtHTML = "";
+        let intCount = 1  // for numbering the services on the html
 
-            let intCount = 0
+        while(intCount < 4){
             aiData.forEach(element => {
-                intCount++
-                let strResourceName = element.NameOfSevice
+                let strResourceName = element.NameOfService
                 let strCompany = element.OrganizationName
                 let strDescription = element.ServiceDescription
                 console.log(strResourceName)
 
-                strDiv += `<div class="flex-row">`
-                strDiv +=`     <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`
-                strDiv +=`    <p class="ai-company-name">`
-                strDiv +=`        by ${strCompany}`
-                strDiv +=`    </p>`
-                strDiv +=`</div>`
-                strDiv +=`<p class="ai-description">`
-                strDiv +=`      ${strDescription}`
-                strDiv +=`</p>`
-                strDiv +=`<p class="btn ai-link">More Details</p>`
+                txtHTML +=`<div class="flex-row">`
+                txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`
+                txtHTML +=`    <p class="ai-company-name">`
+                txtHTML +=`        by ${strCompany}`
+                txtHTML +=`    </p>`
+                txtHTML +=`</div>`
+                txtHTML +=`<p class="ai-description">`
+                txtHTML +=`      ${strDescription}`
+                txtHTML +=`</p>`
+                txtHTML +=`<p class="btn ai-link">More Details</p>`
+                intCount ++;
             })
-            document.querySelector('#suggestedResources').innerHTML += strDiv
-        } catch (objError){
-            console.log('Error fetching aiData', objError)
         }
+        AIContainer.innerHTML += txtHTML
+    } catch (objError){
+        console.log('Error fetching aiData: ', objError)
+
+        strHeader.innerHTML = "Oops! We're having trouble answering your request."
+        AIContainer.innerHTML = `<p class="mt-3 ">Please try again later. In the meantime, feel free to browse all available services.</p>`; //error message
+    }
 }
 document.addEventListener("DOMContentLoaded", function() {
+    let AIContainer = document.querySelector('#suggestedResources');
+    let strHeader = document.querySelector("#txtHeader");
+
     const prompt = sessionStorage.getItem("user_prompt"); // Get prompt
     if (!prompt) {
+        strHeader.innerHTML = "Oops! Looks like you didn't enter anything."
         console.log("No prompt found in sessionStorage.");
+        AIContainer.innerHTML = `<p class="mt-3 ">Please return to home and try again.</p>`; //error message
         return;
     }
     else{ getAIRecommendations(prompt)}
+});
+document.querySelector("#btnHome").addEventListener("click", (e) => {
+    swal("Wait!", {
+        title: "Before you go",
+        text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
+        icon: "warning",
+        buttons: ["Leave page", "Stay and print"],
+    })
+    .then((travelHome) => {
+        if (!travelHome) {
+            window.location.href = "/index.html"; // carries to ai_results page
+        } 
+        // else {
+        //     swal("Your imaginary file is safe!");
+        // }
+    });
+})
+
+document.addEventListener("click", (e) => {
+    if (e.target.closest("#btnPrintPage")) {
+        window.print();
+    }
 });
