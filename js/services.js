@@ -7,7 +7,7 @@ let arrAllServices = []
 async function getServices() {
     try{
         //Get the list of services from api
-        let servResponse = await fetch(`http://34.171.184.135:8000/services`)
+        let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
         arrAllServices = servData
         renderSidebarServices(servData)

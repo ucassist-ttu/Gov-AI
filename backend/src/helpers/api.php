@@ -36,16 +36,23 @@ function get_similar_services(int $id): array
     return [];
 
   $service = json_encode(value: get_service(id: $id));
-  $prompt = 'Respond with only an integer array of the three most similar services in the database for the following service: ' . $service . '. Database: ' . $services;
+  $prompt = "You will be provided with a database of services and a selected service from the user. Use the given service to search the database and identify the three services that are most similar to the given service. Respond with only a valid, unformatted array of json objects containing the 'id', 'service_name', and a 'reason_for_selection' of why you believe that service would be helpful to them. Do not include any markdown formatting in your response. Services: " . $services . 'Selected service: ' . $service;
 
-  $ids = json_decode(json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt), associative: true) ?: [];
-
-  $services = [];
-  foreach ($ids as $id) {
-    $services[] = get_service(id: $id);
+  $attempts = 0;
+  while ($attempts < 3) {
+    $services = gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt);
+    $services = json_decode(json: $services, associative: true);
+    if ($services) {
+      break;
+    }
+    $attempts++;
   }
 
-  return $services;
+  $ids = [];
+  foreach ($services as $service) {
+    $ids[] = get_service(id: $service['id']);
+  }
+  return $ids;
 }
 
 function service_request_success_page(string $message): string

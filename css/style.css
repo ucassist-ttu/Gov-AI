@@ -246,6 +246,13 @@ nav {
 .mapServiceCard {
   border-color: #AA8A41 !important;
 }
+.map-container > .position-absolute {
+  pointer-events: none;
+}
+
+#mapCollapse, .btnMap {
+  pointer-events: auto;
+}
 .search-icon {
     position: absolute;
     top: 50%;
