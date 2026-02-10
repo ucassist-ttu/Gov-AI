@@ -6,7 +6,7 @@ const serviceId = params.get('id');
 async function getServiceInformaion () {
     try{
         //Get the list of services from api
-        let servResponse = await fetch(`http://34.171.184.135:8000/service?id=${serviceId}`)
+        let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
         let servData = await servResponse.json()
 
         let strTagList = getTagList(servData)
@@ -176,7 +176,7 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetch(`http://34.171.184.135:8000/recommendations`, { //calls ai api
+        let servResponse = await fetch(`http://localhost:8000/recommendations`, { //calls ai api
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({"service_id": serviceId})
@@ -229,10 +229,10 @@ function printRecomendedServices () {
     document.querySelector(`#btnService${arrRecomendedServices[0].ID}`).addEventListener('click', () => {
         window.location.href = `service.html?id=${arrRecomendedServices[0].ID}`;
     });
-    document.querySelector(`#btnService${arrRecomendedServices[1].ID}`).addEventListener('click', () => {
-        window.location.href = `service.html?id=${arrRecomendedServices[1].ID}`;
-    });
-    document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
-        window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
-    });
+    // document.querySelector(`#btnService${arrRecomendedServices[1].ID}`).addEventListener('click', () => {
+    //     window.location.href = `service.html?id=${arrRecomendedServices[1].ID}`;
+    // });
+    // document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
+    //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
+    // });
 }
