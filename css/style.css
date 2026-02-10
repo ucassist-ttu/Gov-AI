@@ -46,6 +46,7 @@
     color: var(--dark-navy);
     width: 100% !important;
     margin-bottom: 0px !important;
+    padding: 0px !important;
   } 
   .divider-vertical {
     display: flex;
@@ -244,6 +245,13 @@ nav {
 }
 .mapServiceCard {
   border-color: #AA8A41 !important;
+}
+.map-container > .position-absolute {
+  pointer-events: none;
+}
+
+#mapCollapse, .btnMap {
+  pointer-events: auto;
 }
 .search-icon {
     position: absolute;

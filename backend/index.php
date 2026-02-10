@@ -23,7 +23,7 @@ try {
 
     if ($path === '/recommendations' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
-        echo json_encode(value: get_similar_services(id: request_body(key: 'service_id')));
+        echo json_encode(value: get_similar_services(id: (int) request_body(key: 'service_id')));
         exit;
     }
 
