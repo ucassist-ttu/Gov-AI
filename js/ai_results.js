@@ -4,7 +4,7 @@ async function getAIRecommendations(userPrompt) {
     let AIContainer = document.querySelector('#suggestedResources');
     AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
     try{
-        const servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
+        const servResponse = await fetch(`https://ucassist.duckdns.org/prompt`, { //calls ai api
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({user_input: userPrompt})
@@ -15,11 +15,12 @@ async function getAIRecommendations(userPrompt) {
             throw new Error(`HTTP error! status: ${servResponse.status}`);
         }
 
-        const aiData = await servResponse.json()
+        let aiData = await servResponse.json()
         AIContainer.innerHTML = ""; //clears away loading placeholder text
         // AIContainer = ``;
 
         // console.log(userPrompt)
+        aiData = aiData.services
         console.log(aiData);
         
         let txtHTML = "";
