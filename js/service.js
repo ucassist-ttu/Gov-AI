@@ -48,7 +48,7 @@ async function getServiceInformaion () {
 
         // Creates a more_info section with no display
         strDiv += `<div class="more_info">`
-        strDiv += `<hr class="hr-gold"/>`
+        strDiv += `<hr class="hr-gold">`
         strDiv += `<div class="row with-divider">`
         strDiv+= `<div class="col-12 col-md-6">`
 

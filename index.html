@@ -7,8 +7,8 @@
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="navbar"></div>
@@ -23,7 +23,6 @@
 
             <!-- carousel -->
             <div id="countyCarousel"></div>
-
         </div>
         <!-- UCAssist description -->
         <div class="rounded-bottom UCAssist-desc gold text-center">
@@ -48,13 +47,13 @@
                 <!-- Services Page Link -->
                 <div class="col-12 col-md-5">
                     <div class="card mx-3 mb-3 border-0 home-card col-sm-12">
-                        <img src="\assets\images\ucdd.webp"  class="card-img-top" alt="...">
+                        <img src="assets\images\ucdd.webp"  class="card-img-top" alt="...">
                         <div class="card-body">
                         <h4 class="card-title">Need Help?</h4>
                         <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
                         </div>
                         <div class="card-footer">
-                        <p class="text-muted"><a href="/html/pages/needHelp.html" class="text-dark">See more!</a></p>
+                        <p class="text-muted"><a href="html/pages/needHelp.html" class="text-dark">See more!</a></p>
                         </div>
                     </div>
                 </div>
@@ -67,7 +66,7 @@
                         <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
                         </div>
                         <div class="card-footer">
-                        <p class="text-muted"><a href="/html/pages/registration_landing.html" class="text-dark">Enroll Now!<a></small>
+                        <p class="text-muted"><a href="html/pages/registration_landing.html" class="text-dark">Enroll Now!<a></small>
                         </div>
                     </div>
                 </div>
@@ -79,19 +78,16 @@
     <div id="footer"></div>
 
     <script>
-        fetch('/partials/navbar.html')
+        fetch('partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
-        fetch('/partials/pinmap.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('pinmap').innerHTML = data);
-        fetch('/partials/indexCarousel.html')
+        fetch('partials/indexCarousel.html')
             .then(response => response.text())
             .then(data => document.getElementById('countyCarousel').innerHTML = data);
-        fetch('/partials/iNeed.html')
+        fetch('partials/iNeed.html')
             .then(response => response.text())
             .then(data => document.getElementById('iNeed').innerHTML = data);
-        fetch('/partials/footer.html')
+        fetch('partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
@@ -100,8 +96,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script src="/js/pinmap.js"></script>
-    <script src="/js/iNeed.js"></script>
-    <script src="/js/index.js"></script>
+    <script src="js/pinmap.js"></script>
+    <script src="js/iNeed.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

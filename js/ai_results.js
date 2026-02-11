@@ -75,7 +75,7 @@ document.querySelector("#btnHome").addEventListener("click", (e) => {
     })
     .then((travelHome) => {
         if (!travelHome) {
-            window.location.href = "/index.html"; // carries to ai_results page
+            window.location.href = "index.html"; // carries to ai_results page
         } 
         // else {
         //     swal("Your imaginary file is safe!");
