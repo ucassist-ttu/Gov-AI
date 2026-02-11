@@ -50,7 +50,7 @@ class MapItem {
 
 async function getServices() {
     try{
-        let servResponse = await fetch(`http://localhost:8000/services`)
+        let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
         return servData
     }
@@ -235,7 +235,7 @@ function loadServicesIntoSidebar(services) {
 // -- Loads boundary data from geojson file to draw county borders --
 
 async function loadAndMaskCounties() {
-  const data = await fetch('/assets/data/UC_counties.geojson')
+  const data = await fetch('/Gov-AI/assets/data/UC_counties.geojson')
   const jsonData = await data.json()
 
   // set style for boundary and fill of county layers

@@ -48,7 +48,7 @@ async function getServiceInformaion () {
 
         // Creates a more_info section with no display
         strDiv += `<div class="more_info">`
-        strDiv += `<hr class="hr-gold"/>`
+        strDiv += `<hr class="hr-gold">`
         strDiv += `<div class="row with-divider">`
         strDiv+= `<div class="col-12 col-md-6">`
 
@@ -176,11 +176,7 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetch(`http://localhost:8000/recommendations`, { //calls ai api
-            method: "POST",
-            headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({"service_id": serviceId})
-        })
+        let servResponse = await fetch(`https://ucassist.duckdns.org/recommendations?id=${serviceId}`)
         let servData = await servResponse.json()
         arrRecomendedServices = servData
         printRecomendedServices ()
