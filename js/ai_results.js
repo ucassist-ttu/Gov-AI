@@ -4,7 +4,7 @@ async function getAIRecommendations(userPrompt) {
     let AIContainer = document.querySelector('#suggestedResources');
     AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
     try{
-        const servResponse = await fetch(`http://localhost:8000/prompt`, { //calls ai api
+        const servResponse = await fetch(`http://ucassist.duckdns.org:8000/prompt`, { //calls ai api
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({user_input: userPrompt})

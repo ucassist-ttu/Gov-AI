@@ -75,7 +75,7 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = ids.map(id => {
-      const url = `http://localhost:8000/service?id=${id}`;
+      const url = `http://ucassist.duckdns.org/service?id=${id}`;
       console.log("[iNeed] Fetching:", url);
 
       return fetch(url)

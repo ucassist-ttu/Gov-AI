@@ -176,7 +176,7 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetch(`http://localhost:8000/recommendations`, { //calls ai api
+        let servResponse = await fetch(`http://ucassist.duckdns.org:8000/recommendations`, { //calls ai api
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({"service_id": serviceId})
