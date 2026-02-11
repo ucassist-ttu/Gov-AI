@@ -180,9 +180,8 @@ if (clearLogoBtn) {
   });
 }
 
-
   // Event delegation for toggle buttons (counties and keywords) across all services
-  document.getElementById('services-container').addEventListener('click', (e) => {
+  document.addEventListener('click', (e) => {
     const btn = e.target.closest('[id^="btnCountiesReg"]') || e.target.closest('[id^="btnKeywordsReg"]');
     if (btn) {
       const outerDiv = btn.nextElementSibling;
@@ -220,7 +219,7 @@ if (clearLogoBtn) {
   showStep(currentStep);
 
   // Function to create checkboxes
-  function createCheckbox(labelText, container) {
+  function createCheckbox(labelText, container, suffix = '') {
     const value = labelText.toLowerCase().replace(/\s+/g, "-");
 
     const wrapper = document.createElement("div");
@@ -229,7 +228,7 @@ if (clearLogoBtn) {
     const input = document.createElement("input");
     input.type = "checkbox";
     input.className = "form-check-input";
-    input.id = `${value}-checkbox`;
+    input.id = `${value}-checkbox${suffix}`; 
     input.value = labelText.toLowerCase();
 
     const label = document.createElement("label");
@@ -248,7 +247,7 @@ if (clearLogoBtn) {
     let arrServiceType = [];
 
     try {
-      let servResponse = await fetch(`http://localhost:8000/services`);
+      let servResponse = await fetch(`https://ucassist.duckdns.org/services`);
       let servData = await servResponse.json();
 
       servData.forEach(element => {
@@ -281,9 +280,11 @@ if (clearLogoBtn) {
         createCheckbox(county, countiesContainer);
       });
 
-      const keywordsContainer = document.getElementById("divKeywordsReg");
+      const keywordsContainerStep1 = document.getElementById("divKeywordsReg1");
+      const keywordsContainerStep3 = document.getElementById("divKeywordsReg");
       uniqueServiceTypes.forEach(keyword => {
-        createCheckbox(keyword, keywordsContainer);
+        createCheckbox(keyword, keywordsContainerStep1, '-step1');
+        createCheckbox(keyword, keywordsContainerStep3, '-step3');
       });
 
     } catch (objError) {

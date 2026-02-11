@@ -26,7 +26,7 @@ document.addEventListener("click", async function (e) {
   }
 
   sessionStorage.setItem("user_prompt", prompt);
-  window.location.href = "/html/pages/ai_results.html";
+  window.location.href = "html/pages/ai_results.html";
 });
 
 

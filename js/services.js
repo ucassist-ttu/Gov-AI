@@ -72,7 +72,7 @@ function createServiceCard(arrCards) {
         strDiv += `</div>`
 
         // Blue service divider
-        strDiv += `<hr class="hr-blue"/>`
+        strDiv += `<hr class="hr-blue">`
         strDiv += `</div>`
         document.querySelector('#divServices').innerHTML += strDiv
 
