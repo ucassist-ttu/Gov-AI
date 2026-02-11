@@ -7,7 +7,8 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="/css/style.css"/>
+
   <title>Registration Form</title>
   <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
@@ -83,9 +84,16 @@
         </fieldset>
 
         <div class="mb-3">
-          <label for="attribute" class="form-label">Attribute <small class="text-muted fst-italic">Check All That Apply</small></label>
-          <input type="text" id="attribute" name="attribute" class="form-control" />
+         <label class="form-label required">Keywords </label>
+         <div id="btnKeywordsReg1" class="form-control dropdown-btn">Check All That Apply <i class="bi bi-caret-down-fill"></i></div>
+         <div id="divOuterKeywordsReg1" class="form-check outer-layer">
+         <hr />
+         <div id="divKeywordsReg1" class="form-check">
+         </div>
         </div>
+        <div class="invalid-feedback">At least one keyword must be selected.</div>
+        </div>
+
 
         <div class="mb-3">
           <label for="hours" class="form-label required">Hours of Operation</label>
@@ -309,10 +317,10 @@
    <div id="footer"></div>
 
     <script>
-        fetch('../../partials/footer.html')
+        fetch('/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('../../partials/navbar.html')
+        fetch('/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
