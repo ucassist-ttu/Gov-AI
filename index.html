@@ -32,22 +32,16 @@
         <!-- I need: -->
         <div id="iNeed"></div>
         
+        
         <!-- PinMap -->
-        <div class="position-relative mx-1 mx-md-5 mt-5 rounded shadow map-container">
-            <div id="map" class="w-100 h-100 rounded"></div>
-            <div class="position-absolute top-0 end-0 d-flex flex-row h-100 justify-content-end" style="z-index: 1000;">
-                <button class="btn btnMap btn-light m-3" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
-                    <i class="bi bi-list text-dark"></i>
-                </button>
-                <div class="collapse h-100" id="mapCollapse">
-                    <div class="card card-body w-100 h-100 overflow-auto"></div>
-                </div>
-            </div>
+        <div id="pinmap"></div>
+
+        <div class="m-5"></div>
+        <!-- Snap Link -->
+        <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
+            <span><a href="/html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
         </div>
-
-        <div class="wrapper" id="serviceInfo"></div>
-
-        <div class="mt-5"></div>
+        <div class="m-5"></div>
         <div class="row mt-5">
             <div class="card-group justify-content-evenly">
                 <!-- Services Page Link -->
@@ -87,6 +81,9 @@
         fetch('partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
+        fetch('partials/pinmap.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('pinmap').innerHTML = data);
         fetch('partials/indexCarousel.html')
             .then(response => response.text())
             .then(data => document.getElementById('countyCarousel').innerHTML = data);

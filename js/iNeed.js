@@ -75,7 +75,7 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = ids.map(id => {
-      const url = `http://34.171.184.135:8000/service?id=${id}`;
+      const url = `http://localhost:8000/service?id=${id}`;
       console.log("[iNeed] Fetching:", url);
 
       return fetch(url)
