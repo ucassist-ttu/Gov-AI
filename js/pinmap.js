@@ -1,13 +1,19 @@
+// 2/10 meeting - resize and recenter map when opening side bar
+// option to filter based on category
+
 // -- Global variables --
 
 const sidebarServiceState = {
   mapItems: [],
   currentPage: 0,
-  SERVICES_PER_PAGE: 5
+  SERVICES_PER_PAGE: 5,
+  selectedCounty: null,
+  selectedCategories: [],
+  MAX_CATEGORIES: 6
 };
 let allServices = []
 let countiesLayer = null;
-let selectedCounty = null;
+let categoryColores = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
 var map = null;
 
 // temporary geocode variable
@@ -50,7 +56,7 @@ class MapItem {
 
 async function getServices() {
     try{
-        let servResponse = await fetch(`http://34.171.184.135:8000/services`)
+        let servResponse = await fetch(`http://localhost:8000/services`)
         let servData = await servResponse.json()
         return servData
     }
@@ -258,7 +264,7 @@ async function loadAndMaskCounties() {
         },
         // reset styling when mouse out
         mouseout: () => {
-          if (layer !== selectedCounty) {
+          if (layer !== sidebarServiceState.selectedCounty) {
             countiesLayer.resetStyle(layer);
           }
           map.getContainer().style.cursor = '';
@@ -304,18 +310,18 @@ async function loadAndMaskCounties() {
 // -- Takes a leaflet layer object and fits the bounds of the map to the bounds of the layer --
 
 function zoomToCounty(layer, feature) {
-  if (selectedCounty) countiesLayer.resetStyle(selectedCounty)
+  if (sidebarServiceState.selectedCounty) countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
   
-  if (selectedCounty == layer) {
+  if (sidebarServiceState.selectedCounty == layer) {
     const bounds = countiesLayer.getBounds();
     map.fitBounds(bounds.pad(0.2));
-    countiesLayer.resetStyle(selectedCounty)
-    selectedCounty = null;
+    countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
+    sidebarServiceState.selectedCounty = null;
     loadServicesIntoSidebar(allServices)
     return;
   }
 
-  selectedCounty = layer;
+  sidebarServiceState.selectedCounty = layer;
 
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
   map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
@@ -349,6 +355,32 @@ function filterServicesByCounties(counties) {
   return filteredServices
 }
 
+// -- Gets the list of tags for each service --
+// from services.js
+function getTagList(service) {
+    strKeywords = service.Keywords
+    if (typeof strKeywords === 'string') {
+        strKeywords = JSON.parse(strKeywords);
+    }
+    // Returns keywords seperated by a ','
+    if (Array.isArray(strKeywords)) {
+        return strKeywords;
+    }
+}
+
+// -- takes an array of category strings and an array of services and returns an array of filtered services
+function filterServicesByCategories(mapItems, categories) {
+  let filteredServices = []
+  for (let i = 0; i < mapItems.length; i++) {
+    let serviceCategories = getTagList(mapItems[i].service).split(',')
+    serviceCategories.forEach(serviceCategory => {
+      if (categories.includes(serviceCategory) && !filteredServices.includes(mapItems[i])) {
+        filteredServices.push(mapItems[i])
+      }
+    })
+  }
+  return filteredServices
+}
 
 // -- wait until the inline script has added the Pinmap to the DOM --
 window.addEventListener('load', (event) => {
