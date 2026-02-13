@@ -232,3 +232,31 @@ function printRecomendedServices () {
     //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
     // });
 }
+
+const stars = document.querySelectorAll('.star');
+const ratingValue = document.getElementById('rating-value');
+const ratingText = document.getElementById('rating-text');
+
+stars.forEach(star => {
+  star.addEventListener('click', function () {
+    const value = this.getAttribute('data-value');
+    ratingValue.value = value;
+    console.log(value)
+    ratingText.textContent = "Rating: " + value;
+
+    stars.forEach(s => s.classList.remove('selected'));
+
+    for (let i = 0; i < value; i++) {
+      stars[i].classList.add('selected');
+    }
+  });
+});
+
+stars.forEach(star => {
+  star.addEventListener('click', function () {
+    stars.forEach(s => s.classList.remove('selected'));
+
+    this.classList.add('selected');
+    ratingValue.value = this.getAttribute('data-value');
+  });
+});
