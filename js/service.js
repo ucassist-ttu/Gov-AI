@@ -8,7 +8,9 @@ async function getServiceInformaion () {
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
         let servData = await servResponse.json()
-
+        let servClicks = await fetch(`https://ucassist.duckdns.org/monthly-views?service_id=${serviceId}`)
+        let numClicks = await servClicks.json()
+        console.log(numClicks)
         let strTagList = getTagList(servData)
         let strCounties = getCountyList(servData)
         let strDiv = ``
