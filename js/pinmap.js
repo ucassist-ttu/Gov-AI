@@ -50,7 +50,7 @@ class MapItem {
 
 async function getServices() {
     try{
-        let servResponse = await fetch(`http://localhost:8000/services`)
+        let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
         return servData
     }

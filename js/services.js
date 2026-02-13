@@ -17,7 +17,6 @@ async function getServices() {
             let strTagList = getTagList(element)
             let strCounties = getCountyList(element)
 
-            arrOrgName.push(element.OrganizationName)
             strTagList.forEach(tag => {
                 arrServiceType.push(tag)
             });
@@ -37,7 +36,6 @@ async function getServices() {
     // Create the filters
     createCountyFilter(uniqueCounties)
     createServiceFilter(uniqueServiceTypes)
-    createOrgNamesFilter(uniqueOrgNames)
 }
 
 getServices()
@@ -102,6 +100,7 @@ function getTagList(service) {
 
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
+    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
     window.location.href = `service.html?id=${page_id}`;
 }
 
@@ -177,24 +176,6 @@ function createServiceFilter(services) {
   container.appendChild(moreContainer);
 }
 
-// Creates the checkboxes for the organization names filter
-function createOrgNamesFilter(names) {
-  const VISIBLE_COUNT = 6;
-  const container = document.getElementById("divOrgName");
-  const moreContainer = document.getElementById("divMoreOrgNames");
-  moreContainer.style.display = "none";
-
-  names.forEach((name, index) => {
-      if (index < VISIBLE_COUNT) {
-        createCheckbox(name, container);
-      } else {
-        createCheckbox(name, moreContainer);
-      }
-    });
-
-  container.appendChild(moreContainer);
-}
-
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -227,22 +208,6 @@ document.querySelector("#btnServiceType").addEventListener("click", () => {
     }
 });
 
-// Opens the organization name filter options
-document.querySelector("#btnOrganizationName").addEventListener("click", () => {
-    if (document.querySelector('#divOuterOrgName').style.display === 'none') {
-            document.querySelector('#divOuterOrgName').style.display = 'block';
-            document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
-            if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-            } else {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-            }
-    } else {
-        document.querySelector('#divOuterOrgName').style.display = 'none';
-        document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
 // Shows more Counties
 document.querySelector("#btnShowMoreCounties").addEventListener("click", () => {
     if (document.querySelector('#divMoreCounties').style.display === 'none') {
@@ -265,16 +230,6 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
     }
 });
 
-// Shows more organization names
-document.querySelector("#btnShowMoreOrgNames").addEventListener("click", () => {
-    if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-            document.querySelector('#divMoreOrgNames').style.display = 'block';
-            document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-    } else {
-        document.querySelector('#divMoreOrgNames').style.display = 'none';
-        document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-    }
-});
 
 
 // Opens the filter side bar
@@ -334,15 +289,13 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
         // Normalize arrays to lowercase for case-insensitive comparison
         const counties = (strCounties).map(c => c.toLowerCase());
         const tags = (strTags).map(t => t.toLowerCase());
-        const org = (service.OrganizationName || "").toLowerCase();
 
         // Check each filter; if filter list is empty, treat as "match all"
         const countyMatch = selectedCounties.length === 0 || selectedCounties.some(c => counties.includes(c.toLowerCase()));
         const serviceMatch = selectedServiceTypes.length === 0 || selectedServiceTypes.some(s => tags.includes(s.toLowerCase()));
-        const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
 
         // Only push if all filters match
-        if (countyMatch && serviceMatch && orgMatch) {
+        if (countyMatch && serviceMatch) {
         arrFilteredServices.push(service);
         }
     });
