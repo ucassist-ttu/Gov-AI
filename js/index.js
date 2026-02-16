@@ -1,5 +1,3 @@
-console.log("[index.js] Delegated search listener active");
-
 document.addEventListener("click", async function (e) {
 
   const searchBtn = e.target.closest("#btn-AI-search");
@@ -9,10 +7,6 @@ document.addEventListener("click", async function (e) {
 
   const input = document.getElementById("txtAIPrompt");
 
-  if (!input) {
-    console.warn("[index.js] txtAIPrompt not found");
-    return;
-  }
 
   const prompt = input.value.trim();
 
@@ -30,22 +24,43 @@ document.addEventListener("click", async function (e) {
 });
 
 
+// geolocation to get current county
+window.onload = getLocation()
 
-// //SIDE BAR AI
-// // Opens the filter side bar
-// document.querySelector("#btn-AI-search").addEventListener("click", () => {
-//     document.getElementById("mySidenav").style.width = "375px";
-//     overlay.classList.add("active");
-// });
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(getCounty, getCountyManually)
+  } else {
+    console.log("Geolocation is not supported by this browser.")
+  }
+}
 
-// // Closes the filter side bar
-// function closeNav() {
-//   document.getElementById("mySidenav").style.width = "0";
-//   overlay.classList.remove("active");
-// }
+async function getCounty(position) {
+  console.log("Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude)
 
-// // Closes the filter when the overlay is clicked
-// overlay.addEventListener("click", () => {
-//   document.getElementById("mySidenav").style.width = "0";
-//   overlay.classList.remove("active");
-// })
+  const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
+  const geoData = await response.json()
+  strCountyName = geoData.localityInfo.administrative[3].name
+  document.cookie = `CurrCounty=${encodeURIComponent(strCountyName)}; path=/`
+  // return strCountyName
+}
+
+function getCountyManually() {
+  // alert("Sorry, no position available.");
+  swal("What county are you in?", "To better help us service you, tell us what county you live in.",
+    {content: {
+        element: "input",
+        attributes: {
+          placeholder: "Type your password",
+          type: "password",
+        },
+      },
+    });
+}
+
+
+
+
+//SIDE BAR AI
+

@@ -64,7 +64,7 @@ async function getServices() {
 function markerClick(e) {
     for (let i = 0; i < allServices.length; i++) {
         if (e.target == allServices[i].marker) {
-            console.log(getCountyList(allServices[i].service))
+            // console.log(getCountyList(allServices[i].service))
         }
     }
 }
@@ -80,7 +80,7 @@ function loadServices() {
             if (!geocodes[i]) return;
             let marker = L.marker(geocodes[i]).addTo(map);
             marker.on('click', markerClick);
-            console.log(`${element.CityStateZip} ${element.ServiceAddress} ${geocodes[i]}`)
+            // console.log(`${element.CityStateZip} ${element.ServiceAddress} ${geocodes[i]}`)
             const mapItem = new MapItem ({
               service: element,
               marker: marker
