@@ -1869,3 +1869,29 @@ p{
   align-items: center;
   padding: 0.2rem 0.5rem;
 }
+.rating{
+  margin-left: 15px; 
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.rating h3 {
+  font-size: 20px;
+}
+.star{
+  color: lightgray !important;
+  transition: color 0.2s;
+  font-size: 35px;
+  margin-right: 10px;
+  color: var(--dark-navy);
+}
+/* .star:hover,
+.star:hover ~ .star {
+  color: gold !important;
+} */
+.star.selected,
+.star.selected ~ .star {
+  color: goldenrod !important;
+}
