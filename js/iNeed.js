@@ -1,6 +1,4 @@
 // button handlers
-console.log("[iNeed] Delegated listener active");
-
 document.addEventListener("click", (e) => {
 
   const foodBtn = e.target.closest("#pillINeedFood");
@@ -9,22 +7,18 @@ document.addEventListener("click", (e) => {
   const childcareBtn = e.target.closest("#pillINeedChildCare");
 
   if (foodBtn) {
-    console.log("[iNeed] Food pill clicked");
     loadCardsByCategory("food");
   }
 
   if (housingBtn) {
-    console.log("[iNeed] Housing pill clicked");
     loadCardsByCategory("housing");
   }
 
   if (transportBtn) {
-    console.log("[iNeed] Transportation pill clicked");
     loadCardsByCategory("transportation");
   }
 
   if (childcareBtn) {
-    console.log("[iNeed] Childcare pill clicked");
     loadCardsByCategory("childcare");
   }
 
@@ -33,8 +27,6 @@ document.addEventListener("click", (e) => {
 
 // cherry picked ID for each pill
 function getIdsByCategory(category) {
-  console.log("[iNeed] Getting IDs for category:", category);
-
   switch (category) {
     case "food":
       return [42,57,93,428];
@@ -57,16 +49,11 @@ function getIdsByCategory(category) {
 
 // gets information from the database api for the cards
 async function loadCardsByCategory(category) {
-
-  console.log("[iNeed] Loading cards for category:", category);
-
   const ids = getIdsByCategory(category);
-  console.log("[iNeed] IDs to fetch:", ids);
 
   const container = document.getElementById("divINeedContent");
 
   if (!container) {
-    console.error("[iNeed] Container #divINeedContent not found!");
     return;
   }
 
@@ -76,30 +63,22 @@ async function loadCardsByCategory(category) {
 
     const requests = ids.map(id => {
       const url = `https://ucassist.duckdns.org/service?id=${id}`;
-      console.log("[iNeed] Fetching:", url);
 
       return fetch(url)
         .then(res => {
-          console.log(`[iNeed] Response for ID ${id}:`, res.status);
           return res.json();
         });
     });
 
     const services = await Promise.all(requests);
 
-    console.log("[iNeed] Services returned:", services);
-
     container.innerHTML = "";
 
     services.forEach(service => {
-      console.log("[iNeed] Rendering service:", service.NameOfService);
       container.appendChild(createCard(service));
     });
 
-    console.log("[iNeed] Finished rendering cards");
-
   } catch (error) {
-    console.error("[iNeed] Error loading services:", error);
     container.innerHTML = "<p>Error loading services.</p>";
   }
 }
@@ -107,9 +86,6 @@ async function loadCardsByCategory(category) {
 
 // creates the html for the cards
 function createCard(service, category) {
-
-  console.log("[iNeed] Creating card for:", service);
-
   const col = document.createElement("div");
   col.className = "card m-2 col-12 col-md-5";
   col.style.width = "18rem";
@@ -127,11 +103,9 @@ function createCard(service, category) {
         ? strurl
         : "https://" + strurl;
 
-    console.log("[iNeed] Website link generated:", strhref);
 
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-primary">Learn More</a>`;
   } else {
-    console.log("[iNeed] No website for service:", service.NameOfService);
   }
 
   // FALLBACK IMAGE
