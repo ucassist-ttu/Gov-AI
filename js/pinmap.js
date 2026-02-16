@@ -14,6 +14,7 @@ const sidebarServiceState = {
 let allServices = []
 let countiesLayer = null;
 let categoryColores = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
+let allCategories = []
 var map = null;
 
 // temporary geocode variable
@@ -86,7 +87,6 @@ function loadServices() {
             if (!geocodes[i]) return;
             let marker = L.marker(geocodes[i]).addTo(map);
             marker.on('click', markerClick);
-            console.log(`${element.CityStateZip} ${element.ServiceAddress} ${geocodes[i]}`)
             const mapItem = new MapItem ({
               service: element,
               marker: marker
@@ -175,6 +175,19 @@ function renderSidebarServices() {
 
   sidebarBody.innerHTML = "";
 
+  const filterControls = document.createElement("div")
+  filterControls.className = "d-flex justify-content-between align-items-center mt-3"
+
+  const btnEnterFilter = document.createElement("button");
+  btnEnterFilter.className = "btn btn-sm btn-outline-secondary";
+  btnEnterFilter.innerHTML = '<i class="bi bi-chevron-right"></i>';
+  btnEnterFilter.addEventListener('click', () => {
+    document.getElementById("mapCollapseFilter").classList.remove("d-none")
+    document.getElementById("mapCollapseServices").classList.add("d-none")
+  })
+  filterControls.appendChild(btnEnterFilter)
+  sidebarBody.appendChild(filterControls)
+
   const start = currentPage * SERVICES_PER_PAGE;
   const end = start + SERVICES_PER_PAGE;
 
@@ -226,6 +239,64 @@ function renderSidebarServices() {
   if (collapseEl && !collapseEl.classList.contains("show")) {
     new bootstrap.Collapse(collapseEl, { show: true });
   }
+
+  renderCategoryFiltering(allServices)
+}
+
+// -- takes a list of mapItems and returns a div containing check boxes for each category contained within the services
+
+function renderCategoryFiltering(mapItems) {
+  arrKeywords = []
+  for (let i = 0; i < mapItems.length; i++) {
+    let tags = getTagList(mapItems[i].service)
+    for (let j = 0; j < tags.length; j++) {
+      if (!arrKeywords.includes(tags[j])) {
+        arrKeywords.push(tags[j])
+      }
+    }
+  }
+
+  const divFilter = document.createElement("div")
+  divFilter.className = "w-100 h-100";
+
+  const controls = document.createElement("div");
+  controls.className = "d-flex justify-content-between align-items-center mt-3"
+
+  const btnExitFilter = document.createElement("button");
+  btnExitFilter.className = "btn btn-sm btn-outline-secondary";
+  btnExitFilter.innerHTML = '<i class="bi bi-chevron-left"></i>';
+  btnExitFilter.addEventListener('click', () => {
+    document.getElementById("mapCollapseFilter").classList.add("d-none")
+    document.getElementById("mapCollapseServices").classList.remove("d-none")
+  })
+  controls.appendChild(btnExitFilter)
+  divFilter.appendChild(controls)
+
+  for (let i = 0; i < arrKeywords.length; i++) {
+    let wrapper = document.createElement("div");
+    wrapper.className = "mb-3";
+
+    let chkDiv = document.createElement("div")
+    chkDiv.className = "form-check card shadow-sm";
+
+
+    let chkLabel = document.createElement("label")
+    chkLabel.className = "form-check-label"
+    chkLabel.htmlFor = `chk${arrKeywords[i]}`
+    chkLabel.innerHTML = `${arrKeywords[i]}`
+    chkDiv.appendChild(chkLabel)
+
+    let chkInput = document.createElement("input")
+    chkInput.className = "form-check-input"
+    chkInput.type = "checkbox"
+    chkInput.value = arrKeywords[i]
+    chkInput.id = `chk${arrKeywords[i]}`
+    chkDiv.appendChild(chkInput)
+
+    wrapper.appendChild(chkDiv)
+    divFilter.appendChild(wrapper)
+  }
+  document.getElementById("mapCollapseFilter").appendChild(divFilter)
 }
 
 // -- Updates global variables before calling renderSidebarServices --
@@ -372,12 +443,13 @@ function getTagList(service) {
 function filterServicesByCategories(mapItems, categories) {
   let filteredServices = []
   for (let i = 0; i < mapItems.length; i++) {
-    let serviceCategories = getTagList(mapItems[i].service).split(',')
-    serviceCategories.forEach(serviceCategory => {
-      if (categories.includes(serviceCategory) && !filteredServices.includes(mapItems[i])) {
+    let serviceCategories = getTagList(mapItems[i].service)
+    for (let j = 0; j < serviceCategories.length; j++) {
+      if (categories.includes(serviceCategories[j]) && !filteredServices.includes(mapItems[i])) {
         filteredServices.push(mapItems[i])
+        break
       }
-    })
+    }
   }
   return filteredServices
 }
