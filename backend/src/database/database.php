@@ -30,6 +30,21 @@ function get_service(int $id): array
     return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
 }
 
+function filter_services_by_county(string $county): array
+{
+    $services = get_services();
+    $filtered_services = [];
+    foreach ($services as $service) {
+        foreach (json_decode(json: $service['CountiesAvailable']) as $county_available) {
+            if ($county == $county_available) {
+                $filtered_services[] = $service;
+                break;
+            }
+        }
+    }
+    return $filtered_services;
+}
+
 function create_service(array $service): void
 {
     global $services_table, $pdo, $columns;
