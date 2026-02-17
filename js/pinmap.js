@@ -172,6 +172,14 @@ function renderSidebarServices() {
   const sidebarBody = document.querySelector("#mapCollapse .card-body");
   const collapseEl = document.getElementById("mapCollapse");
 
+  collapseEl.addEventListener("shown.bs.collapse", () => {
+    setTimeout(() => map.invalidateSize(), 350);
+  });
+
+  collapseEl.addEventListener("hidden.bs.collapse", () => {
+    setTimeout(() => map.invalidateSize(), 350);
+  });
+
   if (!sidebarBody) return;
 
   const { mapItems, currentPage, SERVICES_PER_PAGE } = sidebarServiceState;

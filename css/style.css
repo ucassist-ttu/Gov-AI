@@ -239,6 +239,7 @@ nav {
 .btnMap {
   height: 50px;
   width: 50px;
+  z-index: 1001;
 }
 #mapCollapse {
   max-width: 40%;

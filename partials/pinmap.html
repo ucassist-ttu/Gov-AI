@@ -1,15 +1,28 @@
-<div class="position-relative mx-1 mx-md-5 mt-5 rounded shadow map-container">
-    <div id="map" class="w-100 h-100 rounded"></div>
-    <div class="position-absolute top-0 end-0 d-flex flex-row h-100 justify-content-end" style="z-index: 1000;">
-        <button class="btn btnMap btn-light m-3" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
-            <i class="bi bi-list text-dark"></i>
-        </button>
-        <div class="collapse h-100" id="mapCollapse">
-            <!-- Services -->
-            <div class="card card-body w-100 h-100 overflow-auto" id="mapCollapseServices"></div>
-            <!-- Filtering -->
-            <div class="card card-body w-100 h-100 overflow-auto d-none" id="mapCollapseFilter"></div>
+<div class="mx-1 mx-md-5 mt-5 rounded shadow map-container" style="height: 600px;">
+
+    <div class="d-flex h-100">
+
+        <!-- Map Wrapper -->
+        <div class="flex-grow-1 position-relative">
+
+            <!-- Map -->
+            <div id="map" class="h-100 w-100 rounded"></div>
+
+            <!-- Toggle Button -->
+            <button class="btn btnMap btn-light position-absolute top-0 end-0 m-3" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
+                <i class="bi bi-list text-dark"></i>
+            </button>
+
         </div>
+
+        <!-- Sidebar -->
+        <div class="collapse collapse-horizontal h-100" id="mapCollapse">
+            <div class="card card-body h-100 overflow-auto w-100 w-md-50">
+                <div id="mapCollapseServices"></div>
+                <div id="mapCollapseFilter" class="d-none"></div>
+            </div>
+        </div>
+
     </div>
+
 </div>
-<div class="wrapper" id="serviceInfo"></div>
