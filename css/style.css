@@ -1900,7 +1900,10 @@ p{
   height: 40vw;
   max-height: 600px;
   min-height: 475px;
-  margin: 25px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  gap: 12px;
 }
 @media (max-width: 768px) {
   .chart-container {
@@ -1908,3 +1911,21 @@ p{
     margin-right: 5px;
   }
 }
+.stats-select label{
+  padding-top: 10px;
+}
+.stats-select label{
+  margin-left: 25px;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+.stats-select select{
+  margin: 0 auto;
+  width: 80%;
+}
+/* .stats-select hr {
+  background-color: var(--gold);
+  height: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+} */

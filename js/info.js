@@ -1,5 +1,6 @@
 let typeViewCounts = {};
 let arrServiceTypes = [];
+let arrCounties = [];
 let arrServiceTypeCounts = [];
 let combined = {}
 let barChart
@@ -30,6 +31,10 @@ async function getServices() {
 
                 });
             }
+            let strCounties = getCountyList(service)
+            strCounties.forEach(county => {
+                arrCounties.push(county)
+            });
         });
         combined = Object.entries(typeViewCounts).filter(([label, value]) => label.trim() !== "").map(([label, value]) => ({
             label,
@@ -39,10 +44,12 @@ async function getServices() {
         arrTop10 = combined.slice(0,10)
         arrServiceTypes = arrTop10.map(item => item.label);
         arrServiceTypeCounts = arrTop10.map(item => item.value);
+        uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
 
-        console.log(combined)
+        console.log(uniqueCounties)
         console.log(arrServiceTypes)
         console.log(arrServiceTypeCounts)
+        createCountyFilter(uniqueCounties)
 
     } catch (objError){
         console.log('Error fetching objData', objError)
@@ -50,17 +57,6 @@ async function getServices() {
     buildBarChart (arrServiceTypes, arrServiceTypeCounts)
 }
 getServices()
-// Gets the list of tags for each service
-function getTagList(service) {
-    strKeywords = service.Keywords
-    if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
-    }
-    // Returns keywords seperated by a ','
-    if (Array.isArray(strKeywords)) {
-        return strKeywords;
-    }
-}
 
 // Gets  the list of counties for each services
 function getCountyList(service) {
@@ -73,6 +69,12 @@ function getCountyList(service) {
     if (Array.isArray(strCounties)) {
         return strCounties;
     }
+}
+
+function createCountyFilter(uniqueCounties) {
+    uniqueCounties.forEach(county => {
+        document.querySelector('#countyFilter').innerHTML += `<option value="${county}">${county} County</option>`
+    })
 }
 
 function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {

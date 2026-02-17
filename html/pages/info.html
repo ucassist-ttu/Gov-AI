@@ -18,11 +18,20 @@
         </div>
         <div class="mt-3" style="display: justify-space-around">
             <div>
-                <div class="chart-container">
+                <div class="stats-select">
+                    <label for="countyFilter" aria-label="Filter by county:">Filter by county:</label>
+                    <select id="countyFilter" class="form-select">
+                        <option value="all">All Counties</option>
+                    </select>
+                </div>
+                <div class="stats-select">
+                    <label for="chartFilter" aria-label="Show services:">Show services:</label>
                     <select id="chartFilter" class="form-select mb-3">
                         <option value="top10">Top 10</option>
                         <option value="all">All Services</option>
                     </select>
+                </div>
+                <div class="chart-container">
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
