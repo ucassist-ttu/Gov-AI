@@ -9,6 +9,10 @@
   - Body: JSON `{"service_id": <int>}`.
   - Response: Array of 3 service objects Gemini considers most similar to the given service.
   - Response: Single service for that id.
+- `GET /filter-by-keyword-and-county`
+  - Query params: `keyword` (string), `county` (string).
+  - Response: Array of service objects that match both filters.
+  - Example: `curl -G "http://localhost:8000/filter-by-keyword-and-county" --data-urlencode "county=Putnam" --data-urlencode "keyword=Education"`
 - `POST /request-create-service`
   - Body: JSON `{"service": {<service fields>}}`.
   - Behavior: Creates a pending service request, emails approval links, and returns an empty response body.

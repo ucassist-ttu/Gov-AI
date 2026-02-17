@@ -9,6 +9,39 @@ $columns = ['ID', 'OrganizationName', 'OrganizationDescription', 'Website', 'Min
     'ServiceDescription', 'ProgramCriteria', 'Keywords', 'CountiesAvailable',
     'TelephoneContact', 'EmailContact', 'ServiceAddress', 'CityStateZip', 'HoursOfOperation'];
 
+function decode_list_string(mixed $value): array
+{
+    if (!is_string(value: $value) || trim(string: $value) === '') {
+        return [];
+    }
+
+    $trimmed = trim(string: $value);
+
+    $decoded = json_decode(json: $trimmed, associative: true);
+    if (is_array(value: $decoded)) {
+        return $decoded;
+    }
+
+    if (str_starts_with(haystack: $trimmed, needle: '[') && str_ends_with(haystack: $trimmed, needle: ']')) {
+        $inner = trim(string: substr(string: $trimmed, offset: 1, length: - 1));
+        if ($inner === '') {
+            return [];
+        }
+
+        $parts = preg_split(pattern: '/\s*,\s*/', subject: $inner) ?: [];
+        $result = [];
+        foreach ($parts as $part) {
+            $item = trim(string: $part, characters: " \t\n\r\0\v'\"");
+            if ($item !== '') {
+                $result[] = $item;
+            }
+        }
+        return $result;
+    }
+
+    return [$trimmed];
+}
+
 function get_services(): array
 {
     global $services_table, $pdo;
@@ -30,12 +63,31 @@ function get_service(int $id): array
     return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
 }
 
-function filter_services_by_county(string $county): array
+function filter_services_by_keyword(string $keyword, array $services = []): array
 {
-    $services = get_services();
+    if (!$services) {
+        $services = get_services();
+    }
     $filtered_services = [];
     foreach ($services as $service) {
-        foreach (json_decode(json: $service['CountiesAvailable']) as $county_available) {
+        foreach (decode_list_string(value: $service['Keywords'] ?? null) as $k) {
+            if ($keyword == $k) {
+                $filtered_services[] = $service;
+                break;
+            }
+        }
+    }
+    return $filtered_services;
+}
+
+function filter_services_by_county(string $county, array $services = []): array
+{
+    if (!$services) {
+        $services = get_services();
+    }
+    $filtered_services = [];
+    foreach ($services as $service) {
+        foreach (decode_list_string(value: $service['CountiesAvailable'] ?? null) as $county_available) {
             if ($county == $county_available) {
                 $filtered_services[] = $service;
                 break;

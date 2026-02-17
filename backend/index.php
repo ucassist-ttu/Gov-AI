@@ -39,6 +39,10 @@ try {
         exit;
     }
 
+    if ($path === '/filter-by-keyword-and-county' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo json_encode(value: filter_services_by_keyword(keyword: $_GET['keyword'], services: filter_services_by_county(county: $_GET['county'])));
+    }
+
     if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
         header(header: 'Content-Type: text/html; charset=UTF-8');
         $service_request = get_service_request(id: $_GET['uuid']);
