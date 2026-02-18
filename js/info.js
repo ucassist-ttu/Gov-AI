@@ -134,7 +134,6 @@ function createCountyClicksList(countyFilterText, servData) {
         let tags = service.Keywords;
         let counties = service.CountiesAvailable;
 
-        // Parse JSON safely
         if (typeof tags === "string") {
             try { tags = JSON.parse(tags); } catch { tags = []; }
         }
@@ -143,14 +142,13 @@ function createCountyClicksList(countyFilterText, servData) {
             try { counties = JSON.parse(counties); } catch { counties = []; }
         }
 
-        // 🔎 COUNTY FILTER
         if (search && Array.isArray(counties)) {
 
             const matchesCounty = counties.some(c =>
                 String(c).toLowerCase().trim() === search
             );
 
-            if (!matchesCounty) return; // skip this service
+            if (!matchesCounty) return;
         }
 
         const views = Number(service.view_count) || 0;
@@ -194,7 +192,12 @@ function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
                 },
                 title: {
                     display: true,
-                    text: 'Number Of Clicks Per Service Type'
+                    text: 'Number Of Clicks Per Service Type',
+                    font: {
+                        size: 17,
+                        family: 'tahoma',
+                        weight: 'bold',
+                    },
                 }
             },
             scales: {
