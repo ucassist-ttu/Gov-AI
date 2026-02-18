@@ -5,6 +5,46 @@ let servData;
 let arrServiceTypeCounts = [];
 let combined = {}
 let barChart
+let arrCountyCounts = {}
+let colors = [
+  "#4E79A7", // blue
+  "#F28E2B", // orange
+  "#E15759", // red
+  "#76B7B2", // teal
+  "#59A14F", // green
+  "#EDC948", // yellow
+  "#B07AA1", // purple
+  "#FF9DA7", // pink
+  "#9C755F", // brown
+  "#BAB0AC", // gray
+
+  "#2F4B7C", // dark blue
+  "#FFA600", // amber
+  "#8CD17D", // light green
+  "#D37295", // rose
+  "#499894", // sea teal
+  "#E15759", // strong red
+  "#79706E", // warm gray
+  "#86BCB6", // soft teal
+  "#EECA3B", // mustard
+  "#D4A6C8", // lavender
+
+  "#5F9ED1", // sky blue
+  "#C85200", // burnt orange
+  "#6B4C9A", // deep purple
+  "#A5AA99", // sage
+  "#E17C05", // pumpkin
+  "#1F77B4", // classic blue
+  "#FF7F0E", // vivid orange
+  "#2CA02C", // bright green
+  "#D62728", // crimson
+  "#9467BD", // violet
+
+  "#8C564B", // cocoa
+  "#17BECF", // cyan
+  "#BCBD22", // olive
+  "#7F7F7F"  // neutral gray
+]
 async function getServices() {
     try{
         //Get the list of services from api
@@ -54,45 +94,10 @@ async function getServices() {
     } catch (objError){
         console.log('Error fetching objData', objError)
     }
-    buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+    buildBarChart (arrServiceTypes, arrServiceTypeCounts, 'All Counties')
+    buildpieChart (arrCountyCounts)
 }
 getServices()
-let colors = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'blue',
-    'purple',
-    'pink',
-    'brown',
-    'cyan',
-    'magenta',
-    'lime',
-    'teal',
-    'indigo',
-    'violet',
-    'gold',
-    'silver',
-    'maroon',
-    'navy',
-    'olive',
-    'coral',
-    'turquoise',
-    'salmon',
-    'khaki',
-    'plum',
-    'orchid',
-    'crimson',
-    'darkgreen',
-    'darkblue',
-    'darkorange',
-    'lightblue',
-    'lightgreen',
-    'lightcoral',
-    'slateblue',
-    'tomato'
-]
 let colorMap = {}
 function createColorList (arrServiceTypes) {
     x = 0
@@ -122,7 +127,6 @@ function createCountyFilter(uniqueCounties) {
     })
 }
 function createCountyClicksList(countyFilterText, servData) {
-
     const typeViewCounts = {};
 
     const search = countyFilterText
@@ -147,11 +151,22 @@ function createCountyClicksList(countyFilterText, servData) {
             const matchesCounty = counties.some(c =>
                 String(c).toLowerCase().trim() === search
             );
-
+            
             if (!matchesCounty) return;
         }
 
         const views = Number(service.view_count) || 0;
+        if (Array.isArray(counties)) {
+            counties.forEach(county => {
+
+            if (!arrCountyCounts[county]) {
+                arrCountyCounts[county] = 0;
+            }
+
+            arrCountyCounts[county] += views;
+
+            });
+        }
 
         if (Array.isArray(tags)) {
             tags.forEach(tag => {
@@ -165,10 +180,9 @@ function createCountyClicksList(countyFilterText, servData) {
             });
         }
     });
-
     return typeViewCounts;
 }
-function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
+function buildBarChart (arrServiceTypes, arrServiceTypeCounts, countyName) {
         const data = {
         labels: arrServiceTypes,
         datasets: [{
@@ -192,7 +206,7 @@ function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
                 },
                 title: {
                     display: true,
-                    text: 'Number Of Clicks Per Service Type',
+                    text: `Service Type Viewed: ${countyName}`,
                     font: {
                         size: 17,
                         family: 'tahoma',
@@ -219,25 +233,90 @@ function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
         config
     );
 }
+function buildpieChart (arrCountyCounts) {
+    const countyCombined = Object.entries(arrCountyCounts).filter(([label]) => label.trim() !== "").map(([label, value]) => ({ label, value }));
+    console.log(countyCombined)
+    const counties = countyCombined.map(item => item.label);
+    const clicks = countyCombined.map(item => item.value);
+    const data = {
+        labels: counties,
+        datasets: [{
+            label: 'Services Viewed',
+            borderColor: '#1E222E',
+            borderWidth: 2,
+            data: clicks,
+            backgroundColor: [
+                "#4E79A7", // blue
+                "#F28E2B", // orange
+                "#E15759", // red
+                "#76B7B2", // teal
+                "#59A14F", // green
+                "#EDC948", // yellow
+                "#B07AA1", // purple
+                "#FF9DA7", // pink
+                "#9C755F", // brown
+                "#BAB0AC", // gray
+                "#2F4B7C", // dark blue
+                "#FFA600", // amber
+                "#8CD17D", // light green
+                "#D37295"  // rose
+            ]
+        }]
+    };
+    const config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                title: {
+                    display: true,
+                    text: 'Services Viewed Per County',
+                    font: {
+                        size: 17,
+                        family: 'tahoma',
+                        weight: 'bold',
+                    },
+                }
+            }
+        },
+    };
+    pieChart =new Chart(
+        document.getElementById('pieChart'),
+        config
+    );
+}
 document.getElementById('chartFilter').addEventListener('change', (e) => {
-    console.log(document.getElementById('chartFilter').value)
+    county = document.getElementById('countyFilter').value
     if (document.getElementById('chartFilter').value == 'all') {
         barChart.destroy();
         arrServiceTypes = combined.map(item => item.label);
         arrServiceTypeCounts = combined.map(item => item.value);
-        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+        if(county == "all") {
+            buildBarChart (arrServiceTypes, arrServiceTypeCounts, `All Counties`)
+        }
+        else {
+            buildBarChart (arrServiceTypes, arrServiceTypeCounts, `${county} County`)
+        }
     }
     else {
         barChart.destroy();
         arrTop10 = combined.slice(0,10)
         arrServiceTypes = arrTop10.map(item => item.label);
         arrServiceTypeCounts = arrTop10.map(item => item.value);
-        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+        if(county == "all") {
+            buildBarChart (arrServiceTypes, arrServiceTypeCounts, `All Counties`)
+        }
+        else {
+            buildBarChart (arrServiceTypes, arrServiceTypeCounts, `${county} County`)
+        }
     }
 })
 document.getElementById('countyFilter').addEventListener('change', (e) => {
     county = document.getElementById('countyFilter').value
-    console.log(county)
     if (document.getElementById('countyFilter').value == 'all') {
         document.getElementById('chartFilter').value = 'top10'
         arrCountyClicks = createCountyClicksList("", servData)
@@ -250,7 +329,7 @@ document.getElementById('countyFilter').addEventListener('change', (e) => {
         arrServiceTypes = arrTop10.map(item => item.label);
         arrServiceTypeCounts = arrTop10.map(item => item.value);
         barChart.destroy();
-        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+        buildBarChart (arrServiceTypes, arrServiceTypeCounts, `All Counties`)
     }
     else {
         document.getElementById('chartFilter').value = 'top10'
@@ -264,9 +343,8 @@ document.getElementById('countyFilter').addEventListener('change', (e) => {
         arrServiceTypes = arrTop10.map(item => item.label);
         arrServiceTypeCounts = arrTop10.map(item => item.value);
         barChart.destroy();
-        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+        buildBarChart (arrServiceTypes, arrServiceTypeCounts, `${county} County`)
     }
-    console.log(arrTop10)
 })
 function createSpecificColorList (arrServiceTypes) {
     let arrColor = []
