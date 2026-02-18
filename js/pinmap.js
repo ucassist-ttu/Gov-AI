@@ -8,14 +8,12 @@ const sidebarServiceState = {
   currentPage: 0,
   SERVICES_PER_PAGE: 5,
   selectedCounty: null,
-  selectedCategories: [],
+  selectedCategories: ["Abuse", "Healthcare"],
   MAX_CATEGORIES: 6
 };
 let allServices = []
 let countiesLayer = null;
 let categoryColors = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
-let categoryInputs = []
-let allCategories = []
 var map = null;
 
 // temporary geocode variable
@@ -489,6 +487,7 @@ function filterServicesByCategories(mapItems) {
       }
     }
   }
+  console.log(filteredServices)
   return filteredServices
 }
 
