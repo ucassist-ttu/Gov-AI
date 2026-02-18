@@ -49,6 +49,7 @@ async function getServices() {
 
         createCountyClicksList("", servData)
         createCountyFilter(uniqueCounties)
+        createColorList (combined)
 
     } catch (objError){
         console.log('Error fetching objData', objError)
@@ -56,6 +57,51 @@ async function getServices() {
     buildBarChart (arrServiceTypes, arrServiceTypeCounts)
 }
 getServices()
+let colors = [
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'blue',
+    'purple',
+    'pink',
+    'brown',
+    'cyan',
+    'magenta',
+    'lime',
+    'teal',
+    'indigo',
+    'violet',
+    'gold',
+    'silver',
+    'maroon',
+    'navy',
+    'olive',
+    'coral',
+    'turquoise',
+    'salmon',
+    'khaki',
+    'plum',
+    'orchid',
+    'crimson',
+    'darkgreen',
+    'darkblue',
+    'darkorange',
+    'lightblue',
+    'lightgreen',
+    'lightcoral',
+    'slateblue',
+    'tomato'
+]
+let colorMap = {}
+function createColorList (arrServiceTypes) {
+    x = 0
+    arrServiceTypes.forEach(type => {
+        label = type.label
+        colorMap[label] = colors[x % colors.length];
+        x = x + 1
+    })
+}
 
 // Gets  the list of counties for each services
 function getCountyList(service) {
@@ -132,42 +178,7 @@ function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
             borderColor: '#1E222E',
             borderWidth: 2,
             data: arrServiceTypeCounts,
-            backgroundColor: [
-                'red',
-                'orange',
-                'yellow',
-                'green',
-                'blue',
-                'purple',
-                'pink',
-                'brown',
-                'cyan',
-                'magenta',
-                'lime',
-                'teal',
-                'indigo',
-                'violet',
-                'gold',
-                'silver',
-                'maroon',
-                'navy',
-                'olive',
-                'coral',
-                'turquoise',
-                'salmon',
-                'khaki',
-                'plum',
-                'orchid',
-                'crimson',
-                'darkgreen',
-                'darkblue',
-                'darkorange',
-                'lightblue',
-                'lightgreen',
-                'lightcoral',
-                'slateblue',
-                'tomato'
-            ]
+            backgroundColor: createSpecificColorList(arrServiceTypes)
         }]
     };
     const config = {
@@ -254,3 +265,10 @@ document.getElementById('countyFilter').addEventListener('change', (e) => {
     }
     console.log(arrTop10)
 })
+function createSpecificColorList (arrServiceTypes) {
+    let arrColor = []
+    arrServiceTypes.forEach(type => {
+        arrColor.push(colorMap[type])
+    })
+    return arrColor
+}
