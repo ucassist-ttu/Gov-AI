@@ -112,7 +112,7 @@ function loadServices() {
     servData.forEach(element => {
         try {
             if (!geocodes[i]) return;
-            let marker = L.marker(geocodes[i]).addTo(map);
+            let marker = L.marker(geocodes[i]);
             marker.on('click', markerClick);
             const mapItem = new MapItem ({
               service: element,
@@ -203,6 +203,14 @@ function renderSidebarServices() {
 
   const start = currentPage * SERVICES_PER_PAGE;
   const end = start + SERVICES_PER_PAGE;
+
+  allServices.forEach(mapItem => {
+    mapItem.marker.remove()
+  })
+
+  mapItems.forEach(mapItem => {
+    mapItem.marker.addTo(map)
+  })
 
   // Render service cards
   mapItems.slice(start, end).forEach(mapItem => {
@@ -326,12 +334,11 @@ function renderCategoryFiltering(mapItems) {
 
 function loadServicesIntoSidebar() {
 
-  let filteredByCounty = filterServicesByCounties()
-  let filteredByCategories = filterServicesByCategories(filteredByCounty)
-  sidebarServiceState.mapItems = filteredByCounty
-  sidebarServiceState.currentPage = 0;
+  sidebarServiceState.mapItems = allServices
+  sidebarServiceState.mapItems = filterServicesByCounties()
+  sidebarServiceState.mapItems = filterServicesByCategories()
 
-  console.log(sidebarServiceState)
+  sidebarServiceState.currentPage = 0;
 
   renderSidebarServices();
 }
@@ -442,12 +449,13 @@ function getCountyList(service) {
 // -- takes an array of county strings and returns an array of the filtered global array --
 function filterServicesByCounties() {
   let filteredServices = []
-  if (!sidebarServiceState.selectedCounty) return allServices
-  for (let i = 0; i < allServices.length; i++) {
-    let countiesAvailable = getCountyList(allServices[i].service) || []
+  if (!sidebarServiceState.selectedCounty) return sidebarServiceState.mapItems
+
+  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
+    let countiesAvailable = getCountyList(sidebarServiceState.mapItems[i].service) || []
     countiesAvailable.forEach(county => {
-      if (sidebarServiceState.selectedCounty.feature.properties.NAME == county && !filteredServices.includes(allServices[i])) {
-        filteredServices.push(allServices[i])
+      if (sidebarServiceState.selectedCounty.feature.properties.NAME == county && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
+        filteredServices.push(sidebarServiceState.mapItems[i])
       }
     })
   }
@@ -470,22 +478,13 @@ function getTagList(service) {
 // -- takes an array of category strings and an array of services and returns an array of filtered services
 function filterServicesByCategories(mapItems) {
   let filteredServices = []
+  if (sidebarServiceState.selectedCategories.length === 0) return sidebarServiceState.mapItems
 
-  let selectedCategories = []
-  console.log(categoryInputs.length)
-  for (let i = 0; i < categoryInputs.length; i++) {
-    console.log(categoryInputs[i])
-    if (categoryInputs[i].checked === true) {
-      selectedCategories.push(categoryInputs[i].value)
-    }
-  }
-  sidebarServiceState.selectedCategories = selectedCategories
-
-  for (let i = 0; i < mapItems.length; i++) {
-    let serviceCategories = getTagList(mapItems[i].service) || []
+  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
+    let serviceCategories = getTagList(sidebarServiceState.mapItems[i].service) || []
     for (let j = 0; j < serviceCategories.length; j++) {
-      if (sidebarServiceState.selectedCategories.includes(serviceCategories[j]) && !filteredServices.includes(mapItems[i])) {
-        filteredServices.push(mapItems[i])
+      if (sidebarServiceState.selectedCategories.includes(serviceCategories[j]) && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
+        filteredServices.push(sidebarServiceState.mapItems[i])
         break
       }
     }
