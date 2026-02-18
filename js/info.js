@@ -1,6 +1,7 @@
 let typeViewCounts = {};
 let arrServiceTypes = [];
 let arrCounties = [];
+let servData;
 let arrServiceTypeCounts = [];
 let combined = {}
 let barChart
@@ -8,7 +9,7 @@ async function getServices() {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/monthly-views`)
-        let servData = await servResponse.json()
+        servData = await servResponse.json()
 
         servData.forEach(service => {
 
@@ -46,9 +47,7 @@ async function getServices() {
         arrServiceTypeCounts = arrTop10.map(item => item.value);
         uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
 
-        console.log(uniqueCounties)
-        console.log(arrServiceTypes)
-        console.log(arrServiceTypeCounts)
+        createCountyClicksList("", servData)
         createCountyFilter(uniqueCounties)
 
     } catch (objError){
@@ -76,7 +75,55 @@ function createCountyFilter(uniqueCounties) {
         document.querySelector('#countyFilter').innerHTML += `<option value="${county}">${county} County</option>`
     })
 }
+function createCountyClicksList(countyFilterText, servData) {
 
+    const typeViewCounts = {};
+
+    const search = countyFilterText
+        ? countyFilterText.toLowerCase().trim()
+        : "";
+
+    servData.forEach(service => {
+
+        let tags = service.Keywords;
+        let counties = service.CountiesAvailable;
+
+        // Parse JSON safely
+        if (typeof tags === "string") {
+            try { tags = JSON.parse(tags); } catch { tags = []; }
+        }
+
+        if (typeof counties === "string") {
+            try { counties = JSON.parse(counties); } catch { counties = []; }
+        }
+
+        // 🔎 COUNTY FILTER
+        if (search && Array.isArray(counties)) {
+
+            const matchesCounty = counties.some(c =>
+                String(c).toLowerCase().trim() === search
+            );
+
+            if (!matchesCounty) return; // skip this service
+        }
+
+        const views = Number(service.view_count) || 0;
+
+        if (Array.isArray(tags)) {
+            tags.forEach(tag => {
+                if (!tag) return;
+
+                if (!typeViewCounts[tag]) {
+                    typeViewCounts[tag] = 0;
+                }
+
+                typeViewCounts[tag] += views;
+            });
+        }
+    });
+
+    return typeViewCounts;
+}
 function buildBarChart (arrServiceTypes, arrServiceTypeCounts) {
         const data = {
         labels: arrServiceTypes,
@@ -173,4 +220,37 @@ document.getElementById('chartFilter').addEventListener('change', (e) => {
         arrServiceTypeCounts = arrTop10.map(item => item.value);
         buildBarChart (arrServiceTypes, arrServiceTypeCounts)
     }
+})
+document.getElementById('countyFilter').addEventListener('change', (e) => {
+    county = document.getElementById('countyFilter').value
+    console.log(county)
+    if (document.getElementById('countyFilter').value == 'all') {
+        document.getElementById('chartFilter').value = 'top10'
+        arrCountyClicks = createCountyClicksList("", servData)
+        combined = Object.entries(arrCountyClicks).filter(([label, value]) => label.trim() !== "").map(([label, value]) => ({
+            label,
+            value
+        }));
+        combined.sort((a, b) => b.value - a.value);
+        arrTop10 = combined.slice(0,10)
+        arrServiceTypes = arrTop10.map(item => item.label);
+        arrServiceTypeCounts = arrTop10.map(item => item.value);
+        barChart.destroy();
+        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+    }
+    else {
+        document.getElementById('chartFilter').value = 'top10'
+        arrCountyClicks = createCountyClicksList(county, servData)
+        combined = Object.entries(arrCountyClicks).filter(([label, value]) => label.trim() !== "").map(([label, value]) => ({
+            label,
+            value
+        }));
+        combined.sort((a, b) => b.value - a.value);
+        arrTop10 = combined.slice(0,10)
+        arrServiceTypes = arrTop10.map(item => item.label);
+        arrServiceTypeCounts = arrTop10.map(item => item.value);
+        barChart.destroy();
+        buildBarChart (arrServiceTypes, arrServiceTypeCounts)
+    }
+    console.log(arrTop10)
 })
