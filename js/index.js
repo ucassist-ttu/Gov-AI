@@ -25,7 +25,11 @@ document.addEventListener("click", async function (e) {
 
 
 // geolocation to get current county
-window.onload = getLocation()
+// window.onload = getLocation()
+window.onload = () =>{
+  if(sessionStorage.getItem("currCounty") == null)
+    {getLocation()}
+}
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -36,27 +40,72 @@ function getLocation() {
 }
 
 async function getCounty(position) {
+
   console.log("Latitude: " + position.coords.latitude +
-  "<br>Longitude: " + position.coords.longitude)
+  "Longitude: " + position.coords.longitude)
 
   const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
   const geoData = await response.json()
   strCountyName = geoData.localityInfo.administrative[3].name
-  document.cookie = `CurrCounty=${encodeURIComponent(strCountyName)}; path=/`
+  const dictUCCounties = {
+    'bledsoe': 'Bledsoe County',
+    'cannon': 'Cannon County',
+    'clay': 'Clay County',
+    'cumberland': 'Cumberland County',
+    'dekalb': 'DeKalb County',
+    'fentress': 'Fentress County',
+    'jackson': 'Jackson County',
+    'overton': 'Overton County',
+    'pickett': 'Pickett County',
+    'putnam': 'Putnam County',
+    'smith': 'Smith County',
+    'van_buren': 'Van Buren County',
+    'warren': 'Warren County',
+    'white': 'White County'
+  }
+
+  Object.keys(dictUCCounties).forEach(key => {
+    if (strCountyName == dictUCCounties[key])
+      strCountyName = key
+  })
+
+  sessionStorage.setItem("currCounty", strCountyName)
+
+  
   // return strCountyName
+  console.log(strCountyName)
 }
 
 function getCountyManually() {
-  // alert("Sorry, no position available.");
-  swal("What county are you in?", "To better help us service you, tell us what county you live in.",
-    {content: {
-        element: "input",
-        attributes: {
-          placeholder: "Type your password",
-          type: "password",
-        },
-      },
-    });
+  Swal.fire({
+    title: 'What county are you in?',
+    text: 'To better let us service you, tell us what county you live in.',
+    icon: 'info',
+    input: 'select',
+    inputOptions: {
+      'bledsoe': 'Bledsoe County',
+      'cannon': 'Cannon County',
+      'clay': 'Clay County',
+      'cumberland': 'Cumberland County',
+      'dekalb': 'DeKalb County',
+      'fentress': 'Fentress County',
+      'jackson': 'Jackson County',
+      'overton': 'Overton County',
+      'pickett': 'Pickett County',
+      'putnam': 'Putnam County',
+      'smith': 'Smith County',
+      'van_buren': 'Van Buren County',
+      'warren': 'Warren County',
+      'white': 'White County'
+    },
+    inputPlaceholder: 'Select a county',
+    showCancelButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      console.log(result.value); // this will be 'value1', 'value2', etc
+      sessionStorage.setItem("currCounty", result.value)
+    }
+  });
 }
 
 
