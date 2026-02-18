@@ -241,9 +241,6 @@ nav {
   width: 50px;
   z-index: 1001;
 }
-#mapCollapse {
-  max-width: 40%;
-}
 .mapServiceCard {
   border-color: #AA8A41 !important;
 }
