@@ -25,7 +25,7 @@ document.addEventListener("click", async function (e) {
 
 
 // geolocation to get current county
-// window.onload = getLocation()
+// window.onload = getLocation() txtDisplayCounty
 window.onload = () =>{
   if(sessionStorage.getItem("currCounty") == null)
     {getLocation()}

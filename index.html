@@ -6,21 +6,30 @@
     <title>UC Assist</title>
     <link rel="icon" type="image" href="assets/images/cropped-Seal_JPEG-32x32.jpg">
     <!-- bootstrap library and custom css link -->
+     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="css/style.css">
+    
 </head>
 <body>
     <div id="navbar"></div>
 
     <main>
 
-        <div class="position-relative">
-            <!-- crisis tag -->
-            <div class="index-crisis rounded-bottom">
-                <h6 class=""><a href="html/pages/crisis.html" class="fw-bold">Crisis Hotline</a></h6>
+        <!-- <a class="navbar-brand d-flex align-items-start row p-2 m-1 ms-5" href="/Gov-AI/index.html" >
+             <img src="/Gov-AI/assets/images/ucAssistLogo.jpg" alt="UC-Assist Logo">
+            <div id="txtDisplayCounty" class="btn row-cols-auto d-flex d-inline-flex align-items-center">
+                <div class="divider-vertical"></div>
+                <i class="bi bi-geo-alt-fill p-0"></i>
+                <a id="txtDisplayCounty" class="btn-link clr-dark-navy p-0">Select County</a>
             </div>
+        </a> -->
+
+            <!-- crisis tag -->
+            <button type="button" href="html/pages/crisis.html" class="fw-bold btn btn-danger float-end">Crisis Hotline</button>
+            <div>
+
 
             <!-- carousel -->
             <div id="countyCarousel"></div>

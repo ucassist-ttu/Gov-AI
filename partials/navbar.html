@@ -1,29 +1,41 @@
 <nav class="navbar fixed-top navbar-expand-lg bg-white shadow">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand p-2 m-1 ms-5" href="/Gov-AI/index.html" >
-                <img src="/Gov-AI/assets/images/ucAssistLogo.jpg" alt="UC-Assist Logo">
-            </a>
-            <!-- Expand button for mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Gov-AI/html/pages/crisis.html">Crisis Hotline</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Gov-AI/html/pages/services.html">Find Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Gov-AI/html/pages/registration_landing.html">Providers</a>
-                    </li>
-                    <li class="nav-item me-5">
-                        <a class="nav-link" href="/Gov-AI/html/pages/referral_form.html">Refer A Program</a>
-                    </li>
-                </ul>
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-start row p-2 m-1 ms-5" href="/Gov-AI/index.html" >
+            <img src="/Gov-AI/assets/images/ucAssistLogo.jpg" alt="UC-Assist Logo">
+            <div id="txtDisplayCounty" class="btn row-cols-auto d-flex d-inline-flex align-items-center p-0">
+                <div class="divider-verticalp-0"></div>
+                <i class="bi bi-geo-alt-fill p-0"></i>
+                <a id="txtDisplayCounty" class="btn-link clr-dark-navy p-0">Select County</a>
             </div>
+        </a>
+        <!-- Expand button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Gov-AI/html/pages/crisis.html">Crisis Hotline</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Gov-AI/html/pages/services.html">Find Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Gov-AI/html/pages/registration_landing.html">Providers</a>
+                </li>
+                <li class="nav-item me-5">
+                    <a class="nav-link" href="/Gov-AI/html/pages/referral_form.html">Refer A Program</a>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<script>
+    // fetch('../js/index.js')
+    //     .then(response => response.text())
+    //     .then(data => document.getElementById('txtDisplayCounty').innerHTML = data);
+</script>
+<script src="js/index.js"></script>
