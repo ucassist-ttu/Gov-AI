@@ -117,6 +117,41 @@ function getCountyList(service) {
     }
 }
 
+// Searches for services with information matching the users input
+document.querySelector("#btnSearchServices").addEventListener("click", () => {
+    let arrFound = []
+    strSearch = document.querySelector("#txtSearchServices").value
+    arrSearch = strSearch.split(" ");
+    arrAllServices.forEach(item => {
+        arrSearch.forEach(word => {
+            if (word.length >= 4)  {
+                strName = item.NameOfService
+                strKeywords = item.Keywords
+                strCounties = item.CountiesAvailable
+                if (strName.toLowerCase().includes(word.toLowerCase()) || strKeywords.toLowerCase().includes(word.toLowerCase()) || strCounties.toLowerCase().includes(word.toLowerCase())) {
+                    arrFound.push(item)
+                }
+            }
+        })
+    })
+    uniqueSearch = [...new Set(arrFound)];
+    if (uniqueSearch.length == 0) {
+        strDiv =   `<div class="service">
+                    <h3>No services match search:</h3>
+                    <p class="m-3">"${strSearch}"</p>
+                    <button id="btnViewAllServices">View All Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnViewAllServices').addEventListener('click', () => {
+            renderSidebarServices(arrAllServices)
+        })
+    }
+    else {
+        renderSidebarServices(uniqueSearch)
+    }
+})
+
+
 // Creates the checkboxes
 function createCheckbox(labelText, container) {
   const value = labelText.toLowerCase().replace(/\s+/g, "-");
@@ -229,8 +264,6 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
         document.querySelector('#btnShowMoreServices').innerHTML = `+ Show ${uniqueServiceTypes.length - 6} More Service Types`;
     }
 });
-
-
 
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
@@ -355,61 +388,3 @@ function renderSidebarServices(arrServices) {
         sidebarBody.appendChild(controls);
     }
 }
-
-
-// let strLatitude
-// let strLongitude
-
-// document.querySelector("#btnUserLocation").addEventListener("click", () => {
-//     if (!navigator.geolocation) {
-//       alert("Geolocation is not supported by your browser.");
-//       return;
-//     }
-//     navigator.geolocation.getCurrentPosition(pos => {
-//         const { latitude, longitude } = pos.coords;
-//         getLocation(latitude, longitude)
-//     })
-// })
-
-// async function getLocation(latitude, longitude) {
-//     try {
-//         let servResponse = await fetch(`http://34.171.137.8:8000/get-location?latitude=${latitude}&longitude=${longitude}`)
-//         let servData = await servResponse.json()
-//         console.log(servData)
-//     } catch (objError){
-//         console.log('Error fetching objData', objError)
-//     }
-// }
-
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     let { latitude, longitude } = position.coords;
-
-    //     strLatitude = latitude
-    //     strLongitude = longitude
-
-    //     console.log("Latitude:", strLatitude);
-    //     console.log("Longitude:", longitude);
-
-    //     console.log(`Your location is ${strLatitude}, ${longitude}`)
-    //     getLocation()
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //     alert("Unable to retrieve your location.");
-    //   }
-    // );
-//   });
-
-
-
-//   async function getLocation() {
-//             try{
-//                 let locResponse = await fetch(`https://api.open-meteo.com/v1/search?latitude=${strLatitude}&longitude=${strLongitude}&language=en&format=json`)
-//                 let locData = await locResponse.json()
-//                 console.log(locData)
-//             } catch (objError){
-//                 console.log('Error fetching objData', objError)
-//             }
-//         }
-//         getLocation()
