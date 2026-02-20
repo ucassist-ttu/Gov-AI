@@ -3,11 +3,66 @@ let arrServiceType = []
 let arrOrgName = []
 let arrFilteredServices = []
 let arrAllServices = []
+const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.webp";
+
+function getLogoSrc(rawLogo) {
+    if (typeof rawLogo !== "string") {
+        return "";
+    }
+
+    const logo = rawLogo.trim();
+    if (!logo) {
+        return "";
+    }
+
+    const lowered = logo.toLowerCase();
+    if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+        return "";
+    }
+
+    if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+        return logo;
+    }
+
+    if (logo.startsWith("www.")) {
+        return `https://${logo}`;
+    }
+
+    return `/Gov-AI/assets/images/${logo}`;
+}
+
+function parseArrayField(value) {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    if (typeof value !== "string") {
+        return [];
+    }
+
+    const normalized = value.trim();
+    if (!normalized) {
+        return [];
+    }
+
+    try {
+        return JSON.parse(normalized);
+    } catch (_) {
+        // Database currently stores pseudo-JSON arrays with single quotes.
+        try {
+            return JSON.parse(normalized.replace(/'/g, '"'));
+        } catch (_) {
+            return [];
+        }
+    }
+}
 
 async function getServices() {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+        if (!servResponse.ok) {
+            throw new Error(`HTTP error ${servResponse.status}`);
+        }
         let servData = await servResponse.json()
         arrAllServices = servData
         renderSidebarServices(servData)
@@ -53,8 +108,9 @@ function createServiceCard(arrCards) {
         strDiv += `<h2>${service.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        if (service.ProviderLogo != 'N/A'){
-            strDiv += `<h3>Offered by: <img src="${service.ProviderLogo}" alt="${service.OrganizationName}"></h3>`
+        const logoSrc = getLogoSrc(service.ProviderLogo);
+        if (logoSrc){
+            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -70,7 +126,7 @@ function createServiceCard(arrCards) {
         strDiv += `</div>`
 
         // Blue service divider
-        strDiv += `<hr class="hr-blue"/>`
+        strDiv += `<hr class="hr-blue">`
         strDiv += `</div>`
         document.querySelector('#divServices').innerHTML += strDiv
 
@@ -88,14 +144,7 @@ function createServiceCard(arrCards) {
 
 // Gets the list of tags for each service
 function getTagList(service) {
-    strKeywords = service.Keywords
-    if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
-    }
-    // Returns keywords seperated by a ','
-    if (Array.isArray(strKeywords)) {
-        return strKeywords;
-    }
+    return parseArrayField(service?.Keywords);
 }
 
 // Shows more information on a service by calling service.html  
@@ -106,15 +155,7 @@ function callServicePage (page_id) {
 
 // Gets  the list of counties for each services
 function getCountyList(service) {
-    strCounties = service.CountiesAvailable
-    if (typeof strCounties === 'string') {
-        strCounties = JSON.parse(strCounties);
-    }
-
-    // Returns an array of strCounties
-    if (Array.isArray(strCounties)) {
-        return strCounties;
-    }
+    return parseArrayField(service?.CountiesAvailable);
 }
 
 // Creates the checkboxes
@@ -235,19 +276,26 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";
+    const overlay = document.getElementById("overlay");
+    if (!overlay) return;
     overlay.classList.add("active");
 });
 
 // Closes the filter side bar
 function closeNav() {
+  const overlay = document.getElementById("overlay");
   document.getElementById("mySidenav").style.width = "0";
+  if (!overlay) return;
   overlay.classList.remove("active");
 }
 
 // Closes the filter when the overlay is clicked
-overlay.addEventListener("click", () => {
-  closeNav()
-})
+const overlay = document.getElementById("overlay");
+if (overlay) {
+    overlay.addEventListener("click", () => {
+      closeNav()
+    })
+}
 
 // Closes the filter side bar when btnSeeResults is clicked
 document.querySelector("#btnSeeResults").addEventListener("click", () => {
@@ -276,7 +324,6 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     if (!e.target.matches('input[type="checkbox"]')) return;
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
-    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];

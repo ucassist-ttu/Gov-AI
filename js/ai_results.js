@@ -2,6 +2,11 @@ let strHeader = null;
 
 async function getAIRecommendations(userPrompt) {
     let AIContainer = document.querySelector('#suggestedResources');
+    let headerEl = strHeader || document.querySelector("#txtHeader");
+    if (!AIContainer || !headerEl) {
+        console.error("Required AI results elements are missing from the page.");
+        return;
+    }
     AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
     try{
         const servResponse = await fetch(`https://ucassist.duckdns.org/prompt`, { //calls ai api
@@ -17,46 +22,63 @@ async function getAIRecommendations(userPrompt) {
 
         let aiData = await servResponse.json()
         AIContainer.innerHTML = ""; //clears away loading placeholder text
-        // AIContainer = ``;
 
-        // console.log(userPrompt)
-        aiData = aiData.services
+        // Backend returns an array directly for /prompt, but support { services: [...] } too.
+        if (Array.isArray(aiData)) {
+            // no-op
+        } else if (Array.isArray(aiData?.services)) {
+            aiData = aiData.services;
+        } else {
+            aiData = [];
+        }
         console.log(aiData);
         
         let txtHTML = "";
-        let intCount = 1  // for numbering the services on the html
+        let intCount = 1;  // for numbering the services on the html
 
-        while(intCount < 4){
-            aiData.forEach(element => {
-                let strResourceName = element.NameOfService
-                let strCompany = element.OrganizationName
-                let strDescription = element.ServiceDescription
-                console.log(strResourceName)
+        aiData.slice(0, 3).forEach((element) => {
+            let strResourceName = element.NameOfService || "Untitled service";
+            let strCompany = element.OrganizationName || "Unknown organization";
+            let strDescription = element.ServiceDescription || "No description available.";
+            console.log(strResourceName);
 
-                txtHTML +=`<div class="flex-row">`
-                txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`
-                txtHTML +=`    <p class="ai-company-name">`
-                txtHTML +=`        by ${strCompany}`
-                txtHTML +=`    </p>`
-                txtHTML +=`</div>`
-                txtHTML +=`<p class="ai-description">`
-                txtHTML +=`      ${strDescription}`
-                txtHTML +=`</p>`
-                txtHTML +=`<p class="btn ai-link">More Details</p>`
-                intCount ++;
-            })
+            txtHTML +=`<div class="flex-row">`;
+            txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`;
+            txtHTML +=`    <p class="ai-company-name">`;
+            txtHTML +=`        by ${strCompany}`;
+            txtHTML +=`    </p>`;
+            txtHTML +=`</div>`;
+            txtHTML +=`<p class="ai-description">`;
+            txtHTML +=`      ${strDescription}`;
+            txtHTML +=`</p>`;
+            txtHTML +=`<p class="btn ai-link">More Details</p>`;
+            intCount++;
+        });
+
+        if (!txtHTML) {
+            headerEl.innerHTML = "We couldn't find matching resources right now.";
+            AIContainer.innerHTML = `<p class="mt-3">Try a different prompt or browse all available services.</p>`;
+            return;
         }
-        AIContainer.innerHTML += txtHTML
+
+        AIContainer.innerHTML = txtHTML;
     } catch (objError){
         console.log('Error fetching aiData: ', objError)
 
-        strHeader.innerHTML = "Oops! We're having trouble answering your request."
+        if (headerEl) {
+            headerEl.innerHTML = "Oops! We're having trouble answering your request.";
+        }
         AIContainer.innerHTML = `<p class="mt-3 ">Please try again later. In the meantime, feel free to browse all available services.</p>`; //error message
     }
 }
 document.addEventListener("DOMContentLoaded", function() {
     let AIContainer = document.querySelector('#suggestedResources');
-    let strHeader = document.querySelector("#txtHeader");
+    strHeader = document.querySelector("#txtHeader");
+
+    if (!AIContainer || !strHeader) {
+        console.error("Required AI results elements are missing from the page.");
+        return;
+    }
 
     const prompt = sessionStorage.getItem("user_prompt"); // Get prompt
     if (!prompt) {
@@ -76,7 +98,7 @@ document.querySelector("#btnHome").addEventListener("click", (e) => {
     })
     .then((travelHome) => {
         if (!travelHome) {
-            window.location.href = "/index.html"; // carries to ai_results page
+            window.location.href = "index.html"; // carries to ai_results page
         } 
         // else {
         //     swal("Your imaginary file is safe!");
