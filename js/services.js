@@ -3,6 +3,7 @@ let arrServiceType = []
 let arrOrgName = []
 let arrFilteredServices = []
 let arrAllServices = []
+let arrCurrentServices = []
 
 async function getServices() {
     try{
@@ -10,7 +11,20 @@ async function getServices() {
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
         arrAllServices = servData
-        renderSidebarServices(servData)
+        arrCurrentServices = servData
+        if (arrCurrentServices.length == 0) {
+            strDiv =   `<div class="service">
+                        <h3>Error loading services</h3>
+                        <button id="btnReload">Reload Services</button>
+                        </div>`
+            document.querySelector('#divServices').innerHTML = strDiv
+            document.querySelector('#btnReload').addEventListener('click', () => {
+                getServices ()
+            })
+        }
+        else {
+            renderSidebarServices(arrCurrentServices)
+        }
 
         // Get all of the counties, service types, and organization names for filtering
         servData.forEach(element => {
@@ -26,6 +40,14 @@ async function getServices() {
         });
     } catch (objError){
         console.log('Error fetching objData', objError)
+        strDiv =   `<div class="service">
+                    <h3>Error loading services</h3>
+                    <button id="btnReload">Reload Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnReload').addEventListener('click', () => {
+            getServices ()
+        })
     }
 
     // Remove all duplicate instances from each array
@@ -119,6 +141,10 @@ function getCountyList(service) {
 
 // Searches for services with information matching the users input
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
+    selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+    selectedCheckboxes.forEach(box => {
+        box.checked = false;
+    });
     let arrFound = []
     strSearch = document.querySelector("#txtSearchServices").value
     arrSearch = strSearch.split(" ");
@@ -143,11 +169,22 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
                     </div>`
         document.querySelector('#divServices').innerHTML = strDiv
         document.querySelector('#btnViewAllServices').addEventListener('click', () => {
-            renderSidebarServices(arrAllServices)
+            selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+            selectedCheckboxes.forEach(box => {
+                box.checked = false;
+            });
+            document.querySelector("#txtSearchServices").value
+            arrCurrentServices = arrAllServices
+            renderSidebarServices(arrCurrentServices)
         })
     }
     else {
-        renderSidebarServices(uniqueSearch)
+        arrCurrentServices = uniqueSearch
+        renderSidebarServices(arrCurrentServices)
+        selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+        selectedCheckboxes.forEach(box => {
+            box.checked = false;
+        });
     }
 })
 
@@ -293,8 +330,10 @@ document.querySelector("#btnClearFilter").addEventListener("click", () => {
     selectedCheckboxes.forEach(box => {
         box.checked = false;
     });
+    document.querySelector("#txtSearchServices").value = ''
     arrFilteredServices = []
-    renderSidebarServices(arrAllServices)
+    arrCurrentServices = arrAllServices
+    renderSidebarServices(arrCurrentServices)
 })
 
 // Returns an array of all selected check boxed from a container
@@ -308,6 +347,7 @@ function getSelectedCheckboxes(containerId) {
 document.getElementById('divAllFilter').addEventListener('change', (e) => {
     if (!e.target.matches('input[type="checkbox"]')) return;
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
+    console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
     const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
@@ -315,7 +355,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     arrFilteredServices = [];
 
     // Loop through all services
-    arrAllServices.forEach(service => {
+    arrCurrentServices.forEach(service => {
         let strCounties = getCountyList(service)
         let strTags = getTagList(service)
 
@@ -329,12 +369,44 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
 
         // Only push if all filters match
         if (countyMatch && serviceMatch) {
-        arrFilteredServices.push(service);
+            arrFilteredServices.push(service);
         }
     });
 
     currentPage = 0
-    renderSidebarServices(arrFilteredServices)
+    arrCurrentServices = arrFilteredServices
+    if (arrCurrentServices.length == 0) {
+        strDiv =   `<div class="service">
+                    <h3>No services match your filters</h3>`
+        if (document.querySelector("#txtSearchServices").value != '') {
+            strSearch = document.querySelector("#txtSearchServices").value
+            strDiv += `<p class="m-3">Search: "${strSearch}"</p>`
+        }
+        if (selectedCounties.length > 0) {
+            seperatedCounties = selectedCounties.join(", ")
+            strDiv += `<p class="m-3">Counties: "${seperatedCounties}"</p>`
+        }
+        if ( selectedServiceTypes.length > 0) {
+            seperatedTypes = selectedServiceTypes.join(", ")
+            strDiv += `<p class="m-3">Service Types: "${seperatedTypes}"</p>`
+        }
+        strDiv +=  `<button id="btnViewAllServices">View All Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnViewAllServices').addEventListener('click', () => {
+            arrCurrentServices = arrAllServices
+            renderSidebarServices(arrCurrentServices)
+            document.querySelector("#txtSearchServices").value = ''
+            selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+            selectedCheckboxes.forEach(box => {
+                box.checked = false;
+            });
+            strSearch = document.querySelector("#txtSearchServices").value
+        })
+    }
+    else {
+        renderSidebarServices(arrCurrentServices)
+    }
 })
 
 
