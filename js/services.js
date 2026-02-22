@@ -3,14 +3,31 @@ let arrServiceType = []
 let arrOrgName = []
 let arrFilteredServices = []
 let arrAllServices = []
+let arrCurrentServices = []
 
 async function getServices() {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+        if (!servResponse.ok) {
+            throw new Error(`HTTP error ${servResponse.status}`);
+        }
         let servData = await servResponse.json()
         arrAllServices = servData
-        renderSidebarServices(servData)
+        arrCurrentServices = servData
+        if (arrCurrentServices.length == 0) {
+            strDiv =   `<div class="service">
+                        <h3>Error loading services</h3>
+                        <button id="btnReload">Reload Services</button>
+                        </div>`
+            document.querySelector('#divServices').innerHTML = strDiv
+            document.querySelector('#btnReload').addEventListener('click', () => {
+                getServices ()
+            })
+        }
+        else {
+            renderSidebarServices(arrCurrentServices)
+        }
 
         // Get all of the counties, service types, and organization names for filtering
         servData.forEach(element => {
@@ -26,6 +43,14 @@ async function getServices() {
         });
     } catch (objError){
         console.log('Error fetching objData', objError)
+        strDiv =   `<div class="service">
+                    <h3>Error loading services</h3>
+                    <button id="btnReload">Reload Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnReload').addEventListener('click', () => {
+            getServices ()
+        })
     }
 
     // Remove all duplicate instances from each array
@@ -53,8 +78,9 @@ function createServiceCard(arrCards) {
         strDiv += `<h2>${service.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        if (service.ProviderLogo != 'N/A'){
-            strDiv += `<h3>Offered by: <img src="${service.ProviderLogo}" alt="${service.OrganizationName}"></h3>`
+        const logoSrc = getLogoSrc(service.ProviderLogo);
+        if (logoSrc){
+            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -88,14 +114,7 @@ function createServiceCard(arrCards) {
 
 // Gets the list of tags for each service
 function getTagList(service) {
-    strKeywords = service.Keywords
-    if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
-    }
-    // Returns keywords seperated by a ','
-    if (Array.isArray(strKeywords)) {
-        return strKeywords;
-    }
+    return parseArrayField(service?.Keywords);
 }
 
 // Shows more information on a service by calling service.html  
@@ -106,16 +125,58 @@ function callServicePage (page_id) {
 
 // Gets  the list of counties for each services
 function getCountyList(service) {
-    strCounties = service.CountiesAvailable
-    if (typeof strCounties === 'string') {
-        strCounties = JSON.parse(strCounties);
-    }
-
-    // Returns an array of strCounties
-    if (Array.isArray(strCounties)) {
-        return strCounties;
-    }
+    return parseArrayField(service?.CountiesAvailable);
 }
+
+// Searches for services with information matching the users input
+document.querySelector("#btnSearchServices").addEventListener("click", () => {
+    selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+    selectedCheckboxes.forEach(box => {
+        box.checked = false;
+    });
+    let arrFound = []
+    strSearch = document.querySelector("#txtSearchServices").value
+    arrSearch = strSearch.split(" ");
+    arrAllServices.forEach(item => {
+        arrSearch.forEach(word => {
+            if (word.length >= 4)  {
+                strName = item.NameOfService
+                strKeywords = item.Keywords
+                strCounties = item.CountiesAvailable
+                if (strName.toLowerCase().includes(word.toLowerCase()) || strKeywords.toLowerCase().includes(word.toLowerCase()) || strCounties.toLowerCase().includes(word.toLowerCase())) {
+                    arrFound.push(item)
+                }
+            }
+        })
+    })
+    uniqueSearch = [...new Set(arrFound)];
+    if (uniqueSearch.length == 0) {
+        strDiv =   `<div class="service">
+                    <h3>No services match search:</h3>
+                    <p class="m-3">"${strSearch}"</p>
+                    <button id="btnViewAllServices">View All Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnViewAllServices').addEventListener('click', () => {
+            selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+            selectedCheckboxes.forEach(box => {
+                box.checked = false;
+            });
+            document.querySelector("#txtSearchServices").value
+            arrCurrentServices = arrAllServices
+            renderSidebarServices(arrCurrentServices)
+        })
+    }
+    else {
+        arrCurrentServices = uniqueSearch
+        renderSidebarServices(arrCurrentServices)
+        selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+        selectedCheckboxes.forEach(box => {
+            box.checked = false;
+        });
+    }
+})
+
 
 // Creates the checkboxes
 function createCheckbox(labelText, container) {
@@ -230,24 +291,29 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
     }
 });
 
-
-
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";
+    const overlay = document.getElementById("overlay");
+    if (!overlay) return;
     overlay.classList.add("active");
 });
 
 // Closes the filter side bar
 function closeNav() {
+  const overlay = document.getElementById("overlay");
   document.getElementById("mySidenav").style.width = "0";
+  if (!overlay) return;
   overlay.classList.remove("active");
 }
 
 // Closes the filter when the overlay is clicked
-overlay.addEventListener("click", () => {
-  closeNav()
-})
+const overlay = document.getElementById("overlay");
+if (overlay) {
+    overlay.addEventListener("click", () => {
+      closeNav()
+    })
+}
 
 // Closes the filter side bar when btnSeeResults is clicked
 document.querySelector("#btnSeeResults").addEventListener("click", () => {
@@ -260,8 +326,10 @@ document.querySelector("#btnClearFilter").addEventListener("click", () => {
     selectedCheckboxes.forEach(box => {
         box.checked = false;
     });
+    document.querySelector("#txtSearchServices").value = ''
     arrFilteredServices = []
-    renderSidebarServices(arrAllServices)
+    arrCurrentServices = arrAllServices
+    renderSidebarServices(arrCurrentServices)
 })
 
 // Returns an array of all selected check boxed from a container
@@ -275,14 +343,14 @@ function getSelectedCheckboxes(containerId) {
 document.getElementById('divAllFilter').addEventListener('change', (e) => {
     if (!e.target.matches('input[type="checkbox"]')) return;
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
+    console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
-    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];
 
     // Loop through all services
-    arrAllServices.forEach(service => {
+    arrCurrentServices.forEach(service => {
         let strCounties = getCountyList(service)
         let strTags = getTagList(service)
 
@@ -296,12 +364,44 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
 
         // Only push if all filters match
         if (countyMatch && serviceMatch) {
-        arrFilteredServices.push(service);
+            arrFilteredServices.push(service);
         }
     });
 
     currentPage = 0
-    renderSidebarServices(arrFilteredServices)
+    arrCurrentServices = arrFilteredServices
+    if (arrCurrentServices.length == 0) {
+        strDiv =   `<div class="service">
+                    <h3>No services match your filters</h3>`
+        if (document.querySelector("#txtSearchServices").value != '') {
+            strSearch = document.querySelector("#txtSearchServices").value
+            strDiv += `<p class="m-3">Search: "${strSearch}"</p>`
+        }
+        if (selectedCounties.length > 0) {
+            seperatedCounties = selectedCounties.join(", ")
+            strDiv += `<p class="m-3">Counties: "${seperatedCounties}"</p>`
+        }
+        if ( selectedServiceTypes.length > 0) {
+            seperatedTypes = selectedServiceTypes.join(", ")
+            strDiv += `<p class="m-3">Service Types: "${seperatedTypes}"</p>`
+        }
+        strDiv +=  `<button id="btnViewAllServices">View All Services</button>
+                    </div>`
+        document.querySelector('#divServices').innerHTML = strDiv
+        document.querySelector('#btnViewAllServices').addEventListener('click', () => {
+            arrCurrentServices = arrAllServices
+            renderSidebarServices(arrCurrentServices)
+            document.querySelector("#txtSearchServices").value = ''
+            selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+            selectedCheckboxes.forEach(box => {
+                box.checked = false;
+            });
+            strSearch = document.querySelector("#txtSearchServices").value
+        })
+    }
+    else {
+        renderSidebarServices(arrCurrentServices)
+    }
 })
 
 
@@ -355,61 +455,3 @@ function renderSidebarServices(arrServices) {
         sidebarBody.appendChild(controls);
     }
 }
-
-
-// let strLatitude
-// let strLongitude
-
-// document.querySelector("#btnUserLocation").addEventListener("click", () => {
-//     if (!navigator.geolocation) {
-//       alert("Geolocation is not supported by your browser.");
-//       return;
-//     }
-//     navigator.geolocation.getCurrentPosition(pos => {
-//         const { latitude, longitude } = pos.coords;
-//         getLocation(latitude, longitude)
-//     })
-// })
-
-// async function getLocation(latitude, longitude) {
-//     try {
-//         let servResponse = await fetch(`http://34.171.137.8:8000/get-location?latitude=${latitude}&longitude=${longitude}`)
-//         let servData = await servResponse.json()
-//         console.log(servData)
-//     } catch (objError){
-//         console.log('Error fetching objData', objError)
-//     }
-// }
-
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     let { latitude, longitude } = position.coords;
-
-    //     strLatitude = latitude
-    //     strLongitude = longitude
-
-    //     console.log("Latitude:", strLatitude);
-    //     console.log("Longitude:", longitude);
-
-    //     console.log(`Your location is ${strLatitude}, ${longitude}`)
-    //     getLocation()
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //     alert("Unable to retrieve your location.");
-    //   }
-    // );
-//   });
-
-
-
-//   async function getLocation() {
-//             try{
-//                 let locResponse = await fetch(`https://api.open-meteo.com/v1/search?latitude=${strLatitude}&longitude=${strLongitude}&language=en&format=json`)
-//                 let locData = await locResponse.json()
-//                 console.log(locData)
-//             } catch (objError){
-//                 console.log('Error fetching objData', objError)
-//             }
-//         }
-//         getLocation()

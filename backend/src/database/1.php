@@ -1,57 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 $services_table = 'tblServices';
 $service_requests_table = 'tblServiceRequests';
+$pdo = new PDO(dsn: 'sqlite:' . __DIR__ . '/UCAssist.db');
 
 $columns = ['ID', 'OrganizationName', 'OrganizationDescription', 'Website', 'MinorityOwned',
     'FaithBasedProvider', 'NonProfitProvider', 'ProviderLogo', 'NameOfService',
     'ServiceDescription', 'ProgramCriteria', 'Keywords', 'CountiesAvailable',
     'TelephoneContact', 'EmailContact', 'ServiceAddress', 'CityStateZip', 'HoursOfOperation'];
 
-function db(): PDO
-{
-    static $pdo = null;
-
-    if ($pdo === null) {
-        $host = '127.0.0.1';
-        $dbname = 'UCASSIST';
-        $user = 'Olivia';
-        $password = 'Mickey2025!';
-
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-
-        $pdo = new PDO($dsn, $user, $password, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_PERSISTENT => true,  // similar to a connection pool
-        ]);
-    }
-
-    return $pdo;
-}
-
-// Example helper functions
-function get_monthly_views()
-{
-    $pdo = db();
-    $stmt = $pdo->prepare('SELECT s.ID, s.Keywords, s.CountiesAvailable, count(v.service_id) AS view_count FROM tblServices s LEFT JOIN tblMonthlyViews v ON s.ID = v.service_id GROUP BY s.ID');
-    $stmt->execute();
-    $viewCounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $viewCounts;
-}
-
-function add_monthly_views(int $service_id)
-{
-    $pdo = db();
-    $stmt = $pdo->prepare('INSERT INTO tblMonthlyViews (service_id) VALUES (:service_id)');
-    $stmt->execute([':service_id' => $service_id]);
-    return true;
-}
-
 function get_services(): array
 {
-    global $services_table;
-    $pdo = db();
+    global $services_table, $pdo;
 
     $rows = $pdo->query(query: "SELECT * FROM {$services_table}");
     if ($rows === false)
@@ -62,8 +22,7 @@ function get_services(): array
 
 function get_service(int $id): array
 {
-    global $services_table;
-    $pdo = db();
+    global $services_table, $pdo;
 
     $statement = $pdo->prepare(query: "SELECT * FROM {$services_table} WHERE ID = :ID");
     $statement->execute(params: ['ID' => $id]);
@@ -88,8 +47,7 @@ function filter_services_by_county(string $county): array
 
 function create_service(array $service): void
 {
-    global $services_table, $columns;
-    $pdo = db();
+    global $services_table, $pdo, $columns;
     $new_columns = array_values(array: array_diff($columns, ['ID']));
 
     $statement = $pdo->prepare(query: "INSERT INTO {$services_table} (" . implode(array: $new_columns, separator: ', ') . ') VALUES (:' . implode(array: $new_columns, separator: ', :') . ')');
@@ -103,8 +61,7 @@ function create_service(array $service): void
 
 function update_service(array $service): void
 {
-    global $services_table, $columns;
-    $pdo = db();
+    global $services_table, $pdo, $columns;
 
     $set_parts = [];
     foreach ($columns as $column) {
@@ -123,8 +80,7 @@ function update_service(array $service): void
 
 function delete_service(int $id): void
 {
-    global $services_table;
-    $pdo = db();
+    global $services_table, $pdo;
 
     $statement = $pdo->prepare(query: "DELETE FROM {$services_table} WHERE ID = :ID");
     $statement->execute(params: [':ID' => $id]);
@@ -132,8 +88,7 @@ function delete_service(int $id): void
 
 function get_service_requests(): array
 {
-    global $service_requests_table;
-    $pdo = db();
+    global $service_requests_table, $pdo;
 
     $rows = $pdo->query(query: "SELECT * FROM {$service_requests_table}");
 
@@ -142,8 +97,7 @@ function get_service_requests(): array
 
 function get_service_request(string $id): array
 {
-    global $service_requests_table;
-    $pdo = db();
+    global $service_requests_table, $pdo;
 
     $statement = $pdo->prepare(query: "SELECT * FROM {$service_requests_table} WHERE ID = :ID");
     $statement->execute(params: [':ID' => $id]);
@@ -152,8 +106,7 @@ function get_service_request(string $id): array
 
 function delete_service_request(string $id): void
 {
-    global $service_requests_table;
-    $pdo = db();
+    global $service_requests_table, $pdo;
 
     $statement = $pdo->prepare(query: "DELETE FROM {$service_requests_table} WHERE ID = :ID");
     $statement->execute(params: [':ID' => $id]);
@@ -170,8 +123,7 @@ function clean_service_requests(): void
 
 function create_service_request(string $action, string $body, string $message): void
 {
-    global $service_requests_table;
-    $pdo = db();
+    global $service_requests_table, $pdo;
 
     $id = uuidv4();
 

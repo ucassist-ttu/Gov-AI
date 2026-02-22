@@ -1,5 +1,24 @@
 // button handlers
 console.log("[iNeed] Delegated listener active");
+const defaultCardImage = "/Gov-AI/assets/images/placeholder-img.webp";
+
+function getLogoSrc(rawLogo) {
+  if (typeof rawLogo !== "string") return "";
+
+  const logo = rawLogo.trim();
+  if (!logo) return "";
+
+  const lowered = logo.toLowerCase();
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
+
+  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+    return logo;
+  }
+  if (logo.startsWith("www.")) {
+    return `https://${logo}`;
+  }
+  return `/Gov-AI/assets/images/${logo}`;
+}
 
 document.addEventListener("click", (e) => {
 
@@ -115,7 +134,7 @@ function createCard(service, category) {
   col.style.width = "18rem";
 
   let websiteBtn = "";
-  let imgPhoto = service.ProviderLogo;
+  let imgPhoto = getLogoSrc(service.ProviderLogo);
 
   // WEBSITE BUTTON
   if (service.Website && service.Website !== "N/A") {
@@ -135,33 +154,33 @@ function createCard(service, category) {
   }
 
   // FALLBACK IMAGE
-  if (!imgPhoto || imgPhoto === "N/A") {
+  if (!imgPhoto) {
     console.log("[iNeed] Using fallback image for category:", category);
 
     switch (category) {
       case "food":
-        imgPhoto = "assets/images/iNeedFood.jpg";
+        imgPhoto = "/Gov-AI/assets/images/iNeedFood.jpg";
         break;
 
       case "housing":
-        imgPhoto = "assets/images/iNeedHousing.jpg";
+        imgPhoto = "/Gov-AI/assets/images/iNeedHousing.jpg";
         break;
 
       case "childcare":
-        imgPhoto = "assets/images/iNeedChildCare.jpg";
+        imgPhoto = "/Gov-AI/assets/images/iNeedChildCare.jpg";
         break;
 
       case "transportation":
-        imgPhoto = "assets/images/iNeedTransportation.jpg";
+        imgPhoto = "/Gov-AI/assets/images/iNeedTransportation.jpg";
         break;
 
       default:
-        imgPhoto = "assets/images/placeholder-img.webp";
+        imgPhoto = defaultCardImage;
     }
   }
 
   col.innerHTML = `
-    <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}">
+    <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultCardImage}';">
     <div class="card-body">
         <h5 class="card-title">${service.NameOfService}</h5>
         <p class="card-text">${service.OrganizationName}</p>
@@ -172,4 +191,3 @@ function createCard(service, category) {
 
   return col;
 }
-

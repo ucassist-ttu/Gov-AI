@@ -1893,3 +1893,54 @@ p{
 .star.selected ~ .star {
   color: goldenrod !important;
 }
+.chart-container {
+  position: relative;
+  height: 40vw;
+  max-height: 600px;
+  min-height: 475px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+@media (max-width: 768px) {
+  .chart-container {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+.stats-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  margin: 20px;
+}
+.stats-select select{
+  max-width: 200px;
+}
+.stats-select label{
+  min-width: 130px;
+}
+/* .stats-select label{
+  padding-top: 10px;
+}
+.stats-select label{
+  margin-left: 25px;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+.stats-select select{
+  margin: 0 auto;
+  width: 80%;
+} */
+/* .stats-select hr {
+  background-color: var(--gold);
+  height: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+} */
