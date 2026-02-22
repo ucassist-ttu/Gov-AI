@@ -8,7 +8,7 @@ const sidebarServiceState = {
   currentPage: 0,
   SERVICES_PER_PAGE: 5,
   selectedCounty: null,
-  selectedCategories: ["Abuse", "Healthcare"],
+  selectedCategories: [],
   MAX_CATEGORIES: 6
 };
 let allServices = []
