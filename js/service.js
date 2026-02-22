@@ -1,4 +1,31 @@
 let arrRecomendedServices = []
+const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.webp";
+
+function getLogoSrc(rawLogo) {
+    if (typeof rawLogo !== "string") {
+        return "";
+    }
+
+    const logo = rawLogo.trim();
+    if (!logo) {
+        return "";
+    }
+
+    const lowered = logo.toLowerCase();
+    if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+        return "";
+    }
+
+    if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+        return logo;
+    }
+
+    if (logo.startsWith("www.")) {
+        return `https://${logo}`;
+    }
+
+    return `/Gov-AI/assets/images/${logo}`;
+}
 
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get('id');
@@ -36,8 +63,9 @@ async function getServiceInformaion () {
         strDiv += `<h2> ${servData.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        if (servData.ProviderLogo != 'N/A'){
-            strDiv += `<h3>Offered by: <img src="${servData.ProviderLogo}" alt="${servData.OrganizationName}"></h3>`
+        const logoSrc = getLogoSrc(servData.ProviderLogo);
+        if (logoSrc){
+            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${servData.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -50,7 +78,7 @@ async function getServiceInformaion () {
 
         // Creates a more_info section with no display
         strDiv += `<div class="more_info">`
-        strDiv += `<hr class="hr-gold"/>`
+        strDiv += `<hr class="hr-gold">`
         strDiv += `<div class="row with-divider">`
         strDiv+= `<div class="col-12 col-md-6">`
 
