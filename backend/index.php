@@ -101,6 +101,16 @@ try {
         clean_service_requests();
         exit;
     }
+    if ($path === '/monthly-views' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo json_encode(value: get_monthly_views());
+        exit;
+    }
+    if ($path === '/add-monthly-view' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        $success = add_monthly_views((int) $_GET['service_id']);
+
+        echo json_encode(['success' => $success]);
+        exit;
+    }
 } catch (Exception $exception) {
     echo 'Sorry, something went wrong.';
     error_log(message: $exception->getMessage());

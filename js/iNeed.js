@@ -47,6 +47,27 @@
 // getKeywords()
 
 // button handlers
+console.log("[iNeed] Delegated listener active");
+const defaultCardImage = "/Gov-AI/assets/images/placeholder-img.webp";
+
+function getLogoSrc(rawLogo) {
+  if (typeof rawLogo !== "string") return "";
+
+  const logo = rawLogo.trim();
+  if (!logo) return "";
+
+  const lowered = logo.toLowerCase();
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
+
+  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+    return logo;
+  }
+  if (logo.startsWith("www.")) {
+    return `https://${logo}`;
+  }
+  return `/Gov-AI/assets/images/${logo}`;
+}
+
 document.addEventListener("click", (e) => {
 
   const foodBtn = e.target.closest("#pillINeedFood");
@@ -186,7 +207,7 @@ function createCard(service, category) {
   col.style.width = "18rem";
 
   let websiteBtn = "";
-  let imgPhoto = service.ProviderLogo;
+  let imgPhoto = getLogoSrc(service.ProviderLogo);
 
   // WEBSITE BUTTON
   if (service.Website && service.Website !== "N/A") {
@@ -238,7 +259,7 @@ function createCard(service, category) {
   // }
 
   col.innerHTML = `
-    <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}">
+    <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultCardImage}';">
     <div class="card-body">
         <h5 class="card-title">${service.NameOfService}</h5>
         <p class="card-text">${service.OrganizationName}</p>
@@ -249,4 +270,3 @@ function createCard(service, category) {
 
   return col;
 }
-
