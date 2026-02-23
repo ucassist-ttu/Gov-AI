@@ -1,4 +1,4 @@
-const dictUCCounties = {
+const dictUpperCumbCounties = {
     'bledsoe': 'Bledsoe County',
     'cannon': 'Cannon County',
     'clay': 'Clay County',
@@ -24,58 +24,63 @@ function waitForElement(selector, callback) {
     }
 }
 
-waitForElement('#txtDisplayCounty', getGeoLocation)
+// waits for page to load then displays county in navbar
+waitForElement('#txtDisplayCounty', displayCounty)
+
+// for when user wants to change county manually by clicking on county name in navbar
+document.querySelector("#txtDisplayCounty").addEventListener("click", getCountyManually)
 
 // geolocation to get current county
-function getGeoLocation() {
-  if(sessionStorage.getItem("currCounty") == null)
-    {getLocation()}
-    // DISPLAY COUNTY BY LOGO
-    let strStoredCounty = sessionStorage.getItem("currCounty")
+async function displayCounty() {
+  if(sessionStorage.getItem("currCounty") == null){getCoordinates()} //checking if session storage is already set, if not, it sets it using coordinates
 
-    // look through dictionary to match key
-    Object.keys(dictUCCounties).forEach(key => {
-        if (strStoredCounty == key){
-            strStoredCounty = dictUCCounties[key] // key to str to definition
-        }
-    })
+  let strStoredCounty = sessionStorage.getItem("currCounty")
 
-    if (strStoredCounty != null){
-        document.querySelector('#txtDisplayCounty').innerHTML = strStoredCounty
-    } 
-    else{
-        // console.log("else")
-    }
-}
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(getCounty, getCountyManually)
-  } else {
-    console.log("Geolocation is not supported by this browser.")
+  if (!strStoredCounty) {
+    document.querySelector('#txtDisplayCounty').innerHTML = "Select a County";
+    return;
   }
+
+  // look through dictionary to match key to county name for display services
+  Object.keys(dictUpperCumbCounties).forEach(key => {
+    if (strStoredCounty == key){
+        strStoredCounty = dictUpperCumbCounties[key]
+    }
+  })
+
+  document.querySelector('#txtDisplayCounty').innerHTML = strStoredCounty
 }
 
-async function getCounty(position) {
+function getCoordinates() {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getCountyName, getCountyManually)
+    } else {
+      console.log("Geolocation is not supported by this browser.")
+    }
+  })
+}
+
+async function getCountyName(position) {
 
   console.log("Latitude: " + position.coords.latitude +
   "Longitude: " + position.coords.longitude)
 
   const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
   const geoData = await response.json()
-  strCountyName = geoData.localityInfo.administrative[3].name
+  let strCountyName = geoData.localityInfo.administrative[3].name
 
-  Object.keys(dictUCCounties).forEach(key => {
-    if (strCountyName == dictUCCounties[key])
-      strCountyName = key
-  })
 
-  sessionStorage.setItem("currCounty", strCountyName)
+  if (dictUpperCumbCounties[strStoredCounty]) {
+    let strCountyKey = dictUpperCumbCounties[strStoredCounty];
+  }
+  else{
+    console.log("County not found in dictionary, setting county to null")
+    sessionStorage.setItem("currCounty", null)
+    return;
+  }
   
-
-  
-  // return strCountyName
-  console.log(strCountyName)
+  sessionStorage.setItem("currCounty", strCountyKey)
 }
 
 function getCountyManually() {
@@ -106,6 +111,8 @@ function getCountyManually() {
     if (result.isConfirmed) {
       console.log(result.value); // this will be 'value1', 'value2', etc
       sessionStorage.setItem("currCounty", result.value)
+
+      displayCounty()
     }
   });
 }
