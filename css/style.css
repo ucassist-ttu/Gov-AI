@@ -62,7 +62,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background-color: var(--dark-navy);
   }
   .ai-results .page{
     padding-inline: 50px;

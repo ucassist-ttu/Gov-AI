@@ -1,3 +1,4 @@
+import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
 
 async function getAIRecommendations(userPrompt) {
@@ -48,6 +49,8 @@ async function getAIRecommendations(userPrompt) {
             txtHTML +=`        by ${strCompany}`;
             txtHTML +=`    </p>`;
             txtHTML +=`</div>`;
+            txtHTML += getCounties(element)
+            console.log(getCounties(element))
             txtHTML +=`<p class="ai-description">`;
             txtHTML +=`      ${strDescription}`;
             txtHTML +=`</p>`;
@@ -68,7 +71,7 @@ async function getAIRecommendations(userPrompt) {
         if (headerEl) {
             headerEl.innerHTML = "Oops! We're having trouble answering your request.";
         }
-        AIContainer.innerHTML = `<p class="mt-3 ">Please try again later. In the meantime, feel free to browse all available services.</p>`; //error message
+        AIContainer.innerHTML = `<p class="mt-3 ">Please try again later. In the meantime, feel free to browse all available services in the Find Services tab.</p>`; //error message
     }
 }
 document.addEventListener("DOMContentLoaded", function() {
