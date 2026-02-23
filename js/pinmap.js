@@ -1,6 +1,8 @@
 // 2/10 meeting - resize and recenter map when opening side bar
 // option to filter based on category
 
+import {getCounties} from "../js/iNeed.js"
+
 // -- Global variables --
 
 const sidebarServiceState = {
@@ -145,6 +147,12 @@ function createServiceCard(mapItem) {
   title.className = "card-title mb-3 fw-semibold";
   title.textContent = mapItem.service.NameOfService;
 
+
+  // displaying counties available for each service (as pills above description)
+  const countiesHTML = getCounties(mapItem.service); //iNeed.js function that returns html string of county pills
+  const countiesDiv = document.createElement("div");
+  countiesDiv.innerHTML = countiesHTML;
+
   const desc = document.createElement("p");
   desc.className = "card-text mb-3 fs-5";
   desc.textContent = mapItem.service.ServiceDescription;
@@ -154,7 +162,9 @@ function createServiceCard(mapItem) {
   button.textContent = "View service";
   button.href = "#";
 
+
   body.appendChild(title);
+  body.appendChild(countiesDiv); // Insert counties pills above description
   body.appendChild(desc);
   body.appendChild(button);
 

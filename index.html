@@ -82,6 +82,9 @@
         fetch('partials/iNeed.html')
             .then(response => response.text())
             .then(data => document.getElementById('iNeed').innerHTML = data);
+        fetch('partials/pinmap.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('pinmap').innerHTML = data);
         fetch('partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
@@ -92,7 +95,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="js/navbar.js" defer></script>
-    <script src="js/pinmap.js" ></script>
+    <script type="module" src="js/pinmap.js" ></script>
     <script type="module" src="js/iNeed.js"></script>
     <script src="js/index.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">

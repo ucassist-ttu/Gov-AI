@@ -156,7 +156,7 @@ async function loadCardsByCategory(category) {
 }
 
 
-function getCounties(service){
+export function getCounties(service){
   const strCounties = service.CountiesAvailable;
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
