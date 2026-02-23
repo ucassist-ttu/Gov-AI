@@ -6,33 +6,28 @@
     <title>UC Assist</title>
     <link rel="icon" type="image" href="assets/images/cropped-Seal_JPEG-32x32.jpg">
     <!-- bootstrap library and custom css link -->
+     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="css/style.css">
+    
 </head>
 <body>
     <div id="navbar"></div>
 
     <main>
-
         <div class="position-relative">
             <!-- crisis tag -->
             <div class="index-crisis rounded-bottom">
-                <h6 class=""><a href="html/pages/crisis.html" class="fw-bold">Crisis Hotline</a></h6>
+                <h6 class=""><span href="/html/pages/crisis.html" class="fw-bold white">Upper Cumberland News</span></h6>
             </div>
 
             <!-- carousel -->
             <div id="countyCarousel"></div>
         </div>
-        <!-- UCAssist description -->
-        <div class="rounded-bottom UCAssist-desc gold text-center">
-            <h5 class="mx-2 mx-md-5 fw-light clr-light-grey p-4 p-md-5 jumbotron-text">The UCAssist program, run by the Upper Cumberland Development District, helps people find the support they need. Our goal is to make accessing local resources simple and convenient.</h5>
-        </div>
 
         <!-- I need: -->
         <div id="iNeed"></div>
-        
         
         <!-- PinMap -->
         <div id="pinmap"></div>
@@ -40,7 +35,7 @@
         <div class="m-5"></div>
         <!-- Snap Link -->
         <div class="snap-link text-center p-5 fs-5" style="margin-bottom: px;">
-            <span><a href="/html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
+            <span><a href="html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
         </div>
         <div class="m-5"></div>
         <div class="row mt-5">
@@ -88,6 +83,9 @@
         fetch('partials/iNeed.html')
             .then(response => response.text())
             .then(data => document.getElementById('iNeed').innerHTML = data);
+        fetch('partials/pinmap.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('pinmap').innerHTML = data);
         fetch('partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
@@ -97,8 +95,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script src="js/pinmap.js"></script>
-    <script src="js/iNeed.js"></script>
+    <script src="js/navbar.js" defer></script>
+    <script type="module" src="js/pinmap.js" ></script>
+    <script type="module" src="js/iNeed.js"></script>
     <script src="js/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

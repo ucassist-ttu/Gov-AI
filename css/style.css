@@ -62,7 +62,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background-color: var(--dark-navy);
   }
   .ai-results .page{
     padding-inline: 50px;
@@ -910,7 +910,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: 45px;
+    padding-top: 38px;
 }
 main {
     flex: 1 0 auto;
@@ -1470,6 +1470,11 @@ footer img {
   margin-bottom: -30px;
   background-image: url('/Gov-AI/assets/images/registration-landing-adrianna-geo.png');
 }
+.referral-image {
+  margin-top: -30px;
+  margin-bottom: -30px;
+  background-image: url('/assets/images/referral-form.png');
+}
 .dropbox-square {
   height: 150px;
   border: solid 4px var(--gold);
@@ -1620,7 +1625,7 @@ p{
     right: 0rem;
     top: 0rem;
     z-index: 10;
-    background-color: var(--red);
+    background-color: var(--gold);
     width: 20vw;
     min-width: 180px;
     height: 7vh;

@@ -9,9 +9,6 @@ async function getServices() {
     try{
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
-        if (!servResponse.ok) {
-            throw new Error(`HTTP error ${servResponse.status}`);
-        }
         let servData = await servResponse.json()
         arrAllServices = servData
         arrCurrentServices = servData
@@ -78,9 +75,8 @@ function createServiceCard(arrCards) {
         strDiv += `<h2>${service.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        const logoSrc = getLogoSrc(service.ProviderLogo);
-        if (logoSrc){
-            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
+        if (service.ProviderLogo != 'N/A'){
+            strDiv += `<h3>Offered by: <img src="${service.ProviderLogo}" alt="${service.OrganizationName}"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -96,7 +92,7 @@ function createServiceCard(arrCards) {
         strDiv += `</div>`
 
         // Blue service divider
-        strDiv += `<hr class="hr-blue">`
+        strDiv += `<hr class="hr-blue"/>`
         strDiv += `</div>`
         document.querySelector('#divServices').innerHTML += strDiv
 
@@ -114,7 +110,14 @@ function createServiceCard(arrCards) {
 
 // Gets the list of tags for each service
 function getTagList(service) {
-    return parseArrayField(service?.Keywords);
+    strKeywords = service.Keywords
+    if (typeof strKeywords === 'string') {
+        strKeywords = JSON.parse(strKeywords);
+    }
+    // Returns keywords seperated by a ','
+    if (Array.isArray(strKeywords)) {
+        return strKeywords;
+    }
 }
 
 // Shows more information on a service by calling service.html  
@@ -125,7 +128,15 @@ function callServicePage (page_id) {
 
 // Gets  the list of counties for each services
 function getCountyList(service) {
-    return parseArrayField(service?.CountiesAvailable);
+    strCounties = service.CountiesAvailable
+    if (typeof strCounties === 'string') {
+        strCounties = JSON.parse(strCounties);
+    }
+
+    // Returns an array of strCounties
+    if (Array.isArray(strCounties)) {
+        return strCounties;
+    }
 }
 
 // Searches for services with information matching the users input
@@ -294,26 +305,19 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";
-    const overlay = document.getElementById("overlay");
-    if (!overlay) return;
     overlay.classList.add("active");
 });
 
 // Closes the filter side bar
 function closeNav() {
-  const overlay = document.getElementById("overlay");
   document.getElementById("mySidenav").style.width = "0";
-  if (!overlay) return;
   overlay.classList.remove("active");
 }
 
 // Closes the filter when the overlay is clicked
-const overlay = document.getElementById("overlay");
-if (overlay) {
-    overlay.addEventListener("click", () => {
-      closeNav()
-    })
-}
+overlay.addEventListener("click", () => {
+  closeNav()
+})
 
 // Closes the filter side bar when btnSeeResults is clicked
 document.querySelector("#btnSeeResults").addEventListener("click", () => {
@@ -345,6 +349,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
     console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
+    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];
