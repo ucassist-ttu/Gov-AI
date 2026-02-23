@@ -41,14 +41,14 @@ window.onload = () =>{
 
     if (strStoredCounty != null){
         // display in html
-        console.log("strStoredCounty != null" + (strStoredCounty != null))
-        console.log("strStoredCounty: " + strStoredCounty)
-        console.log("before: " + document.querySelector('#txtDisplayCounty').innerHTML)
+        // console.log("strStoredCounty != null" + (strStoredCounty != null))
+        // console.log("strStoredCounty: " + strStoredCounty)
+        // console.log("before: " + document.querySelector('#txtDisplayCounty').innerHTML)
         document.querySelector('#txtDisplayCounty').innerHTML = strStoredCounty
-        console.log(document.querySelector('#txtDisplayCounty').innerHTML)
+        // console.log(document.querySelector('#txtDisplayCounty').innerHTML)
     } 
     else{
-        console.log("else")
+        // console.log("else")
     }
 //   else{
 //     let county = document.querySelector('#txtDisplayCounty');

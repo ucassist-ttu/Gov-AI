@@ -87,7 +87,7 @@ function createServiceCard(arrCards) {
 }
 
 // Gets the list of tags for each service
-function getTagList(service) {
+export function getTagList(service) { //used in iNeed.js
     strKeywords = service.Keywords
     if (typeof strKeywords === 'string') {
         strKeywords = JSON.parse(strKeywords);

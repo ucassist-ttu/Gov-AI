@@ -39,6 +39,10 @@ async function getAIRecommendations(userPrompt) {
                 txtHTML +=`        by ${strCompany}`
                 txtHTML +=`    </p>`
                 txtHTML +=`</div>`
+                
+                txtHTML +=`<p class="ai-description">`
+                txtHTML +=`      ${strDescription}`
+                txtHTML +=`</p>`
                 txtHTML +=`<p class="ai-description">`
                 txtHTML +=`      ${strDescription}`
                 txtHTML +=`</p>`
