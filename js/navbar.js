@@ -28,8 +28,9 @@ function waitForElement(selector, callback) {
 waitForElement('#txtDisplayCounty', displayCounty)
 
 // for when user wants to change county manually by clicking on county name in navbar
-document.querySelector("#txtDisplayCounty").addEventListener("click", getCountyManually)
-
+waitForElement("#txtDisplayCounty", (el) => {
+  el.addEventListener("click", getCountyManually);
+});
 // geolocation to get current county
 async function displayCounty() {
   if(sessionStorage.getItem("currCounty") == null){getCoordinates()} //checking if session storage is already set, if not, it sets it using coordinates
