@@ -24,9 +24,10 @@ function waitForElement(selector, callback) {
     }
 }
 
+waitForElement('#txtDisplayCounty', getGeoLocation)
+
 // geolocation to get current county
-// window.onload = getLocation() txtDisplayCounty
-window.onload = () =>{
+function getGeoLocation() {
   if(sessionStorage.getItem("currCounty") == null)
     {getLocation()}
     // DISPLAY COUNTY BY LOGO
@@ -40,28 +41,12 @@ window.onload = () =>{
     })
 
     if (strStoredCounty != null){
-        // display in html
-        // console.log("strStoredCounty != null" + (strStoredCounty != null))
-        // console.log("strStoredCounty: " + strStoredCounty)
-        // console.log("before: " + document.querySelector('#txtDisplayCounty').innerHTML)
         document.querySelector('#txtDisplayCounty').innerHTML = strStoredCounty
-        // console.log(document.querySelector('#txtDisplayCounty').innerHTML)
     } 
     else{
         // console.log("else")
     }
-//   else{
-//     let county = document.querySelector('#txtDisplayCounty');
-//     let strStoredCounty = sessionStorage.getItem("currCounty")
-//     console.log("county: " + strStoredCounty)
-//     if (boolIsCountySet != null){
-//         console.log("im here")
-//         county.innerHTML = strStoredCounty
-//     }
-//   }
 }
-
-
 
 function getLocation() {
   if (navigator.geolocation) {
