@@ -1,4 +1,31 @@
 let arrRecomendedServices = []
+const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.webp";
+
+function getLogoSrc(rawLogo) {
+    if (typeof rawLogo !== "string") {
+        return "";
+    }
+
+    const logo = rawLogo.trim();
+    if (!logo) {
+        return "";
+    }
+
+    const lowered = logo.toLowerCase();
+    if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+        return "";
+    }
+
+    if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+        return logo;
+    }
+
+    if (logo.startsWith("www.")) {
+        return `https://${logo}`;
+    }
+
+    return `/Gov-AI/assets/images/${logo}`;
+}
 
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get('id');
@@ -8,7 +35,9 @@ async function getServiceInformaion () {
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
         let servData = await servResponse.json()
-
+        let servClicks = await fetch(`https://ucassist.duckdns.org/monthly-views?service_id=${serviceId}`)
+        let numClicks = await servClicks.json()
+        console.log(numClicks)
         let strTagList = getTagList(servData)
         let strCounties = getCountyList(servData)
         let strDiv = ``
@@ -34,8 +63,9 @@ async function getServiceInformaion () {
         strDiv += `<h2> ${servData.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        if (servData.ProviderLogo != 'N/A'){
-            strDiv += `<h3>Offered by: <img src="${servData.ProviderLogo}" alt="${servData.OrganizationName}"></h3>`
+        const logoSrc = getLogoSrc(servData.ProviderLogo);
+        if (logoSrc){
+            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${servData.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -232,3 +262,31 @@ function printRecomendedServices () {
     //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
     // });
 }
+
+const stars = document.querySelectorAll('.star');
+const ratingValue = document.getElementById('rating-value');
+const ratingText = document.getElementById('rating-text');
+
+stars.forEach(star => {
+  star.addEventListener('click', function () {
+    const value = this.getAttribute('data-value');
+    ratingValue.value = value;
+    console.log(value)
+    ratingText.textContent = "Rating: " + value;
+
+    stars.forEach(s => s.classList.remove('selected'));
+
+    for (let i = 0; i < value; i++) {
+      stars[i].classList.add('selected');
+    }
+  });
+});
+
+stars.forEach(star => {
+  star.addEventListener('click', function () {
+    stars.forEach(s => s.classList.remove('selected'));
+
+    this.classList.add('selected');
+    ratingValue.value = this.getAttribute('data-value');
+  });
+});

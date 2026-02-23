@@ -62,7 +62,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background-color: var(--dark-navy);
   }
   .ai-results .page{
     padding-inline: 50px;
@@ -239,9 +239,7 @@ nav {
 .btnMap {
   height: 50px;
   width: 50px;
-}
-#mapCollapse {
-  max-width: 40%;
+  z-index: 1001;
 }
 .mapServiceCard {
   border-color: #AA8A41 !important;
@@ -912,7 +910,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: 45px;
+    padding-top: 38px;
 }
 main {
     flex: 1 0 auto;
@@ -1472,6 +1470,11 @@ footer img {
   margin-bottom: -30px;
   background-image: url('/Gov-AI/assets/images/registration-landing-adrianna-geo.png');
 }
+.referral-image {
+  margin-top: -30px;
+  margin-bottom: -30px;
+  background-image: url('/assets/images/referral-form.png');
+}
 .dropbox-square {
   height: 150px;
   border: solid 4px var(--gold);
@@ -1622,7 +1625,7 @@ p{
     right: 0rem;
     top: 0rem;
     z-index: 10;
-    background-color: var(--red);
+    background-color: var(--gold);
     width: 20vw;
     min-width: 180px;
     height: 7vh;
@@ -1869,3 +1872,80 @@ p{
   align-items: center;
   padding: 0.2rem 0.5rem;
 }
+.rating{
+  margin-left: 15px; 
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.rating h3 {
+  font-size: 20px;
+}
+.star{
+  color: lightgray !important;
+  transition: color 0.2s;
+  font-size: 35px;
+  margin-right: 10px;
+  color: var(--dark-navy);
+}
+/* .star:hover,
+.star:hover ~ .star {
+  color: gold !important;
+} */
+.star.selected,
+.star.selected ~ .star {
+  color: goldenrod !important;
+}
+.chart-container {
+  position: relative;
+  height: 40vw;
+  max-height: 600px;
+  min-height: 475px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+@media (max-width: 768px) {
+  .chart-container {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+.stats-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  margin: 20px;
+}
+.stats-select select{
+  max-width: 200px;
+}
+.stats-select label{
+  min-width: 130px;
+}
+/* .stats-select label{
+  padding-top: 10px;
+}
+.stats-select label{
+  margin-left: 25px;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+.stats-select select{
+  margin: 0 auto;
+  width: 80%;
+} */
+/* .stats-select hr {
+  background-color: var(--gold);
+  height: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+} */
