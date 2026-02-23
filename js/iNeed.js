@@ -134,35 +134,35 @@ async function loadCardsByCategory(category) {
   }
 }
 
-// function getCounties(service){
-  // console.log(service.NameOfService + ": " + service.CountiesAvailable)
 
-  // let counties = [];
-  
-  // if (service.CountiesAvailable) {
-  //   console.log("im here 1")
-  //   if (Array.isArray(service.CountiesAvailable)) {
-  //     console.log("im here 2.1")
-  //     counties = service.CountiesAvailable;
-  //   } else if (typeof service.CountiesAvailable === "string") {
-  //     console.log("im here 2.2")
-  //     try {
-  //       counties = JSON.parse(service.CountiesAvailable);
-  //     } catch {
-  //       // fallback: split by comma if not valid JSON
-  //       counties = service.CountiesAvailable.split(",").map(s => s.trim());
-  //     }
-  //   }
-  // }
-  
-  // console.log("Counties:", counties);
-  // console.log("im here 3")
+function getCounties(service){
+  const strCounties = service.CountiesAvailable;
+  let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
+  let count = 0
+  let innerHTML = `<div>`
 
+  // console.log(service.NameOfService + " counties: ")
 
+  arrCounties.forEach(county => {
+    if (count < 3){ // displays max three counties
+      innerHTML += `<span class="badge rounded-pill bg-secondary me-1 mb-2">${county}</span>`
+      count++
+    }
+    else{
+      count ++
+    }
+    
+  })
 
-  // let html = `<div>`
-  // html += `</div>`
-// }
+  if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
+      innerHTML = `<span class="badge rounded-pill bg-secondary me-1 mb-2">All Counties</span>`
+    } else if (count > 3) { // tells user how many more counties are available if there are more than three
+      innerHTML += `<smaller class="row"> + ${count - 3} counties</smaller>`
+    }
+  innerHTML += `</div>`
+  return innerHTML;
+}
+
 
 // function inCounty(service){
 //   let strCurrCounty = sessionStorage.getItem("currCounty");
@@ -199,7 +199,7 @@ function createCard(service, category) {
         : "https://" + strurl;
 
 
-    websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark">Learn More</a>`;
+    websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
   } else {
   }
 
@@ -229,19 +229,20 @@ function createCard(service, category) {
     }
   }
 
-  try {
-    inCounty(service)
-    console.log("here: " + inCounty(service))
-  } catch (error) {
-    console.error("[iNeed] Error inCounty:", error);
-  }
+  // try {
+  //   // inCounty(service)
+  //   getCounties(service)
+  //   console.log("here: " + getCounties(service))
+  // } catch (error) {
+  //   console.error("[iNeed] Error getCounties:", error);
+  // }
 
   col.innerHTML = `
     <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}">
     <div class="card-body">
         <h5 class="card-title">${service.NameOfService}</h5>
         <p class="card-text">${service.OrganizationName}</p>
-        ${inCounty(service)}
+        ${getCounties(service)}
         ${websiteBtn}
     </div>
   `;
