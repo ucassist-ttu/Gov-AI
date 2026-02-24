@@ -1,27 +1,33 @@
-<div class="mx-1 mx-md-5 mt-5 rounded shadow map-container row" style="height: 600px;">
+<!-- Map Container -->
+<div class="mx-1 mx-md-5 mt-5 rounded shadow map-container row position-relative" style="height: 600px;">
 
-    <div class="d-flex h-100 w-100">
+  <!-- Flex wrapper -->
+  <div class="d-flex flex-column flex-md-row h-100 w-100">
 
-        <!-- Map Wrapper -->
-        <div class="flex-grow-1 position-relative">
+    <!-- Map Wrapper -->
+    <div class="flex-md-fill position-relative d-flex flex-column mb-3 mb-md-0" style="min-height: 350px;">
 
-            <!-- Map -->
-            <div id="map" class="h-100 w-100 rounded"></div>
+      <!-- Leaflet Map -->
+      <div id="map" class="flex-fill w-100 h-100 rounded"></div>
 
-            <!-- Toggle Button -->
-            <button class="btn btnMap btn-light position-absolute top-0 end-0 m-3" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
-                <i class="bi bi-list text-dark"></i>
-            </button>
-
-        </div>
-
-        <!-- Sidebar -->
-        <div class="collapse collapse-horizontal h-100 col-10 col-md-6" id="mapCollapse">
-            <div class="card card-body h-100 overflow-auto">
-                <div id="mapCollapseServices"></div>
-            </div>
-        </div>
+      <!-- Desktop Toggle Button -->
+      <button class="btn btnMap btn-light position-absolute top-0 end-0 m-3 d-none d-md-block"
+        type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse">
+        <i class="bi bi-list text-dark"></i>
+      </button>
 
     </div>
 
+    <!-- Sidebar -->
+    <div class="collapse collapse-horizontal" id="mapCollapse">
+        <div class="d-flex flex-column h-100 sidebar">
+            <div class="card flex-fill d-flex flex-column border-0" style="min-height: 0;">
+                <div class="card-body overflow-auto p-2" style="min-height: 0;">
+                    <div id="mapCollapseServices" class="text-break"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </div>
 </div>
