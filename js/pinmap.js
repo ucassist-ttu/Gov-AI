@@ -101,9 +101,9 @@ function loadServices() {
   }).setView([36.162838, -85.501640], 9);
   map.setMinZoom(9)
   
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     noWrap: true,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
   }).addTo(map);
 
   getServices().then(servData => {
@@ -366,6 +366,47 @@ async function loadAndMaskCounties() {
     },
     // set event handlers for each county layer
     onEachFeature: (feature, layer) => {
+
+      /*
+      // County names using polylabel
+      if (feature.properties && feature.properties.NAME) {
+        let center;
+
+        const geom = feature.geometry;
+
+        if (geom.type === "Polygon") {
+          // polylabel expects [ [ [lng, lat], ... ] ] for a single polygon
+          center = window.polylabel([geom.coordinates[0]], 1.0);
+        } else if (geom.type === "MultiPolygon") {
+          // pick largest polygon by number of points
+          let largest = geom.coordinates[0];
+          geom.coordinates.forEach(polygon => {
+            if (polygon[0].length > largest[0].length) largest = polygon;
+          });
+          center = polylabel([largest], 1.0);
+        }
+
+        // Polylabel returns [lng, lat]
+        const latlng = L.latLng(center[1], center[0]);
+
+        // Bind tooltip at centroid
+        const tooltip = L.tooltip({
+          permanent: true,
+          direction: "center",
+          className: "bg-transparent border-0 shadow-none p-0",
+          interactive: false
+        })
+        .setLatLng(latlng)
+        .setContent(`
+          <div class="fw-bold text-dark text-center small">
+            ${feature.properties.NAME}
+          </div>
+        `);
+
+        layer.bindTooltip(tooltip);
+      }
+        */
+
       layer.on({
         click: () => {
           zoomToCounty(layer, feature)
@@ -387,8 +428,9 @@ async function loadAndMaskCounties() {
   }).addTo(map)
 
   // set zoom to upper cumberland
-  const bounds = countiesLayer.getBounds().pad(0.2);
-  map.fitBounds(bounds);
+  const bounds = countiesLayer.getBounds();
+  const isMobile = window.innerWidth < 768;
+  map.fitBounds(isMobile ? bounds.pad(5) : bounds.pad(0.2));
 
   map.setMaxBounds(bounds);
   map.options.maxBoundsViscosity = 1;
@@ -427,7 +469,8 @@ function zoomToCounty(layer, feature) {
   
   if (sidebarServiceState.selectedCounty == layer) {
     const bounds = countiesLayer.getBounds();
-    map.fitBounds(bounds.pad(0.2));
+    const isMobile = window.innerWidth < 768;
+    map.fitBounds(isMobile ? bounds.pad(5) : bounds.pad(0.2));
     countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
     sidebarServiceState.selectedCounty = null;
     loadServicesIntoSidebar()
