@@ -147,7 +147,7 @@
     height: 80px;
   }
   .search-input{
-    font-size: 1.2rem !important;
+    /* font-size: 1.2rem !important; */
     flex-grow: 1; /* stretches vertically*/
     border: 0px !important;
     outline: none !important;
@@ -247,9 +247,34 @@ nav {
 .map-container > .position-absolute {
   pointer-events: none;
 }
-
 #mapCollapse, .btnMap {
   pointer-events: auto;
+}
+#mapCollapseServices .card {
+  min-width: 0;
+}
+#mapCollapse.show,
+#mapCollapse.collapsing {
+  width: auto;
+}
+.sidebar {
+  width: 600px;
+}
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100vw !important;
+  }
+  #mapCollapse {
+    width: 100% !important;
+    overflow-y: auto;
+  }
+  .map-container {
+    height: 85vh;
+  }
+  #mapCollapse .card-body {
+    overflow: visible !important;
+    max-height: none !important;
+  }
 }
 .search-icon {
     position: absolute;

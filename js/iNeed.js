@@ -146,7 +146,7 @@ async function loadCardsByCategory(category) {
     container.innerHTML = "";
 
     services.forEach(service => {
-      container.appendChild(createCard(service));
+      container.appendChild(createCard(service, category));
     });
 
   } catch (error) {
@@ -176,7 +176,7 @@ export function getCounties(service){
   })
 
   if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
-      innerHTML = `<span class="badge rounded-pill bg-secondary me-1 mb-2">All Counties</span>`
+      innerHTML = `<div><span class="badge rounded-pill bg-secondary me-1 mb-2">All Counties</span>`
     } else if (count > 3) { // tells user how many more counties are available if there are more than three
       innerHTML += `<smaller class="row"> + ${count - 3} counties</smaller>`
     }
@@ -203,9 +203,9 @@ export function getCounties(service){
 // creates the html for the cards
 function createCard(service, category) {
   const col = document.createElement("div");
-  col.className = "card m-2 col-12 col-md-5";
-  col.style.width = "18rem";
-
+  console.log(service)
+  col.className = "card m-2 col-12 border border-2 border-secondary rounded";
+  col.style.maxWidth = "16rem";
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
@@ -259,14 +259,25 @@ function createCard(service, category) {
   // }
 
   col.innerHTML = `
-    <img src="${imgPhoto}" class="card-img-top pt-3" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultCardImage}';">
+    <img src="${imgPhoto}" class="card-img-top p-3" alt="${service.OrganizationName}" style="max-height: 150px; object-fit: contain;">
     <div class="card-body">
-        <h5 class="card-title">${service.NameOfService}</h5>
-        <p class="card-text">${service.OrganizationName}</p>
-        ${getCounties(service)}
-        ${websiteBtn}
-    </div>
-  `;
+      ${getCounties(service)}
+      <h5 class="card-title">${service.NameOfService}</h5>
+      <div class="service m-0">
+        <button>Learn More <i class="bi bi-caret-right-fill"></i></button>
+      </div>
+      </div>`;
+
+      // Logic for the Learn More button
+      col.querySelector('.service button').addEventListener('click', () => {
+        callServicePage(service.ID)
+      })
 
   return col;
+}
+
+// Shows more information on a service by calling service.html  
+function callServicePage (page_id) {
+    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
+    window.location.href = `../../../html/pages/service.html?id=${page_id}`;
 }
