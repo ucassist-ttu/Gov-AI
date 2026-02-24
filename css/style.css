@@ -147,7 +147,7 @@
     height: 80px;
   }
   .search-input{
-    font-size: 1.2rem !important;
+    /* font-size: 1.2rem !important; */
     flex-grow: 1; /* stretches vertically*/
     border: 0px !important;
     outline: none !important;
