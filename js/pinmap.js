@@ -83,15 +83,15 @@ function loadServices() {
 
   // -- HTML variables --
   // recalculates map's size when resizing
-  document.getElementById("mapCollapse")
-    .addEventListener("shown.bs.collapse", () => {
-      map.invalidateSize();
-    });
+  // document.getElementById("mapCollapse")
+  //   .addEventListener("shown.bs.collapse", () => {
+  //     map.invalidateSize();
+  //   });
     
-  document.getElementById("mapCollapse")
-  .addEventListener("hidden.bs.collapse", () => {
-    map.invalidateSize();
-  });
+  // document.getElementById("mapCollapse")
+  // .addEventListener("hidden.bs.collapse", () => {
+  //   map.invalidateSize();
+  // });
 
   // -- Map variables --
 
@@ -348,7 +348,7 @@ function loadServicesIntoSidebar() {
 
   sidebarServiceState.currentPage = 0;
 
-  renderSidebarServices();
+  // renderSidebarServices();
 }
 
 // -- Loads boundary data from geojson file to draw county borders --
