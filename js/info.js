@@ -336,6 +336,11 @@ document.getElementById('countyFilter').addEventListener('change', (e) => {
     }
 })
 
+document.getElementById('btnExport').addEventListener('click', () => {
+    window.print();
+});
+
+
 // returns the specific color that matches the specific service type
 function createSpecificColorList (arrServiceTypes) {
     let arrColor = []

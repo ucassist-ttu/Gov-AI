@@ -1203,6 +1203,16 @@ footer img {
         margin-top: 0 !important;
         padding-top: 0 !important;
     }
+    canvas {
+      visibility: visible !important;
+    }
+    .info-page {
+      overflow: visible !important;
+    }
+    .info-print,
+    .info-print * {
+      visibility: visible !important;
+    }
 }
 
 .service-header i{
