@@ -340,6 +340,19 @@ document.getElementById('btnExport').addEventListener('click', () => {
     window.print();
 });
 
+document.getElementById('btnExportPie').addEventListener('click', () => {
+    document.getElementById('info-bar').classList.add('info-hidden');
+    document.getElementById('info-board').classList.add('info-hidden');
+    window.print();
+    document.getElementById('info-bar').classList.remove('info-hidden');
+    document.getElementById('info-board').classList.remove('info-hidden');
+});
+
+document.getElementById('btnExportBar').addEventListener('click', () => {
+    document.getElementById('info-pie').classList.add('info-hidden');
+    window.print();
+    document.getElementById('info-pie').classList.remove('info-hidden');
+});
 
 // returns the specific color that matches the specific service type
 function createSpecificColorList (arrServiceTypes) {

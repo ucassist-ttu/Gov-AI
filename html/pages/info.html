@@ -17,10 +17,13 @@
             <h1 class="fw-bold white">Site Statistics</h1>
         </div>
         <div class="mt-3" style="display: justify-space-around">
-            <div>
+            <div id="info-pie">
                 <div class="chart-container">
                     <canvas id="pieChart"></canvas>
                 </div>
+            </div>
+            <div class="text-end me-5">
+                <button id="btnExportPie" class="btn btn-secondary mt-3 mb-3">Export Pie Chart</button>
             </div>
             <div class="col-lg-6 col-12 stats-select mt-3 mb-0">
                 <label for="countyFilter" aria-label="Filter by county:">Filter by county:</label>
@@ -28,7 +31,7 @@
                     <option value="all">All Counties</option>
                 </select>
             </div>
-            <div class="row info-print" style="padding: 0px 30px 0px 30px;">
+            <div class="row info-print" id="info-board" style="padding: 0px 30px 0px 30px;">
                 <div class="col col-12 col-lg-6" style="text-align: center;">
                     <h3 class="mt-3">Most used services</h3>
                     <hr class="hr-blue m-4 mt-2" />
@@ -59,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" id="info-bar">
                 <canvas id="barChart"></canvas>
             </div>
             <div class="col-lg-6 col-12 stats-select mt-2 mb-5">
@@ -68,6 +71,9 @@
                     <option value="top10">Top 10</option>
                     <option value="all">All Services</option>
                 </select>
+            </div>
+            <div class="text-end me-5">
+                <button id="btnExportBar" class="btn btn-secondary mt-3 mb-3">Export Bar Chart</button>
             </div>
         </div>
 

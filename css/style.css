@@ -1213,6 +1213,11 @@ footer img {
     .info-print * {
       visibility: visible !important;
     }
+    .info-hidden,
+    .info-hidden * {
+      visibility: hidden !important;
+      display: none !important;
+    }
 }
 
 .service-header i{
