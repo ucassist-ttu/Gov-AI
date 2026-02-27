@@ -11,11 +11,11 @@
     height: auto;
     max-width: 180px;
   }
-  /* .responsive-header{
+  .responsive-header{
     height: 50vh;
     width: 100%;
     object-fit: cover;
-  } */
+  }
   .ai-search-bar .input,
   .ai-search-bar .bi{
     display: inline-flex;
@@ -67,11 +67,11 @@
   .ai-results .page{
     padding-inline: 50px;
   }
-  .ai-results .img-text-lg{
+  /* .ai-results .img-text-lg{ changed to display-3 + fw-bolder
     line-height: 2.2rem;
     padding-top: 30px;
     font-weight: bold;
-  }
+  } */
   .ai-company-name{
     font-style: normal;
     font-weight: 200;
@@ -140,7 +140,7 @@
     border: 3px solid var(--gold);
     border-radius: 30px;
     box-shadow: 0 4px 10px 0 var(--dark-navy);
-    width: 85%;
+    width: 80%;
     padding-inline: 15px;
     flex-direction: row;
     justify-content: center; /* aligns  horizontally*/
