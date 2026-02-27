@@ -1,9 +1,4 @@
-// 2/10 meeting - resize and recenter map when opening side bar
-// option to filter based on category
-
 import {getCounties} from "../js/iNeed.js"
-
-// -- Global variables --
 
 const sidebarServiceState = {
   mapItems: [],
@@ -17,8 +12,85 @@ let allServices = []
 let countiesLayer = null;
 let categoryColors = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
 var map = null;
+var foodIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i>
+         </div>`,
+});
+var personalEssentialsIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i>
+         </div>`,
+});
+var housingIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i>
+         </div>`,
+});
+var transportationIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i>
+         </div>`,
+});
+var healthCareIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i>
+         </div>`,
+});
+var crisisServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i>
+         </div>`,
+});
+var familyIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i>
+         </div>`,
+});
+var educationIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i>
+         </div>`,
+});
+var employementIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i>
+         </div>`,
+});
+var communityIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i>
+         </div>`,
+});
+var legalIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i>
+         </div>`,
+});
+var seniorServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i>
+         </div>`,
+});
+var veteranServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i>
+         </div>`,
+});
 
-// temporary geocode variable
 let geocodes = [
     [0, 0],
     [0, 0],
@@ -80,265 +152,38 @@ function markerClick(e) {
 // -- Pushes service data to global variables
 
 function loadServices() {
-
-  // -- HTML variables --
-  // recalculates map's size when resizing
-  // document.getElementById("mapCollapse")
-  //   .addEventListener("shown.bs.collapse", () => {
-  //     map.invalidateSize();
-  //   });
-    
-  // document.getElementById("mapCollapse")
-  // .addEventListener("hidden.bs.collapse", () => {
-  //   map.invalidateSize();
-  // });
-
-  // -- Map variables --
-
+  // Create the map
   map = L.map('map', {
     zoomSnap: 0,
     zoomDelta: 0.2
   }).setView([36.162838, -85.501640], 9);
   map.setMinZoom(9)
-  
+
+  // Add the map as the base layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     noWrap: true,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
   }).addTo(map);
 
-  getServices().then(servData => {
-    let i = 0;
-    if (!servData) return;
-    servData.forEach(element => {
-        try {
-            if (!geocodes[i]) return;
-            let marker = L.marker(geocodes[i]);
-            marker.on('click', markerClick);
-            const mapItem = new MapItem ({
-              service: element,
-              marker: marker
-            })
-
-            allServices.push(mapItem);
-            i++;
-        } catch (err) {
-            console.error("Error creating marker", err);
-        }
-    });
-    loadServicesIntoSidebar();
-  });
-
   loadAndMaskCounties()
 }
 
-// -- Takes a service and returns a structured div --
-
-function createServiceCard(mapItem) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "mb-3";
-
-  const card = document.createElement("div");
-  card.className = "card border-0 border-start border-4 shadow-sm mapServiceCard";
-
-  const body = document.createElement("div");
-  body.className = "card-body py-3 px-3";
-
-  const title = document.createElement("h3");
-  title.className = "card-title mb-3 fw-semibold";
-  title.textContent = mapItem.service.NameOfService;
-
-
-  // displaying counties available for each service (as pills above description)
-  const countiesHTML = getCounties(mapItem.service); //iNeed.js function that returns html string of county pills
-  const countiesDiv = document.createElement("div");
-  countiesDiv.innerHTML = countiesHTML;
-
-  const desc = document.createElement("p");
-  desc.className = "card-text mb-3 fs-5";
-  desc.textContent = mapItem.service.ServiceDescription;
-
-  const button = document.createElement("a");
-  button.className = "btn btn-outline-dark";
-  button.textContent = "View service";
-  button.href = "#";
-
-
-  body.appendChild(title);
-  body.appendChild(countiesDiv); // Insert counties pills above description
-  body.appendChild(desc);
-  body.appendChild(button);
-
-  card.appendChild(body);
-  wrapper.appendChild(card);
-
-  return wrapper;
+var arrMarkers = []
+// marks the services per county
+function markServices () {
+  geocodes.forEach(address => {
+    let marker = L.marker(address, { icon: healthCareIcon }).addTo(map);
+    arrMarkers.push(marker)
+  })
 }
 
-// -- Calls createServiceCard for each service and implements pagination logic
-
-function renderSidebarServices() {
-  const sidebarBody = document.querySelector("#mapCollapse .card-body");
-  const collapseEl = document.getElementById("mapCollapse");
-
-  collapseEl.addEventListener("shown.bs.collapse", () => {
-    setTimeout(() => map.invalidateSize(), 350);
-  });
-
-  collapseEl.addEventListener("hidden.bs.collapse", () => {
-    setTimeout(() => map.invalidateSize(), 350);
-  });
-
-  if (!sidebarBody) return;
-
-  const { mapItems, currentPage, SERVICES_PER_PAGE } = sidebarServiceState;
-
-  sidebarBody.innerHTML = "";
-
-  /*
-  const filterControls = document.createElement("div")
-  filterControls.className = "d-flex justify-content-between align-items-center mt-3"
-
-  const btnEnterFilter = document.createElement("button");
-  btnEnterFilter.className = "btn btn-sm btn-outline-secondary";
-  btnEnterFilter.innerHTML = '<i class="bi bi-chevron-right"></i>';
-  btnEnterFilter.addEventListener('click', () => {
-    document.getElementById("mapCollapseFilter").classList.remove("d-none")
-    document.getElementById("mapCollapseServices").classList.add("d-none")
-  })
-  filterControls.appendChild(btnEnterFilter)
-  sidebarBody.appendChild(filterControls)
-  */
-
-  const start = currentPage * SERVICES_PER_PAGE;
-  const end = start + SERVICES_PER_PAGE;
-
-  allServices.forEach(mapItem => {
-    mapItem.marker.remove()
-  })
-
-  mapItems.forEach(mapItem => {
-    mapItem.marker.addTo(map)
-  })
-
-  // Render service cards
-  mapItems.slice(start, end).forEach(mapItem => {
-    const card = createServiceCard(mapItem);
-    sidebarBody.appendChild(card);
-  });
-
-  // Pagination controls
-  if (mapItems.length > SERVICES_PER_PAGE) {
-    const controls = document.createElement("div");
-    controls.className = "d-flex justify-content-between align-items-center mt-3";
-
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "btn btn-sm btn-outline-secondary";
-    prevBtn.innerHTML = '<i class="bi bi-chevron-left"></i>';
-    prevBtn.disabled = currentPage === 0;
-
-    const nextBtn = document.createElement("button");
-    nextBtn.className = "btn btn-sm btn-outline-secondary";
-    nextBtn.innerHTML = '<i class="bi bi-chevron-right"></i>';
-    nextBtn.disabled = end >= mapItems.length;
-
-    const pageIndicator = document.createElement("small");
-    pageIndicator.className = "text-muted";
-    pageIndicator.textContent = `Page ${currentPage + 1} of ${Math.ceil(
-      mapItems.length / SERVICES_PER_PAGE
-    )}`;
-
-    prevBtn.addEventListener("click", () => {
-      sidebarServiceState.currentPage--;
-      renderSidebarServices();
-    });
-
-    nextBtn.addEventListener("click", () => {
-      sidebarServiceState.currentPage++;
-      renderSidebarServices();
-    });
-
-    controls.appendChild(prevBtn);
-    controls.appendChild(pageIndicator);
-    controls.appendChild(nextBtn);
-
-    sidebarBody.appendChild(controls);
+// Removes all markers 
+function removeAllMarkers() {
+  for (var i = 0; i < arrMarkers.length; i++) {
+    map.removeLayer(arrMarkers[i]);
   }
-
-  // Ensure sidebar is open
-  if (collapseEl && !collapseEl.classList.contains("show")) {
-    new bootstrap.Collapse(collapseEl, { show: true });
-  }
-
-  // renderCategoryFiltering(allServices)
+  arrMarkers = [];
 }
-
-// -- takes a list of mapItems and returns a div containing check boxes for each category contained within the services
-
-/*
-function renderCategoryFiltering(mapItems) {
-  categoryInputs = []
-  arrKeywords = []
-  for (let i = 0; i < mapItems.length; i++) {
-    let tags = getTagList(mapItems[i].service)
-    for (let j = 0; j < tags.length; j++) {
-      if (!arrKeywords.includes(tags[j])) {
-        arrKeywords.push(tags[j])
-      }
-    }
-  }
-
-  const divFilter = document.createElement("div")
-  divFilter.className = "w-100 h-100";
-
-  const controls = document.createElement("div");
-  controls.className = "d-flex justify-content-between align-items-center mt-3"
-
-  const btnExitFilter = document.createElement("button");
-  btnExitFilter.className = "btn btn-sm btn-outline-secondary";
-  btnExitFilter.innerHTML = '<i class="bi bi-chevron-left"></i>';
-  btnExitFilter.addEventListener('click', () => {
-    document.getElementById("mapCollapseFilter").classList.add("d-none")
-    document.getElementById("mapCollapseServices").classList.remove("d-none")
-  })
-  controls.appendChild(btnExitFilter)
-  divFilter.appendChild(controls)
-
-  for (let i = 0; i < arrKeywords.length; i++) {
-    let wrapper = document.createElement("div");
-    wrapper.className = "mb-3";
-
-    let chkDiv = document.createElement("div")
-    chkDiv.className = "form-check card shadow-sm";
-
-
-    let chkLabel = document.createElement("label")
-    chkLabel.className = "form-check-label"
-    chkLabel.htmlFor = `chk${arrKeywords[i]}`
-    chkLabel.innerHTML = `${arrKeywords[i]}`
-    chkDiv.appendChild(chkLabel)
-
-    let chkInput = document.createElement("input")
-    chkInput.className = "form-check-input"
-    chkInput.type = "checkbox"
-    chkInput.value = arrKeywords[i]
-    chkInput.id = `chk${arrKeywords[i]}`
-    chkInput.checked = true
-    
-    chkInput.addEventListener('click', () => {
-      loadServicesIntoSidebar()
-    })
-    
-    chkDiv.appendChild(chkInput)
-    categoryInputs.push(chkInput)
-
-    wrapper.appendChild(chkDiv)
-    divFilter.appendChild(wrapper)
-  }
-  document.getElementById("mapCollapseFilter").appendChild(divFilter)
-}
-*/
-
-// -- Updates global variables before calling renderSidebarServices --
 
 function loadServicesIntoSidebar() {
 
@@ -347,8 +192,6 @@ function loadServicesIntoSidebar() {
   sidebarServiceState.mapItems = filterServicesByCategories()
 
   sidebarServiceState.currentPage = 0;
-
-  // renderSidebarServices();
 }
 
 // -- Loads boundary data from geojson file to draw county borders --
@@ -361,7 +204,7 @@ async function loadAndMaskCounties() {
   countiesLayer = L.geoJSON(jsonData, {
     style: {
       color: '#AA8A41',
-      weight: 2,
+      weight: 1.5,
       fillOpacity: 0.05
     },
     // set event handlers for each county layer
@@ -465,24 +308,13 @@ async function loadAndMaskCounties() {
 // -- Takes a leaflet layer object and fits the bounds of the map to the bounds of the layer --
 
 function zoomToCounty(layer, feature) {
-  if (sidebarServiceState.selectedCounty) countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
-  
-  if (sidebarServiceState.selectedCounty == layer) {
-    const bounds = countiesLayer.getBounds();
-    const isMobile = window.innerWidth < 768;
-    map.fitBounds(isMobile ? bounds.pad(5) : bounds.pad(0.2));
-    countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
-    sidebarServiceState.selectedCounty = null;
-    loadServicesIntoSidebar()
-    return;
-  }
-
-  sidebarServiceState.selectedCounty = layer;
+  markServices ()
 
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
   map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
   
   loadServicesIntoSidebar()
+  // removeAllMarkers()
 }
 
 // -- takes a service and returns an array of county names --
