@@ -326,7 +326,7 @@ nav {
     height:80vh;
   } 
 }
-.page-tag {
+/* .page-tag {    boostrap: p-4 dark_navy d-flex align-items-center justify-content-start
     margin-bottom: -12px;
     padding-left: 75px;
     padding-block: 35px;
@@ -334,7 +334,7 @@ nav {
     display: flex; 
     justify-content: center;
     align-items: center;
-}
+} */
 
 .img-text-lg {
   color: var(--light-grey);
@@ -1609,10 +1609,6 @@ p{
       top: 0.5rem;
       z-index: 5;
     }
-  }
-  .header-crisis-wrapper {
-    overflow: visible; /* ensure crisis is not clipped by the wrapper */
-    
   }
   /* put crisis behind header and behind the rounded corners */
   .header-crisis-wrapper .crisis {
