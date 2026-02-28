@@ -16,6 +16,7 @@
     <div id="navbar"></div>
 
     <main>
+        <div id="overlay"></div>
         <div class="position-relative">
             <!-- crisis tag -->
             <div class="index-crisis rounded-bottom pt-3 pt-md-0">
@@ -28,7 +29,264 @@
 
         <!-- I need: -->
         <div id="iNeed"></div>
-        
+
+        <!-- Map Filter -->
+        <div id="mySidenav" class="sidenav">
+            <h3>Map Filter & Sort</h3>
+            <a href="javascript:void(0)" class="closebtn" id="btnTopClose">&times;</a>
+            <hr />
+            <div id="divAllFilter" class="sidenav-scroll form-check">
+                <div class="stickytitle">
+                    <a id="btnFood" href="#"><i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterFood" class="form-check outer-layer" style="display: none;">
+                    <div id="divFood" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="food-checkbox" value="food">
+                            <label class="form-check-label" for="food-checkbox">Food</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnPersonalEssentials" href="#"><i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterPersonalEssentials" class="form-check outer-layer" style="display: none;">
+                    <div id="divPersonalEssentials" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="clothing-checkbox" value="clothing">
+                            <label class="form-check-label" for="clothing-checkbox">Clothing</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="toiletries-checkbox" value="toiletries">
+                            <label class="form-check-label" for="toiletries-checkbox">Toiletries</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnHousing" href="#"><i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterHousing" class="form-check outer-layer" style="display: none;">
+                    <div id="divHousing" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="housing-checkbox" value="housing">
+                            <label class="form-check-label" for="housing-checkbox">Housing</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="housing-financial-assistance-checkbox" value="housing - financial assistance">
+                            <label class="form-check-label" for="housing-financial-assistance-checkbox">Housing - Financial Assistance</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="utilities-financial-assistance-checkbox" value="utilities - financial assistance">
+                            <label class="form-check-label" for="utilities-financial-assistance-checkbox">Utilities - Financial Assistance</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="emergency-shelter-checkbox" value="emergency shelter">
+                            <label class="form-check-label" for="emergency-shelter-checkbox">Emergency Shelter</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnTransportation" href="#"><i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterTransportation" class="form-check outer-layer" style="display: none;">
+                    <div id="divTransportation" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="transportation-checkbox" value="transportation">
+                            <label class="form-check-label" for="transportation-checkbox">Transportation</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="drivers-ED/DUI-classes-checkbox" value="drivers ed/dui classes">
+                            <label class="form-check-label" for="drivers-ED/DUI-classes-checkbox">Drivers ED/DUI Classes</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnHealthCare" href="#"><i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterHealthCare" class="form-check outer-layer" style="display: none;">
+                    <div id="divHealthCare" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="health-care-checkbox" value="health care">
+                            <label class="form-check-label" for="health-care-checkbox">Health Care</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="pregnancy-checkbox" value="pregnancy">
+                            <label class="form-check-label" for="pregnancy-checkbox">Pregnancy</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="disabilities-checkbox" value="disabilities">
+                            <label class="form-check-label" for="disabilities-checkbox">Disabilities</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="special-needs-checkbox" value="special needs">
+                            <label class="form-check-label" for="special-needs-checkbox">Special Needs</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="mental-health-checkbox" value="mental health">
+                            <label class="form-check-label" for="mental-health-checkbox">Mental Health</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="substance-abuse-&-addiction-checkbox" value="substance abuse & addiction">
+                            <label class="form-check-label" for="substance-abuse-&-addiction-checkbox">Substance Abuse & Addiction</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="wellnes-checkbox" value="wellness">
+                            <label class="form-check-label" for="wellness-checkbox">Wellness</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="wellnes/support-groups-checkbox" value="wellness/support groups">
+                            <label class="form-check-label" for="wellnes/support-groups-checkbox">Wellnes/Support Groups</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnCrisisServices" href="#"><i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterCrisisServices" class="form-check outer-layer" style="display: none;">
+                    <div id="divCrisisServices" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="crisis-hotlines-checkbox" value="crisis hotlines">
+                            <label class="form-check-label" for="crisis-hotlines-checkbox">Crisis Hotlines</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="abuse-checkbox" value="abuse">
+                            <label class="form-check-label" for="abuse-checkbox">Abuse</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnFamily" href="#"><i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterFamily" class="form-check outer-layer" style="display: none;">
+                    <div id="divFamily" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="child-care-checkbox" value="child care">
+                            <label class="form-check-label" for="child-care-checkbox">Child Care</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="parenting-checkbox" value="parenting">
+                            <label class="form-check-label" for="parenting-checkbox">Parenting</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="youth-services-checkbox" value="yourh services">
+                            <label class="form-check-label" for="youth-services-checkbox">Youth Services</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnEducation" href="#"><i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterEducation" class="form-check outer-layer" style="display: none;">
+                    <div id="divEducation" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="education-checkbox" value="education">
+                            <label class="form-check-label" for="education-checkbox">Education</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnEmployment" href="#"><i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterEmployment" class="form-check outer-layer" style="display: none;">
+                    <div id="divEmployment" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="employment-checkbox" value="employment">
+                            <label class="form-check-label" for="employment-checkbox">Employment</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="small-business-checkbox" value="small business">
+                            <label class="form-check-label" for="small-business-checkbox">Small Business</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="economic-development-checkbox" value="economic development">
+                            <label class="form-check-label" for="economic-development-checkbox">Economic Development</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnCommunity" href="#"><i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterCommunity" class="form-check outer-layer" style="display: none;">
+                    <div id="divCommunity" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="community-development-checkbox" value="community development">
+                            <label class="form-check-label" for="community-development-checkbox">Community Development</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="recreation-checkbox" value="recreation">
+                            <label class="form-check-label" for="recreation-checkbox">Recreation</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="animals-checkbox" value="animals">
+                            <label class="form-check-label" for="animals-checkbox">Animals</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnLegal" href="#"><i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterLegal" class="form-check outer-layer" style="display: none;">
+                    <div id="divLegal" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="legal-checkbox" value="food">
+                            <label class="form-check-label" for="legal-checkbox">Legal</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnSeniorServices" href="#"><i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterSeniorServices" class="form-check outer-layer" style="display: none;">
+                    <div id="divSeniorServices" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="seniors-checkbox" value="seniors">
+                            <label class="form-check-label" for="seniors-checkbox">Seniors</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="in-home-services-checkbox" value="in home services">
+                            <label class="form-check-label" for="in-home-services-checkbox">In Home Services</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnVeteranServices" href="#"><i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterVeteranServices" class="form-check outer-layer" style="display: none;">
+                    <div id="divVeteranServices" class="form-check">
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="veterans-checkbox" value="veterans">
+                            <label class="form-check-label" for="veterans-checkbox">Veterans</label>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" class="form-check-input" id="veteran-services-checkbox" value="veteran services">
+                            <label class="form-check-label" for="veteran-services-checkbox">Veteran Services</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidenav-footer">
+                <hr />
+                <button id="btnClearFilter" class="btn btn-secondary col-5">Clear Filters</button>
+                <button id="btnSeeResults" class="btn btn-primary col-5">See Results</button>
+            </div>
+        </div>
+        <div id="divFilterButtons" class="filter">
+            <button id="btnFilterSort">Map Filter & Sort <i class="bi bi-sliders"></i></button>
+        </div>
+
         <!-- PinMap -->
         <div id="pinmap"></div>
 

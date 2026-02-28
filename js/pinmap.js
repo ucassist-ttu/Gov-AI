@@ -1,5 +1,3 @@
-import {getCounties} from "../js/iNeed.js"
-
 const sidebarServiceState = {
   mapItems: [],
   currentPage: 0,
@@ -10,7 +8,6 @@ const sidebarServiceState = {
 };
 let allServices = []
 let countiesLayer = null;
-let categoryColors = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
 var map = null;
 var foodIcon = L.divIcon({
     className: '',
@@ -118,7 +115,6 @@ let geocodes = [
 ]
 
 // -- Class connects a service to its marker --
-
 class MapItem {
   constructor({ service, marker }) {
     this.service = service
@@ -127,7 +123,6 @@ class MapItem {
 }
 
 // -- Call to backend --
-
 async function getServices() {
     try{
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
@@ -140,7 +135,6 @@ async function getServices() {
 }
 
 // -- Handles marker clicks and matches them to a service --
-
 function markerClick(e) {
     for (let i = 0; i < allServices.length; i++) {
         if (e.target === allServices[i].marker) {
@@ -150,7 +144,6 @@ function markerClick(e) {
 }
 
 // -- Pushes service data to global variables
-
 function loadServices() {
   // Create the map
   map = L.map('map', {
@@ -183,15 +176,6 @@ function removeAllMarkers() {
     map.removeLayer(arrMarkers[i]);
   }
   arrMarkers = [];
-}
-
-function loadServicesIntoSidebar() {
-
-  sidebarServiceState.mapItems = allServices
-  sidebarServiceState.mapItems = filterServicesByCounties()
-  sidebarServiceState.mapItems = filterServicesByCategories()
-
-  sidebarServiceState.currentPage = 0;
 }
 
 // -- Loads boundary data from geojson file to draw county borders --
@@ -312,9 +296,6 @@ function zoomToCounty(layer, feature) {
 
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
   map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
-  
-  loadServicesIntoSidebar()
-  // removeAllMarkers()
 }
 
 // -- takes a service and returns an array of county names --
@@ -329,53 +310,6 @@ function getCountyList(service) {
   }
 }
 
-// -- takes an array of county strings and returns an array of the filtered global array --
-function filterServicesByCounties() {
-  let filteredServices = []
-  if (!sidebarServiceState.selectedCounty) return sidebarServiceState.mapItems
-
-  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
-    let countiesAvailable = getCountyList(sidebarServiceState.mapItems[i].service) || []
-    countiesAvailable.forEach(county => {
-      if (sidebarServiceState.selectedCounty.feature.properties.NAME == county && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
-        filteredServices.push(sidebarServiceState.mapItems[i])
-      }
-    })
-  }
-  return filteredServices
-}
-
-// -- Gets the list of tags for each service --
-// from services.js
-function getTagList(service) {
-    let strKeywords = service.Keywords
-    if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
-    }
-    // Returns keywords seperated by a ','
-    if (Array.isArray(strKeywords)) {
-        return strKeywords;
-    }
-}
-
-// -- takes an array of category strings and an array of services and returns an array of filtered services
-function filterServicesByCategories(mapItems) {
-  let filteredServices = []
-  if (sidebarServiceState.selectedCategories.length === 0) return sidebarServiceState.mapItems
-
-  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
-    let serviceCategories = getTagList(sidebarServiceState.mapItems[i].service) || []
-    for (let j = 0; j < serviceCategories.length; j++) {
-      if (sidebarServiceState.selectedCategories.includes(serviceCategories[j]) && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
-        filteredServices.push(sidebarServiceState.mapItems[i])
-        break
-      }
-    }
-  }
-  console.log(filteredServices)
-  return filteredServices
-}
-
 window.addEventListener('load', (event) => {
   fetch('partials/pinmap.html')
     .then(response => response.text())
@@ -384,4 +318,174 @@ window.addEventListener('load', (event) => {
 
       loadServices();
     });
+});
+
+// Opens the filter side bar
+document.querySelector("#btnFilterSort").addEventListener("click", () => {
+    document.getElementById("mySidenav").style.width = "375px";
+    overlay.classList.add("active");
+});
+
+// Closes the filter side bar
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  overlay.classList.remove("active");
+}
+
+// Closes the filter when the overlay is clicked
+overlay.addEventListener("click", () => {
+  closeNav()
+})
+
+// Closes the filter side bar when btnSeeResults is clicked
+document.querySelector("#btnSeeResults").addEventListener("click", () => {
+    closeNav()
+})
+
+// Closes the filter side bar when btnSeeResults is clicked
+document.querySelector("#btnTopClose").addEventListener("click", () => {
+    closeNav()
+})
+
+// Opens the Food filter options
+document.querySelector("#btnFood").addEventListener("click", () => {
+    if (document.querySelector('#divOuterFood').style.display === 'none') {
+        document.querySelector('#divOuterFood').style.display = 'block';
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterFood').style.display = 'none';
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Personal Essentials filter options
+document.querySelector("#btnPersonalEssentials").addEventListener("click", () => {
+    if (document.querySelector('#divOuterPersonalEssentials').style.display === 'none') {
+        document.querySelector('#divOuterPersonalEssentials').style.display = 'block';
+        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterPersonalEssentials').style.display = 'none';
+        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Housing filter options
+document.querySelector("#btnHousing").addEventListener("click", () => {
+    if (document.querySelector('#divOuterHousing').style.display === 'none') {
+        document.querySelector('#divOuterHousing').style.display = 'block';
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterHousing').style.display = 'none';
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Transportation filter options
+document.querySelector("#btnTransportation").addEventListener("click", () => {
+    if (document.querySelector('#divOuterTransportation').style.display === 'none') {
+        document.querySelector('#divOuterTransportation').style.display = 'block';
+        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterTransportation').style.display = 'none';
+        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Health Care filter options
+document.querySelector("#btnHealthCare").addEventListener("click", () => {
+    if (document.querySelector('#divOuterHealthCare').style.display === 'none') {
+        document.querySelector('#divOuterHealthCare').style.display = 'block';
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterHealthCare').style.display = 'none';
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Crisis Services filter options
+document.querySelector("#btnCrisisServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterCrisisServices').style.display === 'none') {
+        document.querySelector('#divOuterCrisisServices').style.display = 'block';
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterCrisisServices').style.display = 'none';
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Family filter options
+document.querySelector("#btnFamily").addEventListener("click", () => {
+    if (document.querySelector('#divOuterFamily').style.display === 'none') {
+        document.querySelector('#divOuterFamily').style.display = 'block';
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterFamily').style.display = 'none';
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Education filter options
+document.querySelector("#btnEducation").addEventListener("click", () => {
+    if (document.querySelector('#divOuterEducation').style.display === 'none') {
+        document.querySelector('#divOuterEducation').style.display = 'block';
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterEducation').style.display = 'none';
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i>`;
+    }
+  })
+
+// Opens the Employment filter options
+document.querySelector("#btnEmployment").addEventListener("click", () => {
+    if (document.querySelector('#divOuterEmployment').style.display === 'none') {
+        document.querySelector('#divOuterEmployment').style.display = 'block';
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterEmployment').style.display = 'none';
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Community filter options
+document.querySelector("#btnCommunity").addEventListener("click", () => {
+    if (document.querySelector('#divOuterCommunity').style.display === 'none') {
+        document.querySelector('#divOuterCommunity').style.display = 'block';
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterCommunity').style.display = 'none';
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Legal filter options
+document.querySelector("#btnLegal").addEventListener("click", () => {
+    if (document.querySelector('#divOuterLegal').style.display === 'none') {
+        document.querySelector('#divOuterLegal').style.display = 'block';
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterLegal').style.display = 'none';
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Senior Services filter options
+document.querySelector("#btnSeniorServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterSeniorServices').style.display === 'none') {
+        document.querySelector('#divOuterSeniorServices').style.display = 'block';
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterSeniorServices').style.display = 'none';
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Veteran Services filter options
+document.querySelector("#btnVeteranServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterVeteranServices').style.display === 'none') {
+        document.querySelector('#divOuterVeteranServices').style.display = 'block';
+        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterVeteranServices').style.display = 'none';
+        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i>`;
+    }
 });
