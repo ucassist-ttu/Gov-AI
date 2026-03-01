@@ -1,12 +1,5 @@
-const sidebarServiceState = {
-  mapItems: [],
-  currentPage: 0,
-  SERVICES_PER_PAGE: 5,
-  selectedCounty: null,
-  selectedCategories: [],
-  MAX_CATEGORIES: 6
-};
 let allServices = []
+var arrMarkers = []
 let countiesLayer = null;
 var map = null;
 const countyLabelCoords = {
@@ -52,7 +45,7 @@ var transportationIcon = L.divIcon({
 var healthCareIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i>
+            <i class="bi bi-heart-pulse-fill" style="font-size: 14px; color: #C62828;"></i>
          </div>`,
 });
 var crisisServicesIcon = L.divIcon({
@@ -150,15 +143,6 @@ async function getServices() {
     }
 }
 
-// -- Handles marker clicks and matches them to a service --
-function markerClick(e) {
-    for (let i = 0; i < allServices.length; i++) {
-        if (e.target === allServices[i].marker) {
-            console.log(getCountyList(allServices[i].service))
-        }
-    }
-}
-
 // -- Pushes service data to global variables
 function loadServices() {
   // Create the map
@@ -181,11 +165,11 @@ function loadServices() {
   loadAndMaskCounties()
 }
 
-var arrMarkers = []
 // marks the services per county
 function markServices () {
   geocodes.forEach(address => {
-    let marker = L.marker(address, { icon: healthCareIcon }).addTo(map);
+    let marker = L.marker(address, { icon: healthCareIcon }).addTo(map)
+    marker.bindPopup("You clicked me!")
     arrMarkers.push(marker)
   })
 }
@@ -238,7 +222,7 @@ async function loadAndMaskCounties() {
         },
         // reset styling when mouse out
         mouseout: () => {
-          if (layer !== sidebarServiceState.selectedCounty) {
+          if (layer !== null) {
             countiesLayer.resetStyle(layer);
           }
           map.getContainer().style.cursor = '';
