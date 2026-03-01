@@ -233,6 +233,14 @@
 nav {
   min-height: var(--bs-navbar-height);
 }
+.county-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 12px;
+}
+
 .map-container {
   height: 70vh;
 }
@@ -1681,7 +1689,7 @@ p{
   pointer-events: auto; /* but search bar is clickable */
 }
 .sidenav {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 75px);
   width: 0;
   display:flex;
   flex-direction: column;

@@ -9,6 +9,22 @@ const sidebarServiceState = {
 let allServices = []
 let countiesLayer = null;
 var map = null;
+const countyLabelCoords = {
+  "Cannon": [35.8000, -86.1000],
+  "Clay": [36.5457, -85.5458],
+  "Cumberland": [35.9523, -85.1000],
+  "DeKalb": [35.9864, -85.8800],
+  "Fentress": [36.3698, -85.0000],
+  "Jackson": [36.3542, -85.7300],
+  "Macon": [36.5377, -86.0500],
+  "Overton": [36.3500, -85.3300],
+  "Pickett": [36.5593, -85.1757],
+  "Putnam": [36.1500, -85.5016],
+  "Smith": [36.2556, -85.9920],
+  "Van Buren": [35.7100, -85.4600],
+  "Warren": [35.6782, -85.8100],
+  "White": [35.9300, -85.4700]
+};
 var foodIcon = L.divIcon({
     className: '',
   html: `<div>
@@ -152,6 +168,10 @@ function loadServices() {
   }).setView([36.162838, -85.501640], 9);
   map.setMinZoom(9)
 
+  map.createPane('labelsPane');
+  map.getPane('labelsPane').style.zIndex = 650;
+  map.getPane('labelsPane').style.pointerEvents = 'none';
+
   // Add the map as the base layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     noWrap: true,
@@ -191,49 +211,22 @@ async function loadAndMaskCounties() {
       weight: 1.5,
       fillOpacity: 0.05
     },
+  
     // set event handlers for each county layer
     onEachFeature: (feature, layer) => {
+      const countyName = feature.properties.NAME;
+      const coords = countyLabelCoords[countyName];
 
-      /*
-      // County names using polylabel
-      if (feature.properties && feature.properties.NAME) {
-        let center;
-
-        const geom = feature.geometry;
-
-        if (geom.type === "Polygon") {
-          // polylabel expects [ [ [lng, lat], ... ] ] for a single polygon
-          center = window.polylabel([geom.coordinates[0]], 1.0);
-        } else if (geom.type === "MultiPolygon") {
-          // pick largest polygon by number of points
-          let largest = geom.coordinates[0];
-          geom.coordinates.forEach(polygon => {
-            if (polygon[0].length > largest[0].length) largest = polygon;
-          });
-          center = polylabel([largest], 1.0);
-        }
-
-        // Polylabel returns [lng, lat]
-        const latlng = L.latLng(center[1], center[0]);
-
-        // Bind tooltip at centroid
-        const tooltip = L.tooltip({
-          permanent: true,
-          direction: "center",
-          className: "bg-transparent border-0 shadow-none p-0",
+      if (coords) {
+        L.marker(coords, {
+          pane: 'labelsPane',
+          icon: L.divIcon({
+            className: 'county-label',
+            html: countyName
+          }),
           interactive: false
-        })
-        .setLatLng(latlng)
-        .setContent(`
-          <div class="fw-bold text-dark text-center small">
-            ${feature.properties.NAME}
-          </div>
-        `);
-
-        layer.bindTooltip(tooltip);
+        }).addTo(map);
       }
-        */
-
       layer.on({
         click: () => {
           zoomToCounty(layer, feature)
