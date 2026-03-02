@@ -21,25 +21,25 @@ const countyLabelCoords = {
 var foodIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i>
+            <i class="bi bi-cup-hot-fill" style="font-size: 14px; color: #880E4F;"></i>
          </div>`,
 });
 var personalEssentialsIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i>
+            <i class="bi bi-person-walking" style="font-size: 14px; color: #006064;"></i>
          </div>`,
 });
 var housingIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i>
+            <i class="bi bi-house-fill" style="font-size: 14px; color: #5D4037;"></i>
          </div>`,
 });
 var transportationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i>
+            <i class="bi bi-taxi-front-fill" style="font-size: 14px; color: #E65100;"></i>
          </div>`,
 });
 var healthCareIcon = L.divIcon({
@@ -51,49 +51,55 @@ var healthCareIcon = L.divIcon({
 var crisisServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i>
+            <i class="bi bi-tornado" style="font-size: 14px; color: #B71C1C;"></i>
          </div>`,
 });
 var familyIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i>
+            <i class="bi bi-people-fill" style="font-size: 14px; color: #1565C0;"></i>
          </div>`,
 });
 var educationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i>
+            <i class="bi bi-mortarboard-fill" style="font-size: 14px; color: #0D47A1;"></i>
          </div>`,
 });
 var employementIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i>
+            <i class="bi bi-building-fill" style="font-size: 14px; color: #2E7D32;"></i>
          </div>`,
 });
 var communityIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i>
+            <i class="bi bi-globe" style="font-size: 14px; color: #004D40;"></i>
          </div>`,
 });
 var legalIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i>
+            <i class="bi bi-bank" style="font-size: 14px; color: #263238;"></i>
          </div>`,
 });
 var seniorServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i>
+            <i class="bi bi-tree-fill" style="font-size: 14px; color: #1B5E20;"></i>
          </div>`,
 });
 var veteranServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i>
+            <i class="bi bi-star-fill" style="font-size: 14px; color: #4A148C;"></i>
+         </div>`,
+});
+var multiIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-rainbow" style="font-size: 14px;"></i>
          </div>`,
 });
 
@@ -131,12 +137,17 @@ class MapItem {
   }
 }
 
+getServices()
 // -- Call to backend --
 async function getServices() {
     try{
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
-        return servData
+        servData.forEach(service => {
+          if (service.ServiceAddress != 'N/A' || service.CityStateZip != 'N/A') {
+            allServices.push(service)
+          }
+        })
     }
     catch (objError) {
         console.log("Error fetching service data")
@@ -166,9 +177,9 @@ function loadServices() {
 }
 
 // marks the services per county
-function markServices () {
+function markServices (iconTag) {
   geocodes.forEach(address => {
-    let marker = L.marker(address, { icon: healthCareIcon }).addTo(map)
+    let marker = L.marker(address, { icon: iconTag }).addTo(map)
     marker.bindPopup("You clicked me!")
     arrMarkers.push(marker)
   })
@@ -269,8 +280,6 @@ async function loadAndMaskCounties() {
 // -- Takes a leaflet layer object and fits the bounds of the map to the bounds of the layer --
 
 function zoomToCounty(layer, feature) {
-  markServices ()
-
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
   map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
 }
@@ -322,6 +331,15 @@ document.querySelector("#btnSeeResults").addEventListener("click", () => {
 // Closes the filter side bar when btnSeeResults is clicked
 document.querySelector("#btnTopClose").addEventListener("click", () => {
     closeNav()
+})
+
+// Removes all filters when btnClearFilter is clicked
+document.querySelector("#btnClearFilter").addEventListener("click", () => {
+    let selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+    selectedCheckboxes.forEach(box => {
+        box.checked = false;
+    });
+    removeAllMarkers ()
 })
 
 // Opens the Food filter options
@@ -466,3 +484,154 @@ document.querySelector("#btnVeteranServices").addEventListener("click", () => {
         document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i>`;
     }
 });
+
+// Applys the filter anytime a checkbox is updated
+document.getElementById('divAllFilter').addEventListener('change', (e) => {
+  let selectedFood = getSelectedCheckboxes('divOuterFood')
+  let selectedPersonalEssentials = getSelectedCheckboxes('divOuterPersonalEssentials')
+  let selectedHousing = getSelectedCheckboxes('divOuterHousing')
+  let selectedTransportation = getSelectedCheckboxes('divOuterTransportation')
+  let selectedHealthCare = getSelectedCheckboxes('divOuterHealthCare')
+  let selectedCrisisServices = getSelectedCheckboxes('divOuterCrisisServices')
+  let selectedFamily = getSelectedCheckboxes('divOuterFamily')
+  let selectedEducation = getSelectedCheckboxes('divOuterEducation')
+  let selectedEmployment = getSelectedCheckboxes('divOuterEmployment')
+  let selectedCommunity = getSelectedCheckboxes('divOuterCommunity')
+  let selectedLegal = getSelectedCheckboxes('divOuterLegal')
+  let selectedSeniorServices = getSelectedCheckboxes('divOuterSeniorServices')
+  let selectedVeteranServices = getSelectedCheckboxes('divOuterVeteranServices')
+  let arrMatches
+  let iconToUse
+  
+  removeAllMarkers ()
+  allServices.forEach(service => {
+    arrMatches = []
+    let strTags = getTagList(service)
+    let lowKey = (strTags).map(c => c.toLowerCase());
+    if (selectedFood.length > 0 &&
+        selectedFood.some(item => lowKey.includes(item))) {
+      arrMatches.push("food");
+    }
+    else if (selectedPersonalEssentials.length > 0 &&
+            selectedPersonalEssentials.some(item => lowKey.includes(item))) {
+      arrMatches.push("personal essentials");
+    }
+    else if (selectedHousing.length > 0 &&
+            selectedHousing.some(item => lowKey.includes(item))) {
+      arrMatches.push("housing");
+    }
+    else if (selectedTransportation.length > 0 &&
+            selectedTransportation.some(item => lowKey.includes(item))) {
+      arrMatches.push("transportation");
+    }
+    else if (selectedHealthCare.length > 0 &&
+            selectedHealthCare.some(item => lowKey.includes(item))) {
+      arrMatches.push("health care");
+    }
+    else if (selectedCrisisServices.length > 0 &&
+            selectedCrisisServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("crisis services");
+    }
+    else if (selectedFamily.length > 0 &&
+            selectedFamily.some(item => lowKey.includes(item))) {
+      arrMatches.push("family");
+    }
+    else if (selectedEducation.length > 0 &&
+            selectedEducation.some(item => lowKey.includes(item))) {
+      arrMatches.push("education");
+    }
+    else if (selectedEmployment.length > 0 &&
+            selectedEmployment.some(item => lowKey.includes(item))) {
+      arrMatches.push("employment");
+    }
+    else if (selectedCommunity.length > 0 &&
+            selectedCommunity.some(item => lowKey.includes(item))) {
+      arrMatches.push("community");
+    }
+    else if (selectedLegal.length > 0 &&
+            selectedLegal.some(item => lowKey.includes(item))) {
+      arrMatches.push("legal");
+    }
+    else if (selectedSeniorServices.length > 0 &&
+            selectedSeniorServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("senior services");
+    }
+    else if (selectedVeteranServices.length > 0 &&
+            selectedVeteranServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("veteran services");
+    }
+    iconToUse = getMatchIcon(arrMatches);
+  })
+  if (arrMatches.length > 0) {
+    markServices(iconToUse);
+  }
+})
+
+// Returns an array of all selected check boxed from a container
+function getSelectedCheckboxes(containerId) {
+    return Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+    ).map(el => el.value);
+}
+
+// Gets the list of tags for each service
+function getTagList(service) {
+    let strKeywords = service.Keywords
+    if (typeof strKeywords === 'string') {
+        strKeywords = JSON.parse(strKeywords);
+    }
+    // Returns keywords seperated by a ','
+    if (Array.isArray(strKeywords)) {
+        return strKeywords;
+    }
+}
+
+// Returns the icon that matches the keyword match
+function getMatchIcon (arrMatches) {
+  let icon
+  if (arrMatches.length === 1) {
+    if (arrMatches[0] === "food"){
+      icon = foodIcon
+    }
+    if (arrMatches[0] === "personal essentials"){
+      icon = personalEssentialsIcon
+    }
+    if (arrMatches[0] === "housing"){
+      icon = housingIcon
+    }
+    if (arrMatches[0] === "transportation"){
+      icon = transportationIcon
+    }
+    if (arrMatches[0] === "health care"){
+      icon = healthCareIcon
+    }
+    if (arrMatches[0] === "crisis services"){
+      icon = crisisServicesIcon
+    }
+    if (arrMatches[0] === "family"){
+      icon = familyIcon
+    }
+    if (arrMatches[0] === "education"){
+      icon = educationIcon
+    }
+    if (arrMatches[0] === "employment"){
+      icon = employementIcon
+    }
+    if (arrMatches[0] === "community"){
+      icon = communityIcon
+    }
+    if (arrMatches[0] === "legal"){
+      icon = legalIcon
+    }
+    if (arrMatches[0] === "senior services"){
+      icon = seniorServicesIcon
+    }
+    if (arrMatches[0] === "veteran services"){
+      icon = veteranServicesIcon
+    }
+  }
+  if (arrMarkers.length > 1) {
+    icon = multiIcon
+  }
+  return icon
+}
