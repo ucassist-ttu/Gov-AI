@@ -62,6 +62,31 @@ async function getServices() {
 
 getServices()
 
+function soundex(s) {
+  const a = s.toLowerCase().split('');
+  const f = a.shift();
+  const codes = {
+    a: '', e: '', i: '', o: '', u: '',
+    b: 1, f: 1, p: 1, v: 1,
+    c: 2, g: 2, j: 2, k: 2, q: 2, s: 2, x: 2, z: 2,
+    d: 3, t: 3,
+    l: 4,
+    m: 5, n: 5,
+    r: 6
+  };
+
+  const encoded = f + a
+    .map(c => codes[c])
+    .filter((code, i, arr) => code !== arr[i - 1])
+    .join('');
+
+  return (encoded + '000').slice(0, 4).toUpperCase();
+}
+
+function soundsLike(a, b) {
+  return soundex(a) === soundex(b);
+}
+
 // Create the service cards for each page
 function createServiceCard(arrCards) {
     arrCards.forEach(service => {
@@ -154,8 +179,22 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
                 strName = item.NameOfService
                 strKeywords = item.Keywords
                 strCounties = item.CountiesAvailable
-                if (strName.toLowerCase().includes(word.toLowerCase()) || strKeywords.toLowerCase().includes(word.toLowerCase()) || strCounties.toLowerCase().includes(word.toLowerCase())) {
-                    arrFound.push(item)
+                let nameWords = strName.split(" ");
+                let keywordWords = strKeywords.split(" ");
+                let countyWords = strCounties.split(" ");
+
+                let matchFound = false;
+
+                [nameWords, keywordWords, countyWords].forEach(group => {
+                    group.forEach(fieldWord => {
+                        if (soundsLike(fieldWord, word)) {
+                        matchFound = true;
+                        }
+                    });
+                });
+
+                if (matchFound) {
+                arrFound.push(item);
                 }
             }
         })
