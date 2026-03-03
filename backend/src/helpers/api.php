@@ -7,7 +7,19 @@ function request_body(string $key): mixed
 
 function get_services_from_user_input(string $user_input): array
 {
-  $services = json_encode(value: get_services());
+  $services = ['Columns' => [], 'Rows' => []];
+  foreach (get_services()[0] as $key => $value) {
+    $services['Columns'][] = $key;
+  }
+  foreach (get_services() as $service) {
+    $row = [];
+    foreach ($service as $key => $value) {
+      $row[] = $value;
+    }
+    $services['Rows'][] = $row;
+  }
+  $services = json_encode(value: $services);
+
   if (!$services)
     return [];
 
@@ -31,7 +43,19 @@ function get_services_from_user_input(string $user_input): array
 
 function get_similar_services(int $id): array
 {
-  $services = json_encode(value: get_services());
+  $services = ['Columns' => [], 'Rows' => []];
+  foreach (get_services()[0] as $key => $value) {
+    $services['Columns'][] = $key;
+  }
+  foreach (get_services() as $service) {
+    $row = [];
+    foreach ($service as $key => $value) {
+      $row[] = $value;
+    }
+    $services['Rows'][] = $row;
+  }
+  $services = json_encode(value: $services);
+
   if (!$services)
     return [];
 

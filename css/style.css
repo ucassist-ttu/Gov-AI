@@ -62,16 +62,16 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background-color: var(--dark-navy);
   }
   .ai-results .page{
     padding-inline: 50px;
   }
-  .ai-results .img-text-lg{
+  /* .ai-results .img-text-lg{ changed to display-3 + fw-bolder
     line-height: 2.2rem;
     padding-top: 30px;
     font-weight: bold;
-  }
+  } */
   .ai-company-name{
     font-style: normal;
     font-weight: 200;
@@ -140,14 +140,14 @@
     border: 3px solid var(--gold);
     border-radius: 30px;
     box-shadow: 0 4px 10px 0 var(--dark-navy);
-    width: 85%;
+    width: 80%;
     padding-inline: 15px;
     flex-direction: row;
     justify-content: center; /* aligns  horizontally*/
     height: 80px;
   }
   .search-input{
-    font-size: 1.2rem !important;
+    /* font-size: 1.2rem !important; */
     flex-grow: 1; /* stretches vertically*/
     border: 0px !important;
     outline: none !important;
@@ -233,15 +233,21 @@
 nav {
   min-height: var(--bs-navbar-height);
 }
+.county-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-weight: 600;
+  font-size: 12px;
+}
+
 .map-container {
   height: 70vh;
 }
 .btnMap {
   height: 50px;
   width: 50px;
-}
-#mapCollapse {
-  max-width: 40%;
+  z-index: 1001;
 }
 .mapServiceCard {
   border-color: #AA8A41 !important;
@@ -249,9 +255,34 @@ nav {
 .map-container > .position-absolute {
   pointer-events: none;
 }
-
 #mapCollapse, .btnMap {
   pointer-events: auto;
+}
+#mapCollapseServices .card {
+  min-width: 0;
+}
+#mapCollapse.show,
+#mapCollapse.collapsing {
+  width: auto;
+}
+.sidebar {
+  width: 600px;
+}
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100vw !important;
+  }
+  #mapCollapse {
+    width: 100% !important;
+    overflow-y: auto;
+  }
+  .map-container {
+    height: 85vh;
+  }
+  #mapCollapse .card-body {
+    overflow: visible !important;
+    max-height: none !important;
+  }
 }
 .search-icon {
     position: absolute;
@@ -286,9 +317,9 @@ nav {
 }
 
 .header-image-big {
-  width: 105vw;
+  /* width: 100vw;
   height:65vh;
-  position: relative;
+  position: relative; */
   background-size: cover;
   background-position: center;
   display: inline-flex;
@@ -303,7 +334,7 @@ nav {
     height:80vh;
   } 
 }
-.page-tag {
+/* .page-tag {
     margin-bottom: -12px;
     padding-left: 75px;
     padding-block: 35px;
@@ -311,7 +342,7 @@ nav {
     display: flex; 
     justify-content: center;
     align-items: center;
-}
+} */
 
 .img-text-lg {
   color: var(--light-grey);
@@ -912,7 +943,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-top: 45px;
+    padding-top: 38px;
 }
 main {
     flex: 1 0 auto;
@@ -943,65 +974,14 @@ footer img {
     background-image: url('/Gov-AI/assets/images/error-rodney-truitt-jf.png');
 }
 
-.body-text{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-}
-.body-link{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    text-decoration: underline;
-}
+
 .body-light{
     font-style:light;
-}
-.darker-image{
-  background-color:rgba(0,0,0,0.8)
 }
 .overlay-dark {
   background-color: rgba(black, 0.4);
 }
-.snap-title{
-    text-align: start;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: normal;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
-    padding-top: 10px;
-}
-.needHelp-title{
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    text-align: start;
-    line-height: normal;
-    text-decoration-line: none;
-    padding-top: 10px;
-}
+
 .snap-tab{
     margin: 10px;
     color: var(--dark-navy);
@@ -1472,6 +1452,11 @@ footer img {
   margin-bottom: -30px;
   background-image: url('/Gov-AI/assets/images/registration-landing-adrianna-geo.png');
 }
+.referral-image {
+  margin-top: -30px;
+  margin-bottom: -30px;
+  background-image: url('/assets/images/referral-form.png');
+}
 .dropbox-square {
   height: 150px;
   border: solid 4px var(--gold);
@@ -1585,10 +1570,6 @@ p{
       z-index: 5;
     }
   }
-  .header-crisis-wrapper {
-    overflow: visible; /* ensure crisis is not clipped by the wrapper */
-    
-  }
   /* put crisis behind header and behind the rounded corners */
   .header-crisis-wrapper .crisis {
     position: absolute;
@@ -1620,13 +1601,11 @@ p{
   .index-crisis { /* OG min 320 overlap onto images*/
     position: absolute;
     right: 0rem;
-    top: 0rem;
     z-index: 10;
     background-color: var(--red);
     width: 20vw;
     min-width: 180px;
-    height: 7vh;
-    min-height: 5vh;
+    min-height: 7vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1658,7 +1637,7 @@ p{
   display:flex;
   flex-direction: column;
   position: fixed;
-  top: 75px;
+  top: 71px;
   right: 0;
   background-color: white;
   overflow-x: hidden;
@@ -1815,7 +1794,7 @@ p{
   background-color: rgba(0,0,0,0.5);
   opacity: 0;
   pointer-events: none;
-  z-index: 1000;
+  z-index: 1001;
 }
 
 
@@ -1869,3 +1848,87 @@ p{
   align-items: center;
   padding: 0.2rem 0.5rem;
 }
+<<<<<<< HEAD
+=======
+.rating{
+  margin-left: 15px; 
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.rating h3 {
+  font-size: 20px;
+}
+.star{
+  color: lightgray !important;
+  transition: color 0.2s;
+  font-size: 35px;
+  margin-right: 10px;
+  color: var(--dark-navy);
+}
+/* .star:hover,
+.star:hover ~ .star {
+  color: gold !important;
+} */
+.star.selected,
+.star.selected ~ .star {
+  color: goldenrod !important;
+}
+.chart-container {
+  position: relative;
+  height: 40vw;
+  max-height: 600px;
+  min-height: 475px;
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+@media (max-width: 768px) {
+  .chart-container {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
+.stats-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 8px;
+  margin: 20px;
+}
+.stats-select select{
+  max-width: 200px;
+}
+.stats-select label{
+  min-width: 130px;
+}
+/* .stats-select label{
+  padding-top: 10px;
+}
+.stats-select label{
+  margin-left: 25px;
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+.stats-select select{
+  margin: 0 auto;
+  width: 80%;
+} */
+/* .stats-select hr {
+  background-color: var(--gold);
+  height: 3px;
+  margin-left: 20px;
+  margin-right: 20px;
+} */
+
+.landing-img-height{
+  height:65vh;
+}
+>>>>>>> be6d08db634170ab4968c957ddd64c3c688c54ca

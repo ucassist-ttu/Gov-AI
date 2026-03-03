@@ -1,5 +1,3 @@
-console.log("[index.js] Delegated search listener active");
-
 document.addEventListener("click", async function (e) {
 
   const searchBtn = e.target.closest("#btn-AI-search");
@@ -9,10 +7,6 @@ document.addEventListener("click", async function (e) {
 
   const input = document.getElementById("txtAIPrompt");
 
-  if (!input) {
-    console.warn("[index.js] txtAIPrompt not found");
-    return;
-  }
 
   const prompt = input.value.trim();
 
@@ -30,22 +24,92 @@ document.addEventListener("click", async function (e) {
 });
 
 
-
-// //SIDE BAR AI
-// // Opens the filter side bar
-// document.querySelector("#btn-AI-search").addEventListener("click", () => {
-//     document.getElementById("mySidenav").style.width = "375px";
-//     overlay.classList.add("active");
-// });
-
-// // Closes the filter side bar
-// function closeNav() {
-//   document.getElementById("mySidenav").style.width = "0";
-//   overlay.classList.remove("active");
+// // geolocation to get current county
+// // window.onload = getLocation() txtDisplayCounty
+// window.onload = () =>{
+//   if(sessionStorage.getItem("currCounty") == null)
+//     {getLocation()}
 // }
 
-// // Closes the filter when the overlay is clicked
-// overlay.addEventListener("click", () => {
-//   document.getElementById("mySidenav").style.width = "0";
-//   overlay.classList.remove("active");
-// })
+// function getLocation() {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(getCounty, getCountyManually)
+//   } else {
+//     console.log("Geolocation is not supported by this browser.")
+//   }
+// }
+
+// async function getCounty(position) {
+
+//   console.log("Latitude: " + position.coords.latitude +
+//   "Longitude: " + position.coords.longitude)
+
+//   const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
+//   const geoData = await response.json()
+//   strCountyName = geoData.localityInfo.administrative[3].name
+//   const dictUCCounties = {
+//     'bledsoe': 'Bledsoe County',
+//     'cannon': 'Cannon County',
+//     'clay': 'Clay County',
+//     'cumberland': 'Cumberland County',
+//     'dekalb': 'DeKalb County',
+//     'fentress': 'Fentress County',
+//     'jackson': 'Jackson County',
+//     'overton': 'Overton County',
+//     'pickett': 'Pickett County',
+//     'putnam': 'Putnam County',
+//     'smith': 'Smith County',
+//     'van_buren': 'Van Buren County',
+//     'warren': 'Warren County',
+//     'white': 'White County'
+//   }
+
+//   Object.keys(dictUCCounties).forEach(key => {
+//     if (strCountyName == dictUCCounties[key])
+//       strCountyName = key
+//   })
+
+//   sessionStorage.setItem("currCounty", strCountyName)
+
+  
+//   // return strCountyName
+//   console.log(strCountyName)
+// }
+
+// function getCountyManually() {
+//   Swal.fire({
+//     title: 'What county are you in?',
+//     text: 'To better let us service you, tell us what county you live in.',
+//     icon: 'info',
+//     input: 'select',
+//     inputOptions: {
+//       'bledsoe': 'Bledsoe County',
+//       'cannon': 'Cannon County',
+//       'clay': 'Clay County',
+//       'cumberland': 'Cumberland County',
+//       'dekalb': 'DeKalb County',
+//       'fentress': 'Fentress County',
+//       'jackson': 'Jackson County',
+//       'overton': 'Overton County',
+//       'pickett': 'Pickett County',
+//       'putnam': 'Putnam County',
+//       'smith': 'Smith County',
+//       'van_buren': 'Van Buren County',
+//       'warren': 'Warren County',
+//       'white': 'White County'
+//     },
+//     inputPlaceholder: 'Select a county',
+//     showCancelButton: true
+//   }).then((result) => {
+//     if (result.isConfirmed) {
+//       console.log(result.value); // this will be 'value1', 'value2', etc
+//       sessionStorage.setItem("currCounty", result.value)
+//     }
+//   });
+// }
+
+
+
+
+// //SIDE BAR AI
+
