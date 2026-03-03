@@ -326,7 +326,7 @@ nav {
     height:80vh;
   } 
 }
-/* .page-tag {    boostrap: p-4 dark_navy d-flex align-items-center justify-content-start
+/* .page-tag {
     margin-bottom: -12px;
     padding-left: 75px;
     padding-block: 35px;
@@ -966,62 +966,14 @@ footer img {
     background-image: url('/Gov-AI/assets/images/error-rodney-truitt-jf.png');
 }
 
-.body-text{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-}
-.body-link{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    text-decoration: underline;
-}
+
 .body-light{
     font-style:light;
 }
 .overlay-dark {
   background-color: rgba(black, 0.4);
 }
-.snap-title{
-    text-align: start;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: normal;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
-    padding-top: 10px;
-}
-.needHelp-title{
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    text-align: start;
-    line-height: normal;
-    text-decoration-line: none;
-    padding-top: 10px;
-}
+
 .snap-tab{
     margin: 10px;
     color: var(--dark-navy);
