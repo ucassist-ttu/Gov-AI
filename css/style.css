@@ -67,11 +67,11 @@
   .ai-results .page{
     padding-inline: 50px;
   }
-  .ai-results .img-text-lg{
+  /* .ai-results .img-text-lg{ changed to display-3 + fw-bolder
     line-height: 2.2rem;
     padding-top: 30px;
     font-weight: bold;
-  }
+  } */
   .ai-company-name{
     font-style: normal;
     font-weight: 200;
@@ -140,7 +140,7 @@
     border: 3px solid var(--gold);
     border-radius: 30px;
     box-shadow: 0 4px 10px 0 var(--dark-navy);
-    width: 85%;
+    width: 80%;
     padding-inline: 15px;
     flex-direction: row;
     justify-content: center; /* aligns  horizontally*/
@@ -317,9 +317,9 @@ nav {
 }
 
 .header-image-big {
-  width: 105vw;
+  /* width: 100vw;
   height:65vh;
-  position: relative;
+  position: relative; */
   background-size: cover;
   background-position: center;
   display: inline-flex;
@@ -334,7 +334,7 @@ nav {
     height:80vh;
   } 
 }
-.page-tag {
+/* .page-tag {
     margin-bottom: -12px;
     padding-left: 75px;
     padding-block: 35px;
@@ -342,7 +342,7 @@ nav {
     display: flex; 
     justify-content: center;
     align-items: center;
-}
+} */
 
 .img-text-lg {
   color: var(--light-grey);
@@ -974,65 +974,14 @@ footer img {
     background-image: url('/Gov-AI/assets/images/error-rodney-truitt-jf.png');
 }
 
-.body-text{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-}
-.body-link{
-    display: flex;
-    justify-content:flex-start;
-    text-align: center;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    text-decoration: underline;
-}
+
 .body-light{
     font-style:light;
-}
-.darker-image{
-  background-color:rgba(0,0,0,0.8)
 }
 .overlay-dark {
   background-color: rgba(black, 0.4);
 }
-.snap-title{
-    text-align: start;
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    line-height: normal;
-    text-decoration-style: solid;
-    text-decoration-skip-ink: auto;
-    text-decoration-thickness: auto;
-    text-underline-offset: auto;
-    text-underline-position: from-font;
-    padding-top: 10px;
-}
-.needHelp-title{
-    color: var(--dark-navy);
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    text-align: start;
-    line-height: normal;
-    text-decoration-line: none;
-    padding-top: 10px;
-}
+
 .snap-tab{
     margin: 10px;
     color: var(--dark-navy);
@@ -1621,10 +1570,6 @@ p{
       z-index: 5;
     }
   }
-  .header-crisis-wrapper {
-    overflow: visible; /* ensure crisis is not clipped by the wrapper */
-    
-  }
   /* put crisis behind header and behind the rounded corners */
   .header-crisis-wrapper .crisis {
     position: absolute;
@@ -1656,13 +1601,11 @@ p{
   .index-crisis { /* OG min 320 overlap onto images*/
     position: absolute;
     right: 0rem;
-    top: 0rem;
     z-index: 10;
-    background-color: var(--gold);
+    background-color: var(--red);
     width: 20vw;
     min-width: 180px;
-    height: 7vh;
-    min-height: 5vh;
+    min-height: 7vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1982,3 +1925,7 @@ p{
   margin-left: 20px;
   margin-right: 20px;
 } */
+
+.landing-img-height{
+  height:65vh;
+}
