@@ -1,0 +1,17 @@
+{
+    "name":"Upper Cumberland Assist",
+    "short_name": "UCAssist",
+    "theme_color": "#1E222E",
+    "background": "#1E222E",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "https://ucassist-ttu.github.io/Gov-AI/",
+    "description":"UCAssist is a web application designed to connect individuals in need with local government services in the Upper Cumberland region. The app provides an easy-to-use interface for users to search for and access various government services, such as healthcare, housing, and social support. By leveraging AI technology, UCAssist aims to streamline the process of finding and utilizing government resources, ultimately improving the quality of life for residents in the Upper Cumberland area.",
+    "orientation": "any",
+    // "icons": [
+    //     {
+    //         "src" : 
+    //         "sizes" :
+    //     }
+    // ]
+}
