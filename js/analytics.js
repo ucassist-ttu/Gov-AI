@@ -4,7 +4,11 @@ let pageStartTime = Date.now();
 function sendTimeOnPage() {
   const timeSpent = Math.round((Date.now() - pageStartTime) / 1000); // seconds
   
-  console.log("Time spent on page:", timeSpent, "seconds");
+  console.log("Time spent on page", {
+    page: window.location.pathname,
+    timestamp: new Date().toISOString(),
+    timeSpent: timeSpent
+  });
 
   // Send to backend
 }
@@ -37,7 +41,12 @@ localStorage.setItem("analytics_session", JSON.stringify(session));
 // Detect bounce when leaving
 window.addEventListener("beforeunload", () => {
   if (session.pageViews === 1) {
-    console.log("Bounce detected");
+    
+    console.log("Bounce detected", {
+      page: window.location.pathname,
+      timestamp: new Date().toISOString(),
+      pageViews: session.pageViews
+    });
 
     // Send to backend
   }
@@ -52,18 +61,21 @@ window.addEventListener("scroll", () => {
   const scrollPercent = Math.round((scrollTop / docHeight) * 100);
   if (scrollPercent > maxScroll) {
     maxScroll = scrollPercent;
-    console.log("New max scroll depth:", maxScroll + "%");
   }
 });
 
 window.addEventListener("beforeunload", () => {
-  console.log("Max scroll depth:", maxScroll + "%");
+  
+  console.log("Max scroll depth", {
+    page: window.location.pathname,
+    timestamp: new Date().toISOString(),
+    maxScroll: maxScroll
+  });
 
   // Send to backend
 });
 
 // Rage Clicks
-
 let clickHistory = [];
 
 function getElementSelector(el) {
@@ -86,15 +98,6 @@ document.addEventListener("click", (e) => {
   const now = Date.now();
   const target = e.target;
 
-  // Click Target
-  console.log("Clicked element:", {
-    tag: target.tagName,
-    id: target.id || null,
-    classes: [...target.classList],
-    text: target.innerText?.trim() || null,
-    selector: getElementSelector(target)
-  });
-
   // Click Detection
   clickHistory.push({
     time: now,
@@ -115,7 +118,12 @@ document.addEventListener("click", (e) => {
     );
 
     if (distance < 50) {
-      console.log("Rage click detected on:", getElementSelector(target));
+      console.log("Rage click detected", {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        target: getElementSelector(target)
+      });
+      // Send to backend
       clickHistory = [];
     }
   }
