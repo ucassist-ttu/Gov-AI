@@ -2,6 +2,8 @@
 
 $services_table = 'tblServices';
 $service_requests_table = 'tblServiceRequests';
+$coordinates_table = 'tblCoordinates';
+$county_coordinates_table = 'tblCountyCoordinates';
 
 $columns = ['ID', 'OrganizationName', 'OrganizationDescription', 'Website', 'MinorityOwned',
     'FaithBasedProvider', 'NonProfitProvider', 'ProviderLogo', 'NameOfService',
@@ -67,6 +69,28 @@ function get_service(int $id): array
 
     $statement = $pdo->prepare(query: "SELECT * FROM {$services_table} WHERE ID = :ID");
     $statement->execute(params: ['ID' => $id]);
+
+    return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
+}
+
+function get_service_coordinates(int $service_id): array
+{
+    global $coordinates_table;
+    $pdo = db();
+
+    $statement = $pdo->prepare(query: "SELECT latitude, longitude FROM {$coordinates_table} WHERE id = :id LIMIT 1");
+    $statement->execute(params: [':id' => $service_id]);
+
+    return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
+}
+
+function get_county_coordinates(string $county): array
+{
+    global $county_coordinates_table;
+    $pdo = db();
+
+    $statement = $pdo->prepare(query: "SELECT latitude, longitude FROM {$county_coordinates_table} WHERE county = :county LIMIT 1");
+    $statement->execute(params: [':county' => $county]);
 
     return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
 }

@@ -8,7 +8,22 @@
 - `POST /recommendations`
   - Body: JSON `{"service_id": <int>}`.
   - Response: Array of 3 service objects Gemini considers most similar to the given service.
+- `GET /services`
+  - Response: Array of all services.
+- `GET /service?id=<int>`
+  - Query param: `id` (service ID).
   - Response: Single service for that id.
+- `GET /service-coordinates?service_id=<int>`
+  - Query param: `service_id` (service ID).
+  - Response: JSON object with `latitude` and `longitude` for that service from `tblCoordinates`.
+- `GET /county-coordinates?county=<string>`
+  - Query param: `county` (county name).
+  - Response: JSON object with `latitude` and `longitude` for that county from `tblCountyCoordinates`.
+- `GET /monthly-views`
+  - Response: Aggregated monthly view counts by service.
+- `GET /add-monthly-view?service_id=<int>`
+  - Query param: `service_id` (service ID).
+  - Response: JSON `{"success": true}` when insert succeeds.
 - `POST /request-create-service`
   - Body: JSON `{"service": {<service fields>}}`.
   - Behavior: Creates a pending service request, emails approval links, and returns an empty response body.
