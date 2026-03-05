@@ -39,6 +39,16 @@ try {
         exit;
     }
 
+    if ($path === '/service-coordinates' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo json_encode(value: get_service_coordinates(service_id: (int) $_GET['service_id']));
+        exit;
+    }
+
+    if ($path === '/county-coordinates' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        echo json_encode(value: get_county_coordinates(county: (string) $_GET['county']));
+        exit;
+    }
+
     if ($path === '/create-service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
         header(header: 'Content-Type: text/html; charset=UTF-8');
         $service_request = get_service_request(id: $_GET['uuid']);
