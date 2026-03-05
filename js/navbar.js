@@ -1,4 +1,5 @@
 const dictUpperCumbCounties = {
+    'all': ['All Counties', 'null'],
     'bledsoe': 'Bledsoe County',
     'cannon': 'Cannon County',
     'clay': 'Clay County',
@@ -86,11 +87,12 @@ async function getCountyName(position) {
 
 function getCountyManually() {
   Swal.fire({
-    title: 'What county are you in?',
-    text: 'To better let us service you, tell us what county you live in.',
+    title: 'To better let us service you, tell us what county you live in.',
+    text: '(Optional)',
     icon: 'info',
     input: 'select',
     inputOptions: {
+      'all': 'All Counties',
       'bledsoe': 'Bledsoe County',
       'cannon': 'Cannon County',
       'clay': 'Clay County',
