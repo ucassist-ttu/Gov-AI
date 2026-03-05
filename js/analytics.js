@@ -128,3 +128,11 @@ document.addEventListener("click", (e) => {
     }
   }
 });
+
+// General Page Engagement (pages visited)
+window.addEventListener("load", () => {
+  console.log("Page Visited", {
+    page: window.location.pathname,
+    timestamp: new Date().toISOString()
+  })
+});
