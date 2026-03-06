@@ -58,9 +58,39 @@ async function getServices() {
     // Create the filters
     createCountyFilter(uniqueCounties)
     createServiceFilter(uniqueServiceTypes)
+    checkUserLocation () 
 }
 
 getServices()
+
+function usersLocation () {
+    return strStoredCounty = sessionStorage.getItem("currCounty")
+}
+
+function checkUserLocation () {
+    let currCounty = usersLocation()
+    if (currCounty.length == 0) {
+        console.log("home")
+    }
+    else if (currCounty == "van_buren") {
+        let currCountyVan = "van-buren"
+        console.log(currCountyVan)
+        const checkbox = document.querySelector(`#${currCountyVan}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+    else {
+        const checkbox = document.querySelector(`#${currCounty}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
 
 function soundex(s) {
   const a = s.toLowerCase().split('');
@@ -394,6 +424,10 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     arrFilteredServices = [];
 
     // Loop through all services
+    searchQuery = document.querySelector("#txtSearchServices").value
+    if (searchQuery == '') {
+        arrCurrentServices = arrAllServices
+    }
     arrCurrentServices.forEach(service => {
         let strCounties = getCountyList(service)
         let strTags = getTagList(service)
