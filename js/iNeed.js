@@ -1,120 +1,151 @@
-// import { getTagList } from './services.js';
-
-// const db = ['Food', 'Personal Essentials', 'Housing', 'Transportation', 'Health Care', 'Mental Health', 'Crisis Services', 'Family', 'Education', 'Employment', 'Community', 'Legal', 'Senior Services', 'Veteran Services'];
-// let arrKeywords = []
-// let arrAllServices = []
-
-// function createPills(){
-//   // console.log(uniqueKeywords)
-// }
-
-/* <div id="pillINeedFood" class="pill pt-2">
-  <i class="bi bi-person white gold rounded-start"></i>
-  <span class="pill-text bigger fw-light light_grey clr-dark-navy rounded-end">
-      Food
-  </span>
-</div> */
-
-
-// async function getKeywords() {
-//     try{
-//         //Get the list of services from api
-//         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
-//         let servData = await servResponse.json()
-//         arrAllServices = servData
-
-//         // Get all of the keywords
-//         servData.forEach(element => {
-//             let strTagList = getTagList(element)
-
-//             console.log("element: ", element)        // see the raw data
-//             console.log("strTagList: ", strTagList) 
-
-//             strTagList.forEach(tag => {
-//                 arrKeywords.push(tag)
-//             });
-//         });
-//     } catch (objError){
-//         console.log('Error fetching objData', objError)
-//     }
-
-//     // Remove all duplicate instances from each array
-//     let uniqueKeywords = [...new Set(arrKeywords.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-    
-//     console.log("uniqueKeywords: " + uniqueKeywords)
-// }
-
-// getKeywords()
-
 // button handlers
 console.log("[iNeed] Delegated listener active");
-const defaultCardImage = "/Gov-AI/assets/images/placeholder-img.webp";
 
-function getLogoSrc(rawLogo) {
-  if (typeof rawLogo !== "string") return "";
+const keywordCategories = {
+  crisis: "Abuse and Crisis Intervention",
+  housing: "Housing and Home Repair",
+  basicNeeds: "Food and Basic Needs",
+  financial: "Financial and Legal Assistance",
+  transportation: "Transportation",
+  youth: "Children and Youth",
+  seniors: "Seniors, Aging, and Veterans",
+  health: "Health and Wellness",
+  education: "Education and Workforce Development",
+  business: "Small Business and Entrepreneur",
+  tourism: "Tourism and Events",
+  community: "Economic and Community Development"
+};
+const keywords = ["food", "housing", "transportation", "childcare"];
 
-  const logo = rawLogo.trim();
-  if (!logo) return "";
-
-  const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
-
-  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
-    return logo;
-  }
-  if (logo.startsWith("www.")) {
-    return `https://${logo}`;
-  }
-  return `/Gov-AI/assets/images/${logo}`;
-}
+window.addEventListener('load', (event) => {
+  const container = document.getElementById("divINeedPills");
+  keywords.forEach((keyword) => {
+    const pill = createPills(keyword);
+    container.innerHTML += pill;
+  });
+})
 
 document.addEventListener("click", (e) => {
 
-  const foodBtn = e.target.closest("#pillINeedFood");
-  const housingBtn = e.target.closest("#pillINeedHousing");
-  const transportBtn = e.target.closest("#pillINeedTransportation");
-  const childcareBtn = e.target.closest("#pillINeedChildCare");
+  // const foodBtn = e.target.closest("#pillINeedFood");
+  // const housingBtn = e.target.closest("#pillINeedHousing");
+  // const transportBtn = e.target.closest("#pillINeedTransportation");
+  // const childcareBtn = e.target.closest("#pillINeedChildCare");
 
-  if (foodBtn) {
-    loadCardsByCategory("food");
-  }
+  // if (foodBtn) {
+  //   loadCardsByCategory("food");
+  // }
 
-  if (housingBtn) {
-    loadCardsByCategory("housing");
-  }
+  // if (housingBtn) {
+  //   loadCardsByCategory("housing");
+  // }
 
-  if (transportBtn) {
-    loadCardsByCategory("transportation");
-  }
+  // if (transportBtn) {
+  //   loadCardsByCategory("transportation");
+  // }
 
-  if (childcareBtn) {
-    loadCardsByCategory("childcare");
-  }
+  // if (childcareBtn) {
+  //   loadCardsByCategory("childcare");
+  // }
 
 });
 
 
 // cherry picked ID for each pill
-function getIdsByCategory(category) {
-  switch (category) {
-    case "food":
-      return [42,57,93,428];
+// function getIdsByCategory(category) {
+//   switch (category) {
+//     case "food":
+//       return [42,57,93,428];
 
-    case "housing":
-      return [53, 65, 91, 176 ];
+//     case "housing":
+//       return [53, 65, 91, 176 ];
 
-    case "transportation":
-      return [482,491,492,493];
+//     case "transportation":
+//       return [482,491,492,493];
 
-    case "childcare":
-      return [359, 372, 389]; 
+//     case "childcare":
+//       return [359, 372, 389]; 
 
-    default:
-      console.warn("[iNeed] Unknown category:", category);
-      return [];
-  }
+//     default:
+//       console.warn("[iNeed] Unknown category:", category);
+//       return [];
+//   }
+// }
+
+// populating the cards after pressing a pill
+// `<div class="card" style="width: 18rem;"> good
+//   <img src="..." class="card-img-top" alt="...">
+//   <div class="card-body">
+//     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+//   </div>
+// </div>`
+
+function createPills(keyword){
+  
+  // const keywords = ["food", "housing", "transportation", "childcare"];
+  // console.log(service)
+
+  const col = document.createElement("div");
+  col.className = "col-1 card m-2";
+  col.style.width = "18rem";
+
+  const img = document.createElement("img");
+  img.className = "card-img-top p-3";
+  img.alt = keyword;
+  img.style.maxHeight = "150px";
+  img.style.objectFit = "contain";
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+
+  const content = document.createElement("p");
+  content.className = "card-text";
+  content.textContent = keyword;
+
+  col.appendChild(img);
+  body.appendChild(content);
+  col.appendChild(body);
+  return col.outerHTML;
 }
 
+async function getUniqueKeywords(){
+  try{
+    //call database api to get all services
+    let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+    let servData = await servResponse.json()
+
+    // loops through eveyr service in the database
+    servData.forEach((element) => {
+      let strTagList = element.Keywords;
+
+      // convert string JSON → array
+      if (typeof strTagList === "string") {
+        strTagList = JSON.parse(strTagList);
+      }
+
+      // safety check
+      if (!Array.isArray(strTagList)) return;
+
+      // loops through all thw keywords in the database
+      strTagList.forEach((tag) => {
+        let strKeywords = tag.Keywords
+        if (typeof strKeywords === 'string') {
+            strKeywords = JSON.parse(strKeywords);
+        }
+        // Returns keywords seperated by a ','
+        if (Array.isArray(strKeywords)) {
+          return strKeywords;
+        }
+      });
+
+      let uniqueServiceTypes = [...new Set(strTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+      console.log("[iNeed] Unique service types:", uniqueServiceTypes);
+
+    });
+  } catch (objError){
+    console.error("[iNeed] Error fetching services:", objError);
+  }
+}
 
 // gets information from the database api for the cards
 async function loadCardsByCategory(category) {
@@ -148,7 +179,6 @@ async function loadCardsByCategory(category) {
     services.forEach(service => {
       container.appendChild(createCard(service, category));
     });
-
   } catch (error) {
     console.error("[iNeed] Error loading services:", error);
     container.innerHTML = "<p>Please try again later.</p>";
@@ -184,22 +214,6 @@ export function getCounties(service){
   return innerHTML;
 }
 
-
-// function inCounty(service){
-//   let strCurrCounty = sessionStorage.getItem("currCounty");
-//   let arrServiceCounties = service.CountiesAvailable;
-
-//   let isServiced = arrServiceCounties.search(new RegExp(strCurrCounty, "i"))
-
-//   if (isServiced != -1){ // if not found, returns -1
-//     let html = `<p class="card-text text-danger">Available in ${strCurrCounty}!</p>`;
-//     return html;
-//   } else {
-//     return "";
-//   } 
-// }
-
-
 // creates the html for the cards
 function createCard(service, category) {
   const col = document.createElement("div");
@@ -227,7 +241,7 @@ function createCard(service, category) {
   // FALLBACK IMAGE
   if (!imgPhoto || imgPhoto === "N/A") {
     // console.log("[iNeed] Using fallback image for category:", category);
-
+    const imgPhoto = "/Gov-AI/assets/images/placeholder-img.webp";
     switch (category) {
       case "food":
         imgPhoto = "../../assets/images/iNeedFood.jpg";
@@ -281,3 +295,37 @@ function callServicePage (page_id) {
     fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
     window.location.href = `../../../html/pages/service.html?id=${page_id}`;
 }
+
+function getLogoSrc(rawLogo) {
+  if (typeof rawLogo !== "string") return "";
+
+  const logo = rawLogo.trim();
+  if (!logo) return "";
+
+  const lowered = logo.toLowerCase();
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
+
+  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+    return logo;
+  }
+  if (logo.startsWith("www.")) {
+    return `https://${logo}`;
+  }
+  return `/Gov-AI/assets/images/${logo}`;
+}
+
+
+
+// function inCounty(service){
+//   let strCurrCounty = sessionStorage.getItem("currCounty");
+//   let arrServiceCounties = service.CountiesAvailable;
+
+//   let isServiced = arrServiceCounties.search(new RegExp(strCurrCounty, "i"))
+
+//   if (isServiced != -1){ // if not found, returns -1
+//     let html = `<p class="card-text text-danger">Available in ${strCurrCounty}!</p>`;
+//     return html;
+//   } else {
+//     return "";
+//   } 
+// }
