@@ -87,13 +87,14 @@ function createPills(keyword){
 
   const col = document.createElement("div");
   col.className = "col-1 card m-2";
-  col.style.width = "18rem";
+  col.style.width = "16rem";
 
   const img = document.createElement("img");
   img.className = "card-img-top p-3";
   img.alt = keyword;
   img.style.maxHeight = "150px";
   img.style.objectFit = "contain";
+  img.src = getImgSrc(keyword);
 
   const body = document.createElement("div");
   body.className = "card-body";
@@ -145,6 +146,18 @@ async function getUniqueKeywords(){
   } catch (objError){
     console.error("[iNeed] Error fetching services:", objError);
   }
+}
+
+function getImgSrc(keyword) {
+  let basePath = "assets/images/iNeed/"
+  let imgSrcLookUp = {
+    "food": "iNeedFood.jpg", 
+    "housing": "INeedHousing.jpg", 
+    "transportation": "placeholder-img.webp", 
+    "childcare": "iNeedChildCare.jpg"
+  }
+
+  return basePath + imgSrcLookUp[keyword]
 }
 
 // gets information from the database api for the cards
