@@ -80,50 +80,61 @@ async function getServiceInformaion () {
         strDiv += `<div class="more_info">`
         strDiv += `<hr class="hr-gold">`
         strDiv += `<div class="row with-divider">`
-        strDiv+= `<div class="col-12 col-md-6">`
+        if (servData.TelephoneContact != 'N/A' || servData.EmailContact != 'N/A' || servData.ServiceAddress != 'N/A' || servData.Website != 'N/A') {
+            if (servData.HoursOfOperation != 'N/A') { 
+                strDiv+= `<div class="col-12 col-md-6">`
+            }
+            else {
+                strDiv+= `<div class="col-12">`
+            }
 
-        // Next steps section
-        strDiv += `<h3 class="mb-1"><b>Next Steps:</b></h3>`
+            // Next steps section
+            strDiv += `<h3 class="mb-1"><b>Next Steps:</b></h3>`
 
-        // Checks to see if service has a telephone contact
-        if (servData.TelephoneContact != 'N/A'){
-            let telNumber = servData.TelephoneContact.replace(/[^\d+]/g, '');
-            strDiv += `<p><i class="bi bi-telephone"></i> <a href="tel:${telNumber}"><u>${servData.TelephoneContact}</u></a></p>`
+            // Checks to see if service has a telephone contact
+            if (servData.TelephoneContact != 'N/A'){
+                let telNumber = servData.TelephoneContact.replace(/[^\d+]/g, '');
+                strDiv += `<p><i class="bi bi-telephone"></i> <a href="tel:${telNumber}"><u>${servData.TelephoneContact}</u></a></p>`
+            }
+
+            // Checks to see if service has an email contact
+            if (servData.EmailContact != 'N/A'){
+                strDiv += `<p><i class="bi bi-envelope"></i> <a href="mailto:${servData.EmailContact}"><u>${servData.EmailContact}</u></a></p>`
+            }
+
+            // Checks to see if a service has an address
+            if (servData.ServiceAddress != 'N/A') {
+                let straddress = `${servData.ServiceAddress} ${servData.CityStateZip}`.trim();
+                let strencoded = encodeURIComponent(straddress);
+                strDiv += `<p><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`;
+            }
+
+            //Checks to see if a service has a website
+            if (servData.Website != 'N/A') {
+                let strurl = servData.Website.trim();
+
+                let strhref = strurl.startsWith("http://") || strurl.startsWith("https://")
+                    ? strurl
+                    : "https://" + strurl;
+
+                strDiv += `<p><i class="bi bi-display"></i> <a href="${strhref}" target="_blank"><u>${strurl}</u></a></p>`;
+            }
+            strDiv += `</div>`
         }
-
-        // Checks to see if service has an email contact
-        if (servData.EmailContact != 'N/A'){
-            strDiv += `<p><i class="bi bi-envelope"></i> <a href="mailto:${servData.EmailContact}"><u>${servData.EmailContact}</u></a></p>`
-        }
-
-        // Checks to see if a service has an address
-        if (servData.ServiceAddress != 'N/A') {
-            let straddress = `${servData.ServiceAddress} ${servData.CityStateZip}`.trim();
-            let strencoded = encodeURIComponent(straddress);
-            strDiv += `<p><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`;
-        }
-
-        //Checks to see if a service has a website
-        if (servData.Website != 'N/A') {
-            let strurl = servData.Website.trim();
-
-            let strhref = strurl.startsWith("http://") || strurl.startsWith("https://")
-                ? strurl
-                : "https://" + strurl;
-
-            strDiv += `<p><i class="bi bi-display"></i> <a href="${strhref}" target="_blank"><u>${strurl}</u></a></p>`;
-        }
-        strDiv += `</div>`
 
         // Hours of operation section
         if (servData.HoursOfOperation != 'N/A') {
+            if (servData.TelephoneContact != 'N/A' || servData.EmailContact != 'N/A' || servData.ServiceAddress != 'N/A' || servData.Website != 'N/A') {
+                // Veritcal divider
+                strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
+                strDiv += `<div class="service-divider-vertical"></div>`
+                strDiv += `</div>`
+                strDiv +=`<div class="col-12 col-md-5">`
+            }
+            else {
+                strDiv +=`<div class="col-12">`
+            }
 
-            // Veritcal divider
-            strDiv +=`<div class="col-0 col-md-1 d-none d-md-flex justify-content-center align-items-center">`
-            strDiv += `<div class="service-divider-vertical"></div>`
-            strDiv += `</div>`
-
-            strDiv +=`<div class="col-12 col-md-5">`
             strDiv += `<h3 class="mb-1"><b>Hours:</b></h3>`
             strDiv += `<p>${servData.HoursOfOperation}</p>`
             strDiv += `</div>`
