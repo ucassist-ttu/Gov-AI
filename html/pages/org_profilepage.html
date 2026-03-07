@@ -7,7 +7,7 @@
     <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -15,6 +15,13 @@
 
 <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
             <h1 class="fw-bold white">Find Services</h1>
+                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
+                <ol class="breadcrumb mb-0">
+                   <li class="breadcrumb-item"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                   <li class="text-white mx-2">›</li> 
+                   <li class="breadcrumb-item active text-white" aria-current="page">Find Services</li>
+                </ol>
+                </nav>             
         </div>
 
   <main class="small-container mx-auto">
@@ -90,10 +97,11 @@
 
   <div id="footer"></div>
     <script>
-        fetch('../partials/footer.html')
+
+        fetch('/partials/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('../partials/navbar.html')
+        fetch('/partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
