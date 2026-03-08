@@ -464,3 +464,87 @@ async function getServiceName(serviceId, serviceCount, order) {
         console.log('Error fetching objData', objError)
     }
 }
+
+const analytics = JSON.parse(localStorage.getItem("analytics"));
+
+function groupByPage(events, field){
+
+  const result = {};
+
+  events.forEach(e => {
+
+    if(!result[e.page]){
+      result[e.page] = [];
+    }
+
+    if(field){
+      result[e.page].push(e[field]);
+    } else {
+      result[e.page].push(1);
+    }
+
+  });
+
+  return result;
+
+}
+
+function average(arr){
+  return arr.reduce((a,b)=>a+b,0)/arr.length;
+}
+
+const visits = groupByPage(analytics.pageVisits);
+const time = groupByPage(analytics.timeOnPage,"timeSpent");
+const scroll = groupByPage(analytics.scrollDepth,"maxScroll");
+const bounces = groupByPage(analytics.bounces);
+
+const pages = Object.keys(visits);
+
+const visitCounts = pages.map(p => visits[p].length);
+const avgTime = pages.map(p => average(time[p] || [0]));
+const avgScroll = pages.map(p => average(scroll[p] || [0]));
+const bounceCounts = pages.map(p => (bounces[p] || []).length);
+
+new Chart(document.getElementById("visitsChart"),{
+  type:"bar",
+  data:{
+    labels:pages,
+    datasets:[{
+      label:"Page Visits",
+      data:visitCounts
+    }]
+  }
+});
+
+ new Chart(document.getElementById("timeChart"),{
+  type:"bar",
+  data:{
+    labels:pages,
+    datasets:[{
+      label:"Avg Time on Page (seconds)",
+      data:avgTime
+    }]
+  }
+});
+
+new Chart(document.getElementById("scrollChart"),{
+  type:"line",
+  data:{
+    labels:pages,
+    datasets:[{
+      label:"Avg Scroll %",
+      data:avgScroll
+    }]
+  }
+});
+
+new Chart(document.getElementById("bounceChart"),{
+  type:"pie",
+  data:{
+    labels:pages,
+    datasets:[{
+      label:"Bounces",
+      data:bounceCounts
+    }]
+  }
+});

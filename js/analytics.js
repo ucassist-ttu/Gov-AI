@@ -136,3 +136,62 @@ window.addEventListener("load", () => {
     timestamp: new Date().toISOString()
   })
 });
+
+
+function generateMockAnalytics() {
+
+const pages = ["/", "/services", "/map", "/contact", "/about"];
+
+const analytics = {
+  pageVisits: [],
+  timeOnPage: [],
+  scrollDepth: [],
+  bounces: [],
+  rageClicks: []
+};
+
+for (let i = 0; i < 150; i++) {
+
+  const page = pages[Math.floor(Math.random()*pages.length)];
+  const timestamp = new Date(Date.now() - Math.random()*604800000).toISOString(); // last 7 days
+
+  analytics.pageVisits.push({
+    page,
+    timestamp
+  });
+
+  analytics.timeOnPage.push({
+    page,
+    timestamp,
+    timeSpent: Math.floor(Math.random()*120)
+  });
+
+  analytics.scrollDepth.push({
+    page,
+    timestamp,
+    maxScroll: Math.floor(Math.random()*100)
+  });
+
+  if(Math.random() < 0.25){
+    analytics.bounces.push({
+      page,
+      timestamp,
+      pageViews: 1
+    });
+  }
+
+  if(Math.random() < 0.15){
+    analytics.rageClicks.push({
+      page,
+      timestamp,
+      target: "#map"
+    });
+  }
+
+}
+
+localStorage.setItem("analytics", JSON.stringify(analytics));
+
+}
+
+generateMockAnalytics();
