@@ -140,7 +140,7 @@ window.addEventListener("load", () => {
 
 function generateMockAnalytics() {
 
-const pages = ["/", "/services", "/map", "/contact", "/about"];
+const pages = ["/", "/services", "/snap", "/crisis", "/error"];
 
 const analytics = {
   pageVisits: [],
