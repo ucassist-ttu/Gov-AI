@@ -103,32 +103,6 @@ var multiIcon = L.divIcon({
          </div>`,
 });
 
-let geocodes = [
-    [0, 0],
-    [0, 0],
-    [35.827681355002, -86.07134699457],
-    [36.547651968101, -85.505520538483],
-    [35.956764219755, -85.033665113544],
-    [35.952943369458, -85.812418421547],
-    [36.429184470621, -84.931849164913],
-    [36.345632604262, -85.655101296157],
-    [36.519872318029, -86.032668534536],
-    [36.386137921089, -85.316098564752],
-    [36.57176665495, -85.133106940821],
-    [36.136266648459, -85.487149440991],
-    [36.257682753761, -85.970036766074],
-    [0, 0],
-    [35.681457381861, -85.774497703979],
-    [35.95809112807, -85.476827422985],
-    [36.150279379955, -85.500613844216],
-    [36.150279379955, -85.500613844216],
-    [35.82417488809, -86.077090362361],
-    [36.555323520735, -85.507341135937],
-    [36.337613277505, -85.656995943053],
-    [36.52118398789, -86.024959860955],
-    [36.383444392403, -85.324775225413]
-]
-
 // -- Class connects a service to its marker --
 class MapItem {
   constructor({ service, marker }) {
@@ -176,13 +150,33 @@ function loadServices() {
   loadAndMaskCounties()
 }
 
+async function getGeoCode(service, iconTag) {
+    try{
+        let servID = service.ID
+        let servResponse = await fetch(`https://ucassist.duckdns.org/service-coordinates?service_id=${servID}`)
+        let servData = await servResponse.json()
+        let strLat = servData.latitude
+        let strLon = servData.longitude
+        if (strLat != null && strLon != null) {
+          let address = [strLat, strLon]
+          markService (service, iconTag, address)
+        }
+    }
+    catch (objError) {
+        console.log("Error fetching service data")
+    }
+}
+
 // marks the services per county
-function markServices (iconTag) {
-  geocodes.forEach(address => {
-    let marker = L.marker(address, { icon: iconTag }).addTo(map)
-    marker.bindPopup("You clicked me!")
-    arrMarkers.push(marker)
-  })
+function markService (service, iconTag, address, ) {
+  let marker = L.marker(address, { icon: iconTag }).addTo(map)
+  let strTags = getTagList(service)
+  let straddress = `${service.ServiceAddress} ${service.CityStateZip}`.trim();
+  let strencoded = encodeURIComponent(straddress);          
+  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}</u></a></h3>
+    <p class="mt-3 mb-1">Tags: ${strTags.join(', ')}</p>
+    <p class="mt-3 mb-1><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`)
+  arrMarkers.push(marker)
 }
 
 // Removes all markers 
@@ -500,71 +494,69 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
   let selectedLegal = getSelectedCheckboxes('divOuterLegal')
   let selectedSeniorServices = getSelectedCheckboxes('divOuterSeniorServices')
   let selectedVeteranServices = getSelectedCheckboxes('divOuterVeteranServices')
-  let arrMatches
   let iconToUse
   
   removeAllMarkers ()
   allServices.forEach(service => {
-    arrMatches = []
+    let arrMatches = []
     let strTags = getTagList(service)
     let lowKey = (strTags).map(c => c.toLowerCase());
-    if (selectedFood.length > 0 &&
-        selectedFood.some(item => lowKey.includes(item))) {
+    if (selectedFood.length > 0 && selectedFood.some(item => lowKey.includes(item))) {
       arrMatches.push("food");
     }
-    else if (selectedPersonalEssentials.length > 0 &&
+    if (selectedPersonalEssentials.length > 0 &&
             selectedPersonalEssentials.some(item => lowKey.includes(item))) {
       arrMatches.push("personal essentials");
     }
-    else if (selectedHousing.length > 0 &&
+    if (selectedHousing.length > 0 &&
             selectedHousing.some(item => lowKey.includes(item))) {
       arrMatches.push("housing");
     }
-    else if (selectedTransportation.length > 0 &&
+    if (selectedTransportation.length > 0 &&
             selectedTransportation.some(item => lowKey.includes(item))) {
       arrMatches.push("transportation");
     }
-    else if (selectedHealthCare.length > 0 &&
+    if (selectedHealthCare.length > 0 &&
             selectedHealthCare.some(item => lowKey.includes(item))) {
       arrMatches.push("health care");
     }
-    else if (selectedCrisisServices.length > 0 &&
+    if (selectedCrisisServices.length > 0 &&
             selectedCrisisServices.some(item => lowKey.includes(item))) {
       arrMatches.push("crisis services");
     }
-    else if (selectedFamily.length > 0 &&
+    if (selectedFamily.length > 0 &&
             selectedFamily.some(item => lowKey.includes(item))) {
       arrMatches.push("family");
     }
-    else if (selectedEducation.length > 0 &&
+    if (selectedEducation.length > 0 &&
             selectedEducation.some(item => lowKey.includes(item))) {
       arrMatches.push("education");
     }
-    else if (selectedEmployment.length > 0 &&
+    if (selectedEmployment.length > 0 &&
             selectedEmployment.some(item => lowKey.includes(item))) {
       arrMatches.push("employment");
     }
-    else if (selectedCommunity.length > 0 &&
+    if (selectedCommunity.length > 0 &&
             selectedCommunity.some(item => lowKey.includes(item))) {
       arrMatches.push("community");
     }
-    else if (selectedLegal.length > 0 &&
+    if (selectedLegal.length > 0 &&
             selectedLegal.some(item => lowKey.includes(item))) {
       arrMatches.push("legal");
     }
-    else if (selectedSeniorServices.length > 0 &&
+    if (selectedSeniorServices.length > 0 &&
             selectedSeniorServices.some(item => lowKey.includes(item))) {
       arrMatches.push("senior services");
     }
-    else if (selectedVeteranServices.length > 0 &&
+    if (selectedVeteranServices.length > 0 &&
             selectedVeteranServices.some(item => lowKey.includes(item))) {
       arrMatches.push("veteran services");
     }
     iconToUse = getMatchIcon(arrMatches);
+    if (arrMatches.length > 0) {
+      getGeoCode(service, iconToUse)
+    }
   })
-  if (arrMatches.length > 0) {
-    markServices(iconToUse);
-  }
 })
 
 // Returns an array of all selected check boxed from a container
@@ -630,7 +622,7 @@ function getMatchIcon (arrMatches) {
       icon = veteranServicesIcon
     }
   }
-  if (arrMarkers.length > 1) {
+  else {
     icon = multiIcon
   }
   return icon

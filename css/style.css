@@ -1795,3 +1795,10 @@ p{
 .landing-img-height{
   height:65vh;
 }
+
+.leaflet-popup-close-button {
+    font-size: 28px !important;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+}
