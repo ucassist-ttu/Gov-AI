@@ -127,9 +127,8 @@ try {
         exit;
     }
     if ($path === '/add-monthly-view' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-        $success = add_monthly_views(service_id: (int) $_GET['service_id']);
-
-        echo json_encode(value: ['success' => $success]);
+        $success = add_monthly_views((int) $_GET['service_id']);
+        echo json_encode(['success' => $success]);
         exit;
     }
 } catch (Exception $exception) {
