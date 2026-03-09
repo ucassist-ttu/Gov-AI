@@ -10,10 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function collectFormErrors(form) {
     let errors = [];
     const requiredFields = form.querySelectorAll('[required]');
-    
     requiredFields.forEach(field => {
       if (field.type === 'checkbox') return;
-      
       if (!field.checkValidity()) {
         errors.push(getFieldLabel(field));
       }
@@ -39,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     form.classList.add('was-validated');
-
     const errors = collectFormErrors(form);
-
     if (errors.length === 0) {
       swal("Success", "Service referral form submitted successfully!", "success");
       form.reset();

@@ -67,12 +67,60 @@
 :root { --crisis-visible-height: 48px; } /* how much of the crisis bar should show under the curve */
 
 /*Referral_form*/
+/* progress step*/
+.progress-steps {
+  width: 220px;
+  margin: 48px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+.progress-step {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 30px;
+  border-radius: 50%;
+  background-color: var(--gold-light);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.progress-step.active {
+  background-color: var(--gold);
+  color: white;
+}
+.progress-step:hover,
+.progress-step:focus-visible {
+  box-shadow: 0 0 6px var(--gold);
+  outline: none;
+}
+.progress-line {
+  flex-grow: 1;
+  max-width: 40px;
+  height: 3px;
+  background-color: var(--gold);
+  border-radius: 2px;
+  transition: background-color 0.3s;
+}
 .form-control {
   border-color: var(--dark-navy);
 }
 .form-control:focus {
   border-color: var(--gold);
   box-shadow: 0 4px 10px 0 var(--gold) ;
+}
+.custom-dark-border {
+  color: var(--gold) !important;
+  border-color: var(--dark-navy) !important;
+  border-width: 2px !important;
+  border-style: dashed !important;
 }
 .submit-btn {
   background-color: var(--dark-navy);
