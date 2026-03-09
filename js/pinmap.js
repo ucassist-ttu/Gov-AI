@@ -99,7 +99,7 @@ var veteranServicesIcon = L.divIcon({
 var multiIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-rainbow" style="font-size: 14px;"></i>
+            <i class="bi bi-boxes" style="font-size: 14px;"></i>
          </div>`,
 });
 
