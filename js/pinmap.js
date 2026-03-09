@@ -146,7 +146,6 @@ function loadServices() {
     noWrap: true,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
   }).addTo(map);
-
   loadAndMaskCounties()
 }
 
@@ -158,8 +157,10 @@ async function getGeoCode(service, iconTag) {
         let strLat = servData.latitude
         let strLon = servData.longitude
         if (strLat != null && strLon != null) {
-          let address = [strLat, strLon]
-          markService (service, iconTag, address)
+          if (strLon >= -86.2400 && strLon <= -84.6500) {
+            let address = [strLat, strLon]
+            markService (service, iconTag, address)
+          }
         }
     }
     catch (objError) {
@@ -173,9 +174,20 @@ function markService (service, iconTag, address, ) {
   let strTags = getTagList(service)
   let straddress = `${service.ServiceAddress} ${service.CityStateZip}`.trim();
   let strencoded = encodeURIComponent(straddress);          
-  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}</u></a></h3>
+  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
     <p class="mt-3 mb-1">Tags: ${strTags.join(', ')}</p>
-    <p class="mt-3 mb-1><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`)
+    <p class="mt-3 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`,
+  {
+  autoPan: true,
+  autoPanPadding: [50, 50],
+  keepInView: true
+  })
+  marker.on('click', function () {
+    map.setView(marker.getLatLng(), 13, {
+        animate: true
+    });
+    marker.openPopup();
+});
   arrMarkers.push(marker)
 }
 
@@ -275,7 +287,7 @@ async function loadAndMaskCounties() {
 
 function zoomToCounty(layer, feature) {
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
-  map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
+  map.fitBounds(layer.getBounds(), { padding: [10, 10], maxZoom: 14, animate: true })
 }
 
 // -- takes a service and returns an array of county names --
