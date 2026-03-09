@@ -5,6 +5,9 @@
 - `POST /prompt`
   - Body: JSON `{"user_input": "<text>"}`.
   - Response: Array of up to 3 service objects chosen by Gemini using the provided user input.
+- `POST /prompt-geolocation`
+  - Body: JSON `{"user_input": "<text>", "latitude": <float>, "longitude": <float>}`.
+  - Response: Array of up to 3 service objects chosen by Gemini using the provided user input plus each service's computed distance from the user location.
 - `POST /recommendations`
   - Body: JSON `{"service_id": <int>}`.
   - Response: Array of 3 service objects Gemini considers most similar to the given service.
@@ -58,7 +61,7 @@ All service bodies must include these fields (matching `tblServices` columns):
 
 These must be set in `backend/.env` and loaded at runtime:
 
-- `GOOGLE_API_KEY` (Gemini API key used by `/prompt` and `/recommendations`)
+- `GOOGLE_API_KEY` (Gemini API key used by `/prompt`, `/prompt-geolocation`, and `/recommendations`)
 - `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_FROM` (Mailgun credentials used to send request-approval emails)
 
 ## Running the server

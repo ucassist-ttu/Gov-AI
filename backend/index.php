@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/src/database/database.php';
 require_once __DIR__ . '/src/helpers/api.php';
+require_once __DIR__ . '/src/helpers/distance.php';
 require_once __DIR__ . '/src/helpers/email.php';
 require_once __DIR__ . '/src/helpers/gemini.php';
 require_once __DIR__ . '/src/helpers/loadenv.php';
@@ -18,6 +19,16 @@ try {
     if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         header(header: 'Content-Type: application/json');
         echo json_encode(value: get_services_from_user_input(user_input: request_body(key: 'user_input')));
+        exit;
+    }
+
+    if ($path === '/prompt-geolocation' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        header(header: 'Content-Type: application/json');
+        echo json_encode(value: get_services_from_user_input_with_geolocation(
+            user_input: request_body(key: 'user_input'),
+            latitude: (float) request_body(key: 'latitude'),
+            longitude: (float) request_body(key: 'longitude')
+        ));
         exit;
     }
 
