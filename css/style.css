@@ -1826,3 +1826,7 @@ p{
 .landing-img-height{
   height:65vh;
 }
+.iNeedHover:hover {
+  background-color: var(--light-grey);
+  color: var(--white)
+}

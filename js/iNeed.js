@@ -2,106 +2,93 @@
 console.log("[iNeed] Delegated listener active");
 
 const keywordCategories = {
-  crisis: "Abuse and Crisis Intervention",
-  housing: "Housing and Home Repair",
-  basicNeeds: "Food and Basic Needs",
-  financial: "Financial and Legal Assistance",
-  transportation: "Transportation",
-  youth: "Children and Youth",
-  seniors: "Seniors, Aging, and Veterans",
-  health: "Health and Wellness",
-  education: "Education and Workforce Development",
-  business: "Small Business and Entrepreneur",
-  tourism: "Tourism and Events",
-  community: "Economic and Community Development"
+  "Crisis": "Abuse and Crisis Intervention",
+  "Housing": "Housing and Home Repair",
+  "BasicNeeds": "Food and Basic Needs",
+  "Financial": "Financial and Legal Assistance",
+  "Transportation": "Transportation",
+  "Youth": "Children and Youth",
+  "Seniors": "Seniors, Aging, and Veterans",
+  "Health": "Health and Wellness",
+  "Education": "Education and Workforce Development",
+  "Business": "Small Business and Entrepreneur",
+  "Tourism": "Tourism and Events",
+  "Community": "Economic and Community Development"
 };
-const keywords = ["food", "housing", "transportation", "childcare"];
+let sortedIDCategories = {
+  "Crisis": [],
+  "Housing": [],
+  "BasicNeeds": [],
+  "Financial": [],
+  "Transportation": [],
+  "Youth": [],
+  "Seniors": [],
+  "Health": [],
+  "Education": [],
+  "Business": [],
+  "Tourism": [],
+  "Community": []
+}
 
 window.addEventListener('load', (event) => {
+  getUniqueKeywords()
+
   const container = document.getElementById("divINeedPills");
-  keywords.forEach((keyword) => {
-    const pill = createPills(keyword);
+  Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
+    const pill = createPills(keyword, fullword);
     container.innerHTML += pill;
-  });
+  })
 })
 
 document.addEventListener("click", (e) => {
 
-  // const foodBtn = e.target.closest("#pillINeedFood");
-  // const housingBtn = e.target.closest("#pillINeedHousing");
-  // const transportBtn = e.target.closest("#pillINeedTransportation");
-  // const childcareBtn = e.target.closest("#pillINeedChildCare");
 
-  // if (foodBtn) {
-  //   loadCardsByCategory("food");
-  // }
+  const foodBtn = e.target.closest("#pillINeedFood");
+  const housingBtn = e.target.closest("#pillINeedHousing");
+  const transportBtn = e.target.closest("#pillINeedTransportation");
+  const childcareBtn = e.target.closest("#pillINeedChildCare");
 
-  // if (housingBtn) {
-  //   loadCardsByCategory("housing");
-  // }
+  if (foodBtn) {
+    loadCardsByCategory("food");
+  }
 
-  // if (transportBtn) {
-  //   loadCardsByCategory("transportation");
-  // }
+  if (housingBtn) {
+    loadCardsByCategory("housing");
+  }
 
-  // if (childcareBtn) {
-  //   loadCardsByCategory("childcare");
-  // }
+  if (transportBtn) {
+    loadCardsByCategory("transportation");
+  }
+
+  if (childcareBtn) {
+    loadCardsByCategory("childcare");
+  }
 
 });
 
 
-// cherry picked ID for each pill
-// function getIdsByCategory(category) {
-//   switch (category) {
-//     case "food":
-//       return [42,57,93,428];
-
-//     case "housing":
-//       return [53, 65, 91, 176 ];
-
-//     case "transportation":
-//       return [482,491,492,493];
-
-//     case "childcare":
-//       return [359, 372, 389]; 
-
-//     default:
-//       console.warn("[iNeed] Unknown category:", category);
-//       return [];
-//   }
-// }
-
 // populating the cards after pressing a pill
-// `<div class="card" style="width: 18rem;"> good
-//   <img src="..." class="card-img-top" alt="...">
-//   <div class="card-body">
-//     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-//   </div>
-// </div>`
-
-function createPills(keyword){
-  
-  // const keywords = ["food", "housing", "transportation", "childcare"];
-  // console.log(service)
-
+function createPills(keyword, fullword){
+  console.log("[iNeed] Creating pill for keyword:", keyword, "with full word:", fullword);
   const col = document.createElement("div");
-  col.className = "col-1 card m-2";
-  col.style.width = "16rem";
+  col.className = "card mb-3 m-2 iNeedHover";
+  col.style.width = "14rem";
+  col.id = `pillINeed${keyword}`;
+  col.onclick = () => loadCardsByCategory(keyword);
 
   const img = document.createElement("img");
-  img.className = "card-img-top p-3";
-  img.alt = keyword;
-  img.style.maxHeight = "150px";
-  img.style.objectFit = "contain";
+  img.className = "card-img-top";
+  img.alt = fullword;
+  img.style.maxHeight = "100%";
+  img.style.objectFit = "cover";
   img.src = getImgSrc(keyword);
 
   const body = document.createElement("div");
   body.className = "card-body";
 
-  const content = document.createElement("p");
-  content.className = "card-text";
-  content.textContent = keyword;
+  const content = document.createElement("h5");
+  content.className = "card-title";
+  content.textContent = fullword;
 
   col.appendChild(img);
   body.appendChild(content);
@@ -114,21 +101,22 @@ async function getUniqueKeywords(){
     //call database api to get all services
     let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
     let servData = await servResponse.json()
+    let arrTagList = []
 
-    // loops through eveyr service in the database
+    // loops through every service in the database
     servData.forEach((element) => {
-      let strTagList = element.Keywords;
+      let arrTagList = arrTagList + element.Keywords;
 
       // convert string JSON → array
-      if (typeof strTagList === "string") {
-        strTagList = JSON.parse(strTagList);
+      if (typeof arrTagList === "string") {
+        arrTagList = JSON.parse(arrTagList);
       }
 
       // safety check
-      if (!Array.isArray(strTagList)) return;
+      if (!Array.isArray(arrTagList)) return;
 
-      // loops through all thw keywords in the database
-      strTagList.forEach((tag) => {
+      // loops through all thw keywords in  the database
+      arrTagList.forEach((tag) => {
         let strKeywords = tag.Keywords
         if (typeof strKeywords === 'string') {
             strKeywords = JSON.parse(strKeywords);
@@ -146,56 +134,81 @@ async function getUniqueKeywords(){
   } catch (objError){
     console.error("[iNeed] Error fetching services:", objError);
   }
+
 }
 
 function getImgSrc(keyword) {
   let basePath = "assets/images/iNeed/"
   let imgSrcLookUp = {
-    "food": "iNeedFood.jpg", 
-    "housing": "INeedHousing.jpg", 
-    "transportation": "placeholder-img.webp", 
-    "childcare": "iNeedChildCare.jpg"
+    "Crisis": " ",
+    "Housing": "INeedHousing.jpg", 
+    "BasicNeeds": "iNeedFood.jpg", 
+    "Financial": "",
+    "Transportation": "placeholder-img.webp", 
+    "Youth": "iNeedChildCare.jpg",
+    "Seniors": "Seniors, Aging, and Veterans",
+    "Health": "Health and Wellness",
+    "Education": "Education and Workforce Development",
+    "Business": "Small Business and Entrepreneur",
+    "Tourism": "Tourism and Events",
+    "Community": "Economic and Community Development"
   }
 
   return basePath + imgSrcLookUp[keyword]
 }
 
 // gets information from the database api for the cards
-async function loadCardsByCategory(category) {
-  const ids = getIdsByCategory(category);
+async function loadCardsByCategory(category) { //getKeywordIDs
+  //call dns
+  let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+  let servData = await servResponse.json()
 
-  const container = document.getElementById("divINeedContent");
+  // loops through every service in the database
+  servData.forEach((element) => {
+    currKeywords = element.Keywords
+    // sortedIDCategories = ;
+  })
 
-  if (!container) {
-    return;
-  }
+  //filter by keywords
 
-  container.innerHTML = "<p>Loading services...</p>";
+  //call here
 
-  console.log("[iNeed] Loading category:", category, "with IDs:", ids);
 
-  try {
 
-    const requests = ids.map(id => {
-      const url = `https://ucassist.duckdns.org/service?id=${id}`;
+  // const ids = getIdsByCategory(category);
 
-      return fetch(url)
-        .then(res => {
-          return res.json();
-        });
-    });
+  // const container = document.getElementById("divINeedContent");
 
-    const services = await Promise.all(requests);
+  // if (!container) {
+  //   return;
+  // }
 
-    container.innerHTML = "";
+  // container.innerHTML = "<p>Loading services...</p>";
 
-    services.forEach(service => {
-      container.appendChild(createCard(service, category));
-    });
-  } catch (error) {
-    console.error("[iNeed] Error loading services:", error);
-    container.innerHTML = "<p>Please try again later.</p>";
-  }
+  // console.log("[iNeed] Loading category:", category, "with IDs:", ids);
+
+  // try {
+
+  //   const requests = ids.map(id => {
+  //     const url = `https://ucassist.duckdns.org/service?id=${id}`;
+
+  //     return fetch(url)
+  //       .then(res => {
+  //         return res.json();
+  //       });
+  //   });
+
+  //   const services = await Promise.all(requests);
+
+  //   container.innerHTML = "";
+
+  //   services.forEach(service => {
+  //     container.appendChild(createCard(service, category));
+  //   });
+  // } catch (error) {
+  //   console.error("[iNeed] Error loading services:", error);
+  //   container.innerHTML = "<p>Please try again later.</p>";
+  // }
 }
 
 
@@ -341,4 +354,25 @@ function getLogoSrc(rawLogo) {
 //   } else {
 //     return "";
 //   } 
+// }
+
+// cherry picked ID for each pill
+// function getIdsByCategory(category) {
+//   switch (category) {
+//     case "food":
+//       return [42,57,93,428];
+
+//     case "housing":
+//       return [53, 65, 91, 176 ];
+
+//     case "transportation":
+//       return [482,491,492,493];
+
+//     case "childcare":
+//       return [359, 372, 389]; 
+
+//     default:
+//       console.warn("[iNeed] Unknown category:", category);
+//       return [];
+//   }
 // }
