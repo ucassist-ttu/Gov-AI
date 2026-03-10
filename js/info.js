@@ -340,20 +340,6 @@ document.getElementById('btnExport').addEventListener('click', () => {
     window.print();
 });
 
-document.getElementById('btnExportPie').addEventListener('click', () => {
-    document.getElementById('info-bar').classList.add('info-hidden');
-    document.getElementById('info-board').classList.add('info-hidden');
-    window.print();
-    document.getElementById('info-bar').classList.remove('info-hidden');
-    document.getElementById('info-board').classList.remove('info-hidden');
-});
-
-document.getElementById('btnExportBar').addEventListener('click', () => {
-    document.getElementById('info-pie').classList.add('info-hidden');
-    window.print();
-    document.getElementById('info-pie').classList.remove('info-hidden');
-});
-
 // returns the specific color that matches the specific service type
 function createSpecificColorList (arrServiceTypes) {
     let arrColor = []
@@ -547,4 +533,18 @@ new Chart(document.getElementById("bounceChart"),{
       data:bounceCounts
     }]
   }
+});
+
+// whenever a collapse panel is shown/hidden, swap info-print and info-hidden classes
+// using Bootstrap 5 collapse events
+const collapses = document.querySelectorAll('#accordion .collapse');
+collapses.forEach(el => {
+  el.addEventListener('show.bs.collapse', () => {
+    el.parentElement.classList.add('info-print');
+    el.parentElement.classList.remove('info-hidden');
+  });
+  el.addEventListener('hide.bs.collapse', () => {
+    el.parentElement.classList.remove('info-print');
+    el.parentElement.classList.add('info-hidden');
+  });
 });

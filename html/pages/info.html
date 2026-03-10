@@ -11,96 +11,159 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="white info-page">
-    <div id="navbar"></div>
+    <div id="navbar" class="info-hidden"></div>
     <main>
         <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
             <h1 class="fw-bold white">Site Statistics</h1>
         </div>
-        <div class="mt-3" style="display: justify-space-around">
-            <div id="info-pie">
-                <div class="chart-container">
-                    <canvas id="pieChart"></canvas>
+
+        <div id="accordion" class="mt-5">
+
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Services Viewed Per County
+                        </button>
+                    </h2>
                 </div>
-            </div>
-            <div class="text-end me-5">
-                <button id="btnExportPie" class="btn btn-secondary mt-3 mb-3">Export Pie Chart</button>
-            </div>
-            <div class="col-lg-6 col-12 stats-select mt-3 mb-0">
-                <label for="countyFilter" aria-label="Filter by county:">Filter by county:</label>
-                <select id="countyFilter" class="form-select">
-                    <option value="all">All Counties</option>
-                </select>
-            </div>
-            <div class="row info-print" id="info-board" style="padding: 0px 30px 0px 30px;">
-                <div class="col col-12 col-lg-6" style="text-align: center;">
-                    <h3 class="mt-3">Most used services</h3>
-                    <hr class="hr-blue m-4 mt-2" />
-                    <div id="divMostViewed" class="m-4" style="text-align: start;">
-                        <ul id="listMostViewed">
-                            <li id="top1"></li>
-                            <li id="top2"></li>
-                            <li id="top3"></li>
-                            <li id="top4"></li>
-                            <li id="top5"></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="d-lg-none col-12">
-                    <hr class="hr-gold" />
-                </div>
-                <div class="col col-md-12 col-lg-6" style="text-align: center;">
-                    <h3 class="mt-3">Least used services</h3>
-                    <hr class="hr-blue m-4 mt-2" />
-                    <div id="divLeastViewed" class="m-3" style="text-align: start;">
-                        <ul id="listLeastViewed">
-                            <li id="bottom1"></li>
-                            <li id="bottom2"></li>
-                            <li id="bottom3"></li>
-                            <li id="bottom4"></li>
-                            <li id="bottom5"></li>
-                        </ul>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body col-12 col-md-6 mx-auto">
+                        <canvas id="pieChart"></canvas>
                     </div>
                 </div>
             </div>
-            <div class="chart-container" id="info-bar">
-                <canvas id="barChart"></canvas>
+
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Service Type Viewed
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="col-lg-6 col-12 stats-select mt-3 mb-0">
+                            <label for="countyFilter" aria-label="Filter by county:">Filter by county:</label>
+                            <select id="countyFilter" class="form-select">
+                                <option value="all">All Counties</option>
+                            </select>
+                        </div>
+                        <div class="row" id="info-board" style="padding: 0px 30px 0px 30px;">
+                            <div class="col col-12 col-lg-6" style="text-align: center;">
+                                <h3 class="mt-3">Most used services</h3>
+                                <hr class="hr-blue m-4 mt-2" />
+                                <div id="divMostViewed" class="m-4" style="text-align: start;">
+                                    <ul id="listMostViewed">
+                                        <li id="top1"></li>
+                                        <li id="top2"></li>
+                                        <li id="top3"></li>
+                                        <li id="top4"></li>
+                                        <li id="top5"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="d-lg-none col-12">
+                                <hr class="hr-gold" />
+                            </div>
+                            <div class="col col-md-12 col-lg-6" style="text-align: center;">
+                                <h3 class="mt-3">Least used services</h3>
+                                <hr class="hr-blue m-4 mt-2" />
+                                <div id="divLeastViewed" class="m-3" style="text-align: start;">
+                                    <ul id="listLeastViewed">
+                                        <li id="bottom1"></li>
+                                        <li id="bottom2"></li>
+                                        <li id="bottom3"></li>
+                                        <li id="bottom4"></li>
+                                        <li id="bottom5"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="info-bar">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                        <div class="col-lg-6 col-12 stats-select mt-2 mb-0">
+                            <label for="chartFilter" aria-label="Show services:">Show services:</label>
+                            <select id="chartFilter" class="form-select">
+                                <option value="top10">Top 10</option>
+                                <option value="all">All Services</option>
+                            </select>
+                        </div>    
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6 col-12 stats-select mt-2 mb-5">
-                <label for="chartFilter" aria-label="Show services:">Show services:</label>
-                <select id="chartFilter" class="form-select">
-                    <option value="top10">Top 10</option>
-                    <option value="all">All Services</option>
-                </select>
+
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            Page Visits
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="text-end me-5">
-                <button id="btnExportBar" class="btn btn-secondary mt-3 mb-3">Export Bar Chart</button>
+
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingFour">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                            Average Time On Page
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                    <div class="card-body">
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
             </div>
 
-            <div class="container">
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingFive">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                            Average Scroll Depth
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">      
+                        <canvas id="scrollChart"></canvas>        
+                    </div>
+                </div>
+            </div>
 
-                <h3>Page Visits</h3>
-                <canvas id="visitsChart"></canvas>
-
-                <h3>Average Time on Page</h3>
-                <canvas id="timeChart"></canvas>
-
-                <h3>Average Scroll Depth</h3>
-                <canvas id="scrollChart"></canvas>
-
-                <h3>Bounce Rate by Page</h3>
-                <canvas id="bounceChart"></canvas>
-
+            <div class="card mb-3 mx-0 mx-md-5 info-hidden">
+                <div class="card-header" id="headingSix">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                            Bounce Rate
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body col-12 col-md-6 mx-auto">
+                        <canvas id="bounceChart"></canvas>    
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        <div class="text-end me-5">
-            <button id="btnExport" class="btn btn-secondary mt-3 mb-3">Export Data</button>
+        <div class="text-end me-5 mb-3 info-hidden">
+            <button id="btnExport" class="btn btn-secondary mt-3">Print Expanded Charts</button>
         </div>
 
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" class="info-hidden"></div>
 
     <script>
         fetch('../../partials/footer.html')
