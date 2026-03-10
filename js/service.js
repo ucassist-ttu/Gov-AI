@@ -35,9 +35,7 @@ async function getServiceInformaion () {
         //Get the list of services from api
         let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
         let servData = await servResponse.json()
-        let servClicks = await fetch(`https://ucassist.duckdns.org/monthly-views?service_id=${serviceId}`)
-        let numClicks = await servClicks.json()
-        console.log(numClicks)
+
         let strTagList = getTagList(servData)
         let strCounties = getCountyList(servData)
         let strDiv = ``
@@ -261,6 +259,9 @@ function printRecomendedServices () {
     // document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
     //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
     // });
+<<<<<<< HEAD
+}
+=======
 }
 
 const stars = document.querySelectorAll('.star');
@@ -290,3 +291,4 @@ stars.forEach(star => {
     ratingValue.value = this.getAttribute('data-value');
   });
 });
+>>>>>>> be6d08db634170ab4968c957ddd64c3c688c54ca

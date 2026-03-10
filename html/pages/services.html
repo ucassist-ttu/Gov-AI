@@ -14,8 +14,16 @@
     <div id="navbar"></div>
     <main>
         <div id="overlay"></div>
-        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
-            <h1 class="fw-bold white">Find Services</h1>
+        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative">
+            <h1 class="fw-bold white">Find Services</h1>               
+             <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
+                <ol class="breadcrumb mb-0">
+                   <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                   <li class="text-white mx-2 fs-6">›</li>                 
+                   <li class="breadcrumb-item active text-white fs-6" aria-current="page">Find Services</li>
+                </ol>
+                </nav> 
+
         </div>
         <div id="mySidenav" class="sidenav">
             <h3>Filter & Sort</h3>
@@ -32,6 +40,17 @@
                     <div id="divMoreCounties" style="display:none">
                     </div>
                     <button id="btnShowMoreCounties" class="btn btn-link"></button>
+                </div>
+                <div class="stickytitle">
+                    <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
+                    <hr />
+                </div>
+                <div id="divOuterOrgName" class="form-check outer-layer" style="display: none;">
+                    <div id="divOrgName" class="form-check">
+                    </div>
+                    <div id="divMoreOrgNames" style="display:none">
+                    </div>
+                    <button id="btnShowMoreOrgNames" class="btn btn-link"></button>
                 </div>
                 <div class="stickytitle">
                     <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
