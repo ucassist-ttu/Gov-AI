@@ -69,9 +69,8 @@ document.addEventListener("click", (e) => {
 
 // populating the cards after pressing a pill
 function createPills(keyword, fullword){
-  console.log("[iNeed] Creating pill for keyword:", keyword, "with full word:", fullword);
   const col = document.createElement("div");
-  col.className = "card mb-3 m-2 iNeedHover";
+  col.className = "card col-12 mb-3 m-2 iNeedHover";
   col.style.width = "14rem";
   col.id = `pillINeed${keyword}`;
   col.onclick = () => loadCardsByCategory(keyword);
@@ -83,7 +82,6 @@ function createPills(keyword, fullword){
   img.style.objectFit = "cover";
   // img.src = getImgSrc(keyword);
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
-  console.log("[iNeed] Image source for keyword:", keyword, "is:", img.src);
 
   const body = document.createElement("div");
   body.className = "card-body";
@@ -105,34 +103,39 @@ async function getUniqueKeywords(){
     let servData = await servResponse.json()
     let arrTagList = []
 
-    // loops through every service in the database
-    servData.forEach((element) => {
-      let arrTagList = arrTagList + element.Keywords;
+    console.log("here 1")
 
-      // convert string JSON → array
-      if (typeof arrTagList === "string") {
-        arrTagList = JSON.parse(arrTagList);
-      }
+    // loops through every service in the database for keywords list
+    servData.forEach((element) => {
+      let currKeywords = element.Keywords
+      currKeywords = currKeywords.replace(/["'\[\]]/g, '').split(",").map(keyword => keyword.trim());
+
+      console.log("here 2")
+      arrTagList = arrTagList.concat(currKeywords);
 
       // safety check
       if (!Array.isArray(arrTagList)) return;
 
-      // loops through all thw keywords in  the database
-      arrTagList.forEach((tag) => {
-        let strKeywords = tag.Keywords
+    });
+    console.log(arrTagList)
+
+    // loops through all the keywords in the database
+    arrTagList.forEach((tag) => {
+        let strKeywords = tag
+        console.log("Type of keywords: " + typeof strKeywords)
+        strKeywords = service.Keywords
         if (typeof strKeywords === 'string') {
             strKeywords = JSON.parse(strKeywords);
         }
         // Returns keywords seperated by a ','
         if (Array.isArray(strKeywords)) {
-          return strKeywords;
-        }
+            return strKeywords;
+    }
       });
 
-      let uniqueServiceTypes = [...new Set(strTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+      let uniqueServiceTypes = [...new Set(arrTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
       console.log("[iNeed] Unique service types:", uniqueServiceTypes);
 
-    });
   } catch (objError){
     console.error("[iNeed] Error fetching services:", objError);
   }
