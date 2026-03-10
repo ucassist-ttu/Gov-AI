@@ -283,31 +283,31 @@ function createCard(service, category) {
   }
 
   // FALLBACK IMAGE
-  if (!imgPhoto || imgPhoto === "N/A") {
-    // console.log("[iNeed] Using fallback image for category:", category);
-    let imgPhoto = "/assets/images/placeholder-img.webp";
-    switch (category) {
-      case "food":
-        imgPhoto = "/assets/images/iNeedFood.jpg";
-        break;
+  // if (!imgPhoto || imgPhoto === "N/A") {
+  //   // console.log("[iNeed] Using fallback image for category:", category);
+  //   let imgPhoto = "assets/images/iNeed/placeholder-img.webp";
+  //   // switch (category) {
+    //   case "food":
+    //     imgPhoto = "/assets/images/iNeedFood.jpg";
+    //     break;
 
-      case "housing":
-        imgPhoto = "/assets/images/iNeedHousing.jpg";
-        break;
+    //   case "housing":
+    //     imgPhoto = "/assets/images/iNeedHousing.jpg";
+    //     break;
 
-      case "childcare":
-        imgPhoto = "assets/images/iNeedChildCare.jpg";
-        break;
+    //   case "childcare":
+    //     imgPhoto = "assets/images/iNeedChildCare.jpg";
+    //     break;
 
-      case "transportation":
-        imgPhoto = "assets/images/iNeedTransportation.jpg";
-        break;
+    //   case "transportation":
+    //     imgPhoto = "assets/images/iNeedTransportation.jpg";
+    //     break;
 
-      default:
-        imgPhoto = "assets/images/placeholder-img.webp";
-        break;
-    }
-  }
+    //   default:
+    //     imgPhoto = "assets/images/placeholder-img.webp";
+    //     break;
+    // }
+  // }
 
   // try {
   //   // inCounty(service)
@@ -316,6 +316,8 @@ function createCard(service, category) {
   // } catch (error) {
   //   console.error("[iNeed] Error getCounties:", error);
   // }
+
+  console.log(imgPhoto)
 
   col.innerHTML = `
     <img src="${imgPhoto}" class="card-img-top p-3" alt="${service.OrganizationName}" style="max-height: 150px; object-fit: contain;">
@@ -348,7 +350,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.webp`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
