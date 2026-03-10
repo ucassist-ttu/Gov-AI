@@ -1,52 +1,109 @@
-// 2/10 meeting - resize and recenter map when opening side bar
-// option to filter based on category
-
-import {getCounties} from "../js/iNeed.js"
-
-// -- Global variables --
-
-const sidebarServiceState = {
-  mapItems: [],
-  currentPage: 0,
-  SERVICES_PER_PAGE: 5,
-  selectedCounty: null,
-  selectedCategories: [],
-  MAX_CATEGORIES: 6
-};
 let allServices = []
+var arrMarkers = []
 let countiesLayer = null;
-let categoryColors = ["Blue", "Red", "Green", "Yellow", "Purple", "Orange"]
 var map = null;
-
-// temporary geocode variable
-let geocodes = [
-    [0, 0],
-    [0, 0],
-    [35.827681355002, -86.07134699457],
-    [36.547651968101, -85.505520538483],
-    [35.956764219755, -85.033665113544],
-    [35.952943369458, -85.812418421547],
-    [36.429184470621, -84.931849164913],
-    [36.345632604262, -85.655101296157],
-    [36.519872318029, -86.032668534536],
-    [36.386137921089, -85.316098564752],
-    [36.57176665495, -85.133106940821],
-    [36.136266648459, -85.487149440991],
-    [36.257682753761, -85.970036766074],
-    [0, 0],
-    [35.681457381861, -85.774497703979],
-    [35.95809112807, -85.476827422985],
-    [36.150279379955, -85.500613844216],
-    [36.150279379955, -85.500613844216],
-    [35.82417488809, -86.077090362361],
-    [36.555323520735, -85.507341135937],
-    [36.337613277505, -85.656995943053],
-    [36.52118398789, -86.024959860955],
-    [36.383444392403, -85.324775225413]
-]
+const countyLabelCoords = {
+  "Cannon": [35.8000, -86.1000],
+  "Clay": [36.5457, -85.5458],
+  "Cumberland": [35.9523, -85.1000],
+  "DeKalb": [35.9864, -85.8800],
+  "Fentress": [36.3698, -85.0000],
+  "Jackson": [36.3542, -85.7300],
+  "Macon": [36.5377, -86.0500],
+  "Overton": [36.3500, -85.3300],
+  "Pickett": [36.5593, -85.1757],
+  "Putnam": [36.1500, -85.5016],
+  "Smith": [36.2556, -85.9920],
+  "Van Buren": [35.7100, -85.4600],
+  "Warren": [35.6782, -85.8100],
+  "White": [35.9300, -85.4700]
+};
+var foodIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-cup-hot-fill" style="font-size: 14px; color: #880E4F;"></i>
+         </div>`,
+});
+var personalEssentialsIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-person-walking" style="font-size: 14px; color: #006064;"></i>
+         </div>`,
+});
+var housingIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-house-fill" style="font-size: 14px; color: #5D4037;"></i>
+         </div>`,
+});
+var transportationIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-taxi-front-fill" style="font-size: 14px; color: #E65100;"></i>
+         </div>`,
+});
+var healthCareIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-heart-pulse-fill" style="font-size: 14px; color: #C62828;"></i>
+         </div>`,
+});
+var crisisServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-tornado" style="font-size: 14px; color: #B71C1C;"></i>
+         </div>`,
+});
+var familyIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-people-fill" style="font-size: 14px; color: #1565C0;"></i>
+         </div>`,
+});
+var educationIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-mortarboard-fill" style="font-size: 14px; color: #0D47A1;"></i>
+         </div>`,
+});
+var employementIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-building-fill" style="font-size: 14px; color: #2E7D32;"></i>
+         </div>`,
+});
+var communityIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-globe" style="font-size: 14px; color: #004D40;"></i>
+         </div>`,
+});
+var legalIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-bank" style="font-size: 14px; color: #263238;"></i>
+         </div>`,
+});
+var seniorServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-tree-fill" style="font-size: 14px; color: #1B5E20;"></i>
+         </div>`,
+});
+var veteranServicesIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-star-fill" style="font-size: 14px; color: #4A148C;"></i>
+         </div>`,
+});
+var multiIcon = L.divIcon({
+    className: '',
+  html: `<div>
+            <i class="bi bi-boxes" style="font-size: 14px;"></i>
+         </div>`,
+});
 
 // -- Class connects a service to its marker --
-
 class MapItem {
   constructor({ service, marker }) {
     this.service = service
@@ -54,301 +111,92 @@ class MapItem {
   }
 }
 
+getServices()
 // -- Call to backend --
-
 async function getServices() {
     try{
         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
         let servData = await servResponse.json()
-        return servData
+        servData.forEach(service => {
+          if (service.ServiceAddress != 'N/A' || service.CityStateZip != 'N/A') {
+            allServices.push(service)
+          }
+        })
     }
     catch (objError) {
         console.log("Error fetching service data")
     }
 }
 
-// -- Handles marker clicks and matches them to a service --
-
-function markerClick(e) {
-    for (let i = 0; i < allServices.length; i++) {
-        if (e.target === allServices[i].marker) {
-            console.log(getCountyList(allServices[i].service))
-        }
-    }
-}
-
 // -- Pushes service data to global variables
-
 function loadServices() {
-
-  // -- HTML variables --
-  // recalculates map's size when resizing
-  document.getElementById("mapCollapse")
-    .addEventListener("shown.bs.collapse", () => {
-      map.invalidateSize();
-    });
-    
-  document.getElementById("mapCollapse")
-  .addEventListener("hidden.bs.collapse", () => {
-    map.invalidateSize();
-  });
-
-  // -- Map variables --
-
+  // Create the map
   map = L.map('map', {
     zoomSnap: 0,
     zoomDelta: 0.2
   }).setView([36.162838, -85.501640], 9);
   map.setMinZoom(9)
-  
+
+  map.createPane('labelsPane');
+  map.getPane('labelsPane').style.zIndex = 650;
+  map.getPane('labelsPane').style.pointerEvents = 'none';
+
+  // Add the map as the base layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     noWrap: true,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
   }).addTo(map);
-
-  getServices().then(servData => {
-    let i = 0;
-    if (!servData) return;
-    servData.forEach(element => {
-        try {
-            if (!geocodes[i]) return;
-            let marker = L.marker(geocodes[i]);
-            marker.on('click', markerClick);
-            const mapItem = new MapItem ({
-              service: element,
-              marker: marker
-            })
-
-            allServices.push(mapItem);
-            i++;
-        } catch (err) {
-            console.error("Error creating marker", err);
-        }
-    });
-    loadServicesIntoSidebar();
-  });
-
   loadAndMaskCounties()
 }
 
-// -- Takes a service and returns a structured div --
-
-function createServiceCard(mapItem) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "mb-3";
-
-  const card = document.createElement("div");
-  card.className = "card border-0 border-start border-4 shadow-sm mapServiceCard";
-
-  const body = document.createElement("div");
-  body.className = "card-body py-3 px-3";
-
-  const title = document.createElement("h3");
-  title.className = "card-title mb-3 fw-semibold";
-  title.textContent = mapItem.service.NameOfService;
-
-
-  // displaying counties available for each service (as pills above description)
-  const countiesHTML = getCounties(mapItem.service); //iNeed.js function that returns html string of county pills
-  const countiesDiv = document.createElement("div");
-  countiesDiv.innerHTML = countiesHTML;
-
-  const desc = document.createElement("p");
-  desc.className = "card-text mb-3 fs-5";
-  desc.textContent = mapItem.service.ServiceDescription;
-
-  const button = document.createElement("a");
-  button.className = "btn btn-outline-dark";
-  button.textContent = "View service";
-  button.href = "#";
-
-
-  body.appendChild(title);
-  body.appendChild(countiesDiv); // Insert counties pills above description
-  body.appendChild(desc);
-  body.appendChild(button);
-
-  card.appendChild(body);
-  wrapper.appendChild(card);
-
-  return wrapper;
-}
-
-// -- Calls createServiceCard for each service and implements pagination logic
-
-function renderSidebarServices() {
-  const sidebarBody = document.querySelector("#mapCollapse .card-body");
-  const collapseEl = document.getElementById("mapCollapse");
-
-  collapseEl.addEventListener("shown.bs.collapse", () => {
-    setTimeout(() => map.invalidateSize(), 350);
-  });
-
-  collapseEl.addEventListener("hidden.bs.collapse", () => {
-    setTimeout(() => map.invalidateSize(), 350);
-  });
-
-  if (!sidebarBody) return;
-
-  const { mapItems, currentPage, SERVICES_PER_PAGE } = sidebarServiceState;
-
-  sidebarBody.innerHTML = "";
-
-  /*
-  const filterControls = document.createElement("div")
-  filterControls.className = "d-flex justify-content-between align-items-center mt-3"
-
-  const btnEnterFilter = document.createElement("button");
-  btnEnterFilter.className = "btn btn-sm btn-outline-secondary";
-  btnEnterFilter.innerHTML = '<i class="bi bi-chevron-right"></i>';
-  btnEnterFilter.addEventListener('click', () => {
-    document.getElementById("mapCollapseFilter").classList.remove("d-none")
-    document.getElementById("mapCollapseServices").classList.add("d-none")
-  })
-  filterControls.appendChild(btnEnterFilter)
-  sidebarBody.appendChild(filterControls)
-  */
-
-  const start = currentPage * SERVICES_PER_PAGE;
-  const end = start + SERVICES_PER_PAGE;
-
-  allServices.forEach(mapItem => {
-    mapItem.marker.remove()
-  })
-
-  mapItems.forEach(mapItem => {
-    mapItem.marker.addTo(map)
-  })
-
-  // Render service cards
-  mapItems.slice(start, end).forEach(mapItem => {
-    const card = createServiceCard(mapItem);
-    sidebarBody.appendChild(card);
-  });
-
-  // Pagination controls
-  if (mapItems.length > SERVICES_PER_PAGE) {
-    const controls = document.createElement("div");
-    controls.className = "d-flex justify-content-between align-items-center mt-3";
-
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "btn btn-sm btn-outline-secondary";
-    prevBtn.innerHTML = '<i class="bi bi-chevron-left"></i>';
-    prevBtn.disabled = currentPage === 0;
-
-    const nextBtn = document.createElement("button");
-    nextBtn.className = "btn btn-sm btn-outline-secondary";
-    nextBtn.innerHTML = '<i class="bi bi-chevron-right"></i>';
-    nextBtn.disabled = end >= mapItems.length;
-
-    const pageIndicator = document.createElement("small");
-    pageIndicator.className = "text-muted";
-    pageIndicator.textContent = `Page ${currentPage + 1} of ${Math.ceil(
-      mapItems.length / SERVICES_PER_PAGE
-    )}`;
-
-    prevBtn.addEventListener("click", () => {
-      sidebarServiceState.currentPage--;
-      renderSidebarServices();
-    });
-
-    nextBtn.addEventListener("click", () => {
-      sidebarServiceState.currentPage++;
-      renderSidebarServices();
-    });
-
-    controls.appendChild(prevBtn);
-    controls.appendChild(pageIndicator);
-    controls.appendChild(nextBtn);
-
-    sidebarBody.appendChild(controls);
-  }
-
-  // Ensure sidebar is open
-  if (collapseEl && !collapseEl.classList.contains("show")) {
-    new bootstrap.Collapse(collapseEl, { show: true });
-  }
-
-  // renderCategoryFiltering(allServices)
-}
-
-// -- takes a list of mapItems and returns a div containing check boxes for each category contained within the services
-
-/*
-function renderCategoryFiltering(mapItems) {
-  categoryInputs = []
-  arrKeywords = []
-  for (let i = 0; i < mapItems.length; i++) {
-    let tags = getTagList(mapItems[i].service)
-    for (let j = 0; j < tags.length; j++) {
-      if (!arrKeywords.includes(tags[j])) {
-        arrKeywords.push(tags[j])
-      }
+async function getGeoCode(service, iconTag) {
+    try{
+        let servID = service.ID
+        let servResponse = await fetch(`https://ucassist.duckdns.org/service-coordinates?service_id=${servID}`)
+        let servData = await servResponse.json()
+        let strLat = servData.latitude
+        let strLon = servData.longitude
+        if (strLat != null && strLon != null) {
+          if (strLon >= -86.2400 && strLon <= -84.6500) {
+            let address = [strLat, strLon]
+            markService (service, iconTag, address)
+          }
+        }
     }
-  }
-
-  const divFilter = document.createElement("div")
-  divFilter.className = "w-100 h-100";
-
-  const controls = document.createElement("div");
-  controls.className = "d-flex justify-content-between align-items-center mt-3"
-
-  const btnExitFilter = document.createElement("button");
-  btnExitFilter.className = "btn btn-sm btn-outline-secondary";
-  btnExitFilter.innerHTML = '<i class="bi bi-chevron-left"></i>';
-  btnExitFilter.addEventListener('click', () => {
-    document.getElementById("mapCollapseFilter").classList.add("d-none")
-    document.getElementById("mapCollapseServices").classList.remove("d-none")
-  })
-  controls.appendChild(btnExitFilter)
-  divFilter.appendChild(controls)
-
-  for (let i = 0; i < arrKeywords.length; i++) {
-    let wrapper = document.createElement("div");
-    wrapper.className = "mb-3";
-
-    let chkDiv = document.createElement("div")
-    chkDiv.className = "form-check card shadow-sm";
-
-
-    let chkLabel = document.createElement("label")
-    chkLabel.className = "form-check-label"
-    chkLabel.htmlFor = `chk${arrKeywords[i]}`
-    chkLabel.innerHTML = `${arrKeywords[i]}`
-    chkDiv.appendChild(chkLabel)
-
-    let chkInput = document.createElement("input")
-    chkInput.className = "form-check-input"
-    chkInput.type = "checkbox"
-    chkInput.value = arrKeywords[i]
-    chkInput.id = `chk${arrKeywords[i]}`
-    chkInput.checked = true
-    
-    chkInput.addEventListener('click', () => {
-      loadServicesIntoSidebar()
-    })
-    
-    chkDiv.appendChild(chkInput)
-    categoryInputs.push(chkInput)
-
-    wrapper.appendChild(chkDiv)
-    divFilter.appendChild(wrapper)
-  }
-  document.getElementById("mapCollapseFilter").appendChild(divFilter)
+    catch (objError) {
+        console.log("Error fetching service data")
+    }
 }
-*/
 
-// -- Updates global variables before calling renderSidebarServices --
+// marks the services per county
+function markService (service, iconTag, address, ) {
+  let marker = L.marker(address, { icon: iconTag }).addTo(map)
+  let strTags = getTagList(service)
+  let straddress = `${service.ServiceAddress} ${service.CityStateZip}`.trim();
+  let strencoded = encodeURIComponent(straddress);          
+  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
+    <p class="mt-3 mb-1">Tags: ${strTags.join(', ')}</p>
+    <p class="mt-3 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`,
+  {
+  autoPan: true,
+  autoPanPadding: [50, 50],
+  keepInView: true
+  })
+  marker.on('click', function () {
+    map.setView(marker.getLatLng(), 13, {
+        animate: true
+    });
+    marker.openPopup();
+});
+  arrMarkers.push(marker)
+}
 
-function loadServicesIntoSidebar() {
-
-  sidebarServiceState.mapItems = allServices
-  sidebarServiceState.mapItems = filterServicesByCounties()
-  sidebarServiceState.mapItems = filterServicesByCategories()
-
-  sidebarServiceState.currentPage = 0;
-
-  renderSidebarServices();
+// Removes all markers 
+function removeAllMarkers() {
+  for (var i = 0; i < arrMarkers.length; i++) {
+    map.removeLayer(arrMarkers[i]);
+  }
+  arrMarkers = [];
 }
 
 // -- Loads boundary data from geojson file to draw county borders --
@@ -361,52 +209,25 @@ async function loadAndMaskCounties() {
   countiesLayer = L.geoJSON(jsonData, {
     style: {
       color: '#AA8A41',
-      weight: 2,
+      weight: 1.5,
       fillOpacity: 0.05
     },
+  
     // set event handlers for each county layer
     onEachFeature: (feature, layer) => {
+      const countyName = feature.properties.NAME;
+      const coords = countyLabelCoords[countyName];
 
-      /*
-      // County names using polylabel
-      if (feature.properties && feature.properties.NAME) {
-        let center;
-
-        const geom = feature.geometry;
-
-        if (geom.type === "Polygon") {
-          // polylabel expects [ [ [lng, lat], ... ] ] for a single polygon
-          center = window.polylabel([geom.coordinates[0]], 1.0);
-        } else if (geom.type === "MultiPolygon") {
-          // pick largest polygon by number of points
-          let largest = geom.coordinates[0];
-          geom.coordinates.forEach(polygon => {
-            if (polygon[0].length > largest[0].length) largest = polygon;
-          });
-          center = polylabel([largest], 1.0);
-        }
-
-        // Polylabel returns [lng, lat]
-        const latlng = L.latLng(center[1], center[0]);
-
-        // Bind tooltip at centroid
-        const tooltip = L.tooltip({
-          permanent: true,
-          direction: "center",
-          className: "bg-transparent border-0 shadow-none p-0",
+      if (coords) {
+        L.marker(coords, {
+          pane: 'labelsPane',
+          icon: L.divIcon({
+            className: 'county-label',
+            html: countyName
+          }),
           interactive: false
-        })
-        .setLatLng(latlng)
-        .setContent(`
-          <div class="fw-bold text-dark text-center small">
-            ${feature.properties.NAME}
-          </div>
-        `);
-
-        layer.bindTooltip(tooltip);
+        }).addTo(map);
       }
-        */
-
       layer.on({
         click: () => {
           zoomToCounty(layer, feature)
@@ -418,7 +239,7 @@ async function loadAndMaskCounties() {
         },
         // reset styling when mouse out
         mouseout: () => {
-          if (layer !== sidebarServiceState.selectedCounty) {
+          if (layer !== null) {
             countiesLayer.resetStyle(layer);
           }
           map.getContainer().style.cursor = '';
@@ -465,24 +286,8 @@ async function loadAndMaskCounties() {
 // -- Takes a leaflet layer object and fits the bounds of the map to the bounds of the layer --
 
 function zoomToCounty(layer, feature) {
-  if (sidebarServiceState.selectedCounty) countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
-  
-  if (sidebarServiceState.selectedCounty == layer) {
-    const bounds = countiesLayer.getBounds();
-    const isMobile = window.innerWidth < 768;
-    map.fitBounds(isMobile ? bounds.pad(5) : bounds.pad(0.2));
-    countiesLayer.resetStyle(sidebarServiceState.selectedCounty)
-    sidebarServiceState.selectedCounty = null;
-    loadServicesIntoSidebar()
-    return;
-  }
-
-  sidebarServiceState.selectedCounty = layer;
-
   // sets bounds of the map to a leaflet layer (county boundary) with 20 padding --
-  map.fitBounds(layer.getBounds(), { padding: [20, 20], maxZoom: 14, animate: true })
-  
-  loadServicesIntoSidebar()
+  map.fitBounds(layer.getBounds(), { padding: [10, 10], maxZoom: 14, animate: true })
 }
 
 // -- takes a service and returns an array of county names --
@@ -497,24 +302,283 @@ function getCountyList(service) {
   }
 }
 
-// -- takes an array of county strings and returns an array of the filtered global array --
-function filterServicesByCounties() {
-  let filteredServices = []
-  if (!sidebarServiceState.selectedCounty) return sidebarServiceState.mapItems
+window.addEventListener('load', (event) => {
+  fetch('partials/pinmap.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('pinmap').innerHTML = data;
 
-  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
-    let countiesAvailable = getCountyList(sidebarServiceState.mapItems[i].service) || []
-    countiesAvailable.forEach(county => {
-      if (sidebarServiceState.selectedCounty.feature.properties.NAME == county && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
-        filteredServices.push(sidebarServiceState.mapItems[i])
-      }
-    })
-  }
-  return filteredServices
+      loadServices();
+    });
+});
+
+// Opens the filter side bar
+document.querySelector("#btnFilterSort").addEventListener("click", () => {
+    document.getElementById("mySidenav").style.width = "375px";
+    overlay.classList.add("active");
+});
+
+// Closes the filter side bar
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  overlay.classList.remove("active");
 }
 
-// -- Gets the list of tags for each service --
-// from services.js
+// Closes the filter when the overlay is clicked
+overlay.addEventListener("click", () => {
+  closeNav()
+})
+
+// Closes the filter side bar when btnSeeResults is clicked
+document.querySelector("#btnSeeResults").addEventListener("click", () => {
+    closeNav()
+})
+
+// Closes the filter side bar when btnSeeResults is clicked
+document.querySelector("#btnTopClose").addEventListener("click", () => {
+    closeNav()
+})
+
+// Removes all filters when btnClearFilter is clicked
+document.querySelector("#btnClearFilter").addEventListener("click", () => {
+    let selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+    selectedCheckboxes.forEach(box => {
+        box.checked = false;
+    });
+    removeAllMarkers ()
+})
+
+// Opens the Food filter options
+document.querySelector("#btnFood").addEventListener("click", () => {
+    if (document.querySelector('#divOuterFood').style.display === 'none') {
+        document.querySelector('#divOuterFood').style.display = 'block';
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterFood').style.display = 'none';
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Personal Essentials filter options
+document.querySelector("#btnPersonalEssentials").addEventListener("click", () => {
+    if (document.querySelector('#divOuterPersonalEssentials').style.display === 'none') {
+        document.querySelector('#divOuterPersonalEssentials').style.display = 'block';
+        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterPersonalEssentials').style.display = 'none';
+        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Housing filter options
+document.querySelector("#btnHousing").addEventListener("click", () => {
+    if (document.querySelector('#divOuterHousing').style.display === 'none') {
+        document.querySelector('#divOuterHousing').style.display = 'block';
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterHousing').style.display = 'none';
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Transportation filter options
+document.querySelector("#btnTransportation").addEventListener("click", () => {
+    if (document.querySelector('#divOuterTransportation').style.display === 'none') {
+        document.querySelector('#divOuterTransportation').style.display = 'block';
+        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterTransportation').style.display = 'none';
+        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Health Care filter options
+document.querySelector("#btnHealthCare").addEventListener("click", () => {
+    if (document.querySelector('#divOuterHealthCare').style.display === 'none') {
+        document.querySelector('#divOuterHealthCare').style.display = 'block';
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterHealthCare').style.display = 'none';
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Crisis Services filter options
+document.querySelector("#btnCrisisServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterCrisisServices').style.display === 'none') {
+        document.querySelector('#divOuterCrisisServices').style.display = 'block';
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterCrisisServices').style.display = 'none';
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Family filter options
+document.querySelector("#btnFamily").addEventListener("click", () => {
+    if (document.querySelector('#divOuterFamily').style.display === 'none') {
+        document.querySelector('#divOuterFamily').style.display = 'block';
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterFamily').style.display = 'none';
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Education filter options
+document.querySelector("#btnEducation").addEventListener("click", () => {
+    if (document.querySelector('#divOuterEducation').style.display === 'none') {
+        document.querySelector('#divOuterEducation').style.display = 'block';
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterEducation').style.display = 'none';
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i>`;
+    }
+  })
+
+// Opens the Employment filter options
+document.querySelector("#btnEmployment").addEventListener("click", () => {
+    if (document.querySelector('#divOuterEmployment').style.display === 'none') {
+        document.querySelector('#divOuterEmployment').style.display = 'block';
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterEmployment').style.display = 'none';
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Community filter options
+document.querySelector("#btnCommunity").addEventListener("click", () => {
+    if (document.querySelector('#divOuterCommunity').style.display === 'none') {
+        document.querySelector('#divOuterCommunity').style.display = 'block';
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterCommunity').style.display = 'none';
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Legal filter options
+document.querySelector("#btnLegal").addEventListener("click", () => {
+    if (document.querySelector('#divOuterLegal').style.display === 'none') {
+        document.querySelector('#divOuterLegal').style.display = 'block';
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterLegal').style.display = 'none';
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Senior Services filter options
+document.querySelector("#btnSeniorServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterSeniorServices').style.display === 'none') {
+        document.querySelector('#divOuterSeniorServices').style.display = 'block';
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterSeniorServices').style.display = 'none';
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Opens the Veteran Services filter options
+document.querySelector("#btnVeteranServices").addEventListener("click", () => {
+    if (document.querySelector('#divOuterVeteranServices').style.display === 'none') {
+        document.querySelector('#divOuterVeteranServices').style.display = 'block';
+        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-up-fill"></i>`;
+    } else {
+        document.querySelector('#divOuterVeteranServices').style.display = 'none';
+        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i>`;
+    }
+});
+
+// Applys the filter anytime a checkbox is updated
+document.getElementById('divAllFilter').addEventListener('change', (e) => {
+  let selectedFood = getSelectedCheckboxes('divOuterFood')
+  let selectedPersonalEssentials = getSelectedCheckboxes('divOuterPersonalEssentials')
+  let selectedHousing = getSelectedCheckboxes('divOuterHousing')
+  let selectedTransportation = getSelectedCheckboxes('divOuterTransportation')
+  let selectedHealthCare = getSelectedCheckboxes('divOuterHealthCare')
+  let selectedCrisisServices = getSelectedCheckboxes('divOuterCrisisServices')
+  let selectedFamily = getSelectedCheckboxes('divOuterFamily')
+  let selectedEducation = getSelectedCheckboxes('divOuterEducation')
+  let selectedEmployment = getSelectedCheckboxes('divOuterEmployment')
+  let selectedCommunity = getSelectedCheckboxes('divOuterCommunity')
+  let selectedLegal = getSelectedCheckboxes('divOuterLegal')
+  let selectedSeniorServices = getSelectedCheckboxes('divOuterSeniorServices')
+  let selectedVeteranServices = getSelectedCheckboxes('divOuterVeteranServices')
+  let iconToUse
+  
+  removeAllMarkers ()
+  allServices.forEach(service => {
+    let arrMatches = []
+    let strTags = getTagList(service)
+    let lowKey = (strTags).map(c => c.toLowerCase());
+    if (selectedFood.length > 0 && selectedFood.some(item => lowKey.includes(item))) {
+      arrMatches.push("food");
+    }
+    if (selectedPersonalEssentials.length > 0 &&
+            selectedPersonalEssentials.some(item => lowKey.includes(item))) {
+      arrMatches.push("personal essentials");
+    }
+    if (selectedHousing.length > 0 &&
+            selectedHousing.some(item => lowKey.includes(item))) {
+      arrMatches.push("housing");
+    }
+    if (selectedTransportation.length > 0 &&
+            selectedTransportation.some(item => lowKey.includes(item))) {
+      arrMatches.push("transportation");
+    }
+    if (selectedHealthCare.length > 0 &&
+            selectedHealthCare.some(item => lowKey.includes(item))) {
+      arrMatches.push("health care");
+    }
+    if (selectedCrisisServices.length > 0 &&
+            selectedCrisisServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("crisis services");
+    }
+    if (selectedFamily.length > 0 &&
+            selectedFamily.some(item => lowKey.includes(item))) {
+      arrMatches.push("family");
+    }
+    if (selectedEducation.length > 0 &&
+            selectedEducation.some(item => lowKey.includes(item))) {
+      arrMatches.push("education");
+    }
+    if (selectedEmployment.length > 0 &&
+            selectedEmployment.some(item => lowKey.includes(item))) {
+      arrMatches.push("employment");
+    }
+    if (selectedCommunity.length > 0 &&
+            selectedCommunity.some(item => lowKey.includes(item))) {
+      arrMatches.push("community");
+    }
+    if (selectedLegal.length > 0 &&
+            selectedLegal.some(item => lowKey.includes(item))) {
+      arrMatches.push("legal");
+    }
+    if (selectedSeniorServices.length > 0 &&
+            selectedSeniorServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("senior services");
+    }
+    if (selectedVeteranServices.length > 0 &&
+            selectedVeteranServices.some(item => lowKey.includes(item))) {
+      arrMatches.push("veteran services");
+    }
+    iconToUse = getMatchIcon(arrMatches);
+    if (arrMatches.length > 0) {
+      getGeoCode(service, iconToUse)
+    }
+  })
+})
+
+// Returns an array of all selected check boxed from a container
+function getSelectedCheckboxes(containerId) {
+    return Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+    ).map(el => el.value);
+}
+
+// Gets the list of tags for each service
 function getTagList(service) {
     let strKeywords = service.Keywords
     if (typeof strKeywords === 'string') {
@@ -526,30 +590,52 @@ function getTagList(service) {
     }
 }
 
-// -- takes an array of category strings and an array of services and returns an array of filtered services
-function filterServicesByCategories(mapItems) {
-  let filteredServices = []
-  if (sidebarServiceState.selectedCategories.length === 0) return sidebarServiceState.mapItems
-
-  for (let i = 0; i < sidebarServiceState.mapItems.length; i++) {
-    let serviceCategories = getTagList(sidebarServiceState.mapItems[i].service) || []
-    for (let j = 0; j < serviceCategories.length; j++) {
-      if (sidebarServiceState.selectedCategories.includes(serviceCategories[j]) && !filteredServices.includes(sidebarServiceState.mapItems[i])) {
-        filteredServices.push(sidebarServiceState.mapItems[i])
-        break
-      }
+// Returns the icon that matches the keyword match
+function getMatchIcon (arrMatches) {
+  let icon
+  if (arrMatches.length === 1) {
+    if (arrMatches[0] === "food"){
+      icon = foodIcon
+    }
+    if (arrMatches[0] === "personal essentials"){
+      icon = personalEssentialsIcon
+    }
+    if (arrMatches[0] === "housing"){
+      icon = housingIcon
+    }
+    if (arrMatches[0] === "transportation"){
+      icon = transportationIcon
+    }
+    if (arrMatches[0] === "health care"){
+      icon = healthCareIcon
+    }
+    if (arrMatches[0] === "crisis services"){
+      icon = crisisServicesIcon
+    }
+    if (arrMatches[0] === "family"){
+      icon = familyIcon
+    }
+    if (arrMatches[0] === "education"){
+      icon = educationIcon
+    }
+    if (arrMatches[0] === "employment"){
+      icon = employementIcon
+    }
+    if (arrMatches[0] === "community"){
+      icon = communityIcon
+    }
+    if (arrMatches[0] === "legal"){
+      icon = legalIcon
+    }
+    if (arrMatches[0] === "senior services"){
+      icon = seniorServicesIcon
+    }
+    if (arrMatches[0] === "veteran services"){
+      icon = veteranServicesIcon
     }
   }
-  console.log(filteredServices)
-  return filteredServices
+  else {
+    icon = multiIcon
+  }
+  return icon
 }
-
-window.addEventListener('load', (event) => {
-  fetch('partials/pinmap.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('pinmap').innerHTML = data;
-
-      loadServices();
-    });
-});

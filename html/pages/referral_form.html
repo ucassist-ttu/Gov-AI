@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,76 +10,74 @@
   <title>Service Referral Form</title>
   <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
-
+<div id="navbar"></div>
 <body class="white">
-  <div id="navbar"></div>
-  <!-- <figure class="position-relative z-0">
-      <div class="banner-image referral-image">
-      <figcaption class="position-absolute top-50 start-50 translate-middle text-center w-100">
-          <div class="fw-bold clr-light-grey img-text-lg w-100">Know a service provider we should add?</div>
-      </figcaption> -->
-    <!-- <div id="navbar"></div> -->
       <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
+            <div class="position-relative overflow-hidden" style="max-height: 350px;">
                 <div class="carousel-item active">
-                    <img src="/Gov-AI/assets/images/referral-form.png" class="background_filter_image z-0" alt="Referral form background image">
-                <div class="carousel-referral"> <h1> Know a service provider we should add? </h1> </div>
-      <div class="index-referral">
-        Photo by Toa Heftiba on <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer">Unsplash</a>
+                    <img src="..\..\assets\images\referral-form.png" class="w-100 h-100 object-fit-cover"  style=" max-height: 350px;" alt="Hero Background">
+    <div class="position-absolute top-50 start-50 translate-middle text-center w-75 text-white fw-bold fs-2" >
+      Know a service provider we should add?</div>
+      <div class="position-absolute bottom-0 end-0 text-white-50 fst-italic small pe-3 pb-2 user-select-none fs-7" >
+        Photo by Toa Heftiba on <a href="https://unsplash.com" target="_blank" class="text-white-50 text-decoration-underline">Unsplash</a>
       </div>
-  </figure>
-
-  <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start py-3 px-4">
-    <h1 class="fw-bold white m-0">Registration Form</h1>
+    </div>
   </div>
+</div>
+  <div class="overflow-visible">
+  <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
+    <h1 class="ps-5 fw-bold white">Referral Form</h1>
+  <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+    <li class="text-white mx-2 fs-6">›</li> 
+    <li class="breadcrumb-item active text-white fs-6" aria-current="page">Referral form</li>
+  </ol>
+</nav>
+</div>
+</div>
 
-<main class="container-referral page">
-  <p>Share their details below, and we’ll contact them.</p>
+<main class="container-referral page w-50">
+  <p>Share their details below, and we'll contact them.</p>
 
   <form novalidate>
   <div class="mb-3">
-    <label for="firstName" class="form-label required">First Name</label>
-    <input type="text" id="firstName" name="firstName" class="form-control" required aria-required="true" />
-    <div class="invalid-feedback">First Name is required.</div>
+    <label for="firstName" class="fw-semibold dark-navy required">First Name</label>
+    <input type="text" id="firstName" name="firstName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
   </div>
 
   <div class="mb-3">
-    <label for="lastName" class="form-label required">Last Name </label>
-    <input type="text" id="lastName" name="lastName" class="form-control" required aria-required="true" />
-    <div class="invalid-feedback">Last Name is required.</div>
+    <label for="lastName" class="fw-semibold dark-navy required">Last Name </label>
+    <input type="text" id="lastName" name="lastName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
   </div>
 
   <div class="mb-3">
-    <label for="email" class="form-label required">Email </label>
-    <input type="email" id="email" name="email" class="form-control" required aria-required="true" />
-    <div class="invalid-feedback">Email is required.</div>
+    <label for="email" class="fw-semibold dark-navy required">Email </label>
+    <input type="email" id="email" name="email" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
   </div>
 
   <div class="mb-3">
-    <label for="phone" class="form-label required">Phone Number</label>
-    <input type="tel" id="phone" name="phone" class="form-control" required aria-required="true" />
-    <div class="invalid-feedback">Phone Number is required.</div>
+    <label for="phone" class="fw-semibold dark-navy required">Phone Number</label>
+    <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
   </div>
 
   <div class="mb-3">
-    <label for="organization" class="form-label required">Organization</label>
-    <input type="text" id="organization" name="organization" class="form-control" required aria-required="true">
-    <div class="invalid-feedback">Organization is required.</div>
+    <label for="organization" class="fw-semibold dark-navy required">Organization</label>
+    <input type="text" id="organization" name="organization" class="form-control border-2 rounded p-2 px-3" required aria-required="true">
   </div>
 
   <div class="mb-3">
-    <label for="contactInfo" class="form-label required">Contact Info</label>
-    <input type="text" id="contactInfo" name="contactInfo" class="form-control" required aria-required="true">
-    <div class="invalid-feedback">Contact Information is required.</div>
+    <label for="contactInfo" class="fw-semibold dark-navy required">Contact Info</label>
+    <input type="text" id="contactInfo" name="contactInfo" class="form-control border-2 rounded p-2 px-3" required aria-required="true">
   </div>
 
   <div class="mb-3">
-    <label for="message" class="form-label">Message</label>
-    <textarea id="message" rows="4" class="form-control" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>
+    <label for="message" class="fw-semibold dark-navy">Message</label>
+    <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>
   </div>
 
   <div class="d-flex gap-3 mt-3">
-    <button type="submit" class="submit-btn">Next</button>
+    <button type="submit" class="submit-btn ">Next</button>
   </div>
 </form>
 </main>                 
@@ -94,11 +91,8 @@
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
-    <!-- more bootsrap libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/Gov-AI/js/referral_form.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../js/navbar.js"></script>
 </body>
 </html>
-                  

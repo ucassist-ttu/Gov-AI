@@ -14,41 +14,48 @@
     <div id="navbar"></div>
     
     <main>
-        <div class="header-crisis-wrapper">
-            <div class="page-tag rounded-bottom z-3 position-relative dark_navy justify-content-start">
-                <h1 class="fw-bold white">Crisis Hotlines</h1>
+        <div class="overflow-visible">
+            <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
+                <h1 class="ps-5 fw-bold white">Crisis Hotlines</h1>
+                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
+                <ol class="breadcrumb mb-0">
+                   <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                   <li class="text-white mx-2 fs-6">></li> 
+                   <li class="breadcrumb-item active text-white fs-6" aria-current="page">Crisis Hotlines</li>
+                </ol>
+                </nav> 
             </div>
             <!-- emergency Link -->
-            <div class="jumbotron crisis rounded-bottom position-relative red clr-light-grey">
-                <p class="fw-bold" style="color:white"> <a class="fw-bold white" href="tel:+911">If you are experiencing an emergengy please call 911.</a>
+            <div class="crisis rounded-bottom red clr-light-grey">
+                <p class="fw-bold" style="color:#ffffff"> <a class="fw-bold white" href="tel:+911">If you are experiencing an emergengy please call 911.</a>
                 </p>
             </div>
         </div>
         <!-- page content -->
-        <div class="page">
-            <div class="row d-flex justify-content-center pt-5 pb-5 ">
-                <!--navigation tabs--> <!---->
-                <div class="col col-sm-12 col-md-6 col-lg-6 col-xl-4 pb-4 ">
-                    <ul class="nav nav-tabs" id="crisis-pills-tabs" role="tablist" aria-orientation="vertical">
-                        <li class="nav-item snap-description" role="presentation">
-                            <button type="button" class="nav-link active snap-tab" id="crisis-pills-tab-mental" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-mental" role="tab" aria-controls="crisis-pills-content-mental">Mental Health & Emotional Support</button>
-                        </li>
-                        <li class="nav-item snap-description" role="presentation">
-                            <button type="button" class="nav-link snap-tab" id="crisis-pills-tab-abuse" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-abuse" role="tab" aria-controls="crisis-pills-content-abuse">Abuse, Violence, & Safety</button>
-                        </li>
-                        <li class="nav-item snap-description" role="presentation">
-                            <button type="button" class="nav-link snap-tab" id="crisis-pills-tab-addiction" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-addiction" role="tab" aria-controls="crisis-pills-content-addiction">Sustance Use & Addiction Support</button>
-                        </li>
-                        <li class="nav-item snap-description" role="presentation">
-                            <button type="button" class="nav-link snap-tab" id="crisis-pills-tab-health" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-health" role="tab" aria-controls="crisis-pills-content-health">Health & Wellness Hotlines</button>
-                        </li>
-                        <li class="nav-item snap-description" role="presentation">
-                            <button type="button" class="nav-link snap-tab" id="crisis-pills-tab-family" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-family" role="tab" aria-controls="crisis-pills-content-family">Youth, Families, & Veterans</button>
-                        </li>
-                    </ul>
-                </div>
-                <!--tab content-->
-                <div class="tab-content col">
+        <div class="row d-flex justify-content-center py-5 ">
+            <!--navigation tabs-->
+            <div class="col-sm-12 col-md-5 col-lg-4">
+                <ul class="nav nav-tabs p-0" id="crisis-pills-tabs" role="tablist" aria-orientation="vertical">
+                    <li class="nav-item snap-description" role="presentation">
+                        <button type="button" class="nav-link active clr-dark-navy mx-3 mb-0" id="crisis-pills-tab-mental" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-mental" role="tab" aria-controls="crisis-pills-content-mental">Mental Health & Emotional Support</button>
+                    </li>
+                    <li class="nav-item snap-description" role="presentation">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="crisis-pills-tab-abuse" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-abuse" role="tab" aria-controls="crisis-pills-content-abuse">Abuse, Violence, & Safety</button>
+                    </li>
+                    <li class="nav-item snap-description" role="presentation">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="crisis-pills-tab-addiction" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-addiction" role="tab" aria-controls="crisis-pills-content-addiction">Sustance Use & Addiction Support</button>
+                    </li>
+                    <li class="nav-item snap-description" role="presentation">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="crisis-pills-tab-health" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-health" role="tab" aria-controls="crisis-pills-content-health">Health & Wellness Hotlines</button>
+                    </li>
+                    <li class="nav-item snap-description" role="presentation">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="crisis-pills-tab-family" data-bs-toggle="pill" data-bs-target="#crisis-pills-content-family" role="tab" aria-controls="crisis-pills-content-family">Youth, Families, & Veterans</button>
+                    </li>
+                </ul>
+            </div>
+            <!--tab content-->
+            <div class="col-sm-12 col-md-7 col-lg-7 px-5 py-5 py-md-0">
+                <div class="tab-content" id="crisis-pills-tabs-content">
                     <!-- tab one: mental health -->
                     <div class="tab-pane fade show active" id="crisis-pills-content-mental" role="tabpanel" aria-labelledby="crisis-pills-tab-mental">
 
@@ -192,8 +199,7 @@
 
                     </div>
 
-                    </div>
-
+                </div>
             </div>
         </div>
 
