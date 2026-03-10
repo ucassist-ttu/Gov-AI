@@ -79,9 +79,11 @@ function createPills(keyword, fullword){
   const img = document.createElement("img");
   img.className = "card-img-top";
   img.alt = fullword;
-  img.style.maxHeight = "100%";
+  img.style.maxHeight = "100px";
   img.style.objectFit = "cover";
-  img.src = getImgSrc(keyword);
+  // img.src = getImgSrc(keyword);
+  img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
+  console.log("[iNeed] Image source for keyword:", keyword, "is:", img.src);
 
   const body = document.createElement("div");
   body.className = "card-body";
@@ -287,6 +289,7 @@ function createCard(service, category) {
 
       default:
         imgPhoto = "../../assets/images/placeholder-img.webp";
+        break;
     }
   }
 

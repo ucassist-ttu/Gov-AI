@@ -1830,3 +1830,7 @@ p{
   background-color: var(--light-grey);
   color: var(--white)
 }
+.iNeedHover:active {
+  background-color: var(--light-grey);
+  color: var(--white)
+}
