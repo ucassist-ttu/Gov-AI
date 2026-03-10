@@ -31,30 +31,32 @@ let sortedIDCategories = {
 }
 
 window.addEventListener('load', (event) => {
+  // searching through database
   getUniqueKeywords()
 
+  //populating pills
   const container = document.getElementById("divINeedPills");
   Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
     const pill = createPills(keyword, fullword);
     container.innerHTML += pill;
   })
-})
 
-//ARROW SCROLLING
-const pillsContainer = document.getElementById("divINeedPills");
-document.getElementById("scrollLeftPills").onclick = () => {
-  pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
+  //ARROW SCROLLING JS
+  const pillsContainer = document.getElementById("divINeedPills");
+  document.getElementById("scrollLeftPills").onclick = () => {
+    pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
+  };
+  document.getElementById("scrollRightPills").onclick = () => {
+    pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
+  };
+  const contentContainer = document.getElementById("divINeedContent");
+  document.getElementById("scrollLeftContent").onclick = () => {
+    contentContainer.scrollBy({ left: -300, behavior: "smooth" });
+  };
+  document.getElementById("scrollRightContent").onclick = () => {
+    contentContainer.scrollBy({ left: 300, behavior: "smooth" });
 };
-document.getElementById("scrollRightPills").onclick = () => {
-  pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
-};
-const contentContainer = document.getElementById("divINeedContent");
-document.getElementById("scrollLeftContent").onclick = () => {
-  contentContainer.scrollBy({ left: -300, behavior: "smooth" });
-};
-document.getElementById("scrollRightContent").onclick = () => {
-  contentContainer.scrollBy({ left: 300, behavior: "smooth" });
-};
+})
 
 //pill button event listener (delegated to the document since pills are generated dynamically)
 document.addEventListener("click", (e) => {
@@ -66,43 +68,21 @@ document.addEventListener("click", (e) => {
     });
     // Add "selected" to the clicked card
     clickedCard.classList.add("selected");
+    console.log("[iNeed] Clicked card ID:", clickedCard.id.replace("pillINeed", ""));
+    loadCardsByCategory(clickedCard.id.replace("pillINeed", ""));
+
+    
   }
 });
 
-// document.addEventListener("click", (e) => {
 
-
-//   const foodBtn = e.target.closest("#pillINeedFood");
-//   const housingBtn = e.target.closest("#pillINeedHousing");
-//   const transportBtn = e.target.closest("#pillINeedTransportation");
-//   const childcareBtn = e.target.closest("#pillINeedChildCare");
-
-//   if (foodBtn) {
-//     loadCardsByCategory("food");
-//   }
-
-//   if (housingBtn) {
-//     loadCardsByCategory("housing");
-//   }
-
-//   if (transportBtn) {
-//     loadCardsByCategory("transportation");
-//   }
-
-//   if (childcareBtn) {
-//     loadCardsByCategory("childcare");
-//   }
-
-// });
-
-
-// populating the cards after pressing a pill
+// populating the pills based on the keywords in the database
 function createPills(keyword, fullword){
   const col = document.createElement("div");
   col.className = "card col-12 mb-3 m-2 iNeedHover";
   col.style.width = "14rem";
   col.id = `pillINeed${keyword}`;
-  col.onclick = () => loadCardsByCategory(keyword);
+  // col.onclick = () => loadCardsByCategory(keyword);
 
   const img = document.createElement("img");
   img.className = "card-img-top";
@@ -205,51 +185,48 @@ async function loadCardsByCategory(category) { //getKeywordIDs
   let servData = await servResponse.json()
 
   // loops through every service in the database
-  servData.forEach((element) => {
-    currKeywords = element.Keywords
-    // sortedIDCategories = ;
-  })
+  // servData.forEach((element) => {
+  //   currKeywords = element.Keywords
+  //   // sortedIDCategories = ;
+  // })
 
   //filter by keywords
 
   //call here
+  const ids = getIdsByCategory(category);
 
+  const container = document.getElementById("divINeedContent");
 
+  if (!container) {
+    return;
+  }
 
-  // const ids = getIdsByCategory(category);
+  container.innerHTML = "<p>Loading services...</p>";
 
-  // const container = document.getElementById("divINeedContent");
+  console.log("[iNeed] Loading category:", category, "with IDs:", ids);
 
-  // if (!container) {
-  //   return;
-  // }
+  try {
 
-  // container.innerHTML = "<p>Loading services...</p>";
+    const requests = ids.map(id => {
+      const url = `https://ucassist.duckdns.org/service?id=${id}`;
 
-  // console.log("[iNeed] Loading category:", category, "with IDs:", ids);
+      return fetch(url)
+        .then(res => {
+          return res.json();
+        });
+    });
 
-  // try {
+    const services = await Promise.all(requests);
 
-  //   const requests = ids.map(id => {
-  //     const url = `https://ucassist.duckdns.org/service?id=${id}`;
+    container.innerHTML = "";
 
-  //     return fetch(url)
-  //       .then(res => {
-  //         return res.json();
-  //       });
-  //   });
-
-  //   const services = await Promise.all(requests);
-
-  //   container.innerHTML = "";
-
-  //   services.forEach(service => {
-  //     container.appendChild(createCard(service, category));
-  //   });
-  // } catch (error) {
-  //   console.error("[iNeed] Error loading services:", error);
-  //   container.innerHTML = "<p>Please try again later.</p>";
-  // }
+    services.forEach(service => {
+      container.appendChild(createCard(service, category));
+    });
+  } catch (error) {
+    console.error("[iNeed] Error loading services:", error);
+    container.innerHTML = "<p>Please try again later.</p>";
+  }
 }
 
 
@@ -286,7 +263,7 @@ function createCard(service, category) {
   const col = document.createElement("div");
   console.log(service)
   col.className = "card m-2 col-12 border border-2 border-secondary rounded";
-  col.style.maxWidth = "16rem";
+  col.style.maxWidth = "14rem";
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
@@ -308,26 +285,26 @@ function createCard(service, category) {
   // FALLBACK IMAGE
   if (!imgPhoto || imgPhoto === "N/A") {
     // console.log("[iNeed] Using fallback image for category:", category);
-    const imgPhoto = "/Gov-AI/assets/images/placeholder-img.webp";
+    let imgPhoto = "/assets/images/placeholder-img.webp";
     switch (category) {
       case "food":
-        imgPhoto = "../../assets/images/iNeedFood.jpg";
+        imgPhoto = "/assets/images/iNeedFood.jpg";
         break;
 
       case "housing":
-        imgPhoto = "../../assets/images/iNeedHousing.jpg";
+        imgPhoto = "/assets/images/iNeedHousing.jpg";
         break;
 
       case "childcare":
-        imgPhoto = "../../assets/images/iNeedChildCare.jpg";
+        imgPhoto = "assets/images/iNeedChildCare.jpg";
         break;
 
       case "transportation":
-        imgPhoto = "../../assets/images/iNeedTransportation.jpg";
+        imgPhoto = "assets/images/iNeedTransportation.jpg";
         break;
 
       default:
-        imgPhoto = "../../assets/images/placeholder-img.webp";
+        imgPhoto = "assets/images/placeholder-img.webp";
         break;
     }
   }
@@ -382,6 +359,28 @@ function getLogoSrc(rawLogo) {
   return `/Gov-AI/assets/images/${logo}`;
 }
 
+// cherry picked ID for each pill
+function getIdsByCategory(category) {
+  switch (category) {
+    case "BasicNeeds":
+      return [42,57,93,428];
+
+    case "Housing":
+      return [53, 65, 91, 176 ];
+
+    case "Transportation":
+      return [482,491,492,493];
+
+    case "Youth":
+      return [359, 372, 389]; 
+
+    default:
+      console.warn("[iNeed] Unknown category:", category);
+      return [];
+  }
+}
+
+
 
 
 // function inCounty(service){
@@ -398,23 +397,28 @@ function getLogoSrc(rawLogo) {
 //   } 
 // }
 
-// cherry picked ID for each pill
-// function getIdsByCategory(category) {
-//   switch (category) {
-//     case "food":
-//       return [42,57,93,428];
+// document.addEventListener("click", (e) => {
 
-//     case "housing":
-//       return [53, 65, 91, 176 ];
 
-//     case "transportation":
-//       return [482,491,492,493];
+//   const foodBtn = e.target.closest("#pillINeedFood");
+//   const housingBtn = e.target.closest("#pillINeedHousing");
+//   const transportBtn = e.target.closest("#pillINeedTransportation");
+//   const childcareBtn = e.target.closest("#pillINeedChildCare");
 
-//     case "childcare":
-//       return [359, 372, 389]; 
-
-//     default:
-//       console.warn("[iNeed] Unknown category:", category);
-//       return [];
+//   if (foodBtn) {
+//     loadCardsByCategory("food");
 //   }
-// }
+
+//   if (housingBtn) {
+//     loadCardsByCategory("housing");
+//   }
+
+//   if (transportBtn) {
+//     loadCardsByCategory("transportation");
+//   }
+
+//   if (childcareBtn) {
+//     loadCardsByCategory("childcare");
+//   }
+
+// });
