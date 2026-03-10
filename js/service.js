@@ -259,9 +259,6 @@ function printRecomendedServices () {
     // document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
     //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
     // });
-<<<<<<< HEAD
-}
-=======
 }
 
 const stars = document.querySelectorAll('.star');
@@ -291,4 +288,3 @@ stars.forEach(star => {
     ratingValue.value = this.getAttribute('data-value');
   });
 });
->>>>>>> be6d08db634170ab4968c957ddd64c3c688c54ca

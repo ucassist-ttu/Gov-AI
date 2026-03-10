@@ -337,21 +337,6 @@ document.querySelector("#btnShowMoreServices").addEventListener("click", () => {
     }
 });
 
-<<<<<<< HEAD
-// Shows more organization names
-document.querySelector("#btnShowMoreOrgNames").addEventListener("click", () => {
-    if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-            document.querySelector('#divMoreOrgNames').style.display = 'block';
-            document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-    } else {
-        document.querySelector('#divMoreOrgNames').style.display = 'none';
-        document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-    }
-});
-
-
-=======
->>>>>>> be6d08db634170ab4968c957ddd64c3c688c54ca
 // Opens the filter side bar
 document.querySelector("#btnFilterSort").addEventListener("click", () => {
     document.getElementById("mySidenav").style.width = "375px";
@@ -420,13 +405,8 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
         const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
 
         // Only push if all filters match
-<<<<<<< HEAD
-        if (countyMatch && serviceMatch && orgMatch) {
-        arrFilteredServices.push(service);
-=======
         if (countyMatch && serviceMatch) {
             arrFilteredServices.push(service);
->>>>>>> be6d08db634170ab4968c957ddd64c3c688c54ca
         }
     });
 
