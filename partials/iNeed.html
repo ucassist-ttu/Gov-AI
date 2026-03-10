@@ -1,17 +1,41 @@
 <div class="p-2 p-md-5">
-    <h4 class="justify-content-start jumbotron-text clr-dark-navy fw-light px-2 ">I Need: </h4>
-    <div id="wrapperINeedPills" class="pt-1 scrollmenu">
-        <div id="divINeedPills" class="d-flex overflow-auto" style="padding: 0px 0px; margin: 0px;">
-             <!-- iNeed.js: pills go here, food, housing, transportation, childcare justify-content-center row pt-2 -->
-        </div>
+  <h4 class="jumbotron-text clr-dark-navy fw-light px-2">I Need:</h4>
+  <div class="d-flex align-items-center">
+    <!-- LEFT ARROW -->
+    <button class="btn btn-light me-2" id="scrollLeftPills">
+      ❮
+    </button>
+
+    <!-- SCROLL PILL AREA -->
+    <div id="wrapperINeedPills" class="flex-grow-1 overflow-hidden">
+      <div id="divINeedPills" class="d-flex overflow-auto scrollmenu">
+        <!-- pills populate here -->
+      </div>
     </div>
-    <div class="p-2" style="margin: 10px;">
-        <div id="wrapperINeedContent" class="pt-1 scrollmenu">
-            <div id="divINeedContent" class="d-flex overflow-auto">
-            <!-- service cards go here, abuse help, legalhelp-->
-            </div>
-        </div>
-    </div>
+
+    <!-- RIGHT ARROW -->
+    <button class="btn btn-light ms-2" id="scrollRightPills">
+      ❯
+    </button>
+  </div>
+
+  <!-- <div class="p-2 mt-3">
+    <div class="d-flex align-items-center">
+      <button class="btn btn-light me-2" id="scrollLeftContent">
+        ❮
+      </button>
+
+      <div id="wrapperINeedContent" class="flex-grow-1 overflow-hidden">
+        <div id="divINeedContent" class="d-flex overflow-auto"> -->
+          <!-- service cards go here -->
+        <!-- </div>
+      </div>
+
+      <button class="btn btn-light ms-2" id="scrollRightContent">
+        ❯
+      </button>
+    </div> -->
+  </div>
 </div>
 
 <script type="module" src="../js/iNeed.js"></script>

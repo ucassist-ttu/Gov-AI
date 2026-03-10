@@ -40,31 +40,60 @@ window.addEventListener('load', (event) => {
   })
 })
 
+//ARROW SCROLLING
+const pillsContainer = document.getElementById("divINeedPills");
+document.getElementById("scrollLeftPills").onclick = () => {
+  pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
+};
+document.getElementById("scrollRightPills").onclick = () => {
+  pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
+};
+const contentContainer = document.getElementById("divINeedContent");
+document.getElementById("scrollLeftContent").onclick = () => {
+  contentContainer.scrollBy({ left: -300, behavior: "smooth" });
+};
+document.getElementById("scrollRightContent").onclick = () => {
+  contentContainer.scrollBy({ left: 300, behavior: "smooth" });
+};
+
+//pill button event listener (delegated to the document since pills are generated dynamically)
 document.addEventListener("click", (e) => {
-
-
-  const foodBtn = e.target.closest("#pillINeedFood");
-  const housingBtn = e.target.closest("#pillINeedHousing");
-  const transportBtn = e.target.closest("#pillINeedTransportation");
-  const childcareBtn = e.target.closest("#pillINeedChildCare");
-
-  if (foodBtn) {
-    loadCardsByCategory("food");
+  const clickedCard = e.target.closest(".iNeedHover");
+  if (clickedCard) {
+    // Remove "selected" from all cards
+    document.querySelectorAll(".iNeedHover").forEach(card => {
+      card.classList.remove("selected");
+    });
+    // Add "selected" to the clicked card
+    clickedCard.classList.add("selected");
   }
-
-  if (housingBtn) {
-    loadCardsByCategory("housing");
-  }
-
-  if (transportBtn) {
-    loadCardsByCategory("transportation");
-  }
-
-  if (childcareBtn) {
-    loadCardsByCategory("childcare");
-  }
-
 });
+
+// document.addEventListener("click", (e) => {
+
+
+//   const foodBtn = e.target.closest("#pillINeedFood");
+//   const housingBtn = e.target.closest("#pillINeedHousing");
+//   const transportBtn = e.target.closest("#pillINeedTransportation");
+//   const childcareBtn = e.target.closest("#pillINeedChildCare");
+
+//   if (foodBtn) {
+//     loadCardsByCategory("food");
+//   }
+
+//   if (housingBtn) {
+//     loadCardsByCategory("housing");
+//   }
+
+//   if (transportBtn) {
+//     loadCardsByCategory("transportation");
+//   }
+
+//   if (childcareBtn) {
+//     loadCardsByCategory("childcare");
+//   }
+
+// });
 
 
 // populating the cards after pressing a pill
@@ -83,6 +112,7 @@ function createPills(keyword, fullword){
   // img.src = getImgSrc(keyword);
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
 
+
   const body = document.createElement("div");
   body.className = "card-body";
 
@@ -90,9 +120,15 @@ function createPills(keyword, fullword){
   content.className = "card-title";
   content.textContent = fullword;
 
+  // makes card clickable
+  const btn = document.createElement("a");
+  btn.className = "stretched-link";
+  btn.href = "#";
+
   col.appendChild(img);
   body.appendChild(content);
   col.appendChild(body);
+  col.appendChild(btn);
   return col.outerHTML;
 }
 

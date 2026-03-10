@@ -1830,7 +1830,16 @@ p{
   background-color: var(--light-grey);
   color: var(--white)
 }
-.iNeedHover:focus {
+.card.iNeedHover.selected,
+.card.iNeedHover.selected *{
   background-color: var(--gold);
-  color: var(--white)
+  color: var(--white) !important;
 }
+/* removes scroll bar from iNeed section */
+.scrollmenu {
+  scrollbar-width: none;
+}
+.scrollmenu::-webkit-scrollbar {
+  display: none;
+}
+
