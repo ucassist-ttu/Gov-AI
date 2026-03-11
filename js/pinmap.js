@@ -199,6 +199,35 @@ function removeAllMarkers() {
   arrMarkers = [];
 }
 
+function usersLocation () {
+  let strStoredCounty
+  return strStoredCounty = sessionStorage.getItem("currCounty")
+}
+
+function checkUserLocation (jsonData) {
+  let currCounty = usersLocation()
+  if (!currCounty) {
+  console.log("home");
+  } else {
+    if (currCounty == "van_buren") {
+      currCounty = "Van Buren"
+    }
+    countiesLayer = L.geoJSON(jsonData, {
+      style: {
+        color: '#AA8A41',
+        weight: 1.5,
+        fillOpacity: 0.05
+      },
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.NAME.toLowerCase() === currCounty.toLowerCase()) {
+          zoomToCounty(layer, feature)
+        }
+      }
+    }).addTo(map);
+  }
+}
+
+
 // -- Loads boundary data from geojson file to draw county borders --
 
 async function loadAndMaskCounties() {
@@ -206,6 +235,7 @@ async function loadAndMaskCounties() {
   const jsonData = await data.json()
 
   // set style for boundary and fill of county layers
+  checkUserLocation (jsonData)
   countiesLayer = L.geoJSON(jsonData, {
     style: {
       color: '#AA8A41',
