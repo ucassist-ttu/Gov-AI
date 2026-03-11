@@ -119,43 +119,25 @@ async function getUniqueKeywords(){
     let servData = await servResponse.json()
     let arrTagList = []
 
-    console.log("here 1")
 
     // loops through every service in the database for keywords list
     servData.forEach((element) => {
       let currKeywords = element.Keywords
       currKeywords = currKeywords.replace(/["'\[\]]/g, '').split(",").map(keyword => keyword.trim());
 
-      console.log("here 2")
       arrTagList = arrTagList.concat(currKeywords);
 
       // safety check
       if (!Array.isArray(arrTagList)) return;
 
     });
-    console.log(arrTagList)
 
-    // loops through all the keywords in the database
-    arrTagList.forEach((tag) => {
-        let strKeywords = tag
-        console.log("Type of keywords: " + typeof strKeywords)
-        strKeywords = service.Keywords
-        if (typeof strKeywords === 'string') {
-            strKeywords = JSON.parse(strKeywords);
-        }
-        // Returns keywords seperated by a ','
-        if (Array.isArray(strKeywords)) {
-            return strKeywords;
-    }
-      });
-
-      let uniqueServiceTypes = [...new Set(arrTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-      console.log("[iNeed] Unique service types:", uniqueServiceTypes);
+    let uniqueServiceTypes = [...new Set(arrTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    console.log("[iNeed] Unique service types:", uniqueServiceTypes);
 
   } catch (objError){
     console.error("[iNeed] Error fetching services:", objError);
   }
-
 }
 
 function getImgSrc(keyword) {
@@ -185,10 +167,10 @@ async function loadCardsByCategory(category) { //getKeywordIDs
   let servData = await servResponse.json()
 
   // loops through every service in the database
-  // servData.forEach((element) => {
-  //   currKeywords = element.Keywords
-  //   // sortedIDCategories = ;
-  // })
+  servData.forEach((element) => {
+    currKeywords = element.Keywords
+    // sortedIDCategories = ;
+  })
 
   //filter by keywords
 
@@ -363,6 +345,7 @@ function getLogoSrc(rawLogo) {
 
 // cherry picked ID for each pill
 function getIdsByCategory(category) {
+  console.log("[iNeed] Getting IDs for category:", category);
   switch (category) {
     case "BasicNeeds":
       return [42,57,93,428];
