@@ -1,5 +1,5 @@
 let arrRecomendedServices = []
-const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.webp";
+const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.png";
 
 function getLogoSrc(rawLogo) {
     if (typeof rawLogo !== "string") {

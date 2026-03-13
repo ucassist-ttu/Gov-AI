@@ -68,10 +68,13 @@
                     Cookeville, TN 38501<br />
                 </p>
                 <a href="./error.html"><h5 class="fw-bold text-dark text-decoration-underline">Downlaod Files Here</h5></a>
-                <label for="fileUpload" class="dropbox-square d-flex justify-content-center align-items-center rounded mb-4 w-75 w-md-50 gold-light mx-auto mt-5" style="cursor:pointer;">
-                    <span class="fw-bold text-center clr-gold mx-4">Drag and drop your files here or <br />upload from computer</span>
-                    <input type="file" id="fileUpload" multiple class="d-none">
-                </label>
+                <div class="mb-4 mt-5 mx-md-5 p-md-2 px-md-5">
+                    <label for="pdfRegister" class="file-upload d-block p-4 text-center" tabindex="0" role="button" aria-label="Upload pdf file">
+                        Drag and drop your file here<br />or <br />
+                        <a href="#" onclick="document.getElementById('pdfRegister').click(); return false;">upload from your computer</a>
+                    </label>
+                    <input type="file" id="pdfRegister" name="pdfRegister" class="d-none" accept="pdf" aria-label="PDF file upload" />
+                </div>
             </div>
             </div>  
         </div>
