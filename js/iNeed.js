@@ -239,12 +239,8 @@ function getImgSrc(keyword) {
 
 
 // gets information from the database api for the cards
-async function loadCardsByCategory(category) { //getKeywordIDs
-  console.log("[loadCardsByCategory] category: ",category)
-  //call here
+async function loadCardsByCategory(category) {
   const arrIDs = sortedIDCategories[category];
-  console.log(arrIDs)
-
   const container = document.getElementById("divINeedContent");
 
   if (!container) {
@@ -302,7 +298,7 @@ export function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
-  let innerHTML = `<div class="">`
+  let innerHTML = `<div class="row mx-auto">`
 
   const userSelectedCounty = sessionStorage.getItem("currCounty")
 
@@ -312,7 +308,7 @@ export function getCounties(service){
 
   arrCounties.forEach(county => {
     if (count < 1){ // displays max three counties
-      innerHTML += `<span class="badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
+      innerHTML += `<span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
       count++
     }
     else{
@@ -322,10 +318,12 @@ export function getCounties(service){
   })
 
   if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
-    innerHTML = `<div><span class="badge rounded-pill gold me-1 mb-2">All Counties</span>`
-  } else if (count > 1) { // tells user how many more counties are available if there are more than three
-    innerHTML += `<smaller class="row"> + ${count - 1} counties</smaller>`
+    innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">All Counties</span>`
+  } else if (count == 2) { // tells user how many more counties are available if there are more than three
+    innerHTML += `<smaller class="col-auto"> + ${count - 1} county</smaller>`
     // console.log("[getCounties] arrCounties: ", arrCounties)
+  } else if (count > 2) {
+    innerHTML += `<smaller class="col-auto"> + ${count - 1} counties</smaller>`
   }
 
   innerHTML += `</div>`
