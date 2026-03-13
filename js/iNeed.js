@@ -223,7 +223,7 @@ function getImgSrc(keyword) {
     "Housing": "INeedHousing.jpg", 
     "BasicNeeds": "iNeedFood.jpg", 
     "Financial": "",
-    "Transportation": "placeholder-img.webp", 
+    "Transportation": "placeholder-img.png", 
     "Youth": "iNeedChildCare.jpg",
     "Seniors": "Seniors, Aging, and Veterans",
     "Health": "Health and Wellness",
@@ -265,13 +265,16 @@ async function loadCardsByCategory(category) {
     const services = await Promise.all(requests);
 
     container.innerHTML = "";
-
+    let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
-      if (newCard == ""){
-        return;
-      } else{
-        container.appendChild(newCard)
+      if(count < 7){
+        if (newCard == ""){
+          return;
+        } else{
+          count ++
+          container.appendChild(newCard)
+        }
       }
     });
   } catch (error) {
@@ -333,7 +336,7 @@ export function getCounties(service){
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
     fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
-    window.location.href = `../../../html/pages/service.html?id=${page_id}`;
+    window.location.href = `/Gov-AI/html/pages/service.html?id=${page_id}`;
 }
 
 function getLogoSrc(rawLogo) {
@@ -343,7 +346,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.webp`;
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.png`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
