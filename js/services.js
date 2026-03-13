@@ -4,6 +4,10 @@ let arrOrgName = []
 let arrFilteredServices = []
 let arrAllServices = []
 let arrCurrentServices = []
+// Analytics
+let boolSearched = false
+let boolResourceFound = false
+let dataSearch
 
 async function getServices() {
     try{
@@ -158,6 +162,16 @@ function createServiceCard(arrCards) {
                 const serviceCard = button.closest('.service');
 
                 let serviceId = serviceCard.dataset.id
+                // Log user has clicked on a service for analytics
+                if (boolSearched) {
+                    boolResourceFound = true
+                    console.log("Service Found", {
+                        page: window.location.pathname,
+                        timestamp: new Date().toISOString(),
+                        dataSearch: dataSearch,
+                        boolResourceFound: boolResourceFound
+                    })
+                }
                 callServicePage(serviceId)
             });
         })
@@ -196,6 +210,17 @@ function getCountyList(service) {
 
 // Searches for services with information matching the users input
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
+
+    // If user searches a second time without clicking a service
+    if (boolSearched && !boolResourceFound) {
+        console.log("Service Not Found, Searching Again", {
+            page: window.location.pathname,
+            timestamp: new Date().toISOString(),
+            dataSearch: dataSearch,
+            boolResourceFound: boolResourceFound
+        })
+    }
+
     selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
     selectedCheckboxes.forEach(box => {
         box.checked = false;
@@ -230,6 +255,12 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
         })
     })
     uniqueSearch = [...new Set(arrFound)];
+    // Search Analytics
+    dataSearch = {
+        searchTerm: strSearch,
+        checked: selectedCheckboxes, 
+        resultsFound: uniqueSearch.length
+    }
     if (uniqueSearch.length == 0) {
         strDiv =   `<div class="service">
                     <h3>No services match search:</h3>
@@ -246,6 +277,13 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
             arrCurrentServices = arrAllServices
             renderSidebarServices(arrCurrentServices)
         })
+        // Analytics for 0 search results
+        console.log("0 Result Search", {
+            page: window.location.pathname,
+            timestamp: new Date().toISOString(),
+            dataSearch: dataSearch,
+            boolResourceFound: boolResourceFound
+        })
     }
     else {
         arrCurrentServices = uniqueSearch
@@ -255,6 +293,10 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
             box.checked = false;
         });
     }
+
+    // Log user has searched for analytics
+    boolSearched = true
+    boolResourceFound = false
 })
 
 
@@ -569,3 +611,23 @@ function renderSidebarServices(arrServices) {
         sidebarBody.appendChild(controls);
     }
 }
+
+/*
+    4 cases for analytics logging:
+        1. User searches and finds a resource (logged when clicking learn more on a service)
+        2. User searches and does not find a resource (logged when user searches and leaves page without clicking on a service)
+        3. User searches and has to search again (logged when searching again without clicking on a service)
+        4. User searches and finds zero results (also logs either 2 or 3 depending on how the user continues)
+*/
+
+// Log if user has searched and didnt find a resource
+window.addEventListener('beforeunload', () => {
+    if (boolSearched && !boolResourceFound) {
+        console.log("Service Not Found, Leaving Page", {
+            page: window.location.pathname,
+            timestamp: new Date().toISOString(),
+            dataSearch: dataSearch,
+            boolResourceFound: boolResourceFound
+        })
+    }
+})
