@@ -137,6 +137,10 @@ function createCard(service, category) {
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
+  if(!isInCounty(service)){
+    return "";
+  }
+
   // WEBSITE BUTTON
   if (service.Website && service.Website !== "N/A") {
 
@@ -151,6 +155,8 @@ function createCard(service, category) {
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
   } else {
   }
+
+
 
   col.innerHTML = `
     <img src="${imgPhoto}" class="card-img-top p-3" alt="${service.OrganizationName}" style="max-height: 150px; object-fit: contain;">
@@ -265,11 +271,29 @@ async function loadCardsByCategory(category) { //getKeywordIDs
     container.innerHTML = "";
 
     services.forEach(service => {
-      container.appendChild(createCard(service, category));
+      let newCard = createCard(service, category)
+      if (newCard == ""){
+        return;
+      } else{
+        container.appendChild(newCard)
+      }
     });
   } catch (error) {
     console.error("[iNeed] Error loading services:", error);
     container.innerHTML = "<p>Please try again later.</p>";
+  }
+}
+
+function isInCounty(service){
+  const strCounties = service.CountiesAvailable.toLowerCase();
+  let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
+
+  const userSelectedCounty = sessionStorage.getItem("currCounty")
+
+  if(!strCounties.includes(userSelectedCounty)){
+    return false;
+  } else {
+    return true;
   }
 }
 
@@ -278,39 +302,34 @@ export function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
-  let innerHTML = `<div>`
+  let innerHTML = `<div class="">`
 
   const userSelectedCounty = sessionStorage.getItem("currCounty")
 
-  if(strCounties.includes(userSelectedCounty)){
-    // console.log("[getCounties] service in county, displaying counties")
-    console.log("[getService]  service: ", service.NameOfService)
-    console.log("[getCounties] arrCounties: ", arrCounties)
-    arrCounties.forEach(county => {
-      console.log("[getCountied] count: ", count)
-      if (count < 3){ // displays max three counties
-
-        innerHTML += `<span class="badge rounded-pill bg-secondary me-1 mb-2">${county}</span>`
-        count++
-      }
-      else{
-        count ++
-      }
-      
-    })
-
-    if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
-        innerHTML = `<div><span class="badge rounded-pill bg-secondary me-1 mb-2">All Counties</span>`
-      } else if (count > 3) { // tells user how many more counties are available if there are more than three
-        innerHTML += `<smaller class="row"> + ${count - 3} counties</smaller>`
-      }
-    innerHTML += `</div>`
-    return innerHTML;
+  if(!strCounties.includes(userSelectedCounty)){
+    return;
   }
-  else{
-    // console.log("[getCounties] service skipped bc service not in county")
-    return "";
+
+  arrCounties.forEach(county => {
+    if (count < 1){ // displays max three counties
+      innerHTML += `<span class="badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
+      count++
+    }
+    else{
+      count ++
+    }
+    
+  })
+
+  if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
+    innerHTML = `<div><span class="badge rounded-pill gold me-1 mb-2">All Counties</span>`
+  } else if (count > 1) { // tells user how many more counties are available if there are more than three
+    innerHTML += `<smaller class="row"> + ${count - 1} counties</smaller>`
+    // console.log("[getCounties] arrCounties: ", arrCounties)
   }
+
+  innerHTML += `</div>`
+  return innerHTML;
 }
 
 // Shows more information on a service by calling service.html  
@@ -336,44 +355,3 @@ function getLogoSrc(rawLogo) {
   }
   return `/Gov-AI/assets/images/${logo}`;
 }
-
-// function getIdsByKeyword(keyword){
-//   oldKeywordLookUp = {"Crisis": ["Abuse","Crisis Hotlines","Emergency Shelter"],
-//     "Housing": ["Housing", "Housing - Financial Assistance","Utilities - Financial Assistance","Home Repair","In Home Services","Utilities","Emergency Shelter","Homeless"], 
-//     "BasicNeeds": ["Meals","Food","Toiletries","Veteran Services","Veterans","Food Financial Assistance","Food Pantry","Clothing","Animals"], 
-//     "Financial": ["Budgeting","Financial Assistance","Legal"],
-//     "Transportation": ["Transportation","Public Transportaion","Drivers ED/DUI Classes"], 
-//     "Youth": ["Child Care","Parenting","Youth Services"],
-//     "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilties/Special Needs"],
-//     "Health": ["Health Care","In Home Services","Primary Care","Special Needs" ,"Wellness", "Pregnancy", "Mental Health", "Disabilities", "Substance Abuse & Addiction","Wellness/Support Groups"],
-//     "Education": ["Education","Employment","Workforce Development"],
-//     "Business": ["Small Business", "Entrepreneur"],
-//     "Tourism": ["Recreation","Tourism and Recreation","Calendar of Events"],
-//     "Community": ["Community Development"]}
-
-
-
-  
-// }
-
-// cherry picked ID for each pill
-// function sortIDsByCounty(id) {
-  
-// }
-
-
-
-
-// function inCounty(service){
-//   let strCurrCounty = sessionStorage.getItem("currCounty");
-//   let arrServiceCounties = service.CountiesAvailable;
-
-//   let isServiced = arrServiceCounties.search(new RegExp(strCurrCounty, "i"))
-
-//   if (isServiced != -1){ // if not found, returns -1
-//     let html = `<p class="card-text text-danger">Available in ${strCurrCounty}!</p>`;
-//     return html;
-//   } else {
-//     return "";
-//   } 
-// }

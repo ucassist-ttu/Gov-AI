@@ -1586,11 +1586,11 @@ p{
 }
 .iNeedHover:hover {
   background-color: var(--light-grey);
-  color: var(--white)
 }
 .card.iNeedHover.selected,
 .card.iNeedHover.selected *{
   background-color: var(--gold); /*change to dark navy*/
+  color: var(--white)
 }
 /* removes scroll bar from iNeed section */
 .scrollmenu {
