@@ -1,7 +1,9 @@
 import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
+let printed = false;
 
 async function getAIRecommendations(userPrompt) {
+    printed = false;
     let AIContainer = document.querySelector('#suggestedResources');
     let headerEl = strHeader || document.querySelector("#txtHeader");
     if (!AIContainer || !headerEl) {
@@ -61,6 +63,12 @@ async function getAIRecommendations(userPrompt) {
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
             AIContainer.innerHTML = `<p class="mt-3">Try a different prompt or browse all available services.</p>`;
+
+            console.log("0 Result AI Search", {
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+
             return;
         }
 
@@ -111,6 +119,15 @@ document.querySelector("#btnHome").addEventListener("click", (e) => {
 
 document.addEventListener("click", (e) => {
     if (e.target.closest("#btnPrintPage")) {
+        printed = true;
         window.print();
     }
+});
+
+window.addEventListener('beforeunload', () => {
+    console.log("AI Results Page Left", {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        printed: printed
+    });
 });

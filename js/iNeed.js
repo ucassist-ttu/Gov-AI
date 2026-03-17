@@ -1,213 +1,145 @@
-// import { getTagList } from './services.js';
-
-// const db = ['Food', 'Personal Essentials', 'Housing', 'Transportation', 'Health Care', 'Mental Health', 'Crisis Services', 'Family', 'Education', 'Employment', 'Community', 'Legal', 'Senior Services', 'Veteran Services'];
-// let arrKeywords = []
-// let arrAllServices = []
-
-// function createPills(){
-//   // console.log(uniqueKeywords)
-// }
-
-/* <div id="pillINeedFood" class="pill pt-2">
-  <i class="bi bi-person white gold rounded-start"></i>
-  <span class="pill-text bigger fw-light light_grey clr-dark-navy rounded-end">
-      Food
-  </span>
-</div> */
-
-
-// async function getKeywords() {
-//     try{
-//         //Get the list of services from api
-//         let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
-//         let servData = await servResponse.json()
-//         arrAllServices = servData
-
-//         // Get all of the keywords
-//         servData.forEach(element => {
-//             let strTagList = getTagList(element)
-
-//             console.log("element: ", element)        // see the raw data
-//             console.log("strTagList: ", strTagList) 
-
-//             strTagList.forEach(tag => {
-//                 arrKeywords.push(tag)
-//             });
-//         });
-//     } catch (objError){
-//         console.log('Error fetching objData', objError)
-//     }
-
-//     // Remove all duplicate instances from each array
-//     let uniqueKeywords = [...new Set(arrKeywords.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-    
-//     console.log("uniqueKeywords: " + uniqueKeywords)
-// }
-
-// getKeywords()
-
 // button handlers
 console.log("[iNeed] Delegated listener active");
-const defaultCardImage = "/Gov-AI/assets/images/placeholder-img.webp";
 
-function getLogoSrc(rawLogo) {
-  if (typeof rawLogo !== "string") return "";
-
-  const logo = rawLogo.trim();
-  if (!logo) return "";
-
-  const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return "";
-
-  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
-    return logo;
-  }
-  if (logo.startsWith("www.")) {
-    return `https://${logo}`;
-  }
-  return `/Gov-AI/assets/images/${logo}`;
+// shortened variable names for the categories
+const keywordCategories = {
+//"oneWord": "Long category name"
+  "Crisis": "Abuse and Crisis Intervention",
+  "Housing": "Housing and Home Repair",
+  "BasicNeeds": "Food and Basic Needs",
+  "Financial": "Financial and Legal Assistance",
+  "Transportation": "Transportation",
+  "Youth": "Children and Youth",
+  "Seniors": "Seniors, Aging, and Veterans",
+  "Health": "Health and Wellness",
+  "Education": "Education and Workforce Development",
+  "Business": "Small Business and Entrepreneur",
+  "Tourism": "Tourism and Events",
+  "Community": "Economic and Community Development"
+};
+// dictionary of keywordCategories and their database sub categories
+const oldKeywordLookUp = {
+//"main category": ["subcategory","subcategory"],
+  "Crisis": ["Abuse","Crisis Hotlines","Emergency Shelter"],
+  "Housing": ["Housing", "Housing - Financial Assistance","Utilities - Financial Assistance","Home Repair","In Home Services","Utilities","Emergency Shelter","Homeless"], 
+  "BasicNeeds": ["Meals","Food","Toiletries","Veteran Services","Veterans","Food Financial Assistance","Food Pantry","Clothing","Animals"], 
+  "Financial": ["Budgeting","Financial Assistance","Legal"],
+  "Transportation": ["Transportation","Public Transportaion","Drivers ED/DUI Classes"], 
+  "Youth": ["Child Care","Parenting","Youth Services"],
+  "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilties/Special Needs"],
+  "Health": ["Health Care","In Home Services","Primary Care","Special Needs" ,"Wellness", "Pregnancy", "Mental Health", "Disabilities", "Substance Abuse & Addiction","Wellness/Support Groups"],
+  "Education": ["Education","Employment","Workforce Development"],
+  "Business": ["Small Business", "Entrepreneur", "Economic Development"],
+  "Tourism": ["Recreation","Tourism and Recreation","Calendar of Events"],
+  "Community": ["Community Development"]
+}
+// empty list of all IDs sorted by keywordCategories
+let sortedIDCategories = {
+//"main category": [],
+  "Crisis": [],
+  "Housing": [],
+  "BasicNeeds": [],
+  "Financial": [],
+  "Transportation": [],
+  "Youth": [],
+  "Seniors": [],
+  "Health": [],
+  "Education": [],
+  "Business": [],
+  "Tourism": [],
+  "Community": []
 }
 
-document.addEventListener("click", (e) => {
-
-  const foodBtn = e.target.closest("#pillINeedFood");
-  const housingBtn = e.target.closest("#pillINeedHousing");
-  const transportBtn = e.target.closest("#pillINeedTransportation");
-  const childcareBtn = e.target.closest("#pillINeedChildCare");
-
-  if (foodBtn) {
-    loadCardsByCategory("food");
-  }
-
-  if (housingBtn) {
-    loadCardsByCategory("housing");
-  }
-
-  if (transportBtn) {
-    loadCardsByCategory("transportation");
-  }
-
-  if (childcareBtn) {
-    loadCardsByCategory("childcare");
-  }
-
-});
-
-
-// cherry picked ID for each pill
-function getIdsByCategory(category) {
-  switch (category) {
-    case "food":
-      return [42,57,93,428];
-
-    case "housing":
-      return [53, 65, 91, 176 ];
-
-    case "transportation":
-      return [482,491,492,493];
-
-    case "childcare":
-      return [359, 372, 389]; 
-
-    default:
-      console.warn("[iNeed] Unknown category:", category);
-      return [];
-  }
-}
-
-
-// gets information from the database api for the cards
-async function loadCardsByCategory(category) {
-  const ids = getIdsByCategory(category);
-
-  const container = document.getElementById("divINeedContent");
-
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = "<p>Loading services...</p>";
-
-  console.log("[iNeed] Loading category:", category, "with IDs:", ids);
-
-  try {
-
-    const requests = ids.map(id => {
-      const url = `https://ucassist.duckdns.org/service?id=${id}`;
-
-      return fetch(url)
-        .then(res => {
-          return res.json();
-        });
-    });
-
-    const services = await Promise.all(requests);
-
-    container.innerHTML = "";
-
-    services.forEach(service => {
-      container.appendChild(createCard(service, category));
-    });
-
-  } catch (error) {
-    console.error("[iNeed] Error loading services:", error);
-    container.innerHTML = "<p>Please try again later.</p>";
-  }
-}
-
-
-export function getCounties(service){
-  const strCounties = service.CountiesAvailable;
-  let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
-  let count = 0
-  let innerHTML = `<div>`
-
-  // console.log(service.NameOfService + " counties: ")
-
-  arrCounties.forEach(county => {
-    if (count < 3){ // displays max three counties
-      innerHTML += `<span class="badge rounded-pill bg-secondary me-1 mb-2">${county}</span>`
-      count++
-    }
-    else{
-      count ++
-    }
-    
+window.addEventListener('load', (event) => {
+  // gets database keywords and populates sortedIDCategories
+  getUniqueKeywords()
+  //populating pills
+  const container = document.getElementById("divINeedPills");
+  Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
+    const pill = createPills(keyword, fullword);
+    container.innerHTML += pill;
   })
 
-  if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
-      innerHTML = `<div><span class="badge rounded-pill bg-secondary me-1 mb-2">All Counties</span>`
-    } else if (count > 3) { // tells user how many more counties are available if there are more than three
-      innerHTML += `<smaller class="row"> + ${count - 3} counties</smaller>`
-    }
-  innerHTML += `</div>`
-  return innerHTML;
+  //javascript for scroll buttons
+  const pillsContainer = document.getElementById("divINeedPills");
+  document.getElementById("scrollLeftPills").onclick = () => {
+    pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
+  };
+  document.getElementById("scrollRightPills").onclick = () => {
+    pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
+  };
+  const contentContainer = document.getElementById("divINeedContent");
+  document.getElementById("scrollLeftContent").onclick = () => {
+    contentContainer.scrollBy({ left: -300, behavior: "smooth" });
+  };
+  document.getElementById("scrollRightContent").onclick = () => {
+    contentContainer.scrollBy({ left: 300, behavior: "smooth" });
+};
+})
+
+//EVENT LISTENER for pills (delegated to the document since pills are generated dynamically)
+document.addEventListener("click", (e) => {
+  const clickedCard = e.target.closest(".iNeedHover");
+  if (clickedCard) {
+    // Remove "selected" from all cards
+    document.querySelectorAll(".iNeedHover").forEach(card => {
+      card.classList.remove("selected");
+    });
+    // Add "selected" to the clicked card
+    clickedCard.classList.add("selected");
+    console.log("[iNeed] Clicked card ID:", clickedCard.id.replace("pillINeed", ""));
+    loadCardsByCategory(clickedCard.id.replace("pillINeed", ""));
+
+    
+  }
+});
+
+// populating the pills based on the keywords in the database
+function createPills(keyword, fullword){
+  const col = document.createElement("div");
+  col.className = "card col-12 mb-3 m-2 iNeedHover";
+  col.style.width = "14rem";
+  col.id = `pillINeed${keyword}`;
+
+  const img = document.createElement("img");
+  img.className = "card-img-top";
+  img.alt = fullword;
+  img.style.maxHeight = "100px";
+  img.style.objectFit = "cover";
+  // img.src = getImgSrc(keyword);
+  img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
+
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+
+  const content = document.createElement("h5");
+  content.className = "card-title";
+  content.textContent = fullword;
+
+  // makes card clickable
+  const btn = document.createElement("a");
+  btn.className = "stretched-link";
+  btn.href = "#";
+
+  col.appendChild(img);
+  body.appendChild(content);
+  col.appendChild(body);
+  col.appendChild(btn);
+  return col.outerHTML;
 }
-
-
-// function inCounty(service){
-//   let strCurrCounty = sessionStorage.getItem("currCounty");
-//   let arrServiceCounties = service.CountiesAvailable;
-
-//   let isServiced = arrServiceCounties.search(new RegExp(strCurrCounty, "i"))
-
-//   if (isServiced != -1){ // if not found, returns -1
-//     let html = `<p class="card-text text-danger">Available in ${strCurrCounty}!</p>`;
-//     return html;
-//   } else {
-//     return "";
-//   } 
-// }
-
 
 // creates the html for the cards
 function createCard(service, category) {
   const col = document.createElement("div");
-  console.log(service)
   col.className = "card m-2 col-12 border border-2 border-secondary rounded";
-  col.style.maxWidth = "16rem";
+  col.style.maxWidth = "14rem";
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
+
+  if(!isInCounty(service)){
+    return "";
+  }
 
   // WEBSITE BUTTON
   if (service.Website && service.Website !== "N/A") {
@@ -224,39 +156,7 @@ function createCard(service, category) {
   } else {
   }
 
-  // FALLBACK IMAGE
-  if (!imgPhoto || imgPhoto === "N/A") {
-    // console.log("[iNeed] Using fallback image for category:", category);
 
-    switch (category) {
-      case "food":
-        imgPhoto = "../../assets/images/iNeedFood.jpg";
-        break;
-
-      case "housing":
-        imgPhoto = "../../assets/images/iNeedHousing.jpg";
-        break;
-
-      case "childcare":
-        imgPhoto = "../../assets/images/iNeedChildCare.jpg";
-        break;
-
-      case "transportation":
-        imgPhoto = "../../assets/images/iNeedTransportation.jpg";
-        break;
-
-      default:
-        imgPhoto = "../../assets/images/placeholder-img.webp";
-    }
-  }
-
-  // try {
-  //   // inCounty(service)
-  //   getCounties(service)
-  //   console.log("here: " + getCounties(service))
-  // } catch (error) {
-  //   console.error("[iNeed] Error getCounties:", error);
-  // }
 
   col.innerHTML = `
     <img src="${imgPhoto}" class="card-img-top p-3" alt="${service.OrganizationName}" style="max-height: 150px; object-fit: contain;">
@@ -276,8 +176,183 @@ function createCard(service, category) {
   return col;
 }
 
+async function getUniqueKeywords(){
+  try{
+    //call database api to get all services
+    let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+    let servData = await servResponse.json()
+    let arrTagList = []
+
+    // loops through every service in the database for keywords list
+    servData.forEach((element) => {
+      let currKeywords = element.Keywords
+      currKeywords = currKeywords.replace(/["'\[\]]/g, '').split(",").map(keyword => keyword.trim());
+      sortIDsByKeyword(currKeywords, element.ID)
+
+      arrTagList = arrTagList.concat(currKeywords);
+
+      // safety check
+      if (!Array.isArray(arrTagList)) return;
+
+    });
+
+    let uniqueServiceTypes = [...new Set(arrTagList.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+  } catch (objError){
+    console.error("[iNeed] Error fetching services:", objError);
+  }
+}
+
+//takes a service id and their keywords array
+function sortIDsByKeyword(arrKeywords, id){  
+  // compares service keyword with oldKeywordLookUp to get pill category name
+  arrKeywords.forEach(keyword => {
+    const category = Object.keys(oldKeywordLookUp).find(cat => oldKeywordLookUp[cat].includes(keyword))
+    if (category in sortedIDCategories) {
+      sortedIDCategories[category].push(id); 
+    }
+    else (
+      console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
+    )
+  })
+}
+
+function getImgSrc(keyword) {
+  let basePath = "assets/images/iNeed/"
+  let imgSrcLookUp = {
+    "Crisis": " ",
+    "Housing": "INeedHousing.jpg", 
+    "BasicNeeds": "iNeedFood.jpg", 
+    "Financial": "",
+    "Transportation": "placeholder-img.png", 
+    "Youth": "iNeedChildCare.jpg",
+    "Seniors": "Seniors, Aging, and Veterans",
+    "Health": "Health and Wellness",
+    "Education": "Education and Workforce Development",
+    "Business": "Small Business and Entrepreneur",
+    "Tourism": "Tourism and Events",
+    "Community": "Economic and Community Development"
+  }
+
+  return basePath + imgSrcLookUp[keyword]
+}
+
+
+
+// gets information from the database api for the cards
+async function loadCardsByCategory(category) {
+  const arrIDs = sortedIDCategories[category];
+  const container = document.getElementById("divINeedContent");
+
+  if (!container) {
+    return;
+  }
+
+  container.innerHTML = "<p>Loading services...</p>";
+
+  console.log("[loadCardsByCategory] Loading category:", category);
+
+  try {
+
+    const requests = arrIDs.map(id => {
+      const url = `https://ucassist.duckdns.org/service?id=${id}`;
+
+      return fetch(url)
+        .then(res => {
+          return res.json();
+        });
+    });
+
+    const services = await Promise.all(requests);
+
+    container.innerHTML = "";
+    let count = 0
+    services.forEach(service => {
+      let newCard = createCard(service, category)
+      if(count < 7){
+        if (newCard == ""){
+          return;
+        } else{
+          count ++
+          container.appendChild(newCard)
+        }
+      }
+    });
+  } catch (error) {
+    console.error("[iNeed] Error loading services:", error);
+    container.innerHTML = "<p>Please try again later.</p>";
+  }
+}
+
+function isInCounty(service){
+  const strCounties = service.CountiesAvailable.toLowerCase();
+  let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
+
+  const userSelectedCounty = sessionStorage.getItem("currCounty")
+
+  if(!strCounties.includes(userSelectedCounty)){
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+export function getCounties(service){
+  const strCounties = service.CountiesAvailable.toLowerCase();
+  let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
+  let count = 0
+  let innerHTML = `<div class="row mx-auto">`
+
+  const userSelectedCounty = sessionStorage.getItem("currCounty")
+
+  if(!strCounties.includes(userSelectedCounty)){
+    return;
+  }
+
+  arrCounties.forEach(county => {
+    if (count < 1){ // displays max three counties
+      innerHTML += `<span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
+      count++
+    }
+    else{
+      count ++
+    }
+    
+  })
+
+  if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
+    innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">All Counties</span>`
+  } else if (count == 2) { // tells user how many more counties are available if there are more than three
+    innerHTML += `<smaller class="col-auto"> + ${count - 1} county</smaller>`
+    // console.log("[getCounties] arrCounties: ", arrCounties)
+  } else if (count > 2) {
+    innerHTML += `<smaller class="col-auto"> + ${count - 1} counties</smaller>`
+  }
+
+  innerHTML += `</div>`
+  return innerHTML;
+}
+
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
     fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
-    window.location.href = `../../../html/pages/service.html?id=${page_id}`;
+    window.location.href = `/Gov-AI/html/pages/service.html?id=${page_id}`;
+}
+
+function getLogoSrc(rawLogo) {
+  if (typeof rawLogo !== "string") return "";
+
+  const logo = rawLogo.trim();
+  if (!logo) return "";
+
+  const lowered = logo.toLowerCase();
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.png`;
+
+  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+    return logo;
+  }
+  if (logo.startsWith("www.")) {
+    return `https://${logo}`;
+  }
+  return `/Gov-AI/assets/images/${logo}`;
 }
