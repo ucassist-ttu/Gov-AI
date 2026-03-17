@@ -573,6 +573,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
 
 // Returns an array of all selected check boxed from a container
 function getSelectedCheckboxes(containerId) {
+  console.log()
     return Array.from(
         document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
     ).map(el => el.value);

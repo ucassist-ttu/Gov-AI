@@ -37,16 +37,10 @@
     box-sizing: border-box;
   }
   .search-input{
-    flex: 1;
+    .search-input {
     font-size: clamp(1.2rem, 5vh, 1.5rem);
-    align-self: center;
-    border: 0px !important;
-    outline: none !important;
-    box-shadow: none !important; 
     color: var(--dark-navy);
-    width: 100% !important;
-    margin-bottom: 0px !important;
-    padding: 0px !important;
+}
   } 
   .divider-vertical {
     display: flex;
