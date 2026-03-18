@@ -149,7 +149,7 @@
     color: var(--dark-navy);
   }
   .ai-results{
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background: linear-gradient(173deg, var(--gold) 10.87%, var(--dark-navy), var(--accent-blue) 92%);
   }
   .ai-results .page{
     padding-inline: 100px;
@@ -196,7 +196,7 @@
     color: var(--dark-navy);
   }
   .ai-results{
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background: linear-gradient(173deg, var(--dark-navy) 10.87%, var(--gold) 50.04%, #3E4450 92%);
   }
   .ai-results .page{
     padding-inline: 20%;

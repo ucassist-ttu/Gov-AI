@@ -2,17 +2,47 @@ import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
 let printed = false;
 
+document.addEventListener("DOMContentLoaded", function() {
+    let AIContainer = document.querySelector('#suggestedResources');
+    strHeader = document.querySelector("#txtHeader");
+
+    if (!AIContainer || !strHeader) {
+        console.error("Required AI results elements are missing from the page.");
+        return;
+    }
+    // grabs prompt from session storage
+    const prompt = sessionStorage.getItem("user_prompt");
+    console.log("[ai_results.js] prompt: ", prompt)
+
+    //this should never happen beacuse of the sweet alert on index.js:ln 12
+    if (!prompt) {
+        strHeader.innerHTML = "Oops! Looks like you didn't enter anything."
+        console.log("No prompt found in sessionStorage.");
+        AIContainer.innerHTML = `<p class="mt-3 ">Please return to home and try again.</p>`; //error message
+        return;
+    }
+    else{ getAIRecommendations(prompt)}
+});
+
 async function getAIRecommendations(userPrompt) {
-    printed = false;
     let AIContainer = document.querySelector('#suggestedResources');
     let headerEl = strHeader || document.querySelector("#txtHeader");
+
     if (!AIContainer || !headerEl) {
         console.error("Required AI results elements are missing from the page.");
         return;
     }
-    AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; //placeholder text during loading
+
+    //placeholder text while loading the ai results
+
+    AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; 
+    
+    //calls ai api
     try{
-        const servResponse = await fetch(`https://ucassist.duckdns.org/prompt`, { //calls ai api
+        console.log("Sending response:", data);
+        res.json(data);
+        
+        const servResponse = await fetch(`https://ucassist.duckdns.org/prompt`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({user_input: userPrompt})
@@ -22,8 +52,12 @@ async function getAIRecommendations(userPrompt) {
         if (!servResponse.ok) {
             throw new Error(`HTTP error! status: ${servResponse.status}`);
         }
+        const text = await servResponse.text();
+        let aiData = ""//await servResponse.json()
 
-        let aiData = await servResponse.json()
+        console.log("RAW RESPONSE:", text);
+
+
         AIContainer.innerHTML = ""; //clears away loading placeholder text
 
         // Backend returns an array directly for /prompt, but support { services: [...] } too.
@@ -62,7 +96,8 @@ async function getAIRecommendations(userPrompt) {
 
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
-            AIContainer.innerHTML = `<p class="mt-3">Try a different prompt or browse all available services.</p>`;
+            AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try rephrasing your question or browse all available services on the Find Services page.</p>
+                                     <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Find Services <i class="bi bi-caret-right-fill"></i></a>`;
 
             console.log("0 Result AI Search", {
                 page: window.location.pathname,
@@ -79,43 +114,27 @@ async function getAIRecommendations(userPrompt) {
         if (headerEl) {
             headerEl.innerHTML = "Oops! We're having trouble answering your request.";
         }
-        AIContainer.innerHTML = `<p class="mt-3 ">Please try again later. In the meantime, feel free to browse all available services in the Find Services tab.</p>`; //error message
+        //error message
+        AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try again later. In the meantime, feel free to browse all available services in the Find Services tab. </p>
+                                 <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Go Now <i class="bi bi-caret-right-fill"></i></a>`;
     }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    let AIContainer = document.querySelector('#suggestedResources');
-    strHeader = document.querySelector("#txtHeader");
-
-    if (!AIContainer || !strHeader) {
-        console.error("Required AI results elements are missing from the page.");
-        return;
-    }
-
-    const prompt = sessionStorage.getItem("user_prompt"); // Get prompt
-    if (!prompt) {
-        strHeader.innerHTML = "Oops! Looks like you didn't enter anything."
-        console.log("No prompt found in sessionStorage.");
-        AIContainer.innerHTML = `<p class="mt-3 ">Please return to home and try again.</p>`; //error message
-        return;
-    }
-    else{ getAIRecommendations(prompt)}
-});
-document.querySelector("#btnHome").addEventListener("click", (e) => {
-    swal("Wait!", {
-        title: "Before you go",
-        text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
-        icon: "warning",
-        buttons: ["Leave page", "Stay and print"],
-    })
-    .then((travelHome) => {
-        if (!travelHome) {
-            window.location.href = "index.html"; // carries to ai_results page
-        } 
-        // else {
-        //     swal("Your imaginary file is safe!");
-        // }
-    });
-})
+// document.querySelector("#btnHome").addEventListener("click", (e) => {
+    // swal("Wait!", {
+    //     title: "Before you go",
+    //     text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
+    //     icon: "warning",
+    //     buttons: ["Leave page", "Stay and print"],
+    // })
+    // .then((travelHome) => {
+    //     if (!travelHome) {
+    //         window.location.href = "index.html"; // carries to ai_results page
+    //     } 
+    //     // else {
+    //     //     swal("Your imaginary file is safe!");
+    //     // }
+    // });
+// })
 
 document.addEventListener("click", (e) => {
     if (e.target.closest("#btnPrintPage")) {
