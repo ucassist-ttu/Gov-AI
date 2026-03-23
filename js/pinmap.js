@@ -21,85 +21,85 @@ const countyLabelCoords = {
 var foodIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-cup-hot-fill" style="font-size: 14px; color: #880E4F;"></i>
+            <i class="bi bi-cup-hot-fill" style="font-size: 25px; color: #880E4F;"></i>
          </div>`,
 });
 var personalEssentialsIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-person-walking" style="font-size: 14px; color: #006064;"></i>
+            <i class="bi bi-person-walking" style="font-size: 25px; color: #006064;"></i>
          </div>`,
 });
 var housingIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-house-fill" style="font-size: 14px; color: #5D4037;"></i>
+            <i class="bi bi-house-fill" style="font-size: 25px; color: #5D4037;"></i>
          </div>`,
 });
 var transportationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-taxi-front-fill" style="font-size: 14px; color: #E65100;"></i>
+            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;"></i>
          </div>`,
 });
 var healthCareIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-heart-pulse-fill" style="font-size: 14px; color: #C62828;"></i>
+            <i class="bi bi-heart-pulse-fill" style="font-size: 25px; color: #C62828;"></i>
          </div>`,
 });
 var crisisServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tornado" style="font-size: 14px; color: #B71C1C;"></i>
+            <i class="bi bi-tornado" style="font-size: 25px; color: #B71C1C;"></i>
          </div>`,
 });
 var familyIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-people-fill" style="font-size: 14px; color: #1565C0;"></i>
+            <i class="bi bi-people-fill" style="font-size: 25px; color: #1565C0;"></i>
          </div>`,
 });
 var educationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-mortarboard-fill" style="font-size: 14px; color: #0D47A1;"></i>
+            <i class="bi bi-mortarboard-fill" style="font-size: 25px; color: #0D47A1;"></i>
          </div>`,
 });
 var employementIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-building-fill" style="font-size: 14px; color: #2E7D32;"></i>
+            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;"></i>
          </div>`,
 });
 var communityIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-globe" style="font-size: 14px; color: #004D40;"></i>
+            <i class="bi bi-globe" style="font-size: 25px; color: #004D40;"></i>
          </div>`,
 });
 var legalIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-bank" style="font-size: 14px; color: #263238;"></i>
+            <i class="bi bi-bank" style="font-size: 25px; color: #263238;"></i>
          </div>`,
 });
 var seniorServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tree-fill" style="font-size: 14px; color: #1B5E20;"></i>
+            <i class="bi bi-tree-fill" style="font-size: 25px; color: #1B5E20;"></i>
          </div>`,
 });
 var veteranServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-star-fill" style="font-size: 14px; color: #4A148C;"></i>
+            <i class="bi bi-star-fill" style="font-size: 25px; color: #4A148C;"></i>
          </div>`,
 });
 var multiIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-boxes" style="font-size: 14px;"></i>
+            <i class="bi bi-boxes" style="font-size: 25px;"></i>
          </div>`,
 });
 
@@ -171,19 +171,24 @@ async function getGeoCode(service, iconTag) {
 // marks the services per county
 function markService (service, iconTag, address, ) {
   let marker = L.marker(address, { icon: iconTag }).addTo(map)
-  let strTags = getTagList(service)
   let straddress = `${service.ServiceAddress} ${service.CityStateZip}`.trim();
-  let strencoded = encodeURIComponent(straddress);          
+  let strencoded = encodeURIComponent(straddress); 
+  let strPhoneContact = ''
+  if (service.TelephoneContact != 'N/A'){
+      let telNumber = service.TelephoneContact.replace(/[^\d+]/g, '');
+      strPhoneContact = `<a href="tel:${telNumber}"><i class="bi bi-telephone p-2"></i><u>${service.TelephoneContact}</u></a>`
+  }          
   marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
-    <p class="mt-3 mb-1">Tags: ${strTags.join(', ')}</p>
-    <p class="mt-3 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`,
-  {
-  autoPan: true,
-  autoPanPadding: [50, 50],
-  keepInView: true
+    <p class="mt-1 mb-1">${strPhoneContact}</p>
+    <p class="mt-1 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`, {
+    autoPan: true,
+    autoPanPadding: [25, 50],
+    keepInView: true,
+    maxWidth: 250,
+    minWidth: 250
   })
   marker.on('click', function () {
-    map.setView(marker.getLatLng(), 13, {
+    map.setView(marker.getLatLng(), 14, {
         animate: true
     });
     marker.openPopup();
