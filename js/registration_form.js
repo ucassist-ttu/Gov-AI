@@ -3,7 +3,72 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentStep = 0;
   const progressSteps = document.querySelectorAll('.progress-step');
 
-  // Show the step section by index and update progress
+  // 🔥 NEW: Service list and tab functionality from example
+  const step3Container = document.getElementById('services-container');
+  const addServiceBtn = document.getElementById('addServiceBtn');
+  let serviceCount = 1;
+
+  if (step3Container && addServiceBtn) {
+    const serviceListContainer = document.createElement('div');
+    serviceListContainer.id = 'service-list';
+    serviceListContainer.className = 'mb-3 d-flex flex-column gap-2';
+
+    const firstServiceBlock = step3Container.querySelector('.service-block');
+    if (firstServiceBlock) step3Container.insertBefore(serviceListContainer, firstServiceBlock);
+
+    function createServiceTab(num) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-light text-start service-tab shadow-sm';
+      btn.dataset.service = num;
+      btn.style.width = '100%';
+      btn.innerHTML = `Service ${num}`;
+      return btn;
+    }
+
+    function updateActiveTab(selectedNum) {
+      const tabs = serviceListContainer.querySelectorAll('.service-tab');
+      tabs.forEach(tab => {
+        const num = parseInt(tab.dataset.service, 10);
+        tab.innerHTML = `Service ${num}`;
+        if (num === selectedNum) {
+          tab.classList.remove('btn-light');
+          tab.classList.add('btn-dark', 'active');
+        } else {
+          tab.classList.remove('btn-dark', 'active');
+          tab.classList.add('btn-light');
+        }
+      });
+    }
+
+    function showService(num) {
+      const allServices = step3Container.querySelectorAll('.service-block');
+      allServices.forEach(svc => { svc.style.display = 'none'; });
+      const selected = step3Container.querySelector(`.service-block[data-service="${num}"]`);
+      if (selected) {
+        selected.style.display = 'block';
+        serviceListContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      updateActiveTab(num);
+    }
+
+    const existingServices = step3Container.querySelectorAll('.service-block');
+    existingServices.forEach((serviceBlock, index) => {
+      const num = index + 1;
+      serviceBlock.setAttribute('data-service', num);
+      serviceBlock.style.display = num === 1 ? 'block' : 'none';
+    });
+    serviceListContainer.innerHTML = '';
+    serviceListContainer.appendChild(createServiceTab(1));
+    updateActiveTab(1);
+    serviceListContainer.addEventListener('click', e => {
+      const tab = e.target.closest('.service-tab');
+      if (tab) {
+        const num = parseInt(tab.dataset.service, 10);
+        showService(num);
+      }
+    });
+  }
   function showStep(index) {
     steps.forEach((stepId, i) => {
       const section = document.getElementById(stepId);
@@ -139,41 +204,25 @@ document.addEventListener('DOMContentLoaded', () => {
     setupAddHours(btn, container, '.time-range');
   });
 
-  // Handle adding another service dynamically
-  const addServiceBtn = document.getElementById('addServiceBtn');
-  let serviceCount = 1;
-
+  // 🔥 UPDATED: Add service button with example functionality
   addServiceBtn.addEventListener('click', () => {
     serviceCount++;
     const firstService = document.querySelector('.service-block');
+    if (!firstService) return;
+
     const newService = firstService.cloneNode(true);
-    const label = newService.querySelector('label.required');
-    if (label) {
-      label.textContent = `Service ${serviceCount}`;
-    }
-
+    suffixIds(newService, serviceCount);
     newService.setAttribute('data-service', serviceCount);
-
-    // Update IDs, names, and for attributes with suffix
-    function updateElementIds(element, suffix) {
-      if (element.id) element.id += suffix;
-      if (element.name) element.name += suffix;
-      if (element.htmlFor) element.htmlFor += suffix;
-      if (element.getAttribute('for')) element.setAttribute('for', element.getAttribute('for') + suffix);
-
-      if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
-        element.value = '';
-        if (element.type === 'checkbox') element.checked = false;
-      }
-      Array.from(element.children).forEach(child => updateElementIds(child, suffix));
-    }
-    updateElementIds(newService, serviceCount);
     const servicesContainer = document.getElementById('services-container');
     servicesContainer.insertBefore(newService, addServiceBtn);
-    const buttonContainer = document.querySelector('#form-step-3 .d-flex.gap-3');
-    if (buttonContainer) {
-      servicesContainer.appendChild(buttonContainer);
+
+    const serviceListContainer = document.getElementById('service-list');
+    if (serviceListContainer) {
+      serviceListContainer.appendChild(createServiceTab(serviceCount));
+      showService(serviceCount);
+      updateActiveTab(serviceCount);
     }
+
     const newHoursDiffer = newService.querySelector(`#hoursDiffer${serviceCount}`);
     const newServiceHoursContainer = newService.querySelector(`#serviceHoursContainer${serviceCount}`);
     setupHoursDiffer(newHoursDiffer, newServiceHoursContainer);
@@ -190,6 +239,20 @@ document.addEventListener('DOMContentLoaded', () => {
       setupAddHours(newAddBtn, newContainer, '.time-range');
     }
   });
+
+  function suffixIds(element, suffix) {
+    if (element.id) element.id += suffix;
+    if (element.name) element.name += suffix;
+    if (element.htmlFor) element.htmlFor += suffix;
+    if (element.getAttribute('for')) element.setAttribute('for', element.getAttribute('for') + suffix);
+
+    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+      element.value = '';
+      if (element.type === 'checkbox') element.checked = false;
+    }
+    Array.from(element.children).forEach(child => suffixIds(child, suffix));
+  }
+  // 🔥 END UPDATED ADD SERVICE
 
   function getFieldLabel(input) {
     if (input.id === 'physicalAddress') return 'Physical Address (Street)';
@@ -224,33 +287,45 @@ document.addEventListener('DOMContentLoaded', () => {
     return Array.from(checkboxes).some(cb => cb.checked);
   }
 
-  function collectFormErrors(form) {
-    let errors = [];
-    const requiredFields = form.querySelectorAll('[required]');
-    requiredFields.forEach(field => {
-      if (field.type === 'checkbox') return;
-      if (!field.checkValidity()) {
-        errors.push(getFieldLabel(field));
-      }
-    });
-    if (form.id === 'form-step-1') {
-      if (!isGroupChecked('#divKeywordsReg1', form)) {
-        errors.push("Keywords (Step 1)");
-      }
-    } else if (form.id === 'form-step-3') {
-      const services = form.querySelectorAll('.service-block');
-      services.forEach((block, index) => {
-        const serviceNum = index + 1;
-        if (!isGroupChecked('[id^="divCountiesReg"]', block)) {
-          errors.push(`Counties for Service ${serviceNum}`);
-        }
-        if (!isGroupChecked('[id^="divKeywordsReg"]', block)) {
-          errors.push(`Keywords for Service ${serviceNum}`);
-        }
-      });
+function collectFormErrors(form) {
+  let errors = [];
+
+  const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
+    // Exclude service-name and description inputs to handle separately with numbering
+    if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
+      return false;
     }
-    return errors;
+    return true;
+  });
+
+  requiredFields.forEach(field => {
+    if (field.type === 'checkbox') return;
+    if (!field.checkValidity()) {
+      errors.push(getFieldLabel(field));
+    }
+  });
+
+  if (form.id === 'form-step-1') {
+    if (!isGroupChecked('#divKeywordsReg1', form)) {
+      errors.push("Keywords (Step 1)");
+    }
   }
+
+  if (form.id === 'form-step-3') {
+    const services = form.querySelectorAll('.service-block');
+    services.forEach((block, index) => {
+      const serviceNum = index + 1;
+      const name = block.querySelector('input[id^="serviceName"]');
+      if (!name || !name.value.trim()) errors.push(`Service Name for Service ${serviceNum}`);
+      const desc = block.querySelector('textarea[id^="serviceDescription"]');
+      if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
+      if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
+      if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
+    });
+  }
+
+  return errors;
+}
 
   const formStep1 = document.getElementById('form-step-1');
   if (formStep1) {
@@ -472,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   fetchAndPopulateAllData();
 
-  // Phone and Zip masking
+  // Phone and Zip 
   document.addEventListener('input', e => {
     const target = e.target;
     const isPhone = target.id === 'phone' || target.id === 'primaryPhone' || target.id === 'secondaryPhone' || target.id.startsWith('servicePhone');
