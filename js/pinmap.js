@@ -176,11 +176,12 @@ function markService (service, iconTag, address, ) {
   let strPhoneContact = ''
   if (service.TelephoneContact != 'N/A'){
       let telNumber = service.TelephoneContact.replace(/[^\d+]/g, '');
-      strPhoneContact = `<a href="tel:${telNumber}"><i class="bi bi-telephone p-2"></i><u>${service.TelephoneContact}</u></a>`
+      strPhoneContact = `<a href="tel:${telNumber}"><i class="bi bi-telephone pe-2"></i><u>${service.TelephoneContact}</u></a>`
   }          
-  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
+  marker.bindPopup(`<h3 class="mt-4 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
+    <hr class="hr-gold" />
     <p class="mt-1 mb-1">${strPhoneContact}</p>
-    <p class="mt-1 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`, {
+    <p class="mt-1 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill pe-2"></i>${straddress}</u></a></p>`, {
     autoPan: true,
     autoPanPadding: [25, 50],
     keepInView: true,
