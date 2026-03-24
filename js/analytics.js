@@ -1,18 +1,6 @@
 // Time on Page
 let pageStartTime = Date.now();
 
-function sendTimeOnPage() {
-  const timeSpent = Math.round((Date.now() - pageStartTime) / 1000); // seconds
-  
-  console.log("Time spent on page", {
-    page: window.location.pathname,
-    timestamp: new Date().toISOString(),
-    timeSpent: timeSpent
-  });
-
-  // Send to backend
-}
-
 window.addEventListener("beforeunload", sendTimeOnPage);
 window.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") {
@@ -62,17 +50,6 @@ window.addEventListener("scroll", () => {
   if (scrollPercent > maxScroll) {
     maxScroll = scrollPercent;
   }
-});
-
-window.addEventListener("beforeunload", () => {
-  
-  console.log("Max scroll depth", {
-    page: window.location.pathname,
-    timestamp: new Date().toISOString(),
-    maxScroll: maxScroll
-  });
-
-  // Send to backend
 });
 
 // Rage Clicks
@@ -129,14 +106,20 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// General Page Engagement (pages visited)
-window.addEventListener("load", () => {
-  console.log("Page Visited", {
-    page: window.location.pathname,
-    timestamp: new Date().toISOString()
-  })
-});
+// composite method to track all analytics when leaving a page (completing a visit)
+window.addEventListener("beforeunload", () => {
+  const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
 
+  console.log("Page Visit Complete", {
+    page: window.location.pathname,
+    timeViewed: pageStartTime,
+    timeLeft: Date.now().toISOString(),
+    timeSpent: Math.round((Date.now() - pageStartTime) / 1000),
+    maxScoll: maxScroll,
+    pageViews: session.pageViews,
+    rageClicks: session.rageClicks
+  })
+})
 
 function generateMockAnalytics() {
 
@@ -147,7 +130,8 @@ const analytics = {
   timeOnPage: [],
   scrollDepth: [],
   bounces: [],
-  rageClicks: []
+  rageClicks: [],
+  aiResults: []
 };
 
 for (let i = 0; i < 150; i++) {
@@ -171,6 +155,21 @@ for (let i = 0; i < 150; i++) {
     timestamp,
     maxScroll: Math.floor(Math.random()*100)
   });
+
+  if(Math.random() < 0.45) {
+    analytics.aiResults.push({
+      page,
+      timestamp,
+      printed: true
+    })
+  }
+  else {
+    analytics.aiResults.push({
+      page,
+      timestamp,
+      printed: false
+    })
+  }
 
   if(Math.random() < 0.25){
     analytics.bounces.push({
