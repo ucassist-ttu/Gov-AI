@@ -56,7 +56,7 @@
 
   }
   .ai-results *{
-    color: white;
+    color: #ffffff;
   }
   .ai-results{
     display: flex;
@@ -375,61 +375,6 @@ nav {
   }
 }
 
-/*
-.form-header {
-  background-color: var(--dark-navy);
-  color: white;
-  padding: 16px 24px;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: left;
-  margin: 0;
-  width: 100vw;
-  
-}
-.form-container {
-  max-width: 100%;
-  margin: 32px auto 64px auto;
-  padding: 32px 48px;
-  border-radius: 6px;
-}
-.form-container p {
-  font-size: 17.6px;
-  margin-bottom: 24px;
-}
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-.required-asterisk {
-  color: #E14848;
-  margin-left: 4px;
-  font-weight: 700;
-}
-input[type="text"],
-input[type="email"] {
-  font-family: inherit;
-  width: 300px;
-  padding: 9.6px 16px;
-  font-size: 13px;
-  margin-bottom: 24px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-textarea {
-  font-family: inherit;
-  width: 100%;
-  padding: 9.6px 16px;
-  font-size: 16px;
-  margin-bottom: 24px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  box-sizing: border-box;
-  min-height: 140px;
-}   */
 
 .page-tag {
     /* margin-top: 75px; */
@@ -866,19 +811,7 @@ footer img {
     border-width: 100px;
     border-left-color: #afbeee;
 }
-/* .search-bar { Olivias Maybe?
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    width: calc(100% - 80px);
-    margin: 40px;
-    border: 2px solid #606A76;
-    color: #1E222E;
-}
-.search-bar:focus {
-  border-color: #1E222E;
-} */
+
 .background_filter_image {
   width: 100vw;
   height: 350px;
@@ -1620,10 +1553,6 @@ p{
   margin-right: 10px;
   color: var(--dark-navy);
 }
-/* .star:hover,
-.star:hover ~ .star {
-  color: gold !important;
-} */
 .star.selected,
 .star.selected ~ .star {
   color: goldenrod !important;
@@ -1661,25 +1590,6 @@ p{
 .stats-select label{
   min-width: 130px;
 }
-/* .stats-select label{
-  padding-top: 10px;
-}
-.stats-select label{
-  margin-left: 25px;
-  margin-bottom: 5px;
-  font-size: 17px;
-}
-.stats-select select{
-  margin: 0 auto;
-  width: 80%;
-} */
-/* .stats-select hr {
-  background-color: var(--gold);
-  height: 3px;
-  margin-left: 20px;
-  margin-right: 20px;
-} */
-
 .landing-img-height{
   height:65vh;
 }
@@ -1690,3 +1600,19 @@ p{
     height: 30px !important;
     line-height: 30px !important;
 }
+.iNeedHover:hover {
+  background-color: var(--light-grey);
+}
+.card.iNeedHover.selected,
+.card.iNeedHover.selected *{
+  background-color: var(--gold); /*change to dark navy*/
+  color: white !important;
+}
+/* removes scroll bar from iNeed section */
+.scrollmenu {
+  scrollbar-width: none;
+}
+.scrollmenu::-webkit-scrollbar {
+  display: none;
+}
+

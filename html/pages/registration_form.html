@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css"/>
   <title>Registration Form</title>
 </head>
 <body>
@@ -47,23 +47,23 @@
       </div>
       <form id="form-step-1" novalidate>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Company Name</label>
+          <label class="fw-semibold dark-navy">Company Name <span class="text-danger">*</span></label>
           <input type="text" class="form-control border-2 rounded p-2 px-3" required />
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Organization Description</label>
+          <label class="fw-semibold dark-navy">Organization Description <span class="text-danger">*</span></label>
           <textarea class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" required></textarea>
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Phone Number</label>
+          <label class="fw-semibold dark-navy">Phone Number <span class="text-danger">*</span></label>
           <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Website / URL</label>
+          <label class="fw-semibold dark-navy">Website / URL <span class="text-danger">*</span></label>
           <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" required />
         </div>
         <fieldset class="mb-2">
-          <label class="fw-semibold dark-navy required">Physical Address</label>
+          <label class="fw-semibold dark-navy">Physical Address <span class="text-danger">*</span></label>
           <input type="text" name="address1" id="physicalAddress" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." required aria-required="true" />
           <div class="row g-2 mb-2">
             <div class="col">
@@ -132,7 +132,7 @@
           </div>
         </fieldset>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Keywords</label>
+          <label class="fw-semibold dark-navy">Keywords <span class="text-danger">*</span></label>
           <div id="btnKeywordsReg1" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2"><span>All That Apply</span><i class="bi bi-caret-down-fill"></i></div>
           <div id="divOuterKeywordsReg1" class="form-check outer-layer">
             <hr />
@@ -141,7 +141,7 @@
         </div>
         <div class="mb-3">
           <div class="time-ranges">
-            <label class="fw-semibold dark-navy required">Hours of Operation</label>
+            <label class="fw-semibold dark-navy">Hours of Operation <span class="text-danger">*</span></label>
             <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2">
               <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" required>
                 <option value="" disabled selected>Day</option>
@@ -153,7 +153,7 @@
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
               </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3 " required>
+              <select class="form-select form-control border-2 rounded p-2 px-3" required>
                 <option value="" disabled selected>Start</option>
               </select>
               <select class="form-select form-control border-2 rounded p-2 px-3" required>
@@ -177,7 +177,7 @@
         </div>
    <div class="mb-4">
   <label class="fw-semibold">
-    Logo <small class="text-muted fst-italic">(Please keep in mind the logo will be placed on a dark navy background)</small>
+    Logo <small class="text-muted mt-1 fst-italic">(Please keep in mind the logo will be placed on a dark navy background)</small>
   </label>
 
   <label for="upload"
@@ -210,7 +210,7 @@
 <section id="step-2" class="form-step d-none" aria-labelledby="private-info-title">
   <div class="form-info mb-4" role="region" aria-labelledby="private-info-title">
     <strong id="private-info-title" class="d-block mb-1">Organization Information - Private</strong>
-    <small class="text-muted">
+    <small class="text-muted mt-1 d-block fst-italic">
       This information is for UCAssist staff to reach out to you and will not be displayed to the customers.
     </small>
   </div>
@@ -218,15 +218,15 @@
   <form id="form-step-2" novalidate>
     <h5 class="mb-3">Primary Contact</h5>
     <div class="mb-3">
-      <label for="primaryName" class="fw-semibold dark-navy required">Name</label>
+      <label for="primaryName" class="fw-semibold dark-navy">Name <span class="text-danger">*</span></label>
       <input type="text" id="primaryName" name="primaryName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
     </div>
     <div class="mb-3">
-      <label for="primaryEmail" class="fw-semibold dark-navy required">Email</label>
+      <label for="primaryEmail" class="fw-semibold dark-navy">Email <span class="text-danger">*</span></label>
       <input type="email" id="primaryEmail" name="primaryEmail" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
     </div>
     <div class="mb-3">
-      <label for="primaryPhone" class="fw-semibold dark-navy required">Phone Number</label>
+      <label for="primaryPhone" class="fw-semibold dark-navy">Phone Number <span class="text-danger">*</span></label>
       <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
     </div>
     <div class="mb-3">
@@ -262,7 +262,7 @@
 <section id="step-3" class="form-step d-none" aria-labelledby="register-services-title">
   <div class="form-info mb-4" role="region" aria-labelledby="register-services-title">
     <strong id="register-services-title" class="d-block mb-1">Register Services</strong>
-    <small class="text-muted">
+    <small class="text-muted mt-1 d-block fst-italic">
       Register all of your services or resources your organization offers.<br />Once you register your services you will be able to edit them using our edit service form from the previous page.
     </small>
   </div>
@@ -271,19 +271,19 @@
     <div id="services-container">
       <div class="service-block mb-4" data-service="1">
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Service Name</label>
+          <label class="fw-semibold dark-navy">Service Name <span class="text-danger">*</span></label>
           <input type="text" id="serviceName" name="serviceName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Service Description</label>
+          <label class="fw-semibold dark-navy">Service Description <span class="text-danger">*</span></label>
           <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4"></textarea>
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy">Service Criteria <small class="text-muted fst-italic">This will be displayed to the customer.</small></label>
+          <label class="fw-semibold dark-navy">Service Criteria <small class="text-muted d-block mt-1 fst-italic">This will be displayed to the customer.</small></label>
           <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" />
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Counties Offered In</label>
+          <label class="fw-semibold dark-navy">Counties Offered In <span class="text-danger">*</span></label>
           <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
           <div id="divOuterCountiesReg" class="form-check outer-layer">
             <hr />
@@ -291,125 +291,144 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Keywords</label>
+          <label class="fw-semibold dark-navy">Keywords <span class="text-danger">*</span></label>
           <div id="btnKeywordsReg" class="form-control d-flex justify-content-between align-items-center border-2 rounded p-2 px-3 mb-2"><span>Check All That Apply </span> <i class="bi bi-caret-down-fill"></i></div>
           <div id="divOuterKeywordsReg" class="form-check outer-layer">
             <hr />
             <div id="divKeywordsReg" class="form-check"></div>
           </div>
         </div>
-        <div class="checkbox mb-3" style="padding-left: 0;">
-          <input type="checkbox" class="form-check-input" id="separatePhone" name="separatePhone" />
-          <label for="separatePhone" class="form-check-label dark-navy">Separate phone number for this service?</label>
-        </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy required">Phone Number</label>
-          <input type="tel" id="servicePhone" name="servicePhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
-        </div>
+<!-- Phone Number Section -->
+<div class="checkbox mb-3" style="padding-left: 0;">
+  <input type="checkbox" class="form-check-input" id="separatePhone1" name="separatePhone1" />
+  <label for="separatePhone1" class="form-check-label dark-navy">Separate phone number for this service?</label>
+</div>
+<div class="service-phone-container mb-3" style="display: none;">
+  <label class="fw-semibold dark-navy">Phone Number</label>
+  <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" />
+</div>
 
-        <div class="checkbox mb-3" style="padding-left: 0;">
-          <input type="checkbox" class="form-check-input" id="separateAddress" name="separateAddress" />
-          <label for="separateAddress" class="form-check-label dark-navy">Separate address for this service?</label>
-        </div>
-
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Physical Address</label>
-          <input type="text" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." />
-          <select class="form-control border-2 rounded p-2 px-3 mb-2 service-city-select">
-            <option value="" disabled selected>Select City</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
-            <option value="CT">Connecticut</option>
-            <option value="DE">Delaware</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-            <option value="HI">Hawaii</option>
-            <option value="ID">Idaho</option>
-            <option value="IL">Illinois</option>
-            <option value="IN">Indiana</option>
-            <option value="IA">Iowa</option>
-            <option value="KS">Kansas</option>
-            <option value="KY">Kentucky</option>
-            <option value="LA">Louisiana</option>
-            <option value="ME">Maine</option>
-            <option value="MD">Maryland</option>
-            <option value="MA">Massachusetts</option>
-            <option value="MI">Michigan</option>
-            <option value="MN">Minnesota</option>
-            <option value="MS">Mississippi</option>
-            <option value="MO">Missouri</option>
-            <option value="MT">Montana</option>
-            <option value="NE">Nebraska</option>
-            <option value="NV">Nevada</option>
-            <option value="NH">New Hampshire</option>
-            <option value="NJ">New Jersey</option>
-            <option value="NM">New Mexico</option>
-            <option value="NY">New York</option>
-            <option value="NC">North Carolina</option>
-            <option value="ND">North Dakota</option>
-            <option value="OH">Ohio</option>
-            <option value="OK">Oklahoma</option>
-            <option value="OR">Oregon</option>
-            <option value="PA">Pennsylvania</option>
-            <option value="RI">Rhode Island</option>
-            <option value="SC">South Carolina</option>
-            <option value="SD">South Dakota</option>
-            <option value="TN">Tennessee</option>
-            <option value="TX">Texas</option>
-            <option value="UT">Utah</option>
-            <option value="VT">Vermont</option>
-            <option value="VA">Virginia</option>
-            <option value="WA">Washington</option>
-            <option value="WV">West Virginia</option>
-            <option value="WI">Wisconsin</option>
-            <option value="WY">Wyoming</option>
-          </select>
-          <div style="max-width: 150px;">
-            <input type="text" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="Zip Code" />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <div class="time-ranges">
-            <label class="fw-semibold dark-navy required">Hours of Operation</label>
-            <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2">
-              <select class="form-select form-control border-2 rounded p-2 px-3 fs-6 " required>
-                <option value="" disabled selected>Day</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3 " required>
-                <option value="" disabled selected>Start</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required>
-                <option value="" disabled selected>AM/PM</option>
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-              <span class="me-2">-</span>
-              <select class="form-select form-control border-2 rounded p-2 px-3 me-2">
-                <option value="" disabled selected>End</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3 me-2">
-                <option value="" disabled selected>AM/PM</option>
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-              <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" style="display: none;">Remove</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary add-hours">+ Add Hours</button>
-        </div>
+<!-- Physical Address Section -->
+<div class="checkbox mb-3" style="padding-left: 0;">
+  <input type="checkbox" class="form-check-input" id="separateAddress1" name="separateAddress1" />
+  <label for="separateAddress1" class="form-check-label dark-navy">Separate address for this service?</label>
+</div>
+<div class="service-address-container mb-3" style="display: none;">
+  <label class="fw-semibold dark-navy">Physical Address</label>
+  <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." />
+  <div class="row g-2">
+    <div class="col-md-6">
+      <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select">
+        <option value="" disabled selected>Select City</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3">
+                <option value="" disabled selected>State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+        <input type="text" id="serviceZip1" name="serviceZip1" class="form-control border-2 rounded p-2 px-3" placeholder="Zip Code" />
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Hours Section -->
+<div class="checkbox mb-3" style="padding-left: 0;">
+  <input type="checkbox" class="form-check-input" id="separateHours1" name="separateHours1" />
+  <label for="separateHours1" class="form-check-label dark-navy">Do service hours of operation differ from organization hours of operation?
+    <small class="text-muted d-block mt-1 fst-italic">
+      ex: Monday 8am - 2pm
+    </small>
+  </label>
+</div>
+<div class="service-hours-container mb-3" style="display: none;">
+  <label class="fw-semibold dark-navy">Hours of Operation</label>
+  <div class="time-ranges">
+    <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2">
+      <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" >
+        <option value="" disabled selected>Day</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+      </select>
+      <select class="form-select form-control border-2 rounded p-2 px-3" >
+        <option value="" disabled selected>Start</option>
+      </select>
+      <select class="form-select form-control border-2 rounded p-2 px-3" >
+        <option value="" disabled selected>AM/PM</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+      <span class="me-2">-</span>
+      <select class="form-select form-control border-2 rounded p-2 px-3" >
+        <option value="" disabled selected>End</option>
+      </select>
+      <select class="form-select form-control border-2 rounded p-2 px-3">
+        <option value="" disabled selected>AM/PM</option>
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
+      <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2">Remove</button>
+    </div>
+  </div>
+  <button type="button" class="btn btn-sm btn-outline-secondary add-hours">+ Add Hours</button>
+</div>
       <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn">+ Add Another Service</button>
       <div class="d-flex gap-3 mt-3">
         <button type="submit" class="submit-btn">Submit</button>
