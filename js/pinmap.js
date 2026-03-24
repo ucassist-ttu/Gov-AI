@@ -3,20 +3,20 @@ var arrMarkers = []
 let countiesLayer = null;
 var map = null;
 const countyLabelCoords = {
-  "Cannon": [35.8000, -86.1000],
-  "Clay": [36.5457, -85.5458],
+  "Cannon": [35.8100, -86.1100],
+  "Clay": [36.5657, -85.5458],
   "Cumberland": [35.9523, -85.1000],
   "DeKalb": [35.9864, -85.8800],
   "Fentress": [36.3698, -85.0000],
   "Jackson": [36.3542, -85.7300],
   "Macon": [36.5377, -86.0500],
-  "Overton": [36.3500, -85.3300],
-  "Pickett": [36.5593, -85.1757],
-  "Putnam": [36.1500, -85.5016],
+  "Overton": [36.3500, -85.3500],
+  "Pickett": [36.5693, -85.2000],
+  "Putnam": [36.1500, -85.5416],
   "Smith": [36.2556, -85.9920],
-  "Van Buren": [35.7100, -85.4600],
+  "Van Buren": [35.7100, -85.5000],
   "Warren": [35.6782, -85.8100],
-  "White": [35.9300, -85.4700]
+  "White": [35.9300, -85.4900]
 };
 var foodIcon = L.divIcon({
     className: '',
@@ -258,7 +258,7 @@ async function loadAndMaskCounties() {
           pane: 'labelsPane',
           icon: L.divIcon({
             className: 'county-label',
-            html: countyName
+            html: countyName,
           }),
           interactive: false
         }).addTo(map);
