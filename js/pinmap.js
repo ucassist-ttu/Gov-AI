@@ -24,12 +24,6 @@ var foodIcon = L.divIcon({
             <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i>
          </div>`,
 });
-var tourismIcon = L.divIcon({
-    className: '',
-  html: `<div>
-            <i class="bi bi-camera-fill" style="font-size: 25px; color: #006064;"></i>
-         </div>`,
-});
 var housingIcon = L.divIcon({
     className: '',
   html: `<div>
@@ -389,17 +383,6 @@ document.querySelector("#btnFood").addEventListener("click", () => {
     }
 });
 
-// Opens the Tourism filter options
-document.querySelector("#btnTourism").addEventListener("click", () => {
-    if (document.querySelector('#divOuterTourism').style.display === 'none') {
-        document.querySelector('#divOuterTourism').style.display = 'block';
-        document.querySelector('#btnTourism').innerHTML = `<i class="bi bi-camera-fill" style="font-size: 20px; color: #006064;"></i> Tourism and Events <i class="bi bi-caret-up-fill"></i>`;
-    } else {
-        document.querySelector('#divOuterTourism').style.display = 'none';
-        document.querySelector('#btnTourism').innerHTML = `<i class="bi bi-camera-fill" style="font-size: 20px; color: #006064;"></i> Tourism and Events <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
 // Opens the Housing filter options
 document.querySelector("#btnHousing").addEventListener("click", () => {
     if (document.querySelector('#divOuterHousing').style.display === 'none') {
@@ -459,10 +442,10 @@ document.querySelector("#btnFamily").addEventListener("click", () => {
 document.querySelector("#btnEducation").addEventListener("click", () => {
     if (document.querySelector('#divOuterEducation').style.display === 'none') {
         document.querySelector('#divOuterEducation').style.display = 'block';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education and Workforce Development <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterEducation').style.display = 'none';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education and Workforce Development <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i>`;
     }
   })
 
@@ -534,10 +517,6 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     let lowKey = (strTags).map(c => c.toLowerCase());
     if (selectedFood.length > 0 && selectedFood.some(item => lowKey.includes(item))) {
       arrMatches.push("food");
-    }
-    if (selectedPersonalEssentials.length > 0 &&
-            selectedPersonalEssentials.some(item => lowKey.includes(item))) {
-      arrMatches.push("tourism");
     }
     if (selectedHousing.length > 0 &&
             selectedHousing.some(item => lowKey.includes(item))) {
@@ -615,9 +594,6 @@ function getMatchIcon (arrMatches) {
   if (arrMatches.length === 1) {
     if (arrMatches[0] === "food"){
       icon = foodIcon
-    }
-    if (arrMatches[0] === "tourism"){
-      icon = tourismIcon
     }
     if (arrMatches[0] === "housing"){
       icon = housingIcon
