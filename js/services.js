@@ -291,24 +291,6 @@ function createServiceFilter(services) {
   container.appendChild(moreContainer);
 }
 
-// Creates the checkboxes for the organization names filter
-function createOrgNamesFilter(names) {
-  const VISIBLE_COUNT = 6;
-  const container = document.getElementById("divOrgName");
-  const moreContainer = document.getElementById("divMoreOrgNames");
-  moreContainer.style.display = "none";
-
-  names.forEach((name, index) => {
-      if (index < VISIBLE_COUNT) {
-        createCheckbox(name, container);
-      } else {
-        createCheckbox(name, moreContainer);
-      }
-    });
-
-  container.appendChild(moreContainer);
-}
-
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -338,22 +320,6 @@ document.querySelector("#btnServiceType").addEventListener("click", () => {
     } else {
         document.querySelector('#divOuterServiceTypes').style.display = 'none';
         document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the organization name filter options
-document.querySelector("#btnOrganizationName").addEventListener("click", () => {
-    if (document.querySelector('#divOuterOrgName').style.display === 'none') {
-            document.querySelector('#divOuterOrgName').style.display = 'block';
-            document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
-            if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-            } else {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-            }
-    } else {
-        document.querySelector('#divOuterOrgName').style.display = 'none';
-        document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -426,7 +392,6 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
     console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
-    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];
@@ -439,12 +404,10 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
         // Normalize arrays to lowercase for case-insensitive comparison
         const counties = (strCounties).map(c => c.toLowerCase());
         const tags = (strTags).map(t => t.toLowerCase());
-        const org = (service.OrganizationName || "").toLowerCase();
 
         // Check each filter; if filter list is empty, treat as "match all"
         const countyMatch = selectedCounties.length === 0 || selectedCounties.some(c => counties.includes(c.toLowerCase()));
         const serviceMatch = selectedServiceTypes.length === 0 || selectedServiceTypes.some(s => tags.includes(s.toLowerCase()));
-        const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
 
         // Only push if all filters match
         if (countyMatch && serviceMatch) {
