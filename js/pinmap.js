@@ -21,19 +21,19 @@ const countyLabelCoords = {
 var foodIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-cup-hot-fill" style="font-size: 25px; color: #880E4F;"></i>
+            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i>
          </div>`,
 });
-var personalEssentialsIcon = L.divIcon({
+var tourismIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-person-walking" style="font-size: 25px; color: #006064;"></i>
+            <i class="bi bi-camera-fill" style="font-size: 25px; color: #006064;"></i>
          </div>`,
 });
 var housingIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-house-fill" style="font-size: 25px; color: #5D4037;"></i>
+            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;"></i>
          </div>`,
 });
 var transportationIcon = L.divIcon({
@@ -51,13 +51,13 @@ var healthCareIcon = L.divIcon({
 var crisisServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tornado" style="font-size: 25px; color: #B71C1C;"></i>
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;"></i>
          </div>`,
 });
 var familyIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-people-fill" style="font-size: 25px; color: #1565C0;"></i>
+            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;"></i>
          </div>`,
 });
 var educationIcon = L.divIcon({
@@ -75,25 +75,19 @@ var employementIcon = L.divIcon({
 var communityIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-globe" style="font-size: 25px; color: #004D40;"></i>
+            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;"></i>
          </div>`,
 });
 var legalIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-bank" style="font-size: 25px; color: #263238;"></i>
+            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;"></i>
          </div>`,
 });
 var seniorServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tree-fill" style="font-size: 25px; color: #1B5E20;"></i>
-         </div>`,
-});
-var veteranServicesIcon = L.divIcon({
-    className: '',
-  html: `<div>
-            <i class="bi bi-star-fill" style="font-size: 25px; color: #4A148C;"></i>
+            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i>
          </div>`,
 });
 var multiIcon = L.divIcon({
@@ -388,21 +382,21 @@ document.querySelector("#btnClearFilter").addEventListener("click", () => {
 document.querySelector("#btnFood").addEventListener("click", () => {
     if (document.querySelector('#divOuterFood').style.display === 'none') {
         document.querySelector('#divOuterFood').style.display = 'block';
-        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-basket-fill" style="font-size: 20px; color: #880E4F;"></i> Food and Basic Needs <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterFood').style.display = 'none';
-        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-basket-fill" style="font-size: 20px; color: #880E4F;"></i> Food and Basic Needs <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
-// Opens the Personal Essentials filter options
-document.querySelector("#btnPersonalEssentials").addEventListener("click", () => {
-    if (document.querySelector('#divOuterPersonalEssentials').style.display === 'none') {
-        document.querySelector('#divOuterPersonalEssentials').style.display = 'block';
-        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-up-fill"></i>`;
+// Opens the Tourism filter options
+document.querySelector("#btnTourism").addEventListener("click", () => {
+    if (document.querySelector('#divOuterTourism').style.display === 'none') {
+        document.querySelector('#divOuterTourism').style.display = 'block';
+        document.querySelector('#btnTourism').innerHTML = `<i class="bi bi-camera-fill" style="font-size: 20px; color: #006064;"></i> Tourism and Events <i class="bi bi-caret-up-fill"></i>`;
     } else {
-        document.querySelector('#divOuterPersonalEssentials').style.display = 'none';
-        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#divOuterTourism').style.display = 'none';
+        document.querySelector('#btnTourism').innerHTML = `<i class="bi bi-camera-fill" style="font-size: 20px; color: #006064;"></i> Tourism and Events <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -410,10 +404,10 @@ document.querySelector("#btnPersonalEssentials").addEventListener("click", () =>
 document.querySelector("#btnHousing").addEventListener("click", () => {
     if (document.querySelector('#divOuterHousing').style.display === 'none') {
         document.querySelector('#divOuterHousing').style.display = 'block';
-        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-heart-fill" style="font-size: 20px; color: #5D4037;"></i> Housing and Home Repair <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterHousing').style.display = 'none';
-        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-heart-fill" style="font-size: 20px; color: #5D4037;"></i> Housing and Home Repair <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -432,10 +426,10 @@ document.querySelector("#btnTransportation").addEventListener("click", () => {
 document.querySelector("#btnHealthCare").addEventListener("click", () => {
     if (document.querySelector('#divOuterHealthCare').style.display === 'none') {
         document.querySelector('#divOuterHealthCare').style.display = 'block';
-        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health and Wellness <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterHealthCare').style.display = 'none';
-        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health and Wellness <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -443,10 +437,10 @@ document.querySelector("#btnHealthCare").addEventListener("click", () => {
 document.querySelector("#btnCrisisServices").addEventListener("click", () => {
     if (document.querySelector('#divOuterCrisisServices').style.display === 'none') {
         document.querySelector('#divOuterCrisisServices').style.display = 'block';
-        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-exclamation-triangle-fill" style="font-size: 20px; color: #B71C1C;"></i> Abuse and Crisis Intervention <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterCrisisServices').style.display = 'none';
-        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-exclamation-triangle-fill" style="font-size: 20px; color: #B71C1C;"></i> Abuse and Crisis Intervention <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -454,10 +448,10 @@ document.querySelector("#btnCrisisServices").addEventListener("click", () => {
 document.querySelector("#btnFamily").addEventListener("click", () => {
     if (document.querySelector('#divOuterFamily').style.display === 'none') {
         document.querySelector('#divOuterFamily').style.display = 'block';
-        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-backpack2-fill" style="font-size: 20px; color: #1565C0;"></i> Children and Youth <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterFamily').style.display = 'none';
-        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-backpack2-fill" style="font-size: 20px; color: #1565C0;"></i> Children and Youth <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -465,10 +459,10 @@ document.querySelector("#btnFamily").addEventListener("click", () => {
 document.querySelector("#btnEducation").addEventListener("click", () => {
     if (document.querySelector('#divOuterEducation').style.display === 'none') {
         document.querySelector('#divOuterEducation').style.display = 'block';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education and Workforce Development <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterEducation').style.display = 'none';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education and Workforce Development <i class="bi bi-caret-down-fill"></i>`;
     }
   })
 
@@ -476,10 +470,10 @@ document.querySelector("#btnEducation").addEventListener("click", () => {
 document.querySelector("#btnEmployment").addEventListener("click", () => {
     if (document.querySelector('#divOuterEmployment').style.display === 'none') {
         document.querySelector('#divOuterEmployment').style.display = 'block';
-        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Small Buisness and Entreprenueur <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterEmployment').style.display = 'none';
-        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Small Buisness and Entreprenueur <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -487,10 +481,10 @@ document.querySelector("#btnEmployment").addEventListener("click", () => {
 document.querySelector("#btnCommunity").addEventListener("click", () => {
     if (document.querySelector('#divOuterCommunity').style.display === 'none') {
         document.querySelector('#divOuterCommunity').style.display = 'block';
-        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #004D40;"></i> Economic and Community Development <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterCommunity').style.display = 'none';
-        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #004D40;"></i> Economic and Community Development <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -498,10 +492,10 @@ document.querySelector("#btnCommunity").addEventListener("click", () => {
 document.querySelector("#btnLegal").addEventListener("click", () => {
     if (document.querySelector('#divOuterLegal').style.display === 'none') {
         document.querySelector('#divOuterLegal').style.display = 'block';
-        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-piggy-bank-fill" style="font-size: 20px; color: #1B5E20;"></i> Financial and Legal Assistance <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterLegal').style.display = 'none';
-        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-piggy-bank-fill" style="font-size: 20px; color: #1B5E20;"></i> Financial and Legal Assistance <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -509,21 +503,10 @@ document.querySelector("#btnLegal").addEventListener("click", () => {
 document.querySelector("#btnSeniorServices").addEventListener("click", () => {
     if (document.querySelector('#divOuterSeniorServices').style.display === 'none') {
         document.querySelector('#divOuterSeniorServices').style.display = 'block';
-        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #4A148C;"></i> Seniors, Aging, and Veterans <i class="bi bi-caret-up-fill"></i>`;
     } else {
         document.querySelector('#divOuterSeniorServices').style.display = 'none';
-        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the Veteran Services filter options
-document.querySelector("#btnVeteranServices").addEventListener("click", () => {
-    if (document.querySelector('#divOuterVeteranServices').style.display === 'none') {
-        document.querySelector('#divOuterVeteranServices').style.display = 'block';
-        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-up-fill"></i>`;
-    } else {
-        document.querySelector('#divOuterVeteranServices').style.display = 'none';
-        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #4A148C;"></i> Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -554,7 +537,7 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     }
     if (selectedPersonalEssentials.length > 0 &&
             selectedPersonalEssentials.some(item => lowKey.includes(item))) {
-      arrMatches.push("personal essentials");
+      arrMatches.push("tourism");
     }
     if (selectedHousing.length > 0 &&
             selectedHousing.some(item => lowKey.includes(item))) {
@@ -633,8 +616,8 @@ function getMatchIcon (arrMatches) {
     if (arrMatches[0] === "food"){
       icon = foodIcon
     }
-    if (arrMatches[0] === "personal essentials"){
-      icon = personalEssentialsIcon
+    if (arrMatches[0] === "tourism"){
+      icon = tourismIcon
     }
     if (arrMatches[0] === "housing"){
       icon = housingIcon
