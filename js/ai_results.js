@@ -56,7 +56,7 @@ async function getAIRecommendations(userPrompt) {
             txtHTML +=`<p class="ai-description">`;
             txtHTML +=`      ${strDescription}`;
             txtHTML +=`</p>`;
-            txtHTML +=`<p class="btn ai-link">More Details</p>`;
+            txtHTML +=`<button class="btn btn-link" onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${element.ID}'); window.location.href='html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
             intCount++;
         });
 
