@@ -1,5 +1,5 @@
 document.addEventListener("click", async function (e) {
-  const searchBtn = e.target.closest("#btnAISearch");
+  const searchBtn = e.target.closest("#btn-AI-search");
   if (!searchBtn) return;
 
   e.preventDefault();
@@ -21,6 +21,4 @@ document.addEventListener("click", async function (e) {
   sessionStorage.setItem("user_prompt", prompt);
   window.location.href = "html/pages/ai_results.html";
 });
-
-// //SIDE BAR AI
 

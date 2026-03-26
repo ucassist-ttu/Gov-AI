@@ -880,9 +880,9 @@ footer img {
     @page {
         margin: 0.5in;
     }
-    body * {
+    /* body * {
         visibility: hidden;
-    }
+    } */
     #divService,
     #divService * {
         visibility: visible;
@@ -907,8 +907,11 @@ footer img {
         padding: 0;
     }
     #btnReturn,
-    #btnPrintPage {
-        display: none !important;
+    #btnPrintAIResults {
+        /* display: none !important; */
+        visibility: visible !important;
+        background: white !important;
+        color: black !important;
     }
     .service-header {
         margin-top: 0 !important;
