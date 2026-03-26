@@ -3,103 +3,91 @@ var arrMarkers = []
 let countiesLayer = null;
 var map = null;
 const countyLabelCoords = {
-  "Cannon": [35.8000, -86.1000],
-  "Clay": [36.5457, -85.5458],
+  "Cannon": [35.8100, -86.1100],
+  "Clay": [36.5657, -85.5458],
   "Cumberland": [35.9523, -85.1000],
   "DeKalb": [35.9864, -85.8800],
   "Fentress": [36.3698, -85.0000],
   "Jackson": [36.3542, -85.7300],
   "Macon": [36.5377, -86.0500],
-  "Overton": [36.3500, -85.3300],
-  "Pickett": [36.5593, -85.1757],
-  "Putnam": [36.1500, -85.5016],
+  "Overton": [36.3500, -85.3500],
+  "Pickett": [36.5693, -85.2000],
+  "Putnam": [36.1500, -85.5416],
   "Smith": [36.2556, -85.9920],
-  "Van Buren": [35.7100, -85.4600],
+  "Van Buren": [35.7100, -85.5000],
   "Warren": [35.6782, -85.8100],
-  "White": [35.9300, -85.4700]
+  "White": [35.9300, -85.4900]
 };
 var foodIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-cup-hot-fill" style="font-size: 14px; color: #880E4F;"></i>
-         </div>`,
-});
-var personalEssentialsIcon = L.divIcon({
-    className: '',
-  html: `<div>
-            <i class="bi bi-person-walking" style="font-size: 14px; color: #006064;"></i>
+            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i>
          </div>`,
 });
 var housingIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-house-fill" style="font-size: 14px; color: #5D4037;"></i>
+            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;"></i>
          </div>`,
 });
 var transportationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-taxi-front-fill" style="font-size: 14px; color: #E65100;"></i>
+            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;"></i>
          </div>`,
 });
 var healthCareIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-heart-pulse-fill" style="font-size: 14px; color: #C62828;"></i>
+            <i class="bi bi-heart-pulse-fill" style="font-size: 25px; color: #C62828;"></i>
          </div>`,
 });
 var crisisServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tornado" style="font-size: 14px; color: #B71C1C;"></i>
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;"></i>
          </div>`,
 });
 var familyIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-people-fill" style="font-size: 14px; color: #1565C0;"></i>
+            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;"></i>
          </div>`,
 });
 var educationIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-mortarboard-fill" style="font-size: 14px; color: #0D47A1;"></i>
+            <i class="bi bi-mortarboard-fill" style="font-size: 25px; color: #0D47A1;"></i>
          </div>`,
 });
 var employementIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-building-fill" style="font-size: 14px; color: #2E7D32;"></i>
+            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;"></i>
          </div>`,
 });
 var communityIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-globe" style="font-size: 14px; color: #004D40;"></i>
+            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;"></i>
          </div>`,
 });
 var legalIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-bank" style="font-size: 14px; color: #263238;"></i>
+            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;"></i>
          </div>`,
 });
 var seniorServicesIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-tree-fill" style="font-size: 14px; color: #1B5E20;"></i>
-         </div>`,
-});
-var veteranServicesIcon = L.divIcon({
-    className: '',
-  html: `<div>
-            <i class="bi bi-star-fill" style="font-size: 14px; color: #4A148C;"></i>
+            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i>
          </div>`,
 });
 var multiIcon = L.divIcon({
     className: '',
   html: `<div>
-            <i class="bi bi-boxes" style="font-size: 14px;"></i>
+            <i class="bi bi-boxes" style="font-size: 25px;"></i>
          </div>`,
 });
 
@@ -171,19 +159,25 @@ async function getGeoCode(service, iconTag) {
 // marks the services per county
 function markService (service, iconTag, address, ) {
   let marker = L.marker(address, { icon: iconTag }).addTo(map)
-  let strTags = getTagList(service)
   let straddress = `${service.ServiceAddress} ${service.CityStateZip}`.trim();
-  let strencoded = encodeURIComponent(straddress);          
-  marker.bindPopup(`<h3 class="mt-2 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}'"target="_blank"><u>${service.NameOfService}<i class="bi bi-caret-right-fill p-2"></i></u></a></h3>
-    <p class="mt-3 mb-1">Tags: ${strTags.join(', ')}</p>
-    <p class="mt-3 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill p-2"></i>${straddress}</u></a></p>`,
-  {
-  autoPan: true,
-  autoPanPadding: [50, 50],
-  keepInView: true
+  let strencoded = encodeURIComponent(straddress); 
+  let strPhoneContact = ''
+  if (service.TelephoneContact != 'N/A'){
+      let telNumber = service.TelephoneContact.replace(/[^\d+]/g, '');
+      strPhoneContact = `<a href="tel:${telNumber}"><i class="bi bi-telephone pe-2"></i><u>${service.TelephoneContact}</u></a>`
+  }          
+  marker.bindPopup(`<h3 class="mt-4 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" target="_blank" style="cursor: pointer;"><u>${service.NameOfService}</u></a></h3>
+    <hr class="hr-gold" />
+    <p class="mt-1 mb-1">${strPhoneContact}</p>
+    <p class="mt-1 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill pe-2"></i>${straddress}</u></a></p>`, {
+    autoPan: true,
+    autoPanPadding: [25, 50],
+    keepInView: true,
+    maxWidth: 250,
+    minWidth: 250
   })
   marker.on('click', function () {
-    map.setView(marker.getLatLng(), 13, {
+    map.setView(marker.getLatLng(), 14, {
         animate: true
     });
     marker.openPopup();
@@ -193,11 +187,42 @@ function markService (service, iconTag, address, ) {
 
 // Removes all markers 
 function removeAllMarkers() {
-  for (var i = 0; i < arrMarkers.length; i++) {
-    map.removeLayer(arrMarkers[i]);
+  if (arrMarkers.length > 0) {
+    for (var i = 0; i < arrMarkers.length; i++) {
+      map.removeLayer(arrMarkers[i]);
+    }
+    arrMarkers = [];
   }
-  arrMarkers = [];
 }
+
+function usersLocation () {
+  let strStoredCounty
+  return strStoredCounty = sessionStorage.getItem("currCounty")
+}
+
+function checkUserLocation (jsonData) {
+  let currCounty = usersLocation()
+  if (!currCounty) {
+  console.log("home");
+  } else {
+    if (currCounty == "van_buren") {
+      currCounty = "Van Buren"
+    }
+    countiesLayer = L.geoJSON(jsonData, {
+      style: {
+        color: '#AA8A41',
+        weight: 1.5,
+        fillOpacity: 0.05
+      },
+      onEachFeature: (feature, layer) => {
+        if (feature.properties.NAME.toLowerCase() === currCounty.toLowerCase()) {
+          zoomToCounty(layer, feature)
+        }
+      }
+    }).addTo(map);
+  }
+}
+
 
 // -- Loads boundary data from geojson file to draw county borders --
 
@@ -206,6 +231,7 @@ async function loadAndMaskCounties() {
   const jsonData = await data.json()
 
   // set style for boundary and fill of county layers
+  checkUserLocation (jsonData)
   countiesLayer = L.geoJSON(jsonData, {
     style: {
       color: '#AA8A41',
@@ -223,7 +249,7 @@ async function loadAndMaskCounties() {
           pane: 'labelsPane',
           icon: L.divIcon({
             className: 'county-label',
-            html: countyName
+            html: countyName,
           }),
           interactive: false
         }).addTo(map);
@@ -341,32 +367,39 @@ document.querySelector("#btnTopClose").addEventListener("click", () => {
 
 // Removes all filters when btnClearFilter is clicked
 document.querySelector("#btnClearFilter").addEventListener("click", () => {
-    let selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
-    selectedCheckboxes.forEach(box => {
-        box.checked = false;
-    });
-    removeAllMarkers ()
+    clearFilter ()
 })
+
+function clearFilter () {
+  let selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
+  selectedCheckboxes.forEach(box => {
+      box.checked = false;
+  });
+  removeAllMarkers ()
+}
 
 // Opens the Food filter options
 document.querySelector("#btnFood").addEventListener("click", () => {
     if (document.querySelector('#divOuterFood').style.display === 'none') {
         document.querySelector('#divOuterFood').style.display = 'block';
-        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnFood').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i> 
+                        </div>
+                        <div class="col pe-0">
+                            Food and Basic <br>Needs <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterFood').style.display = 'none';
-        document.querySelector('#btnFood').innerHTML = `<i class="bi bi-cup-hot-fill" style="font-size: 20px; color: #880E4F;"></i> Food <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the Personal Essentials filter options
-document.querySelector("#btnPersonalEssentials").addEventListener("click", () => {
-    if (document.querySelector('#divOuterPersonalEssentials').style.display === 'none') {
-        document.querySelector('#divOuterPersonalEssentials').style.display = 'block';
-        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-up-fill"></i>`;
-    } else {
-        document.querySelector('#divOuterPersonalEssentials').style.display = 'none';
-        document.querySelector('#btnPersonalEssentials').innerHTML = `<i class="bi bi-person-walking" style="font-size: 20px; color: #006064;"></i> Personal Essentials <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnFood').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i> 
+                        </div>
+                        <div class="col pe-0">
+                            Food and Basic <br>Needs <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -374,10 +407,24 @@ document.querySelector("#btnPersonalEssentials").addEventListener("click", () =>
 document.querySelector("#btnHousing").addEventListener("click", () => {
     if (document.querySelector('#divOuterHousing').style.display === 'none') {
         document.querySelector('#divOuterHousing').style.display = 'block';
-        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnHousing').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;"></i> 
+                        </div>
+                        <div class="col">
+                            Housing and Home Repair <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterHousing').style.display = 'none';
-        document.querySelector('#btnHousing').innerHTML = `<i class="bi bi-house-fill" style="font-size: 20px; color: #5D4037;"></i> Housing <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnHousing').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;"></i> 
+                        </div>
+                        <div class="col">
+                            Housing and Home Repair <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -385,10 +432,24 @@ document.querySelector("#btnHousing").addEventListener("click", () => {
 document.querySelector("#btnTransportation").addEventListener("click", () => {
     if (document.querySelector('#divOuterTransportation').style.display === 'none') {
         document.querySelector('#divOuterTransportation').style.display = 'block';
-        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnTransportation').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Transportation <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterTransportation').style.display = 'none';
-        document.querySelector('#btnTransportation').innerHTML = `<i class="bi bi-taxi-front-fill" style="font-size: 20px; color: #E65100;"></i> Transportation <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnTransportation').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Transportation <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -396,10 +457,24 @@ document.querySelector("#btnTransportation").addEventListener("click", () => {
 document.querySelector("#btnHealthCare").addEventListener("click", () => {
     if (document.querySelector('#divOuterHealthCare').style.display === 'none') {
         document.querySelector('#divOuterHealthCare').style.display = 'block';
-        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnHealthCare').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-heart-pulse-fill" style="font-size: 25px; color: #C62828;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Health and Wellness <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterHealthCare').style.display = 'none';
-        document.querySelector('#btnHealthCare').innerHTML = `<i class="bi bi-heart-pulse-fill" style="font-size: 20px; color: #C62828;"></i> Health Care <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnHealthCare').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-heart-pulse-fill" style="font-size: 25px; color: #C62828;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Health and Wellness <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -407,10 +482,24 @@ document.querySelector("#btnHealthCare").addEventListener("click", () => {
 document.querySelector("#btnCrisisServices").addEventListener("click", () => {
     if (document.querySelector('#divOuterCrisisServices').style.display === 'none') {
         document.querySelector('#divOuterCrisisServices').style.display = 'block';
-        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnCrisisServices').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;"></i>
+                        </div>
+                        <div class="col">
+                            Abuse and Crisis Intervention <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterCrisisServices').style.display = 'none';
-        document.querySelector('#btnCrisisServices').innerHTML = `<i class="bi bi-tornado" style="font-size: 20px; color: #B71C1C;"></i> Crisis Services <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnCrisisServices').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;"></i>
+                        </div>
+                        <div class="col">
+                            Abuse and Crisis Intervention <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -418,10 +507,24 @@ document.querySelector("#btnCrisisServices").addEventListener("click", () => {
 document.querySelector("#btnFamily").addEventListener("click", () => {
     if (document.querySelector('#divOuterFamily').style.display === 'none') {
         document.querySelector('#divOuterFamily').style.display = 'block';
-        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnFamily').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Children and Youth <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterFamily').style.display = 'none';
-        document.querySelector('#btnFamily').innerHTML = `<i class="bi bi-people-fill" style="font-size: 20px; color: #1565C0;"></i> Family <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnFamily').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Children and Youth <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -429,10 +532,24 @@ document.querySelector("#btnFamily").addEventListener("click", () => {
 document.querySelector("#btnEducation").addEventListener("click", () => {
     if (document.querySelector('#divOuterEducation').style.display === 'none') {
         document.querySelector('#divOuterEducation').style.display = 'block';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-mortarboard-fill" style="font-size: 25px; color: #0D47A1;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Education <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterEducation').style.display = 'none';
-        document.querySelector('#btnEducation').innerHTML = `<i class="bi bi-mortarboard-fill" style="font-size: 20px; color: #0D47A1;"></i> Education <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnEducation').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-mortarboard-fill" style="font-size: 25px; color: #0D47A1;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Education <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
   })
 
@@ -440,10 +557,24 @@ document.querySelector("#btnEducation").addEventListener("click", () => {
 document.querySelector("#btnEmployment").addEventListener("click", () => {
     if (document.querySelector('#divOuterEmployment').style.display === 'none') {
         document.querySelector('#divOuterEmployment').style.display = 'block';
-        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnEmployment').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Small Buisness and Entreprenueur <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterEmployment').style.display = 'none';
-        document.querySelector('#btnEmployment').innerHTML = `<i class="bi bi-building-fill" style="font-size: 20px; color: #2E7D32;"></i> Employment <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnEmployment').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Small Buisness and Entreprenueur <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -451,10 +582,24 @@ document.querySelector("#btnEmployment").addEventListener("click", () => {
 document.querySelector("#btnCommunity").addEventListener("click", () => {
     if (document.querySelector('#divOuterCommunity').style.display === 'none') {
         document.querySelector('#divOuterCommunity').style.display = 'block';
-        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnCommunity').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;"></i>
+                        </div>
+                        <div class="col pe-0"> 
+                            Economic and Community Development <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterCommunity').style.display = 'none';
-        document.querySelector('#btnCommunity').innerHTML = `<i class="bi bi-globe" style="font-size: 20px; color: #004D40;"></i> Community <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnCommunity').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;"></i>
+                        </div>
+                        <div class="col pe-0"> 
+                            Economic and Community Development <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -462,10 +607,24 @@ document.querySelector("#btnCommunity").addEventListener("click", () => {
 document.querySelector("#btnLegal").addEventListener("click", () => {
     if (document.querySelector('#divOuterLegal').style.display === 'none') {
         document.querySelector('#divOuterLegal').style.display = 'block';
-        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnLegal').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;"></i>
+                        </div>
+                        <div class="col pe-0"> 
+                            Financial and Legal Assistance <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterLegal').style.display = 'none';
-        document.querySelector('#btnLegal').innerHTML = `<i class="bi bi-bank" style="font-size: 20px; color: #263238;"></i> Legal <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnLegal').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;"></i>
+                        </div>
+                        <div class="col pe-0"> 
+                            Financial and Legal Assistance <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -473,21 +632,24 @@ document.querySelector("#btnLegal").addEventListener("click", () => {
 document.querySelector("#btnSeniorServices").addEventListener("click", () => {
     if (document.querySelector('#divOuterSeniorServices').style.display === 'none') {
         document.querySelector('#divOuterSeniorServices').style.display = 'block';
-        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-up-fill"></i>`;
+        document.querySelector('#btnSeniorServices').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Seniors, Aging, and Veterans <i class="bi bi-caret-up-fill"></i>
+                        </div>
+                    </div>`;
     } else {
         document.querySelector('#divOuterSeniorServices').style.display = 'none';
-        document.querySelector('#btnSeniorServices').innerHTML = `<i class="bi bi-tree-fill" style="font-size: 20px; color: #1B5E20;"></i> Senior Services <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the Veteran Services filter options
-document.querySelector("#btnVeteranServices").addEventListener("click", () => {
-    if (document.querySelector('#divOuterVeteranServices').style.display === 'none') {
-        document.querySelector('#divOuterVeteranServices').style.display = 'block';
-        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-up-fill"></i>`;
-    } else {
-        document.querySelector('#divOuterVeteranServices').style.display = 'none';
-        document.querySelector('#btnVeteranServices').innerHTML = `<i class="bi bi-star-fill" style="font-size: 20px; color: #4A148C;"></i> Veteran Services <i class="bi bi-caret-down-fill"></i>`;
+        document.querySelector('#btnSeniorServices').innerHTML = `<div class="row align-items-center">
+                        <div class="col col-2">
+                            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
+                        </div>
+                        <div class="col pe-0"> 
+                            Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
+                        </div>
+                    </div>`;
     }
 });
 
@@ -515,10 +677,6 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     let lowKey = (strTags).map(c => c.toLowerCase());
     if (selectedFood.length > 0 && selectedFood.some(item => lowKey.includes(item))) {
       arrMatches.push("food");
-    }
-    if (selectedPersonalEssentials.length > 0 &&
-            selectedPersonalEssentials.some(item => lowKey.includes(item))) {
-      arrMatches.push("personal essentials");
     }
     if (selectedHousing.length > 0 &&
             selectedHousing.some(item => lowKey.includes(item))) {
@@ -596,9 +754,6 @@ function getMatchIcon (arrMatches) {
   if (arrMatches.length === 1) {
     if (arrMatches[0] === "food"){
       icon = foodIcon
-    }
-    if (arrMatches[0] === "personal essentials"){
-      icon = personalEssentialsIcon
     }
     if (arrMatches[0] === "housing"){
       icon = housingIcon
