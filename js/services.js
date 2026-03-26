@@ -63,10 +63,63 @@ async function getServices() {
     // Create the filters
     createCountyFilter(uniqueCounties)
     createServiceFilter(uniqueServiceTypes)
-    createOrgNamesFilter(uniqueOrgNames)
+    checkUserLocation () 
 }
 
 getServices()
+function usersLocation () {
+    return strStoredCounty = sessionStorage.getItem("currCounty")
+}
+
+function checkUserLocation () {
+    let currCounty = usersLocation()
+    if (currCounty.length == 0) {
+        console.log("home")
+    }
+    else if (currCounty == "van_buren") {
+        let currCountyVan = "van-buren"
+        console.log(currCountyVan)
+        const checkbox = document.querySelector(`#${currCountyVan}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+    else {
+        const checkbox = document.querySelector(`#${currCounty}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
+
+function soundex(s) {
+  const a = s.toLowerCase().split('');
+  const f = a.shift();
+  const codes = {
+    a: '', e: '', i: '', o: '', u: '',
+    b: 1, f: 1, p: 1, v: 1,
+    c: 2, g: 2, j: 2, k: 2, q: 2, s: 2, x: 2, z: 2,
+    d: 3, t: 3,
+    l: 4,
+    m: 5, n: 5,
+    r: 6
+  };
+
+  const encoded = f + a
+    .map(c => codes[c])
+    .filter((code, i, arr) => code !== arr[i - 1])
+    .join('');
+
+  return (encoded + '000').slice(0, 4).toUpperCase();
+}
+
+function soundsLike(a, b) {
+  return soundex(a) === soundex(b);
+}
 
 // Create the service cards for each page
 function createServiceCard(arrCards) {
@@ -180,8 +233,22 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
                 strName = item.NameOfService
                 strKeywords = item.Keywords
                 strCounties = item.CountiesAvailable
-                if (strName.toLowerCase().includes(word.toLowerCase()) || strKeywords.toLowerCase().includes(word.toLowerCase()) || strCounties.toLowerCase().includes(word.toLowerCase())) {
-                    arrFound.push(item)
+                let nameWords = strName.split(" ");
+                let keywordWords = strKeywords.split(" ");
+                let countyWords = strCounties.split(" ");
+
+                let matchFound = false;
+
+                [nameWords, keywordWords, countyWords].forEach(group => {
+                    group.forEach(fieldWord => {
+                        if (soundsLike(fieldWord, word)) {
+                        matchFound = true;
+                        }
+                    });
+                });
+
+                if (matchFound) {
+                arrFound.push(item);
                 }
             }
         })
@@ -291,24 +358,6 @@ function createServiceFilter(services) {
   container.appendChild(moreContainer);
 }
 
-// Creates the checkboxes for the organization names filter
-function createOrgNamesFilter(names) {
-  const VISIBLE_COUNT = 6;
-  const container = document.getElementById("divOrgName");
-  const moreContainer = document.getElementById("divMoreOrgNames");
-  moreContainer.style.display = "none";
-
-  names.forEach((name, index) => {
-      if (index < VISIBLE_COUNT) {
-        createCheckbox(name, container);
-      } else {
-        createCheckbox(name, moreContainer);
-      }
-    });
-
-  container.appendChild(moreContainer);
-}
-
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -338,22 +387,6 @@ document.querySelector("#btnServiceType").addEventListener("click", () => {
     } else {
         document.querySelector('#divOuterServiceTypes').style.display = 'none';
         document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the organization name filter options
-document.querySelector("#btnOrganizationName").addEventListener("click", () => {
-    if (document.querySelector('#divOuterOrgName').style.display === 'none') {
-            document.querySelector('#divOuterOrgName').style.display = 'block';
-            document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
-            if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-            } else {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-            }
-    } else {
-        document.querySelector('#divOuterOrgName').style.display = 'none';
-        document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -426,12 +459,15 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
     console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
-    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];
 
     // Loop through all services
+    searchQuery = document.querySelector("#txtSearchServices").value
+    if (searchQuery == '') {
+        arrCurrentServices = arrAllServices
+    }
     arrCurrentServices.forEach(service => {
         let strCounties = getCountyList(service)
         let strTags = getTagList(service)
@@ -439,12 +475,10 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
         // Normalize arrays to lowercase for case-insensitive comparison
         const counties = (strCounties).map(c => c.toLowerCase());
         const tags = (strTags).map(t => t.toLowerCase());
-        const org = (service.OrganizationName || "").toLowerCase();
 
         // Check each filter; if filter list is empty, treat as "match all"
         const countyMatch = selectedCounties.length === 0 || selectedCounties.some(c => counties.includes(c.toLowerCase()));
         const serviceMatch = selectedServiceTypes.length === 0 || selectedServiceTypes.some(s => tags.includes(s.toLowerCase()));
-        const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
 
         // Only push if all filters match
         if (countyMatch && serviceMatch) {
