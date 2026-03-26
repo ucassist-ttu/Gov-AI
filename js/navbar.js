@@ -112,6 +112,7 @@ function getCountyManually() {
     showCancelButton: true
   }).then((result) => {
     if (result.isConfirmed) {
+      location.reload();
       console.log(result.value); // this will be 'value1', 'value2', etc
       sessionStorage.setItem("currCounty", result.value)
 
