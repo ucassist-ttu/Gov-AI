@@ -1,13 +1,6 @@
 // Time on Page
 let pageStartTime = Date.now();
 
-window.addEventListener("beforeunload", sendTimeOnPage);
-window.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") {
-    sendTimeOnPage();
-  }
-});
-
 // Bounce Rate
 const SESSION_TIMEOUT = 30 * 60 * 1000;
 const now = Date.now();
@@ -17,28 +10,45 @@ let session = JSON.parse(localStorage.getItem("analytics_session"));
 if (!session || now - session.lastActivity > SESSION_TIMEOUT) {
   session = {
     startTime: now,
-    pageViews: 0
+    pageViews: 0,
+    clickLogs: []
   };
 }
 
 session.pageViews += 1;
 session.lastActivity = now;
 
-localStorage.setItem("analytics_session", JSON.stringify(session));
+// Improved bounce detection: Set bounce flag and log on page visit complete
+let bounce = session.pageViews === 1;
+let bounceTimeout;
 
-// Detect bounce when leaving
-window.addEventListener("beforeunload", () => {
-  if (session.pageViews === 1) {
-    
+function logBounce() {
+  if (bounce) {
     console.log("Bounce detected", {
       page: window.location.pathname,
       timestamp: new Date().toISOString(),
-      pageViews: session.pageViews
+      pageViews: session.pageViews,
+      bounce: true
     });
+  }
+}
 
-    // Send to backend
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") {
+    // Delay to allow for potential navigation back or internal links
+    bounceTimeout = setTimeout(logBounce, 5000); // 5-second delay
+  } else if (document.visibilityState === "visible") {
+    // User returned, cancel bounce logging
+    clearTimeout(bounceTimeout);
   }
 });
+
+window.addEventListener("beforeunload", () => {
+  clearTimeout(bounceTimeout);
+  logBounce();
+});
+
+localStorage.setItem("analytics_session", JSON.stringify(session));
 
 // Scroll Depth
 let maxScroll = 0;
@@ -54,6 +64,7 @@ window.addEventListener("scroll", () => {
 
 // Rage Clicks
 let clickHistory = [];
+let clickLogs = [];
 
 function getElementSelector(el) {
   if (!el) return "unknown";
@@ -95,11 +106,10 @@ document.addEventListener("click", (e) => {
     );
 
     if (distance < 50) {
-      console.log("Rage click detected", {
-        page: window.location.pathname,
-        timestamp: new Date().toISOString(),
+      clickLogs.push({
         target: getElementSelector(target)
-      });
+      })
+      session.clickLogs = clickLogs
       // Send to backend
       clickHistory = [];
     }
@@ -110,14 +120,15 @@ document.addEventListener("click", (e) => {
 window.addEventListener("beforeunload", () => {
   const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
 
-  console.log("Page Visit Complete", {
+  console.log({
     page: window.location.pathname,
     timeViewed: pageStartTime,
-    timeLeft: Date.now().toISOString(),
+    timeLeft: Date.now().toString(),
     timeSpent: Math.round((Date.now() - pageStartTime) / 1000),
     maxScoll: maxScroll,
     pageViews: session.pageViews,
-    rageClicks: session.rageClicks
+    clickLogs: session.clickLogs,
+    bounce: bounce
   })
 })
 
@@ -125,71 +136,45 @@ function generateMockAnalytics() {
 
 const pages = ["/", "/services", "/snap", "/crisis", "/error"];
 
-const analytics = {
-  pageVisits: [],
-  timeOnPage: [],
-  scrollDepth: [],
-  bounces: [],
-  rageClicks: [],
-  aiResults: []
-};
+const pageVisits = []
 
 for (let i = 0; i < 150; i++) {
 
+  const rageClicks = []
   const page = pages[Math.floor(Math.random()*pages.length)];
-  const timestamp = new Date(Date.now() - Math.random()*604800000).toISOString(); // last 7 days
-
-  analytics.pageVisits.push({
-    page,
-    timestamp
-  });
-
-  analytics.timeOnPage.push({
-    page,
-    timestamp,
-    timeSpent: Math.floor(Math.random()*120)
-  });
-
-  analytics.scrollDepth.push({
-    page,
-    timestamp,
-    maxScroll: Math.floor(Math.random()*100)
-  });
-
-  if(Math.random() < 0.45) {
-    analytics.aiResults.push({
-      page,
-      timestamp,
-      printed: true
-    })
+  const timeViewed = new Date(Date.now() - Math.random()*604800000).toISOString(); // last 7 days
+  const timeLeft = new Date(Date.parse(timeViewed) + Math.random()*1800).toISOString();
+  const timeSpent = timeLeft - timeViewed
+  const maxScroll = Math.floor(Math.random()*100)
+  const pageViews = Math.ceil(Math.random()*10)
+  if(Math.random() < 0.25 && pageViews == 1){
+    const bounce = true
   }
-  else {
-    analytics.aiResults.push({
-      page,
-      timestamp,
-      printed: false
-    })
-  }
-
-  if(Math.random() < 0.25){
-    analytics.bounces.push({
-      page,
-      timestamp,
-      pageViews: 1
-    });
-  }
-
   if(Math.random() < 0.15){
-    analytics.rageClicks.push({
-      page,
-      timestamp,
+    rageClicks.push({
       target: "#map"
-    });
+    })
   }
+  if(Math.random() < 0.35){
+    rageClicks.push({
+      target: "#map"
+    })
+  }
+
+  pageVisits.push({
+    page: page,
+    timeViewed: timeViewed,
+    timeLeft: timeLeft,
+    timeSpent: timeSpent,
+    maxScroll: maxScroll,
+    pageViews: pageViews,
+    clickLogs: rageClicks,
+    bounce: bounce
+  })
 
 }
 
-localStorage.setItem("analytics", JSON.stringify(analytics));
+localStorage.setItem("analytics", JSON.stringify(pageVisits));
 
 }
 
