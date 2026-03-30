@@ -1,5 +1,5 @@
 // button handlers
-console.log("[iNeed] Delegated listener active");
+// console.log("[iNeed] Delegated listener active");
 
 // shortened variable names for the categories
 const keywordCategories = {
@@ -120,7 +120,7 @@ function createPills(keyword, fullword){
   // makes card clickable
   const btn = document.createElement("a");
   btn.className = "stretched-link";
-  btn.href = "#";
+  // btn.href = "#";
 
   col.appendChild(img);
   body.appendChild(content);
@@ -210,9 +210,9 @@ function sortIDsByKeyword(arrKeywords, id){
     if (category in sortedIDCategories) {
       sortedIDCategories[category].push(id); 
     }
-    else (
-      console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
-    )
+    // else (
+    //   // console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
+    // )
   })
 }
 
@@ -246,6 +246,10 @@ async function loadCardsByCategory(category) {
   if (!container) {
     return;
   }
+  
+  const descriptionContainer = document.getElementById("wrapperINeedContent");
+  let txtDescription = getCategoryDescription(category);
+  descriptionContainer.innerHTML = txtDescription;
 
   container.innerHTML = "<p>Loading services...</p>";
 
@@ -256,6 +260,8 @@ async function loadCardsByCategory(category) {
     const requests = arrIDs.map(id => {
       const url = `https://ucassist.duckdns.org/service?id=${id}`;
 
+      // console.log("[loadCardsByCategory] Fetching service ID:", id);
+
       return fetch(url)
         .then(res => {
           return res.json();
@@ -265,6 +271,7 @@ async function loadCardsByCategory(category) {
     const services = await Promise.all(requests);
 
     container.innerHTML = "";
+
     let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
@@ -274,12 +281,13 @@ async function loadCardsByCategory(category) {
         } else{
           count ++
           container.appendChild(newCard)
+          console.log("[iNeed.js] container: ", container)
         }
       }
     });
   } catch (error) {
     console.error("[iNeed] Error loading services:", error);
-    container.innerHTML = "<p>Please try again later.</p>";
+    container.innerHTML = "<p>DSorry! We're having trouble loading services. Please try again later.</p>";
   }
 }
 
@@ -355,4 +363,35 @@ function getLogoSrc(rawLogo) {
     return `https://${logo}`;
   }
   return `/Gov-AI/assets/images/${logo}`;
+}
+
+function getCategoryDescription(category) {
+  switch(category) {
+    case "Crisis":
+      return "Provides immediate support for individuals experiencing abuse, personal crisis, or emergency situations. Includes crisis hotlines and emergency shelter for those in urgent need.";
+    case "Housing":
+      return "Assists individuals and families with finding stable housing, covering rent or utility costs, and maintaining their homes. Also supports those experiencing homelessness or in need of emergency shelter.";
+    case "BasicNeeds":
+      return "Connects people with essential everyday resources such as food, clothing, and toiletries. Includes food pantries, meal programs, and financial assistance for groceries.";
+    case "Financial":
+      return "Offers guidance and assistance with financial planning, debt management, and legal matters. Helps individuals navigate budgeting and access financial aid programs.";
+    case "Transportation":
+      return "Helps individuals access reliable transportation options including public transit, ride assistance, and driver education programs. Supports those who lack access to personal vehicles.";
+    case "Youth":
+      return "Supports children, teens, and parents through childcare, youth programs, and parenting resources. Focused on the healthy development and wellbeing of young people.";
+    case "Seniors":
+      return "Provides services tailored to older adults, veterans, and individuals with disabilities. Includes senior activities, in-home care, and specialized support programs.";
+    case "Health":
+      return "Covers a wide range of physical and mental health services including primary care, pregnancy support, substance abuse recovery, and wellness programs. Supports overall health and wellbeing.";
+    case "Education":
+      return "Connects individuals with educational opportunities, job training, and workforce development programs. Helps people build skills and find meaningful employment.";
+    case "Business":
+      return "Supports local entrepreneurs and small business owners with resources, mentorship, and economic development opportunities. Helps businesses grow and thrive in the community.";
+    case "Tourism":
+      return "Highlights local recreation, events, and tourism opportunities in the area. Helps residents and visitors discover activities and community happenings.";
+    case "Community":
+      return "Focuses on strengthening and developing the local community through organized initiatives and programs. Encourages civic engagement and neighborhood improvement.";
+    default:
+      return "Please select a category to see available resources and services in your area.";
+  }
 }
