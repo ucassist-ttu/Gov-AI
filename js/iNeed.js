@@ -90,6 +90,11 @@ document.addEventListener("click", (e) => {
     console.log("[iNeed] Clicked card ID:", clickedCard.id.replace("pillINeed", ""));
     loadCardsByCategory(clickedCard.id.replace("pillINeed", ""));
 
+    const descriptionContainer = document.getElementById("wrapperINeedContent");
+    let txtDescription = getCategoryDescription(clickedCard.id.replace("pillINeed", ""));
+    console.log("[iNeed] Category description:", txtDescription);
+    descriptionContainer.innerHTML = `<h5 class="white fw-light"><i class="bi bi-question-circle white me-2"></i>${txtDescription}</h5>`;
+
     
   }
 });
@@ -246,10 +251,6 @@ async function loadCardsByCategory(category) {
   if (!container) {
     return;
   }
-  
-  const descriptionContainer = document.getElementById("wrapperINeedContent");
-  let txtDescription = getCategoryDescription(category);
-  descriptionContainer.innerHTML = txtDescription;
 
   container.innerHTML = "<p>Loading services...</p>";
 
