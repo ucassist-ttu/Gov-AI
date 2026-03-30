@@ -451,88 +451,195 @@ async function getServiceName(serviceId, serviceCount, order) {
     }
 }
 
-const analytics = JSON.parse(localStorage.getItem("analytics"));
+const analytics = JSON.parse(localStorage.getItem("analytics")) || [];
 
-function groupByPage(events, field){
+// Group by Month + Page
+const monthlyData = {};
 
-  const result = {};
+analytics.forEach(entry => {
+    const date = new Date(entry.timeViewed);
 
-  events.forEach(e => {
+    // Format: YYYY-MM
+    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
-    if(!result[e.page]){
-      result[e.page] = [];
+    if (!monthlyData[month]) {
+        monthlyData[month] = {};
     }
 
-    if(field){
-      result[e.page].push(e[field]);
-    } else {
-      result[e.page].push(1);
+    if (!monthlyData[month][entry.page]) {
+        monthlyData[month][entry.page] = 0;
     }
 
-  });
+    monthlyData[month][entry.page] += 1;
+});
 
-  return result;
+function groupMonthlyAverage(data, field) {
+    const result = {};
 
+    data.forEach(entry => {
+        const date = new Date(entry.timeViewed);
+
+        const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+        if (!result[month]) result[month] = {};
+        if (!result[month][entry.page]) result[month][entry.page] = [];
+
+        result[month][entry.page].push(entry[field] || 0);
+    });
+
+    return result;
 }
 
-function average(arr){
-  return arr.reduce((a,b)=>a+b,0)/arr.length;
+function buildDatasets(monthlyData) {
+    return pages.map((page, index) => ({
+        label: page,
+        data: months.map(month => {
+        const values = monthlyData[month]?.[page];
+        return values ? average(values) : 0;
+        }),
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length],
+        tension: 0.3,
+        fill: false
+    }));
 }
 
-const visits = groupByPage(analytics.pageVisits);
-const time = groupByPage(analytics.timeOnPage,"timeSpent");
-const scroll = groupByPage(analytics.scrollDepth,"maxScroll");
-const bounces = groupByPage(analytics.bounces);
+function average(arr) {
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
 
-const pages = Object.keys(visits);
+// Extract sorted months
+const months = Object.keys(monthlyData).sort();
 
-const visitCounts = pages.map(p => visits[p].length);
-const avgTime = pages.map(p => average(time[p] || [0]));
-const avgScroll = pages.map(p => average(scroll[p] || [0]));
-const bounceCounts = pages.map(p => (bounces[p] || []).length);
+// Get all unique pages
+const pages = [...new Set(analytics.map(e => e.page))];
 
-new Chart(document.getElementById("visitsChart"),{
-  type:"bar",
-  data:{
-    labels:pages,
-    datasets:[{
-      label:"Page Visits",
-      data:visitCounts
-    }]
-  }
+const analyticsColors = [
+    "#4E79A7",
+    "#F28E2B",
+    "#E15759",
+    "#76B7B2",
+    "#59A14F"
+];
+
+const datasets = pages.map((page, index) => {
+    return {
+        label: page,
+        data: months.map(month => monthlyData[month][page] || 0),
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length],
+        tension: 0.3,
+        fill: false
+    };
+});
+const scrollData = groupMonthlyAverage(analytics, "maxScroll");
+const timeData = groupMonthlyAverage(analytics, "timeSpent");
+
+new Chart(document.getElementById("visitsChart"), {
+    type: "line",
+    data: {
+        labels: months,
+        datasets: datasets
+    },
+    options: {
+        responsive: true,
+        interaction: {
+        mode: "index",
+        intersect: false
+        },
+        plugins: {
+        legend: {
+            display: true, // clickable by default
+            position: "top"
+        },
+        title: {
+            display: true,
+            text: "Monthly Page Visits"
+        }
+        },
+        scales: {
+        x: {
+            title: {
+            display: true,
+            text: "Month"
+            }
+        },
+        y: {
+            beginAtZero: true,
+            title: {
+            display: true,
+            text: "Visits"
+            }
+        }
+        }
+    }
 });
 
- new Chart(document.getElementById("timeChart"),{
-  type:"bar",
-  data:{
-    labels:pages,
-    datasets:[{
-      label:"Avg Time on Page (seconds)",
-      data:avgTime
-    }]
-  }
+new Chart(document.getElementById("scrollChart"), {
+    type: "line",
+    data: {
+        labels: months,
+        datasets: buildDatasets(scrollData)
+    },
+    options: {
+        responsive: true,
+        interaction: {
+        mode: "index",
+        intersect: false
+        },
+        plugins: {
+        legend: {
+            display: true
+        },
+        title: {
+            display: true,
+            text: "Average Scroll Depth by Page (Monthly)"
+        }
+        },
+        scales: {
+        y: {
+            beginAtZero: true,
+            max: 100,
+            title: {
+            display: true,
+            text: "Scroll %"
+            }
+        }
+        }
+    }
 });
 
-new Chart(document.getElementById("scrollChart"),{
-  type:"line",
-  data:{
-    labels:pages,
-    datasets:[{
-      label:"Avg Scroll %",
-      data:avgScroll
-    }]
-  }
-});
-
-new Chart(document.getElementById("bounceChart"),{
-  type:"pie",
-  data:{
-    labels:pages,
-    datasets:[{
-      label:"Bounces",
-      data:bounceCounts
-    }]
-  }
+new Chart(document.getElementById("timeChart"), {
+    type: "line",
+    data: {
+        labels: months,
+        datasets: buildDatasets(timeData)
+    },
+    options: {
+        responsive: true,
+        interaction: {
+        mode: "index",
+        intersect: false
+        },
+        plugins: {
+        legend: {
+            display: true
+        },
+        title: {
+            display: true,
+            text: "Average Time on Page (Monthly)"
+        }
+        },
+        scales: {
+        y: {
+            beginAtZero: true,
+            title: {
+            display: true,
+            text: "Seconds"
+            }
+        }
+        }
+    }
 });
 
 // whenever a collapse panel is shown/hidden, swap info-print and info-hidden classes

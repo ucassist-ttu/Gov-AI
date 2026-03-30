@@ -142,13 +142,29 @@ for (let i = 0; i < 150; i++) {
 
   const rageClicks = []
   const page = pages[Math.floor(Math.random()*pages.length)];
-  const timeViewed = new Date(Date.now() - Math.random()*604800000).toISOString(); // last 7 days
-  const timeLeft = new Date(Date.parse(timeViewed) + Math.random()*1800).toISOString();
-  const timeSpent = timeLeft - timeViewed
+  const MONTH_RANGE = 6;
+  const now = new Date();
+  const randomMonthOffset = Math.floor(Math.random() * MONTH_RANGE);
+  const baseDate = new Date(
+    now.getFullYear(),
+    now.getMonth() - randomMonthOffset,
+    1
+  );
+  const randomDayOffset = Math.floor(Math.random() * 28);
+  const randomTimeOffset = Math.random() * 86400000;
+  const timeViewedDate = new Date(
+    baseDate.getTime() + (randomDayOffset * 86400000) + randomTimeOffset
+  );
+  const timeViewed = timeViewedDate.toISOString();
+  const timeLeft = new Date(Date.parse(timeViewed) + Math.random()*1800000).toISOString();
+  const timeSpent = Math.round(
+    (Date.parse(timeLeft) - Date.parse(timeViewed)) / 1000
+  );
   const maxScroll = Math.floor(Math.random()*100)
   const pageViews = Math.ceil(Math.random()*10)
-  if(Math.random() < 0.25 && pageViews == 1){
-    const bounce = true
+  let bounce = false;
+  if (Math.random() < 0.25 && pageViews === 1) {
+    bounce = true;
   }
   if(Math.random() < 0.15){
     rageClicks.push({
@@ -156,9 +172,10 @@ for (let i = 0; i < 150; i++) {
     })
   }
   if(Math.random() < 0.35){
+    const targets = ["#map", "#btn-submit", ".nav-link", "#accordion"];
     rageClicks.push({
-      target: "#map"
-    })
+      target: targets[Math.floor(Math.random() * targets.length)]
+    });
   }
 
   pageVisits.push({
