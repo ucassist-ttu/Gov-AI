@@ -797,8 +797,6 @@ function getMatchIcon (arrMatches) {
 }
 
 document.querySelector('#btnLearnPinMap').addEventListener("click", (e) => {
-  let currCounty = usersLocation ()
-  console.log(currCounty)
   let strDiv = `
     <ol style="text-align:left; padding-left: 20px;">
       <li>Select a county on the map to zoom in.</li>
