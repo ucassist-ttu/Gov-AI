@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentStep = 0;
   const progressSteps = document.querySelectorAll('.progress-step');
 
-  // 🔥 NEW: Service list and tab functionality from example
+  // Service list and tab functionality
   const step3Container = document.getElementById('services-container');
   const addServiceBtn = document.getElementById('addServiceBtn');
   let serviceCount = 1;
@@ -69,13 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
   function showStep(index) {
     steps.forEach((stepId, i) => {
       const section = document.getElementById(stepId);
       if (section) {
         section.classList.toggle('d-none', i !== index);
       }
-      // Update circle active state
       if (progressSteps[i]) {
         if (i === index) {
           progressSteps[i].classList.add('active');
@@ -146,20 +146,85 @@ document.addEventListener('DOMContentLoaded', () => {
     { buttonId: 'btnCountiesReg', containerId: 'divOuterCountiesReg' }
   ]);
 
-  function setupHoursDiffer(checkbox, container) {
-    if (checkbox && container) {
-      checkbox.addEventListener('change', () => {
-        if (checkbox.checked) container.style.display = 'block';
-        else {
-          container.style.display = 'none';
-          container.querySelectorAll('select').forEach(sel => sel.value = '');
+  // 🔥 FIXED: ALL checkboxes (Phone, Address, Hours) for Step 3
+  function setupAllServiceCheckboxes() {
+    document.querySelectorAll('.service-block').forEach(serviceBlock => {
+      setupSingleServiceCheckboxes(serviceBlock);
+    });
+
+    // Auto-setup new services with MutationObserver
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === 1 && node.matches('.service-block')) {
+              // Small delay to ensure DOM is fully ready
+              setTimeout(() => setupSingleServiceCheckboxes(node), 100);
+            }
+          });
         }
       });
+    });
+    
+    observer.observe(document.getElementById('services-container'), {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  function setupSingleServiceCheckboxes(serviceBlock) {
+    // PHONE checkbox
+    const phoneCheckbox = serviceBlock.querySelector('input[id^="separatePhone"]');
+    const phoneContainer = serviceBlock.querySelector('.service-phone-container');
+    if (phoneCheckbox && phoneContainer) {
+      phoneCheckbox.removeEventListener('change', phoneCheckbox._listener); // Prevent duplicates
+      const handler = () => {
+        phoneContainer.style.display = phoneCheckbox.checked ? 'block' : 'none';
+        if (!phoneCheckbox.checked) {
+          const phoneInput = phoneContainer.querySelector('input[type="tel"]');
+          if (phoneInput) phoneInput.value = '';
+        }
+      };
+      phoneCheckbox.addEventListener('change', handler);
+      phoneCheckbox._listener = handler;
+      handler(); // Initial state
+    }
+
+
+    const addressCheckbox = serviceBlock.querySelector('input[id^="separateAddress"]');
+    const addressContainer = serviceBlock.querySelector('.service-address-container');
+    if (addressCheckbox && addressContainer) {
+      addressCheckbox.removeEventListener('change', addressCheckbox._listener);
+      const handler = () => {
+        addressContainer.style.display = addressCheckbox.checked ? 'block' : 'none';
+        if (!addressCheckbox.checked) {
+          addressContainer.querySelectorAll('input, select').forEach(field => {
+            field.value = '';
+          });
+        }
+      };
+      addressCheckbox.addEventListener('change', handler);
+      addressCheckbox._listener = handler;
+      handler(); 
+    }
+
+    const hoursCheckbox = serviceBlock.querySelector('input[id^="separateHours"]');
+    const hoursContainer = serviceBlock.querySelector('.service-hours-container');
+    if (hoursCheckbox && hoursContainer) {
+      hoursCheckbox.removeEventListener('change', hoursCheckbox._listener);
+      const handler = () => {
+        hoursContainer.style.display = hoursCheckbox.checked ? 'block' : 'none';
+        if (!hoursCheckbox.checked) {
+          hoursContainer.querySelectorAll('input, select').forEach(field => {
+            field.value = '';
+          });
+        }
+      };
+      hoursCheckbox.addEventListener('change', handler);
+      hoursCheckbox._listener = handler;
+      handler(); 
     }
   }
-  const hoursDifferCheckbox = document.getElementById('hoursDiffer');
-  const serviceHoursContainer = document.getElementById('serviceHoursContainer');
-  setupHoursDiffer(hoursDifferCheckbox, serviceHoursContainer);
 
   function setupAddHours(button, container, rangeSelector) {
     if (!button || !container) return;
@@ -174,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updateRemoveButtons(container, rangeSelector);
   }
+
   function updateRemoveButtons(container, rangeSelector) {
     const ranges = container.querySelectorAll(rangeSelector);
     ranges.forEach(range => {
@@ -191,54 +257,47 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // Setup add/remove hours for Step 1 and 3
   const step1AddBtn = document.querySelector('#step-1 .add-hours');
   if (step1AddBtn) {
     const step1Container = step1AddBtn.parentElement;
     setupAddHours(step1AddBtn, step1Container, '.time-range');
   }
-  const step3AddBtns = document.querySelectorAll('#step-3 .add-hours');
-  step3AddBtns.forEach(btn => {
-    const container = btn.parentElement;
-    setupAddHours(btn, container, '.time-range');
-  });
+  setupAllServiceCheckboxes();
+  populateHourSelects();
 
-  // 🔥 UPDATED: Add service button with example functionality
-  addServiceBtn.addEventListener('click', () => {
-    serviceCount++;
-    const firstService = document.querySelector('.service-block');
-    if (!firstService) return;
+  // Add service button
+  if (addServiceBtn) {
+    addServiceBtn.addEventListener('click', () => {
+      serviceCount++;
+      const firstService = document.querySelector('.service-block');
+      if (!firstService) return;
 
-    const newService = firstService.cloneNode(true);
-    suffixIds(newService, serviceCount);
-    newService.setAttribute('data-service', serviceCount);
-    const servicesContainer = document.getElementById('services-container');
-    servicesContainer.insertBefore(newService, addServiceBtn);
+      const newService = firstService.cloneNode(true);
+      suffixIds(newService, serviceCount);
+      newService.setAttribute('data-service', serviceCount);
+      const servicesContainer = document.getElementById('services-container');
+      servicesContainer.insertBefore(newService, addServiceBtn);
 
-    const serviceListContainer = document.getElementById('service-list');
-    if (serviceListContainer) {
-      serviceListContainer.appendChild(createServiceTab(serviceCount));
-      showService(serviceCount);
-      updateActiveTab(serviceCount);
-    }
+      const serviceListContainer = document.getElementById('service-list');
+      if (serviceListContainer) {
+        serviceListContainer.appendChild(createServiceTab(serviceCount));
+        showService(serviceCount);
+        updateActiveTab(serviceCount);
+      }
 
-    const newHoursDiffer = newService.querySelector(`#hoursDiffer${serviceCount}`);
-    const newServiceHoursContainer = newService.querySelector(`#serviceHoursContainer${serviceCount}`);
-    setupHoursDiffer(newHoursDiffer, newServiceHoursContainer);
-    populateHourSelects();
-    setupDropdownTogglePairs([
-      { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
-      { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
-    ]);
+      populateHourSelects();
+      setupDropdownTogglePairs([
+        { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
+        { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
+      ]);
 
-    // Setup add hours button functionality for new service
-    const newAddBtn = newService.querySelector('.add-hours');
-    if (newAddBtn) {
-      const newContainer = newAddBtn.parentElement;
-      setupAddHours(newAddBtn, newContainer, '.time-range');
-    }
-  });
+      const newAddBtn = newService.querySelector('.add-hours');
+      if (newAddBtn) {
+        const newContainer = newAddBtn.parentElement;
+        setupAddHours(newAddBtn, newContainer, '.time-range');
+      }
+    });
+  }
 
   function suffixIds(element, suffix) {
     if (element.id) element.id += suffix;
@@ -252,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     Array.from(element.children).forEach(child => suffixIds(child, suffix));
   }
-  // 🔥 END UPDATED ADD SERVICE
 
   function getFieldLabel(input) {
     if (input.id === 'physicalAddress') return 'Physical Address (Street)';
@@ -287,46 +345,46 @@ document.addEventListener('DOMContentLoaded', () => {
     return Array.from(checkboxes).some(cb => cb.checked);
   }
 
-function collectFormErrors(form) {
-  let errors = [];
+  function collectFormErrors(form) {
+    let errors = [];
 
-  const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
-    // Exclude service-name and description inputs to handle separately with numbering
-    if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
-      return false;
-    }
-    return true;
-  });
-
-  requiredFields.forEach(field => {
-    if (field.type === 'checkbox') return;
-    if (!field.checkValidity()) {
-      errors.push(getFieldLabel(field));
-    }
-  });
-
-  if (form.id === 'form-step-1') {
-    if (!isGroupChecked('#divKeywordsReg1', form)) {
-      errors.push("Keywords (Step 1)");
-    }
-  }
-
-  if (form.id === 'form-step-3') {
-    const services = form.querySelectorAll('.service-block');
-    services.forEach((block, index) => {
-      const serviceNum = index + 1;
-      const name = block.querySelector('input[id^="serviceName"]');
-      if (!name || !name.value.trim()) errors.push(`Service Name for Service ${serviceNum}`);
-      const desc = block.querySelector('textarea[id^="serviceDescription"]');
-      if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
-      if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
-      if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
+    const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
+      if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
+        return false;
+      }
+      return true;
     });
+
+    requiredFields.forEach(field => {
+      if (field.type === 'checkbox') return;
+      if (!field.checkValidity()) {
+        errors.push(getFieldLabel(field));
+      }
+    });
+
+    if (form.id === 'form-step-1') {
+      if (!isGroupChecked('#divKeywordsReg1', form)) {
+        errors.push("Keywords (Step 1)");
+      }
+    }
+
+    if (form.id === 'form-step-3') {
+      const services = form.querySelectorAll('.service-block');
+      services.forEach((block, index) => {
+        const serviceNum = index + 1;
+        const name = block.querySelector('input[id^="serviceName"]');
+        if (!name || !name.value.trim()) errors.push(`Service Name for Service ${serviceNum}`);
+        const desc = block.querySelector('textarea[id^="serviceDescription"]');
+        if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
+        if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
+        if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
+      });
+    }
+
+    return errors;
   }
 
-  return errors;
-}
-
+  // Form submissions
   const formStep1 = document.getElementById('form-step-1');
   if (formStep1) {
     formStep1.addEventListener('submit', e => {
@@ -341,10 +399,6 @@ function collectFormErrors(form) {
         swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
       }
     });
-  }
-  const cancelBtnStep1 = document.querySelector('#step-1 .cancel-btn');
-  if (cancelBtnStep1) {
-    cancelBtnStep1.addEventListener('click', () => window.location.href = 'registration_landing.html');
   }
 
   const formStep2 = document.getElementById('form-step-2');
@@ -362,13 +416,6 @@ function collectFormErrors(form) {
       }
     });
   }
-  const backBtnStep2 = document.querySelector('#step-2 .cancel-btn');
-  if (backBtnStep2) {
-    backBtnStep2.addEventListener('click', () => {
-      currentStep = 0;
-      showStep(currentStep);
-    });
-  }
 
   const formStep3 = document.getElementById('form-step-3');
   if (formStep3) {
@@ -384,13 +431,17 @@ function collectFormErrors(form) {
       }
     });
   }
-  const cancelBtnStep3 = document.querySelector('#step-3 .cancel-btn');
-  if (cancelBtnStep3) {
-    cancelBtnStep3.addEventListener('click', () => {
-      currentStep = 1;
-      showStep(currentStep);
-    });
-  }
+
+  // Cancel/Back buttons
+  document.querySelector('#step-1 .cancel-btn')?.addEventListener('click', () => window.location.href = 'registration_landing.html');
+  document.querySelector('#step-2 .cancel-btn')?.addEventListener('click', () => {
+    currentStep = 0;
+    showStep(currentStep);
+  });
+  document.querySelector('#step-3 .cancel-btn')?.addEventListener('click', () => {
+    currentStep = 1;
+    showStep(currentStep);
+  });
 
   // Logo upload
   const uploadInput = document.getElementById('upload');
@@ -419,25 +470,9 @@ function collectFormErrors(form) {
         };
         reader.readAsDataURL(file);
       }
-    });
+       });
   }
-  const fileUploadLabel = document.querySelector('.file-upload');
-  if (fileUploadLabel && uploadInput) {
-    fileUploadLabel.addEventListener('dragover', e => {
-      e.preventDefault();
-      fileUploadLabel.classList.add('bg-light');
-    });
-    fileUploadLabel.addEventListener('dragleave', () => fileUploadLabel.classList.remove('bg-light'));
-    fileUploadLabel.addEventListener('drop', e => {
-      e.preventDefault();
-      fileUploadLabel.classList.remove('bg-light');
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        uploadInput.files = files;
-        uploadInput.dispatchEvent(new Event('change'));
-      }
-    });
-  }
+
   if (clearLogoBtn) {
     clearLogoBtn.addEventListener('click', () => {
       if (uploadInput) uploadInput.value = '';
@@ -448,7 +483,7 @@ function collectFormErrors(form) {
 
   showStep(currentStep);
 
-  // Function to create checkboxes for counties/keywords
+  // Create checkboxes for counties/keywords
   function createCheckbox(labelText, container, suffix = '') {
     const value = labelText.toLowerCase().replace(/\s+/g, "-");
     const wrapper = document.createElement("div");
@@ -467,6 +502,7 @@ function collectFormErrors(form) {
     container.appendChild(wrapper);
   }
 
+  // Fetch and populate data
   async function fetchAndPopulateAllData() {
     try {
       const response = await fetch('https://ucassist.duckdns.org/services');
@@ -476,15 +512,13 @@ function collectFormErrors(form) {
         if (service.CityStateZip) {
           const parts = service.CityStateZip.split(',');
           const city = parts[0].trim();
-          if (city) {
-            cities.push(city);
-          }
+          if (city) cities.push(city);
         }
       });
       const uniqueCities = [...new Set(cities)].sort();
+      
       const arrCounties = [];
       const arrServiceType = [];
-
       data.forEach(element => {
         let strKeywords = element.Keywords;
         if (typeof strKeywords === 'string') {
@@ -504,6 +538,8 @@ function collectFormErrors(form) {
 
       const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
       const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
+      
+      // Step 1 city
       const cityStep1 = document.getElementById('cityPublic');
       if (cityStep1) {
         uniqueCities.forEach(city => {
@@ -513,7 +549,9 @@ function collectFormErrors(form) {
           cityStep1.appendChild(option);
         });
       }
-      const cityStep3Selects = document.querySelectorAll('select[id="serviceCity"]');
+      
+      // Step 3 cities
+      const cityStep3Selects = document.querySelectorAll('.service-city-select');
       cityStep3Selects.forEach(select => {
         uniqueCities.forEach(city => {
           const option = document.createElement('option');
@@ -522,23 +560,23 @@ function collectFormErrors(form) {
           select.appendChild(option);
         });
       });
+      
+      // Counties
       const countiesContainer = document.getElementById("divCountiesReg");
       if (countiesContainer) {
-        uniqueCounties.forEach(county => {
-          createCheckbox(county, countiesContainer);
-        });
+        uniqueCounties.forEach(county => createCheckbox(county, countiesContainer));
       }
+      
+      // Keywords Step 1
       const keywordsContainerStep1 = document.getElementById("divKeywordsReg1");
       if (keywordsContainerStep1) {
-        uniqueServiceTypes.forEach(keyword => {
-          createCheckbox(keyword, keywordsContainerStep1, '-step1');
-        });
+        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep1, '-step1'));
       }
+      
+      // Keywords Step 3
       const keywordsContainerStep3 = document.getElementById("divKeywordsReg");
       if (keywordsContainerStep3) {
-        uniqueServiceTypes.forEach(keyword => {
-          createCheckbox(keyword, keywordsContainerStep3, '-step3');
-        });
+        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3, '-step3'));
       }
 
     } catch (error) {
@@ -547,10 +585,12 @@ function collectFormErrors(form) {
   }
   fetchAndPopulateAllData();
 
-  // Phone and Zip 
+  // Phone and Zip formatting
   document.addEventListener('input', e => {
     const target = e.target;
-    const isPhone = target.id === 'phone' || target.id === 'primaryPhone' || target.id === 'secondaryPhone' || target.id.startsWith('servicePhone');
+    
+    // Phone formatting
+    const isPhone = target.matches('input[type="tel"]');
     if (isPhone) {
       let value = target.value.replace(/\D/g, '');
       if (value.length > 0) {
@@ -564,12 +604,12 @@ function collectFormErrors(form) {
       }
       target.value = value;
     }
-    const isZip = target.id === 'zipPublic' || target.id.startsWith('zipCode');
+    
+    // Zip formatting
+    const isZip = target.id === 'zipPublic' || target.id.startsWith('serviceZip');
     if (isZip) {
       let value = target.value.replace(/\D/g, '');
-      if (value.length > 5) {
-        value = value.substring(0, 5);
-      }
+      if (value.length > 5) value = value.substring(0, 5);
       target.value = value;
     }
   });
