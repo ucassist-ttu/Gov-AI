@@ -50,13 +50,16 @@ async function getAIRecommendations(userPrompt) {
             txtHTML +=`    <p class="ai-company-name">`;
             txtHTML +=`        by ${strCompany}`;
             txtHTML +=`    </p>`;
-            txtHTML +=`</div>`;
-            txtHTML += getCounties(element)
-            console.log(getCounties(element))
+            const countiesHTML = getCounties(element);
+            if (countiesHTML) {
+                txtHTML += countiesHTML;
+            }
+
             txtHTML +=`<p class="ai-description">`;
             txtHTML +=`      ${strDescription}`;
             txtHTML +=`</p>`;
             txtHTML +=`<p class="btn ai-link">More Details</p>`;
+            txtHTML +=`</div>`; 
             intCount++;
         });
 
@@ -129,5 +132,5 @@ window.addEventListener('beforeunload', () => {
         page: window.location.pathname,
         timestamp: new Date().toISOString(),
         printed: printed
-    });
+    }); 
 });
