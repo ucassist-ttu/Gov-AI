@@ -574,6 +574,23 @@ function renderSidebarServices(arrServices) {
     }
 }
 
+document.querySelector('#btnLearnServices').addEventListener("click", (e) => {
+  let strDiv = `
+    <ol style="text-align:left; padding-left: 20px;">
+        <li>Services are automatically filtered based on your selected location.</li>
+        <li>Click <b>"Filter and Sort"</b> to refine your results.</li>
+        <li>Select a county or service type to narrow down the list.</li>
+        <li>Click on a service to view detailed information.</li>
+        <li>Use the search bar to better find what you are looking for.</li>
+    </ol>
+  `;
+  Swal.fire({
+    title: "How do I find services?",
+    html: strDiv,
+    icon: "question"
+  });
+})
+
 /*
     4 cases for analytics logging:
         1. User searches and finds a resource (logged when clicking learn more on a service)
