@@ -60,14 +60,23 @@ async function getAIRecommendations(userPrompt) {
             intCount++;
         });
 
+        console.log({
+            searchType: "AI",
+            timeStamp: new Date().toISOString(),
+            search: userPrompt,
+            results: aiData.length(),
+            county: sessionStorage.getItem("currCounty"),
+            checked: null
+        })
+
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
             AIContainer.innerHTML = `<p class="mt-3">Try a different prompt or browse all available services.</p>`;
 
-            console.log("0 Result AI Search", {
-                page: window.location.pathname,
-                timestamp: new Date().toISOString()
-            });
+            // console.log("0 Result AI Search", {
+            //     page: window.location.pathname,
+            //     timestamp: new Date().toISOString()
+            // });
 
             return;
         }
@@ -124,10 +133,10 @@ document.addEventListener("click", (e) => {
     }
 });
 
-window.addEventListener('beforeunload', () => {
-    console.log("AI Results Page Left", {
-        page: window.location.pathname,
-        timestamp: new Date().toISOString(),
-        printed: printed
-    });
-});
+// window.addEventListener('beforeunload', () => {
+//     console.log("AI Results Page Left", {
+//         page: window.location.pathname,
+//         timestamp: new Date().toISOString(),
+//         printed: printed
+//     });
+// });

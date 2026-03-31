@@ -123,12 +123,13 @@ window.addEventListener("beforeunload", () => {
   console.log({
     page: window.location.pathname,
     timeViewed: pageStartTime,
-    timeLeft: Date.now().toString(),
+    timeLeft: new Date().toISOString(),
     timeSpent: Math.round((Date.now() - pageStartTime) / 1000),
     maxScoll: maxScroll,
     pageViews: session.pageViews,
     clickLogs: session.clickLogs,
-    bounce: bounce
+    bounce: bounce,
+    county: sessionStorage.getItem("currCounty")
   })
 })
 
@@ -166,17 +167,35 @@ for (let i = 0; i < 150; i++) {
   if (Math.random() < 0.25 && pageViews === 1) {
     bounce = true;
   }
+  const targets = ["#map", "#btn-submit", ".nav-link", "#accordion"];
   if(Math.random() < 0.15){
-    rageClicks.push({
-      target: "#map"
-    })
-  }
-  if(Math.random() < 0.35){
-    const targets = ["#map", "#btn-submit", ".nav-link", "#accordion"];
     rageClicks.push({
       target: targets[Math.floor(Math.random() * targets.length)]
     });
   }
+  if(Math.random() < 0.35){
+    rageClicks.push({
+      target: targets[Math.floor(Math.random() * targets.length)]
+    });
+  }
+  const counties = [
+    'all',
+    'cannon',
+    'clay',
+    'cumberland',
+    'dekalb',
+    'fentress',
+    'jackson',
+    'macon',
+    'overton',
+    'pickett',
+    'putnam',
+    'smith',
+    'van_buren',
+    'warren',
+    'white'
+  ]
+  const county = counties[Math.floor(Math.random() * counties.length)]
 
   pageVisits.push({
     page: page,
@@ -186,7 +205,8 @@ for (let i = 0; i < 150; i++) {
     maxScroll: maxScroll,
     pageViews: pageViews,
     clickLogs: rageClicks,
-    bounce: bounce
+    bounce: bounce,
+    county: county
   })
 
 }

@@ -109,15 +109,15 @@ function createServiceCard(arrCards) {
 
                 let serviceId = serviceCard.dataset.id
                 // Log user has clicked on a service for analytics
-                if (boolSearched) {
-                    boolResourceFound = true
-                    console.log("Service Found", {
-                        page: window.location.pathname,
-                        timestamp: new Date().toISOString(),
-                        dataSearch: dataSearch,
-                        boolResourceFound: boolResourceFound
-                    })
-                }
+                // if (boolSearched) {
+                //     boolResourceFound = true
+                //     console.log("Service Found", {
+                //         page: window.location.pathname,
+                //         timestamp: new Date().toISOString(),
+                //         dataSearch: dataSearch,
+                //         boolResourceFound: boolResourceFound
+                //     })
+                // }
                 callServicePage(serviceId)
             });
         })
@@ -158,14 +158,14 @@ function getCountyList(service) {
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
 
     // If user searches a second time without clicking a service
-    if (boolSearched && !boolResourceFound) {
-        console.log("Service Not Found, Searching Again", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
-    }
+    // if (boolSearched && !boolResourceFound) {
+    //     console.log("Service Not Found, Searching Again", {
+    //         page: window.location.pathname,
+    //         timestamp: new Date().toISOString(),
+    //         dataSearch: dataSearch,
+    //         boolResourceFound: boolResourceFound
+    //     })
+    // }
 
     selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
     selectedCheckboxes.forEach(box => {
@@ -188,6 +188,14 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
     })
     uniqueSearch = [...new Set(arrFound)];
     // Search Analytics
+    console.log({
+        searchType: "Database",
+        timeStamp: new Date().toISOString(),
+        search: strSearch,
+        results: uniqueSearch.length,
+        county: sessionStorage.getItem("currCounty"),
+        checked: selectedCheckboxes
+    })
     dataSearch = {
         searchTerm: strSearch,
         checked: selectedCheckboxes, 
@@ -210,12 +218,12 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
             renderSidebarServices(arrCurrentServices)
         })
         // Analytics for 0 search results
-        console.log("0 Result Search", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
+        // console.log("0 Result Search", {
+        //     page: window.location.pathname,
+        //     timestamp: new Date().toISOString(),
+        //     dataSearch: dataSearch,
+        //     boolResourceFound: boolResourceFound
+        // })
     }
     else {
         arrCurrentServices = uniqueSearch
@@ -549,13 +557,13 @@ function renderSidebarServices(arrServices) {
 */
 
 // Log if user has searched and didnt find a resource
-window.addEventListener('beforeunload', () => {
-    if (boolSearched && !boolResourceFound) {
-        console.log("Service Not Found, Leaving Page", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
-    }
-})
+// window.addEventListener('beforeunload', () => {
+//     if (boolSearched && !boolResourceFound) {
+//         console.log("Service Not Found, Leaving Page", {
+//             page: window.location.pathname,
+//             timestamp: new Date().toISOString(),
+//             dataSearch: dataSearch,
+//             boolResourceFound: boolResourceFound
+//         })
+//     }
+// })

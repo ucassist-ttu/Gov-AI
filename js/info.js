@@ -508,11 +508,111 @@ function average(arr) {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
+function updateSecondSelect(modeSelect, valueSelect) {
+    const mode = modeSelect.value;
+
+    valueSelect.innerHTML = "";
+
+    if (mode === "recent") {
+        ["3", "6", "12"].forEach(m => {
+            const opt = document.createElement("option");
+            opt.value = m;
+            opt.textContent = `Last ${m} Months`;
+            valueSelect.appendChild(opt);
+        });
+    } else {
+        years.forEach(y => {
+            const opt = document.createElement("option");
+            opt.value = y;
+            opt.textContent = y;
+            valueSelect.appendChild(opt);
+        });
+    }
+}
+
+function getFilteredMonths(mode, value) {
+    if (mode === "recent") {
+        return months.slice(-parseInt(value));
+    } else {
+        return months.filter(m => m.startsWith(value));
+    }
+}
+
+function triggerUpdate() {
+    const mode = modeSelects[0].value;
+    const value = valueSelects[0].value;
+
+    const filteredMonths = getFilteredMonths(mode, value);
+
+    renderCharts(filteredMonths);
+}
+
+let visitsChart, scrollChart, timeChart;
+
+function renderCharts(filteredMonths) {
+
+    const visitDatasets = pages.map((page, index) => ({
+        label: page,
+        data: filteredMonths.map(month => monthlyData[month]?.[page] || 0),
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length],
+        tension: 0.3,
+        fill: false
+    }));
+
+    const scrollDatasets = pages.map((page, index) => ({
+        label: page,
+        data: filteredMonths.map(month => {
+            const values = scrollData[month]?.[page];
+            return values ? average(values) : 0;
+        }),
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length],
+        tension: 0.3,
+        fill: false
+    }));
+
+    const timeDatasets = pages.map((page, index) => ({
+        label: page,
+        data: filteredMonths.map(month => {
+            const values = timeData[month]?.[page];
+            return values ? average(values) : 0;
+        }),
+        borderColor: colors[index % colors.length],
+        backgroundColor: colors[index % colors.length],
+        tension: 0.3,
+        fill: false
+    }));
+
+    // Destroy old charts
+    visitsChart?.destroy();
+    scrollChart?.destroy();
+    timeChart?.destroy();
+
+    visitsChart = new Chart(document.getElementById("visitsChart"), {
+        type: "line",
+        data: { labels: filteredMonths, datasets: visitDatasets }
+    });
+
+    scrollChart = new Chart(document.getElementById("scrollChart"), {
+        type: "line",
+        data: { labels: filteredMonths, datasets: scrollDatasets }
+    });
+
+    timeChart = new Chart(document.getElementById("timeChart"), {
+        type: "line",
+        data: { labels: filteredMonths, datasets: timeDatasets }
+    });
+}
+
 // Extract sorted months
 const months = Object.keys(monthlyData).sort();
 
 // Get all unique pages
 const pages = [...new Set(analytics.map(e => e.page))];
+
+// Get all unique years
+const years = [...new Set(months.map(m => m.split("-")[0]))].sort();
 
 const analyticsColors = [
     "#4E79A7",
@@ -535,123 +635,35 @@ const datasets = pages.map((page, index) => {
 const scrollData = groupMonthlyAverage(analytics, "maxScroll");
 const timeData = groupMonthlyAverage(analytics, "timeSpent");
 
-new Chart(document.getElementById("visitsChart"), {
-    type: "line",
-    data: {
-        labels: months,
-        datasets: datasets
-    },
-    options: {
-        responsive: true,
-        interaction: {
-        mode: "index",
-        intersect: false
-        },
-        plugins: {
-        legend: {
-            display: true, // clickable by default
-            position: "top"
-        },
-        title: {
-            display: true,
-            text: "Monthly Page Visits"
-        }
-        },
-        scales: {
-        x: {
-            title: {
-            display: true,
-            text: "Month"
-            }
-        },
-        y: {
-            beginAtZero: true,
-            title: {
-            display: true,
-            text: "Visits"
-            }
-        }
-        }
-    }
+const modeSelects = document.querySelectorAll(".filter-mode");
+const valueSelects = document.querySelectorAll(".filter-value");
+
+// initialize all dropdowns
+modeSelects.forEach((modeSelect, i) => {
+    const valueSelect = valueSelects[i];
+
+    updateSecondSelect(modeSelect, valueSelect);
+
+    modeSelect.addEventListener("change", () => {
+        updateSecondSelect(modeSelect, valueSelect);
+        triggerUpdate();
+    });
+
+    valueSelect.addEventListener("change", triggerUpdate);
 });
 
-new Chart(document.getElementById("scrollChart"), {
-    type: "line",
-    data: {
-        labels: months,
-        datasets: buildDatasets(scrollData)
-    },
-    options: {
-        responsive: true,
-        interaction: {
-        mode: "index",
-        intersect: false
-        },
-        plugins: {
-        legend: {
-            display: true
-        },
-        title: {
-            display: true,
-            text: "Average Scroll Depth by Page (Monthly)"
-        }
-        },
-        scales: {
-        y: {
-            beginAtZero: true,
-            max: 100,
-            title: {
-            display: true,
-            text: "Scroll %"
-            }
-        }
-        }
-    }
-});
-
-new Chart(document.getElementById("timeChart"), {
-    type: "line",
-    data: {
-        labels: months,
-        datasets: buildDatasets(timeData)
-    },
-    options: {
-        responsive: true,
-        interaction: {
-        mode: "index",
-        intersect: false
-        },
-        plugins: {
-        legend: {
-            display: true
-        },
-        title: {
-            display: true,
-            text: "Average Time on Page (Monthly)"
-        }
-        },
-        scales: {
-        y: {
-            beginAtZero: true,
-            title: {
-            display: true,
-            text: "Seconds"
-            }
-        }
-        }
-    }
-});
+triggerUpdate()
 
 // whenever a collapse panel is shown/hidden, swap info-print and info-hidden classes
 // using Bootstrap 5 collapse events
 const collapses = document.querySelectorAll('#accordion .collapse');
 collapses.forEach(el => {
-  el.addEventListener('show.bs.collapse', () => {
-    el.parentElement.classList.add('info-print');
-    el.parentElement.classList.remove('info-hidden');
-  });
-  el.addEventListener('hide.bs.collapse', () => {
-    el.parentElement.classList.remove('info-print');
-    el.parentElement.classList.add('info-hidden');
-  });
+    el.addEventListener('show.bs.collapse', () => {
+        el.parentElement.classList.add('info-print');
+        el.parentElement.classList.remove('info-hidden');
+    });
+    el.addEventListener('hide.bs.collapse', () => {
+        el.parentElement.classList.remove('info-print');
+        el.parentElement.classList.add('info-hidden');
+    });
 });
