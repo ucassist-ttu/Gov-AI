@@ -215,4 +215,65 @@ localStorage.setItem("analytics", JSON.stringify(pageVisits));
 
 }
 
+function generateMockSearch(count = 100) {
+    const counties = [
+        'all','cannon','clay','cumberland','dekalb','fentress',
+        'jackson','macon','overton','pickett','putnam',
+        'smith','van_buren','warren','white'
+    ];
+
+    const serviceSearches = [
+        "food stamps application",
+        "medicaid eligibility",
+        "housing assistance",
+        "utility bill help",
+        "unemployment benefits",
+        "child care assistance",
+        "transportation services",
+        "mental health services",
+        "substance abuse treatment",
+        "job training programs",
+        "senior services",
+        "disability services",
+        "public health clinic",
+        "vaccination locations",
+        "rental assistance"
+    ];
+
+    const data = [];
+
+    for (let i = 0; i < count; i++) {
+        const searchType = Math.random() < 0.5 ? "AI" : "database";
+
+        // Random timestamp within last 6 months
+        const now = new Date();
+        const past = new Date();
+        past.setMonth(now.getMonth() - 6);
+
+        const randomTime = new Date(
+            past.getTime() + Math.random() * (now.getTime() - past.getTime())
+        );
+
+        const results =
+            searchType === "AI"
+                ? Math.floor(Math.random() * 5) // 0–4
+                : Math.floor(Math.random() * 501); // 0–500
+
+        data.push({
+            searchType: searchType,
+            timeStamp: randomTime.toISOString(),
+            search: serviceSearches[Math.floor(Math.random() * serviceSearches.length)],
+            results: results,
+            county: counties[Math.floor(Math.random() * counties.length)],
+            checked: null
+        });
+    }
+
+    // Save to localStorage
+    localStorage.setItem("searchAnalytics", JSON.stringify(data));
+
+    return data;
+}
+
 generateMockAnalytics();
+generateMockSearch(200);
