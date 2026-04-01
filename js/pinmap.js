@@ -795,3 +795,21 @@ function getMatchIcon (arrMatches) {
   }
   return icon
 }
+
+document.querySelector('#btnLearnPinMap').addEventListener("click", (e) => {
+  let strDiv = `
+    <ol style="text-align:left; padding-left: 20px;">
+      <li>Select a county on the map to zoom in.</li>
+      <li>Click <b>"Map Filter and Sort"</b> to open the filter panel.</li>
+      <li>Choose a category to view available subcategories.</li>
+      <li>Select one or more subcategories to display pins on the map.</li>
+      <li>Click <b>"See Results"</b> to apply your filters.</li>
+      <li>Click on any pin to view detailed information about that service.</li>
+    </ol>
+  `;
+  Swal.fire({
+    title: "How do I use the pinmap?",
+    html: strDiv,
+    icon: "question"
+  });
+})

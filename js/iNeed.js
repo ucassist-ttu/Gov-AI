@@ -366,6 +366,18 @@ function getLogoSrc(rawLogo) {
   return `/Gov-AI/assets/images/${logo}`;
 }
 
+document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
+  let strDiv = `
+    <ol style="text-align:left; padding-left: 20px;">
+      <li>Add How to use steps here {: ^)</li>
+    </ol>
+  `;
+  Swal.fire({
+    title: "How to use I Need?",
+    html: strDiv,
+    icon: "question"
+  });
+})
 function getCategoryDescription(category) {
   switch(category) {
     case "Crisis":
