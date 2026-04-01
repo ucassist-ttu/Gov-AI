@@ -146,19 +146,16 @@ document.addEventListener('DOMContentLoaded', () => {
     { buttonId: 'btnCountiesReg', containerId: 'divOuterCountiesReg' }
   ]);
 
-  // 🔥 FIXED: ALL checkboxes (Phone, Address, Hours) for Step 3
   function setupAllServiceCheckboxes() {
     document.querySelectorAll('.service-block').forEach(serviceBlock => {
       setupSingleServiceCheckboxes(serviceBlock);
     });
 
-    // Auto-setup new services with MutationObserver
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach((node) => {
             if (node.nodeType === 1 && node.matches('.service-block')) {
-              // Small delay to ensure DOM is fully ready
               setTimeout(() => setupSingleServiceCheckboxes(node), 100);
             }
           });
@@ -173,11 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function setupSingleServiceCheckboxes(serviceBlock) {
-    // PHONE checkbox
     const phoneCheckbox = serviceBlock.querySelector('input[id^="separatePhone"]');
     const phoneContainer = serviceBlock.querySelector('.service-phone-container');
     if (phoneCheckbox && phoneContainer) {
-      phoneCheckbox.removeEventListener('change', phoneCheckbox._listener); // Prevent duplicates
+      phoneCheckbox.removeEventListener('change', phoneCheckbox._listener);
       const handler = () => {
         phoneContainer.style.display = phoneCheckbox.checked ? 'block' : 'none';
         if (!phoneCheckbox.checked) {
@@ -187,9 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       phoneCheckbox.addEventListener('change', handler);
       phoneCheckbox._listener = handler;
-      handler(); // Initial state
+      handler();
     }
-
 
     const addressCheckbox = serviceBlock.querySelector('input[id^="separateAddress"]');
     const addressContainer = serviceBlock.querySelector('.service-address-container');
@@ -215,9 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const handler = () => {
         hoursContainer.style.display = hoursCheckbox.checked ? 'block' : 'none';
         if (!hoursCheckbox.checked) {
-          hoursContainer.querySelectorAll('input, select').forEach(field => {
-            field.value = '';
-          });
+          hoursContainer.querySelectorAll('select').forEach(sel => sel.value = '');
         }
       };
       hoursCheckbox.addEventListener('change', handler);
