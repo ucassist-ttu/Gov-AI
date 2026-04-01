@@ -139,11 +139,11 @@ const pages = ["/", "/services", "/snap", "/crisis", "/error"];
 
 const pageVisits = []
 
-for (let i = 0; i < 150; i++) {
+for (let i = 0; i < 400; i++) {
 
   const rageClicks = []
   const page = pages[Math.floor(Math.random()*pages.length)];
-  const MONTH_RANGE = 6;
+  const MONTH_RANGE = 15;
   const now = new Date();
   const randomMonthOffset = Math.floor(Math.random() * MONTH_RANGE);
   const baseDate = new Date(
