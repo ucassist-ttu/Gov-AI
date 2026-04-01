@@ -93,7 +93,7 @@ document.addEventListener("click", (e) => {
     const descriptionContainer = document.getElementById("wrapperINeedContent");
     let txtDescription = getCategoryDescription(clickedCard.id.replace("pillINeed", ""));
     console.log("[iNeed] Category description:", txtDescription);
-    descriptionContainer.innerHTML = `<h5 class="white fw-light"><i class="bi bi-question-circle white me-2"></i>${txtDescription}</h5>`;
+    descriptionContainer.innerHTML = `<h5 class="white fw-light">${txtDescription}</h5>`; //<i class="bi bi-question-circle white me-2"></i>
 
     
   }
@@ -381,29 +381,29 @@ document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
 function getCategoryDescription(category) {
   switch(category) {
     case "Crisis":
-      return "Provides immediate support for individuals experiencing abuse, personal crisis, or emergency situations. Includes crisis hotlines and emergency shelter for those in urgent need.";
+      return "These services provide immediate support for individuals experiencing abuse, personal crisis, or emergency situations. This section includes crisis hotlines and emergency shelter for those in urgent need.";
     case "Housing":
-      return "Assists individuals and families with finding stable housing, covering rent or utility costs, and maintaining their homes. Also supports those experiencing homelessness or in need of emergency shelter.";
+      return "These services assist individuals and families with finding stable housing, covering rent or utility costs, and maintaining their homes. They also support those experiencing homelessness or in need of emergency shelter.";
     case "BasicNeeds":
-      return "Connects people with essential everyday resources such as food, clothing, and toiletries. Includes food pantries, meal programs, and financial assistance for groceries.";
+      return "These services connect people with essential everyday resources such as food, clothing, and toiletries. They include food pantries, meal programs, and financial assistance for groceries.";
     case "Financial":
-      return "Offers guidance and assistance with financial planning, debt management, and legal matters. Helps individuals navigate budgeting and access financial aid programs.";
+      return "These services offer guidance and assistance with financial planning, debt management, and legal matters. They help individuals navigate budgeting and access financial aid programs.";
     case "Transportation":
-      return "Helps individuals access reliable transportation options including public transit, ride assistance, and driver education programs. Supports those who lack access to personal vehicles.";
+      return "These services help individuals access reliable transportation options including public transit, ride assistance, and driver education programs. These offer support for those who lack access to personal vehicles.";
     case "Youth":
-      return "Supports children, teens, and parents through childcare, youth programs, and parenting resources. Focused on the healthy development and wellbeing of young people.";
+      return "These services support children, teens, and parents through childcare, youth programs, and parenting resources. They are focused on the healthy development and wellbeing of young people.";
     case "Seniors":
-      return "Provides services tailored to older adults, veterans, and individuals with disabilities. Includes senior activities, in-home care, and specialized support programs.";
+      return "These services provide support tailored to older adults, veterans, and individuals with disabilities. This Includes senior activities, in-home care, and specialized support programs.";
     case "Health":
-      return "Covers a wide range of physical and mental health services including primary care, pregnancy support, substance abuse recovery, and wellness programs. Supports overall health and wellbeing.";
+      return "These services cover a wide range of physical and mental health services including primary care, pregnancy support, substance abuse recovery, and wellness programs. The aim is to support overall health and wellbeing.";
     case "Education":
-      return "Connects individuals with educational opportunities, job training, and workforce development programs. Helps people build skills and find meaningful employment.";
+      return "These services connect individuals with educational opportunities, job training, and workforce development programs. The goal is to help people build skills and find meaningful employment.";
     case "Business":
-      return "Supports local entrepreneurs and small business owners with resources, mentorship, and economic development opportunities. Helps businesses grow and thrive in the community.";
+      return "These services support local entrepreneurs and small business owners with resources, mentorship, and economic development opportunities. These services help businesses grow and thrive in the Upper Cumberland community.";
     case "Tourism":
-      return "Highlights local recreation, events, and tourism opportunities in the area. Helps residents and visitors discover activities and community happenings.";
+      return "These services highlight local recreation, events, and tourism opportunities in the area to help residents and visitors discover activities and community happenings.";
     case "Community":
-      return "Focuses on strengthening and developing the local community through organized initiatives and programs. Encourages civic engagement and neighborhood improvement.";
+      return "These services focus on strengthening and developing the local community through organized initiatives and programs encouraging civic engagement and neighborhood improvement.";
     default:
       return "Please select a category to see available resources and services in your area.";
   }
