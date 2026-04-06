@@ -544,6 +544,17 @@ function getFilteredMonths(mode, value) {
     }
 }
 
+function getBarAmount(amount) {
+    switch(amount) {
+        case "5":
+            return 5
+        case "15":
+            return 15
+        case "30":
+            return 30
+    }
+}
+
 function triggerUpdate() {
     const mode = modeSelects[0].value;
     const value = valueSelects[0].value;
@@ -613,10 +624,11 @@ function renderCharts() {
 
     const rageMode = rageCard.querySelector(".filter-mode")?.value;
     const rageValue = rageCard.querySelector(".filter-value")?.value;
+    const rageAmount = rageCard.querySelector(".filter-amount")?.value;
 
     const rageMonths = getFilteredMonths(rageMode, rageValue);
 
-    rageClicks = getRageClickCounts(rageMonths);
+    rageClicks = getRageClickCounts(rageMonths, getBarAmount(rageAmount));
 
 
     const aiCard = document.querySelector("#collapseSeven");
@@ -624,20 +636,22 @@ function renderCharts() {
     const aiMode = aiCard.querySelector(".filter-mode").value;
     const aiValue = aiCard.querySelector(".filter-value").value;
     const aiZeroOnly = aiCard.querySelector(".search-filter").value === "zero";
+    const aiAmount = aiCard.querySelector(".filter-amount").value;
 
     const dbCard = document.querySelector("#collapseEight");
 
     const dbMode = dbCard.querySelector(".filter-mode").value;
     const dbValue = dbCard.querySelector(".filter-value").value;
     const dbZeroOnly = dbCard.querySelector(".search-filter").value === "zero";
+    const dbAmount = dbCard.querySelector(".filter-amount").value;
 
     // Compute filtered months
     const aiMonths = getFilteredMonths(aiMode, aiValue);
     const dbMonths = getFilteredMonths(dbMode, dbValue);
 
     // Get word counts
-    const aiWords = getWordCounts(aiMonths, "AI", aiZeroOnly);
-    const dbWords = getWordCounts(dbMonths, "database", dbZeroOnly);
+    const aiWords = getWordCounts(aiMonths, "AI", aiZeroOnly, getBarAmount(aiAmount));
+    const dbWords = getWordCounts(dbMonths, "database", dbZeroOnly, getBarAmount(dbAmount));
 
 
     // Destroy old charts
@@ -752,6 +766,10 @@ document.querySelectorAll(".search-filter").forEach(select => {
     select.addEventListener("change", triggerUpdate);
 });
 
+document.querySelectorAll(".filter-amount").forEach(select => {
+    select.addEventListener("change", triggerUpdate);
+});
+
 triggerUpdate()
 
 function extractKeywords(search) {
@@ -762,7 +780,7 @@ function extractKeywords(search) {
         .filter(word => word && !stopWords.has(word));
 }
 
-function getWordCounts(filteredMonths, type, zeroOnly) {
+function getWordCounts(filteredMonths, type, zeroOnly, amount) {
     const counts = {};
 
     searchAnalytics.forEach(entry => {
@@ -780,13 +798,13 @@ function getWordCounts(filteredMonths, type, zeroOnly) {
         });
     });
 
-    // sort + take top 10
+    // sort + take top x
     return Object.entries(counts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10);
+        .slice(0, amount);
 }
 
-function getRageClickCounts(filteredMonths) {
+function getRageClickCounts(filteredMonths, amount) {
     const counts = {};
 
     analytics.forEach(entry => {
@@ -802,10 +820,10 @@ function getRageClickCounts(filteredMonths) {
         });
     });
 
-    // Sort + top 10
+    // Sort + top x
     return Object.entries(counts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10);
+        .slice(0, amount);
 }
 
 // whenever a collapse panel is shown/hidden, swap info-print and info-hidden classes

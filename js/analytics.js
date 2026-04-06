@@ -18,35 +18,37 @@ if (!session || now - session.lastActivity > SESSION_TIMEOUT) {
 session.pageViews += 1;
 session.lastActivity = now;
 
+// Bounce detection can be calculated as total number of times 1 page view appears in the database - the total number of times 2 page views appears in the database
+
 // Improved bounce detection: Set bounce flag and log on page visit complete
-let bounce = session.pageViews === 1;
-let bounceTimeout;
+// let bounce = session.pageViews === 1;
+// let bounceTimeout;
 
-function logBounce() {
-  if (bounce) {
-    console.log("Bounce detected", {
-      page: window.location.pathname,
-      timestamp: new Date().toISOString(),
-      pageViews: session.pageViews,
-      bounce: true
-    });
-  }
-}
+// function logBounce() {
+//   if (bounce) {
+//     console.log("Bounce detected", {
+//       page: window.location.pathname,
+//       timestamp: new Date().toISOString(),
+//       pageViews: session.pageViews,
+//       bounce: true
+//     });
+//   }
+// }
 
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") {
-    // Delay to allow for potential navigation back or internal links
-    bounceTimeout = setTimeout(logBounce, 5000); // 5-second delay
-  } else if (document.visibilityState === "visible") {
-    // User returned, cancel bounce logging
-    clearTimeout(bounceTimeout);
-  }
-});
+// document.addEventListener("visibilitychange", () => {
+//   if (document.visibilityState === "hidden") {
+//     // Delay to allow for potential navigation back or internal links
+//     bounceTimeout = setTimeout(logBounce, 5000); // 5-second delay
+//   } else if (document.visibilityState === "visible") {
+//     // User returned, cancel bounce logging
+//     clearTimeout(bounceTimeout);
+//   }
+// });
 
-window.addEventListener("beforeunload", () => {
-  clearTimeout(bounceTimeout);
-  logBounce();
-});
+// window.addEventListener("beforeunload", () => {
+//   clearTimeout(bounceTimeout);
+//   logBounce();
+// });
 
 localStorage.setItem("analytics_session", JSON.stringify(session));
 
@@ -128,7 +130,6 @@ window.addEventListener("beforeunload", () => {
     maxScoll: maxScroll,
     pageViews: session.pageViews,
     clickLogs: session.clickLogs,
-    bounce: bounce,
     county: sessionStorage.getItem("currCounty")
   })
 })
