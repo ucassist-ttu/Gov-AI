@@ -143,7 +143,7 @@ for (let i = 0; i < 400; i++) {
 
   const rageClicks = []
   const page = pages[Math.floor(Math.random()*pages.length)];
-  const MONTH_RANGE = 15;
+  const MONTH_RANGE = 18;
   const now = new Date();
   const randomMonthOffset = Math.floor(Math.random() * MONTH_RANGE);
   const baseDate = new Date(
@@ -211,7 +211,7 @@ for (let i = 0; i < 400; i++) {
 
 }
 
-localStorage.setItem("analytics", JSON.stringify(pageVisits));
+  localStorage.setItem("analytics", JSON.stringify(pageVisits));
 
 }
 
@@ -257,7 +257,7 @@ function generateMockSearch(count = 100) {
         const results =
             searchType === "AI"
                 ? Math.floor(Math.random() * 5) // 0–4
-                : Math.floor(Math.random() * 501); // 0–500
+                : Math.floor(Math.random() * 21); // 0–20
 
         data.push({
             searchType: searchType,
