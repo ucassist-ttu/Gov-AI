@@ -6,7 +6,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css"/>
   <title>Service Referral Form</title>
   <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
@@ -37,8 +37,10 @@
 </div>
 </div>
 
-<main class="container-referral page w-50">
-  <p>Share their details below, and we'll contact them.</p>
+ <main class="container-fluid px-4 px-md-5">
+    <div class="row justify-content-left">
+      <div class="col-12 col-lg-6 px-3 px-lg-4">
+        <p class="mb-4">Share their details below, and we'll contact them.</p>
 
   <form novalidate>
   <div class="mb-3">
@@ -60,17 +62,7 @@
     <label for="phone" class="fw-semibold dark-navy required">Phone Number</label>
     <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
   </div>
-
-  <div class="mb-3">
-    <label for="organization" class="fw-semibold dark-navy required">Organization</label>
-    <input type="text" id="organization" name="organization" class="form-control border-2 rounded p-2 px-3" required aria-required="true">
-  </div>
-
-  <div class="mb-3">
-    <label for="contactInfo" class="fw-semibold dark-navy required">Contact Info</label>
-    <input type="text" id="contactInfo" name="contactInfo" class="form-control border-2 rounded p-2 px-3" required aria-required="true">
-  </div>
-
+  
   <div class="mb-3">
     <label for="message" class="fw-semibold dark-navy">Message</label>
     <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>

@@ -37,16 +37,10 @@
     box-sizing: border-box;
   }
   .search-input{
-    flex: 1;
+    .search-input {
     font-size: clamp(1.2rem, 5vh, 1.5rem);
-    align-self: center;
-    border: 0px !important;
-    outline: none !important;
-    box-shadow: none !important; 
     color: var(--dark-navy);
-    width: 100% !important;
-    margin-bottom: 0px !important;
-    padding: 0px !important;
+}
   } 
   .divider-vertical {
     display: flex;
@@ -155,7 +149,7 @@
     color: var(--dark-navy);
   }
   .ai-results{
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background: linear-gradient(173deg, var(--gold) 10.87%, var(--dark-navy), var(--accent-blue) 92%);
   }
   .ai-results .page{
     padding-inline: 100px;
@@ -202,7 +196,7 @@
     color: var(--dark-navy);
   }
   .ai-results{
-    background: linear-gradient(173deg, var(--dark-navy) 10.87%, #3E4450 50.04%, var(--gold) 92%);
+    background: linear-gradient(173deg, var(--dark-navy) 10.87%, var(--gold) 50.04%, #3E4450 92%);
   }
   .ai-results .page{
     padding-inline: 20%;
@@ -238,7 +232,7 @@ nav {
   border: none;
   box-shadow: none;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .map-container {
@@ -886,9 +880,9 @@ footer img {
     @page {
         margin: 0.5in;
     }
-    body * {
+    /* body * {
         visibility: hidden;
-    }
+    } */
     #divService,
     #divService * {
         visibility: visible;
@@ -913,8 +907,11 @@ footer img {
         padding: 0;
     }
     #btnReturn,
-    #btnPrintPage {
-        display: none !important;
+    #btnPrintAIResults {
+        /* display: none !important; */
+        visibility: visible !important;
+        background: white !important;
+        color: black !important;
     }
     .service-header {
         margin-top: 0 !important;

@@ -31,7 +31,7 @@
             <hr />
             <div id="divAllFilter" class="sidenav-scroll form-check">
                 <div class="stickytitle">
-                    <a id="btnCounties" href="#">Counties <i class="bi bi-caret-down-fill"></i></a>
+                    <a id="btnCounties">Counties <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
                 </div>
                 <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
@@ -42,18 +42,7 @@
                     <button id="btnShowMoreCounties" class="btn btn-link"></button>
                 </div>
                 <div class="stickytitle">
-                    <a id="btnOrganizationName" href="#">Organization Name <i class="bi bi-caret-down-fill"></i></a>
-                    <hr />
-                </div>
-                <div id="divOuterOrgName" class="form-check outer-layer" style="display: none;">
-                    <div id="divOrgName" class="form-check">
-                    </div>
-                    <div id="divMoreOrgNames" style="display:none">
-                    </div>
-                    <button id="btnShowMoreOrgNames" class="btn btn-link"></button>
-                </div>
-                <div class="stickytitle">
-                    <a id="btnServiceType" href="#">Service Type <i class="bi bi-caret-down-fill"></i></a>
+                    <a id="btnServiceType">Service Type <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
                 </div>
                 <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;">
@@ -93,10 +82,13 @@
                 </div>
                 
         <div id="divServiceMain"> 
+        <div class="row align-items-center mt-3">
             <div id="divFilterButtons" class="filter">
                 <button id="btnFilterSort">Filter & Sort <i class="bi bi-sliders"></i></button>
+                <button id="btnLearnServices" class="btn btn-link" style="border: none; font-size: 25px;"><i class="bi bi-question-circle"></i></button>
             </div>
-            <div id="divServices" class="mb-3"></div>
+        </div>
+        <div id="divServices" class="mb-3"></div>
         </div>
     </main>
 

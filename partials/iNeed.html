@@ -1,5 +1,8 @@
 <div class="p-2 pt-3 p-md-5 accent_blue">
-    <h4 class="jumbotron-text fw-light px-2">I Need:</h4>
+    <div class="d-flex align-items-center">
+        <h4 class="jumbotron-text mb-0 fw-light px-2">I Need:</h4>
+        <button id="btnLearnINeed" class="btn btn-link p-0" style="border: none; font-size: 25px;"><i class="bi bi-question-circle" style="color: white;"></i></button>
+    </div>
     <div class="d-flex align-items-center">
         <!-- LEFT ARROW -->
         <button class="btn btn-light me-2" id="scrollLeftPills">
@@ -18,10 +21,7 @@
         ❯
         </button>
     </div>
-  <hr>
-  <!-- <div class="divider-horizontal" style="border-bottom: 2px solid white"></div> -->
-  <!-- <div id="divINeedContent" class=" row mt-4 mx-5"> make mx responsive -->
-    <!-- content populates here -->
+  <hr> 
 
 
   <div class="p-2 mt-3">
@@ -31,6 +31,7 @@
       </button> -->
 
       <div id="wrapperINeedContent" class="flex-grow-1 overflow-hidden">
+        <h5 class="white "><i class="bi bi-question-circle white me-2"></i>Please select a category to see available resources and services in your area.</h5>
         <div id="divINeedContent" class="d-flex overflow-auto">
           <!-- service cards go here -->
         </div>

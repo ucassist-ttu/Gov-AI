@@ -1,5 +1,5 @@
 const dictUpperCumbCounties = {
-    'all': ['All Counties', 'null'],
+    'all': 'All Counties',
     'cannon': 'Cannon County',
     'clay': 'Clay County',
     'cumberland': 'Cumberland County',
@@ -87,8 +87,7 @@ async function getCountyName(position) {
 
 function getCountyManually() {
   Swal.fire({
-    title: 'To better let us service you, tell us what county you live in.',
-    text: '(Optional)',
+    title: 'Please select your county.',
     icon: 'info',
     input: 'select',
     inputOptions: {
@@ -109,9 +108,12 @@ function getCountyManually() {
       'white': 'White County'
     },
     inputPlaceholder: 'Select a county',
-    showCancelButton: true
   }).then((result) => {
     if (result.isConfirmed) {
+      if (result.value == '') {
+        result.value = 'all'
+      }
+      location.reload();
       console.log(result.value); // this will be 'value1', 'value2', etc
       sessionStorage.setItem("currCounty", result.value)
 
