@@ -92,6 +92,11 @@ async function getAIRecommendations(userPrompt) {
             let strResourceName = element.NameOfService || "Untitled service";
             let strCompany = element.OrganizationName || "Unknown organization";
             let strDescription = element.ServiceDescription || "No description available.";
+            // let strPhone = element.TelephoneContact || "No Phone Number available.";
+            let rawPhone = element.TelephoneContact || "";
+            let strPhone = rawPhone ? rawPhone.replace(/[^\d+]/g, '') : "";
+            // let strAddress = element.ServiceAddress || "No Address available.";
+            let strEmail = element.EmailContact || "No Email available.";
             console.log(strResourceName);
 
             txtHTML +=`<div class="flex-row">`;
@@ -99,25 +104,54 @@ async function getAIRecommendations(userPrompt) {
             txtHTML +=`    <p class="ai-company-name">`;
             txtHTML +=`        by ${strCompany}`;
             txtHTML +=`    </p>`;
-            txtHTML +=`</div>`;
-            txtHTML += getCounties(element)
-            console.log(getCounties(element))
+            const countiesHTML = getCounties(element);
+            if (countiesHTML) {
+                txtHTML += countiesHTML;
+            }
+
             txtHTML +=`<p class="ai-description">`;
             txtHTML +=`      ${strDescription}`;
             txtHTML +=`</p>`;
+            txtHTML += `<p class="pt-2"><i class="bi bi-telephone"></i> <a href="tel:${strPhone}"><u>${strPhone}</u></a></p>`
+            // Email Existance Check
+            if (strEmail != 'No Email available') {
+                txtHTML += `<p><i class="bi bi-envelope"></i> <a href="mailto:${strEmail}"><u>${strEmail}</u></a></p>`
+
+            }else{
+                txtHTML +=`<p><i class="bi bi-envelope"></i>No Email available.</p>`
+            }
+            // Address Existance Check
+            if (element.ServiceAddress != 'N/A') {
+                let straddress = `${element.ServiceAddress} ${element.CityStateZip}`.trim();
+                let strencoded = encodeURIComponent(straddress);
+                txtHTML += `<p><i class="bi bi-pin-map"></i> <a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u>${straddress}</u></a></p>`;
+            }
+            else{
+                txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
+            }
+            // callServicePage(serviceId)
             txtHTML +=`<button class="btn btn-link" onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${element.ID}'); window.location.href='html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
             intCount++;
         });
+
+        console.log({
+            searchType: "AI",
+            timeStamp: new Date().toISOString(),
+            search: userPrompt,
+            results: aiData.length(),
+            county: sessionStorage.getItem("currCounty"),
+            checked: null
+        })
 
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
             AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try rephrasing your question or browse all available services on the Find Services page.</p>
                                      <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Find Services <i class="bi bi-caret-right-fill"></i></a>`;
 
-            console.log("0 Result AI Search", {
-                page: window.location.pathname,
-                timestamp: new Date().toISOString()
-            });
+            // console.log("0 Result AI Search", {
+            //     page: window.location.pathname,
+            //     timestamp: new Date().toISOString()
+            // });
 
             return;
         }
@@ -155,22 +189,22 @@ async function getAIRecommendations(userPrompt) {
 // });
 
 
-document.querySelector("#btnHome").addEventListener("click", (e) => {
-    swal.fire("Wait!", {
-        title: "Before you go",
-        text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
-        icon: "warning",
-        buttons: ["Leave page", "Stay and print"],
-    })
-    .then((travelHome) => {
-        if (!travelHome) {
-            window.location.href = "index.html"; // carries to ai_results page
-        } 
-        else {
-            swal.fire("Your imaginary file is safe!");
-        }
-    });
-})
+// document.querySelector("#btnHome").addEventListener("click", (e) => {
+//     swal.fire("Wait!", {
+//         title: "Before you go",
+//         text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
+//         icon: "warning",
+//         buttons: ["Leave page", "Stay and print"],
+//     })
+//     .then((travelHome) => {
+//         if (!travelHome) {
+//             window.location.href = "index.html"; // carries to ai_results page
+//         } 
+//         else {
+//             swal.fire("Your imaginary file is safe!");
+//         }
+//     });
+// })
 
 document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
     printed = true;
@@ -183,10 +217,10 @@ document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
 //     }
 // });
 
-window.addEventListener('beforeunload', () => {
-    console.log("AI Results Page Left", {
-        page: window.location.pathname,
-        timestamp: new Date().toISOString(),
-        printed: printed
-    });
-});
+// window.addEventListener('beforeunload', () => {
+//     console.log("AI Results Page Left", {
+//         page: window.location.pathname,
+//         timestamp: new Date().toISOString(),
+//         printed: printed
+//     });
+// });

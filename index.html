@@ -20,7 +20,7 @@
         <div class="position-relative">
             <!-- crisis tag -->
             <div class="index-crisis rounded-bottom pt-3 pt-md-0">
-                <h6><a class="fw-bold white text-decoration-none" href="https://ucdd.org/news/">Click here for UCDD News!</a></h6>
+                <h6><a class="fw-bold white text-decoration-none" href="/Gov-AI/html/pages/crisis.html">Crisis Hotlines</a></h6>
             </div>
 
             <!-- carousel -->
@@ -366,13 +366,16 @@
                 <button id="btnSeeResults" class="btn btn-primary col-5">See Results</button>
             </div>
         </div>
-        <div id="divFilterButtons" class="filter">
-            <button id="btnFilterSort">Map Filter & Sort <i class="bi bi-sliders"></i></button>
+        <div class="row align-items-center mt-3">
+            <div id="divFilterButtons" class="filter">
+                <button id="btnFilterSort">Map Filter & Sort <i class="bi bi-sliders"></i></button>
+                <button id="btnLearnPinMap" class="btn btn-link" style="border: none; font-size: 25px;"><i class="bi bi-question-circle"></i></button>
+            </div>
         </div>
 
         <!-- PinMap -->
         <div id="pinmap"></div>
-        <div class="filter">
+        <div class="filter text-center">
             <p><i><i class="bi bi-boxes"></i> - Services with this icon matches multiple keywords</i></p>
         </div>
 
@@ -444,6 +447,7 @@
     <script src="js/navbar.js" defer></script>
     <script type="module" src="js/pinmap.js" ></script>
     <script type="module" src="js/iNeed.js"></script>
+    <script src="js/indexCarousel.js"></script>
     <script src="js/index.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

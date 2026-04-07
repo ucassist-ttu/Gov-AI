@@ -1,5 +1,5 @@
 // button handlers
-console.log("[iNeed] Delegated listener active");
+// console.log("[iNeed] Delegated listener active");
 
 // shortened variable names for the categories
 const keywordCategories = {
@@ -90,6 +90,11 @@ document.addEventListener("click", (e) => {
     console.log("[iNeed] Clicked card ID:", clickedCard.id.replace("pillINeed", ""));
     loadCardsByCategory(clickedCard.id.replace("pillINeed", ""));
 
+    const descriptionContainer = document.getElementById("wrapperINeedContent");
+    let txtDescription = getCategoryDescription(clickedCard.id.replace("pillINeed", ""));
+    console.log("[iNeed] Category description:", txtDescription);
+    descriptionContainer.innerHTML = `<h5 class="white fw-light">${txtDescription}</h5>`; //<i class="bi bi-question-circle white me-2"></i>
+
     
   }
 });
@@ -120,7 +125,7 @@ function createPills(keyword, fullword){
   // makes card clickable
   const btn = document.createElement("a");
   btn.className = "stretched-link";
-  btn.href = "#";
+  // btn.href = "#";
 
   col.appendChild(img);
   body.appendChild(content);
@@ -210,9 +215,9 @@ function sortIDsByKeyword(arrKeywords, id){
     if (category in sortedIDCategories) {
       sortedIDCategories[category].push(id); 
     }
-    else (
-      console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
-    )
+    // else (
+    //   // console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
+    // )
   })
 }
 
@@ -256,6 +261,8 @@ async function loadCardsByCategory(category) {
     const requests = arrIDs.map(id => {
       const url = `https://ucassist.duckdns.org/service?id=${id}`;
 
+      // console.log("[loadCardsByCategory] Fetching service ID:", id);
+
       return fetch(url)
         .then(res => {
           return res.json();
@@ -265,6 +272,7 @@ async function loadCardsByCategory(category) {
     const services = await Promise.all(requests);
 
     container.innerHTML = "";
+
     let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
@@ -274,12 +282,13 @@ async function loadCardsByCategory(category) {
         } else{
           count ++
           container.appendChild(newCard)
+          console.log("[iNeed.js] container: ", container)
         }
       }
     });
   } catch (error) {
     console.error("[iNeed] Error loading services:", error);
-    container.innerHTML = "<p>Please try again later.</p>";
+    container.innerHTML = "<p>DSorry! We're having trouble loading services. Please try again later.</p>";
   }
 }
 
@@ -355,4 +364,48 @@ function getLogoSrc(rawLogo) {
     return `https://${logo}`;
   }
   return `/Gov-AI/assets/images/${logo}`;
+}
+
+document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
+  let strDiv = `
+    <ol style="text-align:left; padding-left: 20px;">
+      <li>Select a county above to view services in your area.</li>
+      <li>Choose a category below to find what you need.</li>
+    </ol>
+  `;
+  Swal.fire({
+    title: "How to use this section.",
+    html: strDiv,
+    icon: "question"
+  });
+})
+function getCategoryDescription(category) {
+  switch(category) {
+    case "Crisis":
+      return "These services provide immediate support for individuals experiencing abuse, personal crisis, or emergency situations. This section includes crisis hotlines and emergency shelter for those in urgent need.";
+    case "Housing":
+      return "These services assist individuals and families with finding stable housing, covering rent or utility costs, and maintaining their homes. They also support those experiencing homelessness or in need of emergency shelter.";
+    case "BasicNeeds":
+      return "These services connect people with essential everyday resources such as food, clothing, and toiletries. They include food pantries, meal programs, and financial assistance for groceries.";
+    case "Financial":
+      return "These services offer guidance and assistance with financial planning, debt management, and legal matters. They help individuals navigate budgeting and access financial aid programs.";
+    case "Transportation":
+      return "These services help individuals access reliable transportation options including public transit, ride assistance, and driver education programs. These offer support for those who lack access to personal vehicles.";
+    case "Youth":
+      return "These services support children, teens, and parents through childcare, youth programs, and parenting resources. They are focused on the healthy development and wellbeing of young people.";
+    case "Seniors":
+      return "These services provide support tailored to older adults, veterans, and individuals with disabilities. This Includes senior activities, in-home care, and specialized support programs.";
+    case "Health":
+      return "These services cover a wide range of physical and mental health services including primary care, pregnancy support, substance abuse recovery, and wellness programs. The aim is to support overall health and wellbeing.";
+    case "Education":
+      return "These services connect individuals with educational opportunities, job training, and workforce development programs. The goal is to help people build skills and find meaningful employment.";
+    case "Business":
+      return "These services support local entrepreneurs and small business owners with resources, mentorship, and economic development opportunities. These services help businesses grow and thrive in the Upper Cumberland community.";
+    case "Tourism":
+      return "These services highlight local recreation, events, and tourism opportunities in the area to help residents and visitors discover activities and community happenings.";
+    case "Community":
+      return "These services focus on strengthening and developing the local community through organized initiatives and programs encouraging civic engagement and neighborhood improvement.";
+    default:
+      return "Please select a category to see available resources and services in your area.";
+  }
 }
