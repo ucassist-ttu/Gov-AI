@@ -369,7 +369,8 @@ function getLogoSrc(rawLogo) {
 document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
   let strDiv = `
     <ol style="text-align:left; padding-left: 20px;">
-      <li>Add How to use steps here {: ^)</li>
+      <li>Select a county above to view services in your area.</li>
+      <li>Choose a category below to find what you need.</li>
     </ol>
   `;
   Swal.fire({
