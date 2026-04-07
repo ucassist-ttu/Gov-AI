@@ -374,7 +374,7 @@ document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
     </ol>
   `;
   Swal.fire({
-    title: "How to use I Need?",
+    title: "How to use this section.",
     html: strDiv,
     icon: "question"
   });
