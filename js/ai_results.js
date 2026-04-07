@@ -134,15 +134,24 @@ async function getAIRecommendations(userPrompt) {
             intCount++;
         });
 
+        console.log({
+            searchType: "AI",
+            timeStamp: new Date().toISOString(),
+            search: userPrompt,
+            results: aiData.length(),
+            county: sessionStorage.getItem("currCounty"),
+            checked: null
+        })
+
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
             AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try rephrasing your question or browse all available services on the Find Services page.</p>
                                      <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Find Services <i class="bi bi-caret-right-fill"></i></a>`;
 
-            console.log("0 Result AI Search", {
-                page: window.location.pathname,
-                timestamp: new Date().toISOString()
-            });
+            // console.log("0 Result AI Search", {
+            //     page: window.location.pathname,
+            //     timestamp: new Date().toISOString()
+            // });
 
             return;
         }
@@ -208,15 +217,10 @@ document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
 //     }
 // });
 
-window.addEventListener('beforeunload', () => {
-    console.log("AI Results Page Left", {
-        page: window.location.pathname,
-        timestamp: new Date().toISOString(),
-        printed: printed
-    });
-});
-
-// Shows more information on a service by calling service.html  
-// function callServicePage (page_id) {
-//     window.location.href = `service.html?id=${page_id}`;
-// }
+// window.addEventListener('beforeunload', () => {
+//     console.log("AI Results Page Left", {
+//         page: window.location.pathname,
+//         timestamp: new Date().toISOString(),
+//         printed: printed
+//     });
+// });
