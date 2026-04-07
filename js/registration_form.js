@@ -2,8 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3'];
   let currentStep = 0;
   const progressSteps = document.querySelectorAll('.progress-step');
+<<<<<<< Updated upstream
 
   // Service list and tab functionality
+=======
+>>>>>>> Stashed changes
   const step3Container = document.getElementById('services-container');
   const addServiceBtn = document.getElementById('addServiceBtn');
   let serviceCount = 1;
@@ -40,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
-
     function showService(num) {
       const allServices = step3Container.querySelectorAll('.service-block');
       allServices.forEach(svc => { svc.style.display = 'none'; });
@@ -51,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       updateActiveTab(num);
     }
-
     const existingServices = step3Container.querySelectorAll('.service-block');
     existingServices.forEach((serviceBlock, index) => {
       const num = index + 1;
@@ -258,12 +259,19 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAllServiceCheckboxes();
   populateHourSelects();
 
+<<<<<<< Updated upstream
   // Add service button
   if (addServiceBtn) {
     addServiceBtn.addEventListener('click', () => {
       serviceCount++;
       const firstService = document.querySelector('.service-block');
       if (!firstService) return;
+=======
+  addServiceBtn.addEventListener('click', () => {
+    serviceCount++;
+    const firstService = document.querySelector('.service-block');
+    if (!firstService) return;
+>>>>>>> Stashed changes
 
       const newService = firstService.cloneNode(true);
       suffixIds(newService, serviceCount);
@@ -278,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveTab(serviceCount);
       }
 
+<<<<<<< Updated upstream
       populateHourSelects();
       setupDropdownTogglePairs([
         { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
@@ -291,13 +300,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+=======
+    const newHoursDiffer = newService.querySelector(`#hoursDiffer${serviceCount}`);
+    const newServiceHoursContainer = newService.querySelector(`#serviceHoursContainer${serviceCount}`);
+    setupHoursDiffer(newHoursDiffer, newServiceHoursContainer);
+    populateHourSelects();
+    setupDropdownTogglePairs([
+      { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
+      { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
+    ]);
+    const newAddBtn = newService.querySelector('.add-hours');
+    if (newAddBtn) {
+      const newContainer = newAddBtn.parentElement;
+      setupAddHours(newAddBtn, newContainer, '.time-range');
+    }
+  });
+>>>>>>> Stashed changes
 
   function suffixIds(element, suffix) {
     if (element.id) element.id += suffix;
     if (element.name) element.name += suffix;
     if (element.htmlFor) element.htmlFor += suffix;
     if (element.getAttribute('for')) element.setAttribute('for', element.getAttribute('for') + suffix);
-
     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
       element.value = '';
       if (element.type === 'checkbox') element.checked = false;
@@ -330,13 +354,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return input.name || input.id || 'Field';
   }
-
   function isGroupChecked(selector, parent) {
     const container = parent.querySelector(selector);
     if (!container) return true;
     const checkboxes = container.querySelectorAll('input[type="checkbox"]');
     return Array.from(checkboxes).some(cb => cb.checked);
   }
+<<<<<<< Updated upstream
 
   function collectFormErrors(form) {
     let errors = [];
@@ -346,6 +370,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
       }
       return true;
+=======
+function collectFormErrors(form) {
+  let errors = [];
+
+  const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
+    // Exclude service-name and description inputs to handle separately with numbering
+    if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
+      return false;
+    }
+    return true;
+  });
+
+  requiredFields.forEach(field => {
+    if (field.type === 'checkbox') return;
+    if (!field.checkValidity()) {
+      errors.push(getFieldLabel(field));
+    }
+  });
+  if (form.id === 'form-step-1') {
+    if (!isGroupChecked('#divKeywordsReg1', form)) {
+      errors.push("Keywords (Step 1)");
+    }
+  }
+  if (form.id === 'form-step-3') {
+    const services = form.querySelectorAll('.service-block');
+    services.forEach((block, index) => {
+      const serviceNum = index + 1;
+      const name = block.querySelector('input[id^="serviceName"]');
+      if (!name || !name.value.trim()) errors.push(`Service Name for Service ${serviceNum}`);
+      const desc = block.querySelector('textarea[id^="serviceDescription"]');
+      if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
+      if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
+      if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
+>>>>>>> Stashed changes
     });
 
     requiredFields.forEach(field => {
@@ -377,7 +435,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return errors;
   }
 
+<<<<<<< Updated upstream
   // Form submissions
+=======
+  return errors;
+}
+>>>>>>> Stashed changes
   const formStep1 = document.getElementById('form-step-1');
   if (formStep1) {
     formStep1.addEventListener('submit', e => {
