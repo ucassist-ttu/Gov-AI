@@ -2,11 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3'];
   let currentStep = 0;
   const progressSteps = document.querySelectorAll('.progress-step');
-<<<<<<< Updated upstream
 
   // Service list and tab functionality
-=======
->>>>>>> Stashed changes
   const step3Container = document.getElementById('services-container');
   const addServiceBtn = document.getElementById('addServiceBtn');
   let serviceCount = 1;
@@ -43,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+
     function showService(num) {
       const allServices = step3Container.querySelectorAll('.service-block');
       allServices.forEach(svc => { svc.style.display = 'none'; });
@@ -53,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       updateActiveTab(num);
     }
+
     const existingServices = step3Container.querySelectorAll('.service-block');
     existingServices.forEach((serviceBlock, index) => {
       const num = index + 1;
@@ -116,6 +115,56 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   populateHourSelects();
 
+  // NEW: Event delegation for ALL checkboxes (phone, address, hours)
+  function setupCheckboxEventDelegation() {
+    document.addEventListener('change', function(e) {
+      const checkbox = e.target;
+      
+      // Separate phone checkbox
+      if (checkbox.matches('input[id^="separatePhone"]')) {
+        const serviceBlock = checkbox.closest('.service-block');
+        if (!serviceBlock) return;
+        const phoneContainer = serviceBlock.querySelector('.service-phone-container');
+        if (phoneContainer) {
+          phoneContainer.style.display = checkbox.checked ? 'block' : 'none';
+          if (!checkbox.checked) {
+            const phoneInput = phoneContainer.querySelector('input[type="tel"]');
+            if (phoneInput) phoneInput.value = '';
+          }
+        }
+      }
+      
+      // Separate address checkbox
+      else if (checkbox.matches('input[id^="separateAddress"]')) {
+        const serviceBlock = checkbox.closest('.service-block');
+        if (!serviceBlock) return;
+        const addressContainer = serviceBlock.querySelector('.service-address-container');
+        if (addressContainer) {
+          addressContainer.style.display = checkbox.checked ? 'block' : 'none';
+          if (!checkbox.checked) {
+            addressContainer.querySelectorAll('input, select').forEach(field => {
+              field.value = '';
+            });
+          }
+        }
+      }
+      
+      // Separate hours checkbox ✅ THIS WILL NOW WORK!
+      else if (checkbox.matches('input[id^="separateHours"]')) {
+        const serviceBlock = checkbox.closest('.service-block') || document;
+        if (!serviceBlock) return;
+        const hoursContainer = serviceBlock.querySelector('.service-hours-container');
+        if (hoursContainer) {
+          hoursContainer.style.display = checkbox.checked ? 'block' : 'none';
+          if (!checkbox.checked) {
+            hoursContainer.querySelectorAll('select').forEach(sel => sel.value = '');
+          }
+        }
+      }
+    });
+  }
+  setupCheckboxEventDelegation();
+
   // Unified dropdown toggle setup
   function setupDropdownTogglePairs(pairs) {
     pairs.forEach(({ buttonId, containerId }) => {
@@ -146,79 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { buttonId: 'btnKeywordsReg', containerId: 'divOuterKeywordsReg' },
     { buttonId: 'btnCountiesReg', containerId: 'divOuterCountiesReg' }
   ]);
-
-  function setupAllServiceCheckboxes() {
-    document.querySelectorAll('.service-block').forEach(serviceBlock => {
-      setupSingleServiceCheckboxes(serviceBlock);
-    });
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1 && node.matches('.service-block')) {
-              setTimeout(() => setupSingleServiceCheckboxes(node), 100);
-            }
-          });
-        }
-      });
-    });
-    
-    observer.observe(document.getElementById('services-container'), {
-      childList: true,
-      subtree: true
-    });
-  }
-
-  function setupSingleServiceCheckboxes(serviceBlock) {
-    const phoneCheckbox = serviceBlock.querySelector('input[id^="separatePhone"]');
-    const phoneContainer = serviceBlock.querySelector('.service-phone-container');
-    if (phoneCheckbox && phoneContainer) {
-      phoneCheckbox.removeEventListener('change', phoneCheckbox._listener);
-      const handler = () => {
-        phoneContainer.style.display = phoneCheckbox.checked ? 'block' : 'none';
-        if (!phoneCheckbox.checked) {
-          const phoneInput = phoneContainer.querySelector('input[type="tel"]');
-          if (phoneInput) phoneInput.value = '';
-        }
-      };
-      phoneCheckbox.addEventListener('change', handler);
-      phoneCheckbox._listener = handler;
-      handler();
-    }
-
-    const addressCheckbox = serviceBlock.querySelector('input[id^="separateAddress"]');
-    const addressContainer = serviceBlock.querySelector('.service-address-container');
-    if (addressCheckbox && addressContainer) {
-      addressCheckbox.removeEventListener('change', addressCheckbox._listener);
-      const handler = () => {
-        addressContainer.style.display = addressCheckbox.checked ? 'block' : 'none';
-        if (!addressCheckbox.checked) {
-          addressContainer.querySelectorAll('input, select').forEach(field => {
-            field.value = '';
-          });
-        }
-      };
-      addressCheckbox.addEventListener('change', handler);
-      addressCheckbox._listener = handler;
-      handler(); 
-    }
-
-    const hoursCheckbox = serviceBlock.querySelector('input[id^="separateHours"]');
-    const hoursContainer = serviceBlock.querySelector('.service-hours-container');
-    if (hoursCheckbox && hoursContainer) {
-      hoursCheckbox.removeEventListener('change', hoursCheckbox._listener);
-      const handler = () => {
-        hoursContainer.style.display = hoursCheckbox.checked ? 'block' : 'none';
-        if (!hoursCheckbox.checked) {
-          hoursContainer.querySelectorAll('select').forEach(sel => sel.value = '');
-        }
-      };
-      hoursCheckbox.addEventListener('change', handler);
-      hoursCheckbox._listener = handler;
-      handler(); 
-    }
-  }
 
   function setupAddHours(button, container, rangeSelector) {
     if (!button || !container) return;
@@ -251,27 +227,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  
   const step1AddBtn = document.querySelector('#step-1 .add-hours');
   if (step1AddBtn) {
     const step1Container = step1AddBtn.parentElement;
     setupAddHours(step1AddBtn, step1Container, '.time-range');
   }
-  setupAllServiceCheckboxes();
-  populateHourSelects();
 
-<<<<<<< Updated upstream
   // Add service button
   if (addServiceBtn) {
     addServiceBtn.addEventListener('click', () => {
       serviceCount++;
       const firstService = document.querySelector('.service-block');
       if (!firstService) return;
-=======
-  addServiceBtn.addEventListener('click', () => {
-    serviceCount++;
-    const firstService = document.querySelector('.service-block');
-    if (!firstService) return;
->>>>>>> Stashed changes
 
       const newService = firstService.cloneNode(true);
       suffixIds(newService, serviceCount);
@@ -286,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateActiveTab(serviceCount);
       }
 
-<<<<<<< Updated upstream
       populateHourSelects();
       setupDropdownTogglePairs([
         { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
@@ -300,28 +267,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-=======
-    const newHoursDiffer = newService.querySelector(`#hoursDiffer${serviceCount}`);
-    const newServiceHoursContainer = newService.querySelector(`#serviceHoursContainer${serviceCount}`);
-    setupHoursDiffer(newHoursDiffer, newServiceHoursContainer);
-    populateHourSelects();
-    setupDropdownTogglePairs([
-      { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
-      { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
-    ]);
-    const newAddBtn = newService.querySelector('.add-hours');
-    if (newAddBtn) {
-      const newContainer = newAddBtn.parentElement;
-      setupAddHours(newAddBtn, newContainer, '.time-range');
-    }
-  });
->>>>>>> Stashed changes
 
   function suffixIds(element, suffix) {
     if (element.id) element.id += suffix;
     if (element.name) element.name += suffix;
     if (element.htmlFor) element.htmlFor += suffix;
     if (element.getAttribute('for')) element.setAttribute('for', element.getAttribute('for') + suffix);
+
     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
       element.value = '';
       if (element.type === 'checkbox') element.checked = false;
@@ -354,13 +306,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return input.name || input.id || 'Field';
   }
+
   function isGroupChecked(selector, parent) {
     const container = parent.querySelector(selector);
     if (!container) return true;
     const checkboxes = container.querySelectorAll('input[type="checkbox"]');
     return Array.from(checkboxes).some(cb => cb.checked);
   }
-<<<<<<< Updated upstream
 
   function collectFormErrors(form) {
     let errors = [];
@@ -370,40 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
       }
       return true;
-=======
-function collectFormErrors(form) {
-  let errors = [];
-
-  const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
-    // Exclude service-name and description inputs to handle separately with numbering
-    if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
-      return false;
-    }
-    return true;
-  });
-
-  requiredFields.forEach(field => {
-    if (field.type === 'checkbox') return;
-    if (!field.checkValidity()) {
-      errors.push(getFieldLabel(field));
-    }
-  });
-  if (form.id === 'form-step-1') {
-    if (!isGroupChecked('#divKeywordsReg1', form)) {
-      errors.push("Keywords (Step 1)");
-    }
-  }
-  if (form.id === 'form-step-3') {
-    const services = form.querySelectorAll('.service-block');
-    services.forEach((block, index) => {
-      const serviceNum = index + 1;
-      const name = block.querySelector('input[id^="serviceName"]');
-      if (!name || !name.value.trim()) errors.push(`Service Name for Service ${serviceNum}`);
-      const desc = block.querySelector('textarea[id^="serviceDescription"]');
-      if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
-      if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
-      if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
->>>>>>> Stashed changes
     });
 
     requiredFields.forEach(field => {
@@ -435,12 +353,7 @@ function collectFormErrors(form) {
     return errors;
   }
 
-<<<<<<< Updated upstream
   // Form submissions
-=======
-  return errors;
-}
->>>>>>> Stashed changes
   const formStep1 = document.getElementById('form-step-1');
   if (formStep1) {
     formStep1.addEventListener('submit', e => {
@@ -526,7 +439,7 @@ function collectFormErrors(form) {
         };
         reader.readAsDataURL(file);
       }
-       });
+    });
   }
 
   if (clearLogoBtn) {
@@ -558,90 +471,89 @@ function collectFormErrors(form) {
     container.appendChild(wrapper);
   }
 
-  // Fetch and populate data
-  async function fetchAndPopulateAllData() {
-    try {
-      const response = await fetch('https://ucassist.duckdns.org/services');
-      const data = await response.json();
-      const cities = [];
-      data.forEach(service => {
-        if (service.CityStateZip) {
-          const parts = service.CityStateZip.split(',');
-          const city = parts[0].trim();
-          if (city) cities.push(city);
-        }
-      });
-      const uniqueCities = [...new Set(cities)].sort();
-      
-      const arrCounties = [];
-      const arrServiceType = [];
-      data.forEach(element => {
-        let strKeywords = element.Keywords;
-        if (typeof strKeywords === 'string') {
-          try { strKeywords = JSON.parse(strKeywords); } catch (e) { strKeywords = []; }
-        }
-        if (Array.isArray(strKeywords)) {
-          strKeywords.forEach(tag => arrServiceType.push(tag));
-        }
-        let strCounties = element.CountiesAvailable;
-        if (typeof strCounties === 'string') {
-          try { strCounties = JSON.parse(strCounties); } catch (e) { strCounties = []; }
-        }
-        if (Array.isArray(strCounties)) {
-          strCounties.forEach(county => arrCounties.push(county));
-        }
-      });
+// Fetch and populate data
+async function fetchAndPopulateAllData() {
+  try {
+    const response = await fetch('https://ucassist.duckdns.org/services');
+    const data = await response.json();
+    const cities = [];
+    data.forEach(service => {
+      if (service.CityStateZip) {
+        const parts = service.CityStateZip.split(',');
+        const city = parts[0].trim();
+        if (city) cities.push(city);
+      }
+    });
+    const uniqueCities = [...new Set(cities)].sort();
+    
+    const arrCounties = [];
+    const arrServiceType = [];
+    data.forEach(element => {
+      let strKeywords = element.Keywords;
+      if (typeof strKeywords === 'string') {
+        try { strKeywords = JSON.parse(strKeywords); } catch (e) { strKeywords = []; }
+      }
+      if (Array.isArray(strKeywords)) {
+        strKeywords.forEach(tag => arrServiceType.push(tag));
+      }
+      let strCounties = element.CountiesAvailable;
+      if (typeof strCounties === 'string') {
+        try { strCounties = JSON.parse(strCounties); } catch (e) { strCounties = []; }
+      }
+      if (Array.isArray(strCounties)) {
+        strCounties.forEach(county => arrCounties.push(county));
+      }
+    });
 
-      const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      
-      // Step 1 city
-      const cityStep1 = document.getElementById('cityPublic');
-      if (cityStep1) {
-        uniqueCities.forEach(city => {
-          const option = document.createElement('option');
-          option.value = city;
-          option.textContent = city;
-          cityStep1.appendChild(option);
-        });
-      }
-      
-      // Step 3 cities
-      const cityStep3Selects = document.querySelectorAll('.service-city-select');
-      cityStep3Selects.forEach(select => {
-        uniqueCities.forEach(city => {
-          const option = document.createElement('option');
-          option.value = city;
-          option.textContent = city;
-          select.appendChild(option);
-        });
+    const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
+    const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
+    
+    // Step 1 city
+    const cityStep1 = document.getElementById('cityPublic');
+    if (cityStep1) {
+      uniqueCities.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        cityStep1.appendChild(option);
       });
-      
-      // Counties
-      const countiesContainer = document.getElementById("divCountiesReg");
-      if (countiesContainer) {
-        uniqueCounties.forEach(county => createCheckbox(county, countiesContainer));
-      }
-      
-      // Keywords Step 1
-      const keywordsContainerStep1 = document.getElementById("divKeywordsReg1");
-      if (keywordsContainerStep1) {
-        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep1, '-step1'));
-      }
-      
-      // Keywords Step 3
-      const keywordsContainerStep3 = document.getElementById("divKeywordsReg");
-      if (keywordsContainerStep3) {
-        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3, '-step3'));
-      }
-
-    } catch (error) {
-      console.error('Error fetching data for registration filters', error);
     }
-  }
-  fetchAndPopulateAllData();
+    
+    // Step 3 cities
+    const cityStep3Selects = document.querySelectorAll('.service-city-select');
+    cityStep3Selects.forEach(select => {
+      uniqueCities.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        select.appendChild(option);
+      });
+    });
+    
+    // Counties
+    const countiesContainer = document.getElementById("divCountiesReg");
+    if (countiesContainer) {
+      uniqueCounties.forEach(county => createCheckbox(county, countiesContainer));
+    }
+    
+    // Keywords Step 1
+    const keywordsContainerStep1 = document.getElementById("divKeywordsReg1");
+    if (keywordsContainerStep1) {
+      uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep1, '-step1'));
+    }
+    
+    // Keywords Step 3
+    const keywordsContainerStep3 = document.getElementById("divKeywordsReg");
+    if (keywordsContainerStep3) {
+      uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3, '-step3'));
+    }
 
-  // Phone and Zip formatting
+  } catch (error) {
+    console.error('Error fetching data for registration filters', error);
+  }
+}
+fetchAndPopulateAllData();
+// Phone and Zip formatting
   document.addEventListener('input', e => {
     const target = e.target;
     

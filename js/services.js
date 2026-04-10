@@ -63,10 +63,63 @@ async function getServices() {
     // Create the filters
     createCountyFilter(uniqueCounties)
     createServiceFilter(uniqueServiceTypes)
-    createOrgNamesFilter(uniqueOrgNames)
+    checkUserLocation () 
 }
 
 getServices()
+function usersLocation () {
+    return strStoredCounty = sessionStorage.getItem("currCounty")
+}
+
+function checkUserLocation () {
+    let currCounty = usersLocation()
+    if (currCounty.length == 0) {
+        console.log("home")
+    }
+    else if (currCounty == "van_buren") {
+        let currCountyVan = "van-buren"
+        console.log(currCountyVan)
+        const checkbox = document.querySelector(`#${currCountyVan}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+    else {
+        const checkbox = document.querySelector(`#${currCounty}-checkbox`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
+
+function soundex(s) {
+  const a = s.toLowerCase().split('');
+  const f = a.shift();
+  const codes = {
+    a: '', e: '', i: '', o: '', u: '',
+    b: 1, f: 1, p: 1, v: 1,
+    c: 2, g: 2, j: 2, k: 2, q: 2, s: 2, x: 2, z: 2,
+    d: 3, t: 3,
+    l: 4,
+    m: 5, n: 5,
+    r: 6
+  };
+
+  const encoded = f + a
+    .map(c => codes[c])
+    .filter((code, i, arr) => code !== arr[i - 1])
+    .join('');
+
+  return (encoded + '000').slice(0, 4).toUpperCase();
+}
+
+function soundsLike(a, b) {
+  return soundex(a) === soundex(b);
+}
 
 // Create the service cards for each page
 function createServiceCard(arrCards) {
@@ -109,15 +162,15 @@ function createServiceCard(arrCards) {
 
                 let serviceId = serviceCard.dataset.id
                 // Log user has clicked on a service for analytics
-                if (boolSearched) {
-                    boolResourceFound = true
-                    console.log("Service Found", {
-                        page: window.location.pathname,
-                        timestamp: new Date().toISOString(),
-                        dataSearch: dataSearch,
-                        boolResourceFound: boolResourceFound
-                    })
-                }
+                // if (boolSearched) {
+                //     boolResourceFound = true
+                //     console.log("Service Found", {
+                //         page: window.location.pathname,
+                //         timestamp: new Date().toISOString(),
+                //         dataSearch: dataSearch,
+                //         boolResourceFound: boolResourceFound
+                //     })
+                // }
                 callServicePage(serviceId)
             });
         })
@@ -158,14 +211,14 @@ function getCountyList(service) {
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
 
     // If user searches a second time without clicking a service
-    if (boolSearched && !boolResourceFound) {
-        console.log("Service Not Found, Searching Again", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
-    }
+    // if (boolSearched && !boolResourceFound) {
+    //     console.log("Service Not Found, Searching Again", {
+    //         page: window.location.pathname,
+    //         timestamp: new Date().toISOString(),
+    //         dataSearch: dataSearch,
+    //         boolResourceFound: boolResourceFound
+    //     })
+    // }
 
     selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
     selectedCheckboxes.forEach(box => {
@@ -180,14 +233,36 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
                 strName = item.NameOfService
                 strKeywords = item.Keywords
                 strCounties = item.CountiesAvailable
-                if (strName.toLowerCase().includes(word.toLowerCase()) || strKeywords.toLowerCase().includes(word.toLowerCase()) || strCounties.toLowerCase().includes(word.toLowerCase())) {
-                    arrFound.push(item)
+                let nameWords = strName.split(" ");
+                let keywordWords = strKeywords.split(" ");
+                let countyWords = strCounties.split(" ");
+
+                let matchFound = false;
+
+                [nameWords, keywordWords, countyWords].forEach(group => {
+                    group.forEach(fieldWord => {
+                        if (soundsLike(fieldWord, word)) {
+                        matchFound = true;
+                        }
+                    });
+                });
+
+                if (matchFound) {
+                arrFound.push(item);
                 }
             }
         })
     })
     uniqueSearch = [...new Set(arrFound)];
     // Search Analytics
+    console.log({
+        searchType: "Database",
+        timeStamp: new Date().toISOString(),
+        search: strSearch,
+        results: uniqueSearch.length,
+        county: sessionStorage.getItem("currCounty"),
+        checked: selectedCheckboxes
+    })
     dataSearch = {
         searchTerm: strSearch,
         checked: selectedCheckboxes, 
@@ -210,12 +285,12 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
             renderSidebarServices(arrCurrentServices)
         })
         // Analytics for 0 search results
-        console.log("0 Result Search", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
+        // console.log("0 Result Search", {
+        //     page: window.location.pathname,
+        //     timestamp: new Date().toISOString(),
+        //     dataSearch: dataSearch,
+        //     boolResourceFound: boolResourceFound
+        // })
     }
     else {
         arrCurrentServices = uniqueSearch
@@ -291,24 +366,6 @@ function createServiceFilter(services) {
   container.appendChild(moreContainer);
 }
 
-// Creates the checkboxes for the organization names filter
-function createOrgNamesFilter(names) {
-  const VISIBLE_COUNT = 6;
-  const container = document.getElementById("divOrgName");
-  const moreContainer = document.getElementById("divMoreOrgNames");
-  moreContainer.style.display = "none";
-
-  names.forEach((name, index) => {
-      if (index < VISIBLE_COUNT) {
-        createCheckbox(name, container);
-      } else {
-        createCheckbox(name, moreContainer);
-      }
-    });
-
-  container.appendChild(moreContainer);
-}
-
 // Opens the Counties filter options
 document.querySelector("#btnCounties").addEventListener("click", () => {
     if (document.querySelector('#divOuterCounties').style.display === 'none') {
@@ -338,22 +395,6 @@ document.querySelector("#btnServiceType").addEventListener("click", () => {
     } else {
         document.querySelector('#divOuterServiceTypes').style.display = 'none';
         document.querySelector('#btnServiceType').innerHTML = `Service Type <i class="bi bi-caret-down-fill"></i>`;
-    }
-});
-
-// Opens the organization name filter options
-document.querySelector("#btnOrganizationName").addEventListener("click", () => {
-    if (document.querySelector('#divOuterOrgName').style.display === 'none') {
-            document.querySelector('#divOuterOrgName').style.display = 'block';
-            document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-up-fill"></i>`;
-            if (document.querySelector('#divMoreOrgNames').style.display === 'none') {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `+ Show ${uniqueOrgNames.length - 6} More Organization names`;
-            } else {
-                document.querySelector('#btnShowMoreOrgNames').innerHTML = `- Show Fewer Organization Names`;
-            }
-    } else {
-        document.querySelector('#divOuterOrgName').style.display = 'none';
-        document.querySelector('#btnOrganizationName').innerHTML = `Organization Name <i class="bi bi-caret-down-fill"></i>`;
     }
 });
 
@@ -426,12 +467,15 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
     console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
-    const selectedOrgNames = getSelectedCheckboxes("divOuterOrgName").map(o => o.toLowerCase());
 
     //Reset the FilteredServices
     arrFilteredServices = [];
 
     // Loop through all services
+    searchQuery = document.querySelector("#txtSearchServices").value
+    if (searchQuery == '') {
+        arrCurrentServices = arrAllServices
+    }
     arrCurrentServices.forEach(service => {
         let strCounties = getCountyList(service)
         let strTags = getTagList(service)
@@ -439,12 +483,10 @@ document.getElementById('divAllFilter').addEventListener('change', (e) => {
         // Normalize arrays to lowercase for case-insensitive comparison
         const counties = (strCounties).map(c => c.toLowerCase());
         const tags = (strTags).map(t => t.toLowerCase());
-        const org = (service.OrganizationName || "").toLowerCase();
 
         // Check each filter; if filter list is empty, treat as "match all"
         const countyMatch = selectedCounties.length === 0 || selectedCounties.some(c => counties.includes(c.toLowerCase()));
         const serviceMatch = selectedServiceTypes.length === 0 || selectedServiceTypes.some(s => tags.includes(s.toLowerCase()));
-        const orgMatch = selectedOrgNames.length === 0 || selectedOrgNames.some(o => o.toLowerCase() === org);
 
         // Only push if all filters match
         if (countyMatch && serviceMatch) {
@@ -540,6 +582,23 @@ function renderSidebarServices(arrServices) {
     }
 }
 
+document.querySelector('#btnLearnServices').addEventListener("click", (e) => {
+  let strDiv = `
+    <ol style="text-align:left; padding-left: 20px;">
+        <li>Services are automatically filtered based on your selected location.</li>
+        <li>Click <b>"Filter and Sort"</b> to refine your results.</li>
+        <li>Select a county or service type to narrow down the list.</li>
+        <li>Click on a service to view detailed information.</li>
+        <li>Use the search bar to better find what you are looking for.</li>
+    </ol>
+  `;
+  Swal.fire({
+    title: "How do I find services?",
+    html: strDiv,
+    icon: "question"
+  });
+})
+
 /*
     4 cases for analytics logging:
         1. User searches and finds a resource (logged when clicking learn more on a service)
@@ -549,13 +608,13 @@ function renderSidebarServices(arrServices) {
 */
 
 // Log if user has searched and didnt find a resource
-window.addEventListener('beforeunload', () => {
-    if (boolSearched && !boolResourceFound) {
-        console.log("Service Not Found, Leaving Page", {
-            page: window.location.pathname,
-            timestamp: new Date().toISOString(),
-            dataSearch: dataSearch,
-            boolResourceFound: boolResourceFound
-        })
-    }
-})
+// window.addEventListener('beforeunload', () => {
+//     if (boolSearched && !boolResourceFound) {
+//         console.log("Service Not Found, Leaving Page", {
+//             page: window.location.pathname,
+//             timestamp: new Date().toISOString(),
+//             dataSearch: dataSearch,
+//             boolResourceFound: boolResourceFound
+//         })
+//     }
+// })
