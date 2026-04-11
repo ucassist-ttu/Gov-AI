@@ -389,7 +389,16 @@ document.addEventListener('DOMContentLoaded', () => {
         showStep(currentStep);
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
-        swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
+        Swal.fire({
+          title: "Missing Information",
+          icon: "error",
+          html: `
+            <div style="text-align: left;">
+              Please complete the following:<br><br>
+              ${errorList.replace(/\n/g, "<br>")}
+            </div>
+          `
+        });
       }
     });
   }
@@ -405,7 +414,16 @@ document.addEventListener('DOMContentLoaded', () => {
         showStep(currentStep);
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
-        swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
+        Swal.fire({
+          title: "Missing Information",
+          icon: "error",
+          html: `
+            <div style="text-align: left;">
+              Please complete the following:<br><br>
+              ${errorList.replace(/\n/g, "<br>")}
+            </div>
+          `
+        });
       }
     });
   }
@@ -417,10 +435,23 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
-        swal("Success", "Registration form submitted successfully!", "success");
+        Swal.fire({
+          title: "Success",
+          text: "Registration form submitted successfully!",
+          icon: "success"
+        });
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
-        swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
+        Swal.fire({
+          title: "Missing Information",
+          icon: "error",
+          html: `
+            <div style="text-align: left;">
+              Please complete the following:<br><br>
+              ${errorList.replace(/\n/g, "<br>")}
+            </div>
+          `
+        });
       }
     });
   }
