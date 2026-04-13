@@ -644,11 +644,11 @@ p{
 .icon-circle img {
   height: 45px;
 }
-
+/* 
 .banner-image {
   width: 100%;
   height: 55vh;
-}
+} */
 
 .submit-btn {
   background-color: var(--dark-navy);
