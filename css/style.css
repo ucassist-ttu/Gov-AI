@@ -97,16 +97,6 @@ nav img {
     height: 40px;
   }
 }
-.page-tag {
-  /* margin-top: 75px; */
-  margin-bottom: -12px;
-  padding-left: 98px;
-  /* padding-block: 50px; */
-  height: 75px;
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-}
 .responsive-header{
   height: 50vh;
   width: 100%;
