@@ -654,7 +654,7 @@ p{
 .submit-btn:hover {
   background-color: #444c5e;
 }
-/* progress step*/
+/* progress steps */
 .progress-steps {
   width: 220px;
   margin: 48px auto 48px auto;
@@ -669,7 +669,7 @@ p{
   font-size: 16px;
   line-height: 30px;
   border-radius: 50%;
-  background-color: var(--gold);
+  background-color: var(--gold-light);
   color: var(--gold);
   border: 2px solid var(--gold);
   display: flex;
