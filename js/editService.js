@@ -1,5 +1,10 @@
+let strEditorName
+let strEditorEmail
+let strEditorPhoneNumber
+let strEditorOrgPosition
+
 document.addEventListener('DOMContentLoaded', () => {
-  const steps = ['step-1', 'step-2', 'step-3'];
+  const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
   let currentStep = 0;
   const progressSteps = document.querySelectorAll('.progress-step');
 
@@ -268,8 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const newService = firstService.cloneNode(true);
       suffixIds(newService, serviceCount);
       newService.setAttribute('data-service', serviceCount);
-      const servicesContainer = document.getElementById('services-container');
-      servicesContainer.insertBefore(newService, addServiceBtn);
+      // const servicesContainer = document.getElementById('services-container');
+      // servicesContainer.insertBefore(newService, addServiceBtn);
 
       const serviceListContainer = document.getElementById('service-list');
       if (serviceListContainer) {
@@ -385,10 +390,14 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep1.classList.add('was-validated');
       const errors = collectFormErrors(formStep1);
       if (errors.length === 0) {
+        strEditorName = document.getElementById('primaryName').value
+        strEditorEmail = document.getElementById('primaryEmail').value
+        strEditorPhoneNumber = document.getElementById('primaryPhone').value
+        strEditorOrgPosition = document.getElementById('primaryPosition').value
         currentStep = 1;
         showStep(currentStep);
       } else {
-        const errorList = errors.map(err => `• ${err}`).join('\n');
+        const errorList = errors.map(err => `• ${err}`).join('<br>');
         Swal.fire({
           title: "Missing Information",
           icon: "error",
@@ -435,11 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
-        Swal.fire({
-          title: "Success",
-          text: "Registration form submitted successfully!",
-          icon: "success"
-        });
+        currentStep = 3;
+        showStep(currentStep);
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
         Swal.fire({
@@ -456,6 +462,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const formStep4 = document.getElementById('form-step-4');
+  if (formStep4) {
+    formStep4.addEventListener('submit', e => {
+      e.preventDefault();
+      formStep4.classList.add('was-validated');
+      const errors = collectFormErrors(formStep4);
+      if (errors.length === 0) {
+        Swal.fire({
+          title: "Success",
+          text: "Registration form submitted successfully!",
+          icon: "success"
+        }).then((result) => {
+          let activeForm = document.getElementById("divPage4AddServiceInfo");
+          let remove = document.getElementById("btnRemoveServiceBtn");
+          let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+          let btns = document.getElementById("divFinalSubCanBtn");
+          activeForm.style.display = "none"; 
+          remove.style.display = "none"; 
+          inactiveForm.style.display = "none"; 
+          btns.classList.remove("d-none");
+          btns.classList.add("d-flex");
+        })
+      } else {
+        const errorList = errors.map(err => `• ${err}`).join('\n');
+        Swal.fire({
+          title: "Missing Information",
+          html: `Please complete the following:<br><br>${errorList.replace(/\n/g, "<br>")}`,
+          icon: "error"
+        });
+      }
+    });
+  }
+  document.getElementById('btnLeave').addEventListener('click', () => {
+    window.location.href = `registration_landing.html`
+  });
+
   // Cancel/Back buttons
   document.querySelector('#step-1 .cancel-btn')?.addEventListener('click', () => window.location.href = 'registration_landing.html');
   document.querySelector('#step-2 .cancel-btn')?.addEventListener('click', () => {
@@ -465,6 +507,32 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#step-3 .cancel-btn')?.addEventListener('click', () => {
     currentStep = 1;
     showStep(currentStep);
+  });
+  document.querySelector('#step-4 .cancel-btn')?.addEventListener('click', () => {
+    currentStep = 2;
+    showStep(currentStep);
+  });
+  document.querySelector('#step-4 .cancel-btn-1')?.addEventListener('click', () => {
+    let activeForm = document.getElementById("divPage4AddServiceInfo");
+    let remove = document.getElementById("btnRemoveServiceBtn");
+    let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+    let btns = document.getElementById("divFinalSubCanBtn");
+    activeForm.style.display = "none"; 
+    remove.style.display = "none"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
+  });
+  document.querySelector('#step-4 .cancel-btn-2')?.addEventListener('click', () => {
+    let activeForm = document.getElementById("divPage4AddServiceInfo");
+    let remove = document.getElementById("btnRemoveServiceBtn");
+    let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+    let btns = document.getElementById("divFinalSubCanBtn");
+    activeForm.style.display = "none"; 
+    remove.style.display = "none"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
   });
 
   // Logo upload
@@ -637,4 +705,95 @@ document.addEventListener('DOMContentLoaded', () => {
       target.value = value;
     }
   });
+  document.getElementById('selectService').addEventListener('change', (e) => {
+  let activeForm = document.getElementById("divPage4EditServiceInfo");
+  let remove = document.getElementById("btnRemoveServiceBtn");
+  let inactiveForm = document.getElementById("divPage4AddServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
+  console.log(e.target.value)
+  if (e.target.value != '') {
+    activeForm.style.display = "block"; 
+    remove.style.display = "block"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.add("d-none");
+  }
+  else {
+    activeForm.style.display = "none"; 
+    remove.style.display = "none"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
+  }
+})
+
+document.querySelector('#btnRemoveServiceBtn').addEventListener("click", (e) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You are about to delete a service. Once a service has been deleted it cannot be recovered.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Remove Service",
+    cancelButtonText: "Cancel"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: "Deleted!",
+        text: "This service has been deleted.",
+        icon: "success"
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: "Cancelled",
+        text: "This service will not be removed",
+        icon: "error"
+      });
+    }
+  });
+})
+
+document.querySelector('#addServiceBtn').addEventListener("click", (e) => {
+  let activeForm = document.getElementById("divPage4AddServiceInfo");
+  let remove = document.getElementById("btnRemoveServiceBtn");
+  let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
+  activeForm.style.display = "block"; 
+  remove.style.display = "none"; 
+  inactiveForm.style.display = "none"; 
+  btns.classList.add("d-none");
+})
+
+// document.getElementById('same-info-checkbox').addEventListener('change', (e) => {
+//   const name = document.getElementById('primaryContactName');
+//   const email = document.getElementById('primaryContactEmail');
+//   const phone = document.getElementById('primaryContactPhone');
+//   const position = document.getElementById('primaryContactPosition');
+//   const isChecked = e.target.checked;
+
+//   if (isChecked) {
+//     // Fill inputs
+//     name.value = strEditorName;
+//     email.value = strEditorEmail;
+//     phone.value = strEditorPhoneNumber;
+//     position.value = strEditorOrgPosition;
+
+//     // Disable inputs
+//     name.disabled = true;
+//     email.disabled = true;
+//     phone.disabled = true;
+//     position.disabled = true;
+
+//   } else {
+//     // Restore previous values
+//     name.value = originalValues.name || "";
+//     email.value = originalValues.email || "";
+//     phone.value = originalValues.phone || "";
+//     position.value = originalValues.position || "";
+
+//     // Re-enable inputs
+//     name.disabled = false;
+//     email.disabled = false;
+//     phone.disabled = false;
+//     position.disabled = false;
+//   }
+// });
 });
