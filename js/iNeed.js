@@ -92,8 +92,8 @@ document.addEventListener("click", (e) => {
 
     const descriptionContainer = document.getElementById("wrapperINeedContent");
     let txtDescription = getCategoryDescription(clickedCard.id.replace("pillINeed", ""));
-    console.log("[iNeed] Category description:", txtDescription);
-    descriptionContainer.innerHTML = `<h5 class="white fw-light">${txtDescription}</h5>`; //<i class="bi bi-question-circle white me-2"></i>
+    document.getElementById("divINeedDescription").innerHTML = `<h5 class="white fw-light">${txtDescription}</h5>`; // Clear previous description
+    descriptionContainer.innerHTML = descriptionContainer.innerHTML; //<i class="bi bi-question-circle white me-2"></i>
 
     
   }
@@ -178,6 +178,7 @@ function createCard(service, category) {
         callServicePage(service.ID)
       })
 
+  
   return col;
 }
 
@@ -248,6 +249,8 @@ async function loadCardsByCategory(category) {
   const arrIDs = sortedIDCategories[category];
   const container = document.getElementById("divINeedContent");
 
+  console.log("[loadCardsByCategory] Sorted IDs for category", category, ":", arrIDs);
+
   if (!container) {
     return;
   }
@@ -260,6 +263,7 @@ async function loadCardsByCategory(category) {
 
     const requests = arrIDs.map(id => {
       const url = `https://ucassist.duckdns.org/service?id=${id}`;
+      // console.log("[loadCardsByCategory] Fetching service ID:", id, "with URL:", url);
 
       // console.log("[loadCardsByCategory] Fetching service ID:", id);
 
@@ -276,16 +280,19 @@ async function loadCardsByCategory(category) {
     let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
-      if(count < 7){
+      // console.log("[loadCardsByCategory] Created card for service ID:", service.ID, "with html:", newCard)
+      // if(count < 7){
+        console.log("here")
         if (newCard == ""){
           return;
         } else{
+          console.log("here2")
           count ++
           container.appendChild(newCard)
-          console.log("[iNeed.js] container: ", container)
         }
-      }
+      // }
     });
+    document.getElementById("divINeedContent").innerHTML = container.innerHTML
   } catch (error) {
     console.error("[iNeed] Error loading services:", error);
     container.innerHTML = "<p>DSorry! We're having trouble loading services. Please try again later.</p>";
