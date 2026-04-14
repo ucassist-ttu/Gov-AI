@@ -9,37 +9,37 @@
   <title>Registration Form</title>
 </head>
 <body>
-  <div id="navbar" data-name="Navigation Bar"></div>
-  <header data-name="Page Header">
-        <div class="overflow-visible" data-name="Page Header Section">
-            <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative" data-name="Page Header Bar">
-                <h1 class="ps-5 fw-bold white" data-name="Page Title">Registration Form</h1>    
-      <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Navigation Breadcrumb">
-        <ol class="breadcrumb mb-0" data-name="Breadcrumb Links">
-          <li class="breadcrumb-item fs-6" data-name="Breadcrumb Home Link"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-          <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li> 
-          <li class="breadcrumb-item fs-6" data-name="Breadcrumb Provider Link"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white">Provider</a></li>
-          <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li> 
-          <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Current Page in Breadcrumb">Register Now</li>
+  <div id="navbar"></div>
+  <main>
+  <header>
+    <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative">
+      <h1 class="fw-bold white">Registration Form</h1>               
+      <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+          <li class="text-white mx-2 fs-6">›</li> 
+          <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white">Provider</a></li>
+          <li class="text-white mx-2 fs-6">›</li> 
+          <li class="breadcrumb-item active text-white fs-6" aria-current="page">Register Now</li>
         </ol>
-      </nav>
-    </div>
+      </nav> 
+
     </div>
   </header>
   <!-- Progress bar -->
-  <nav aria-label="Progress" class="mb-4 w-100" data-name="Progress Navigation">
-    <div class="progress-steps" role="list" aria-label="progress steps" data-name="Progress Indicator">
-      <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1" data-name="Step 1">1</div>
-      <div class="progress-line" data-name="Progress Connector"></div>
-      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 2" data-name="Step 2">2</div>
-      <div class="progress-line" data-name="Progress Connector"></div>
-      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3" data-name="Step 3">3</div>
+  <nav aria-label="Progress" class="w-100">
+    <div class="progress-steps" role="list" aria-label="progress steps">
+      <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1">1</div>
+      <div class="progress-line"></div>
+      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 2">2</div>
+      <div class="progress-line"></div>
+      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3">3</div>
     </div>
   </nav>
   
- <main class="container-fluid px-4 px-md-5" data-name="Registration Form Main Content">
-    <div class="row justify-content-left" data-name="Form Container Row">
-      <div class="col-12 col-lg-6 px-3 px-lg-4" data-name="Form Input Column">
+ <div class="container-fluid p-4">
+    <div class="row justify-content-left">
+    <div class="col-12 col-lg-6 px-3 px-lg-4">
     <!-- Step 1: Organization Information - Public -->
     <section id="step-1" class="d-none" aria-labelledby="public-info-title" data-name="Organization Information Public Section">
       <div class="mb-4" role="region" aria-labelledby="public-info-title" data-name="Organization Information Public Info">
@@ -256,7 +256,7 @@
     </div>
     <div class="d-flex gap-3 mt-3" data-name="Organization Information Private Actions">
       <button type="submit" class="submit-btn" data-name="Go to Step 3 Button">Next</button>
-      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Cancel Registration Button">Cancel</button>
+      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 1 Button">Previous</button>
     </div>
   </form>
 </section>
@@ -435,24 +435,27 @@
       <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn" data-name="Add Another Service Button">+ Add Another Service</button>
       <div class="d-flex gap-3 mt-3" data-name="Register Services Actions">
         <button type="submit" class="submit-btn" data-name="Submit Registration Button">Submit</button>
-        <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Cancel Registration Button">Cancel</button>
+        <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 2 Button">Previous</button>
       </div>
     </div>
   </form>
 </section>
+    </div>
   </main>
   <div id="footer"></div>
-  <script>
-    fetch('../../partials/footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer').innerHTML = data);
-    fetch('../../partials/navbar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('navbar').innerHTML = data);
-  </script>
+
+    <script>
+        fetch('../../partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('../../partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/registration_form.js"></script>
   <script src="../../js/analytics.js"></script>
+  <script  src="../../js/navbar.js"></script>
 </body>
 </html>
