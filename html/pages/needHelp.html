@@ -11,24 +11,24 @@
 </head>
 
 <body>
-    <div id="navbar"></div>
+    <div id="navbar" data-name="Navigation Bar"></div>
     
-    <main>
-        <div class="overflow-visible">
-            <div class="z-3 p-4 position-relative dark_navy d-flex align-items-center justify-content-start position-relative">
-                <h1 class="ps-5 fw-bold white">Need Help?</h1>
-                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-                <ol class="breadcrumb mb-0">
-                   <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                   <li class="text-white mx-2 fs-6">›</li> 
-                   <li class="breadcrumb-item active text-white fs-6" aria-current="page">Need Help</li>
+    <main data-name="Help Information Main Content">
+        <div class="overflow-visible" data-name="Page Container">
+            <div class="z-3 p-4 position-relative dark_navy d-flex align-items-center justify-content-start position-relative" data-name="Page Header Section">
+                <h1 class="ps-5 fw-bold white" data-name="Page Title">Need Help?</h1>
+                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Navigation Breadcrumb">
+                <ol class="breadcrumb mb-0" data-name="Breadcrumb Links">
+                   <li class="breadcrumb-item fs-6" data-name="Breadcrumb Home Link"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                   <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li> 
+                   <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Current Page in Breadcrumb">Need Help</li>
                 </ol>
                 </nav>                 
             </div>
-            <div class="position-relative z-1">
-                <img src="../../assets/images/need-help-hannah-busing.png" class=" background_filter_image">
-                <div class="position-absolute top-50 start-50 translate-middle">
-                    <h1 class="img-text-lg">We're here to guide you every step of the way.</h1>
+            <div class="position-relative z-1" data-name="Banner Image Section">
+                <img src="../../assets/images/need-help-hannah-busing.png" class=" background_filter_image" data-name="Banner Image">
+                <div class="position-absolute top-50 start-50 translate-middle" data-name="Banner Text Overlay">
+                    <h1 class="img-text-lg" data-name="Banner Heading">We're here to guide you every step of the way.</h1>
                 </div>
             </div>
         </div>
@@ -36,130 +36,130 @@
             <h5 class="fw-light clr-light-grey p-5 jumbotron-text">The UCAssist database, run by the Upper Cumberland Development District, helps residents easily find local resources — from business services to home-delivered meals.</h5>
         </div> -->
         <!-- page content -->
-        <div class="row d-flex justify-content-between py-5">
-            <h5 class="text-lg fw-light clr-light-grey pb-4 ps-4">Who Do You Need Help For?</h5>
+        <div class="row d-flex justify-content-between py-5" data-name="Main Content Row">
+            <h5 class="text-lg fw-light clr-light-grey pb-4 ps-4" data-name="Content Introduction Text">Who Do You Need Help For?</h5>
             <!--navigation tabs-->
-            <div class="col-sm-12 col-md-5 col-lg-4">
-                <ul class="nav nav-tabs p-0" id="needHelp-pills-tabs" role="tablist" aria-orientation="vertical">
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link active clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-family" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-family" role="tab" aria-controls="needHelp-pills-content-family">
+            <div class="col-sm-12 col-md-5 col-lg-4" data-name="Category Selection Tabs">
+                <ul class="nav nav-tabs p-0" id="needHelp-pills-tabs" role="tablist" aria-orientation="vertical" data-name="Tab Categories">
+                    <li class="nav-item snap-description" role="presentation" data-name="Family Category">
+                        <button type="button" class="nav-link active clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-family" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-family" role="tab" aria-controls="needHelp-pills-content-family" data-name="Family Category Button">
                             The Family
                         </button>
                     </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-home" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-home" role="tab" aria-controls="needHelp-pills-content-home">
+                    <li class="nav-item snap-description" role="presentation" data-name="Home Category">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-home" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-home" role="tab" aria-controls="needHelp-pills-content-home" data-name="Home Category Button">
                             The Home
                         </button>
                     </li>
-                    <li class="nav-item snap-description" role="presentation">
-                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-community" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-community" role="tab" aria-controls="needHelp-pills-content-community">
+                    <li class="nav-item snap-description" role="presentation" data-name="Community Category">
+                        <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="needHelp-pills-tab-community" data-bs-toggle="pill" data-bs-target="#needHelp-pills-content-community" role="tab" aria-controls="needHelp-pills-content-community" data-name="Community Category Button">
                             The Community
                         </button>
                     </li>
                 </ul>
             </div>
             <!--tab content-->
-            <div class="col-sm-12 col-md-7 col-lg-7 px-5 py-5 py-md-0">
-                <div class="tab-content">
+            <div class="col-sm-12 col-md-7 col-lg-7 px-5 py-5 py-md-0" data-name="Category Information Area">
+                <div class="tab-content" data-name="Information Sections">
                     <!-- tab one: the whole family -->
-                    <div class="tab-pane fade show active" id="needHelp-pills-content-family" role="tabpanel" aria-labelledby="needHelp-pills-tab-family">
+                    <div class="tab-pane fade show active" id="needHelp-pills-content-family" role="tabpanel" aria-labelledby="needHelp-pills-tab-family" data-name="Family Resources Tab">
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Public Transit</h4>
-                            <p>UC Public Transit provides rides throughout the entire Upper Cumberland region and beyond.</p>
+                        <div class="pb-4" data-name="Public Transportation Service">
+                            <h4 class="fw-bold" data-name="Service Title">Public Transit</h4>
+                            <p data-name="Service Description">UC Public Transit provides rides throughout the entire Upper Cumberland region and beyond.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:18338287477">Call to book a ride at 1-833-UC Trips (1-833-828-7477)</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Website Contact Option">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://ucpublictransit.com" target="_blank">Or visit them at UCPublicTransit.com</a></p>
                             </div>
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Seniors & Disabled Persons</h4>
-                            <p>The Upper Cumberland Area Agency on Aging and Disability has many programs to help the senior and disabled population of the region. Meals, in-home services, Medicare aid, and much more are available.</p>
+                        <div class="pb-4" data-name="Senior and Disabled Services">
+                            <h4 class="fw-bold" data-name="Service Title">Seniors & Disabled Persons</h4>
+                            <p data-name="Service Description">The Upper Cumberland Area Agency on Aging and Disability has many programs to help the senior and disabled population of the region. Meals, in-home services, Medicare aid, and much more are available.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:18668366678">Contact them at 1-866-836-6678</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Website Contact Option">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://ucdd.org/aaad" target="_blank">Or visit them at ucdd.org/aaad</a></p>
                             </div>
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Assistance For Families</h4>
-                            <p>With a region-wide mission to lift 1,600 children and their families out of poverty by 2025, Empower Upper Cumberland (Empower UC) offers programs to aid those in need throughout the Upper Cumberland.</p>
+                        <div class="pb-4" data-name="Family Financial Assistance">
+                            <h4 class="fw-bold" data-name="Service Title">Assistance For Families</h4>
+                            <p data-name="Service Description">With a region-wide mission to lift 1,600 children and their families out of poverty by 2025, Empower Upper Cumberland (Empower UC) offers programs to aid those in need throughout the Upper Cumberland.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:18333679782">Call them at 1-833-EMPWRUC (1-833-367-9782)</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Website Contact Option">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://empoweruppercumberland.org" target="_blank">Or visit them at EmpowerUpperCumberland.org</a></p>
                             </div>
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Services For Relative Caregivers</h4>
-                            <p>Relative Caregiver provides support and aid to relatives who find themselves taking care of children.</p>
+                        <div class="pb-4" data-name="Relative Caregiver Support">
+                            <h4 class="fw-bold" data-name="Service Title">Services For Relative Caregivers</h4>
+                            <p data-name="Service Description">Relative Caregiver provides support and aid to relatives who find themselves taking care of children.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19314324111">Call them at (931)432-4111 to see how they can help.</a></p>
                             </div>
                             <!-- no webiste given -->
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Medicare Assistance</h4>
-                            <p>The SHIP, State Health Insurance Program, provides free and objective one-on-one counseling and education to individuals and groups in regards to Medicare and other related insurances (such as Part D).</p>
+                        <div class="pb-4" data-name="Medicare Insurance Guidance">
+                            <h4 class="fw-bold" data-name="Service Title">Medicare Assistance</h4>
+                            <p data-name="Service Description">The SHIP, State Health Insurance Program, provides free and objective one-on-one counseling and education to individuals and groups in regards to Medicare and other related insurances (such as Part D).</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:18778010044">Call them for services at 1-877-801-0044</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Website Contact Option">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://tnmedicarehelp.com" target="_blank">Or visit them at tnmedicarehelp.com</a></p>
                             </div>
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Your Local UCHRA</h4>
-                            <p>Commodities, homemaker services, recovery support, and drivers education are just a few of the family oriented services that they offer.</p>
+                        <div class="pb-4" data-name="Regional Family Services">
+                            <h4 class="fw-bold" data-name="Service Title">Your Local UCHRA</h4>
+                            <p data-name="Service Description">Commodities, homemaker services, recovery support, and drivers education are just a few of the family oriented services that they offer.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Phone Contact Option">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19315281127">Call (931)528-1127 for more info</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Website Contact Option">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://uchra.com" target="_blank">Or visit them at UCHRA.com or any of the fourteen county offices</a></p>
                             </div>
                         </div>
 
-                        <div class="pb-4">
-                            <h4 class="fw-bold">Housing For Seniors and Disabled Persons</h4>
-                            <p>UCDD’s House and Home programs offer emergency home repairs, pre-packaged mortgages, repair loans, and apartment rentals for elderly and disabled.</p>
+                        <div class="pb-4" data-name="Seniors Housing Section">
+                            <h4 class="fw-bold" data-name="Seniors Housing Header">Housing For Seniors and Disabled Persons</h4>
+                            <p data-name="Seniors Housing Description">UCDD’s House and Home programs offer emergency home repairs, pre-packaged mortgages, repair loans, and apartment rentals for elderly and disabled.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Seniors Housing Phone">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19314324111">Call 1-931-432-4111 for more info</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Seniors Housing Website">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://ucdd.org" target="_blank">Or visit them at UCDD.org</a></p>
                             </div>
@@ -168,33 +168,33 @@
                     </div>
 
                     <!-- tab two: the home -->
-                    <div class="tab-pane fade" id="needHelp-pills-content-home" role="tabpanel" aria-labelledby="needHelp-pills-tab-home">
+                    <div class="tab-pane fade" id="needHelp-pills-content-home" role="tabpanel" aria-labelledby="needHelp-pills-tab-home" data-name="Home Tab">
 
-                        <div>
-                            <h4 class="fw-bold">Housing For Seniors and Disabled Persons</h4>
-                            <p>UCDD’s House and Home programs offer emergency home repairs, pre-packaged mortgages, repair loans, and apartment rentals for elderly and disabled.</p>
+                        <div data-name="Seniors Housing Section">
+                            <h4 class="fw-bold" data-name="Seniors Housing Header">Housing For Seniors and Disabled Persons</h4>
+                            <p data-name="Seniors Housing Description">UCDD’s House and Home programs offer emergency home repairs, pre-packaged mortgages, repair loans, and apartment rentals for elderly and disabled.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Seniors Housing Phone">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19314324111">Call them 1-931-432-4111</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Seniors Housing Website">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://ucdd.org" target="_blank">Or visit them at UCDD.org</a></p>
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="fw-bold">Utilities and Rental Assistance</h4>
-                            <p>UCHRA’s home assistance programs offer home utility bill assistance (electric & water), weatherization, rent assistance, and services for the unhoused.</p>
+                        <div data-name="Utilities And Rental Section">
+                            <h4 class="fw-bold" data-name="Utilities And Rental Header">Utilities and Rental Assistance</h4>
+                            <p data-name="Utilities And Rental Description">UCHRA’s home assistance programs offer home utility bill assistance (electric & water), weatherization, rent assistance, and services for the unhoused.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Utilities Phone">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19315281127">Call 1-931-528-1127 for more information</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Utilities Website">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://uchra.com" target="_blank">Or visit them at UCHRA.org</a></p>
                             </div>
@@ -203,33 +203,33 @@
                     </div>
 
                     <!-- tab three: the community -->
-                    <div class="tab-pane fade" id="needHelp-pills-content-community" role="tabpanel" aria-labelledby="needHelp-pills-tab-community">
+                    <div class="tab-pane fade" id="needHelp-pills-content-community" role="tabpanel" aria-labelledby="needHelp-pills-tab-community" data-name="Community Tab">
 
-                        <div>
-                            <h4 class="fw-bold">Community Development</h4>
-                            <p>Planning and Economic Development at UCDD focuses on the growth and improvement in our region.</p>
+                        <div data-name="Community Development Section">
+                            <h4 class="fw-bold" data-name="Community Development Header">Community Development</h4>
+                            <p data-name="Community Development Description">Planning and Economic Development at UCDD focuses on the growth and improvement in our region.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Community Development Phone">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19314324111">Call 1-931-432-4111</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Community Development Website">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://ucdd.org" target="_blank">Or visit them at UCDD.org</a></p>
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="fw-bold">Community Services</h4>
-                            <p>Community improvement programs at UCHRA help the region realize its full potential.</p>
+                        <div data-name="Community Services Section">
+                            <h4 class="fw-bold" data-name="Community Services Header">Community Services</h4>
+                            <p data-name="Community Services Description">Community improvement programs at UCHRA help the region realize its full potential.</p>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Community Services Phone">
                                 <i class="bi bi-telephone-fill pe-3"></i>
                                 <p><a href="tel:19315281127">Call 1-931-528-1127 for more information</a></p>
                             </div>
 
-                            <div class="column d-flex">
+                            <div class="column d-flex" data-name="Community Services Website">
                                 <i class="bi bi-laptop-fill pe-3"></i>
                                 <p><a href="https://uchra.com" target="_blank">Or visit them at UCHRA.org</a></p>
                             </div>
@@ -237,17 +237,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row d-flex text-center justify-content-center align-items-center pt-5">
-                <div class="divider-horizontal pt-5 mt-5"></div>
-                <h4 class="pt-5">Need Help Navigating</h4>
-                <p>Have one of our agents help you.</p>
-                <p class="mt-2 col-12 col-md-7 col-lg-8 col-xl-6">
+            <div class="row d-flex text-center justify-content-center align-items-center pt-5" data-name="Help Contact Row">
+                <div class="divider-horizontal pt-5 mt-5" data-name="Divider"></div>
+                <h4 class="pt-5" data-name="Need Help Header">Need Help Navigating</h4>
+                <p data-name="Need Help Subtitle">Have one of our agents help you.</p>
+                <p class="mt-2 col-12 col-md-7 col-lg-8 col-xl-6" data-name="Need Help Description">
                     You may call <a href="tel:18444824636">1-844-4UCInfo (1-844-482-4636)</a>.
                     Leave your name, phone number, county, what you are looking for and someone will reach out with resources to help.
                 </p>
             </div>
         </div>
-        <div id="footer"></div>
+        <div id="footer" data-name="Footer"></div>
     </main>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -261,5 +261,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../js/navbar.js"></script>
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>

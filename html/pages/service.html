@@ -11,12 +11,12 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="white">
-    <div id="navbar"></div>
-    <main>
-        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
-            <h1 class="fw-bold white">Find Services</h1>
+    <div id="navbar" data-name="Navigation Bar"></div>
+    <main data-name="Service Details Main Content">
+        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start" data-name="Service Details Header">
+            <h1 class="fw-bold white" data-name="Page Title">Find Services</h1>
         </div>
-        <div id="divService">
+        <div id="divService" data-name="Service Information Container">
         </div>
         <!-- <div id="divResponse" class="service">
             <h3><b>How useful was this service?</b></h3>
@@ -32,7 +32,7 @@
         </div> -->
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -47,5 +47,6 @@
     <script src="../../js/service.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../js/navbar.js"></script>
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>

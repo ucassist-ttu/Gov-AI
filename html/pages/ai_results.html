@@ -11,28 +11,28 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar" data-name="Navigation Bar"></div>
     
-    <main class="ai-results" class="sidenav">
-        <div class="page mt-5">
-            <div class="d-flex align-items-center justify-content-end mb-5">
+    <main class="ai-results" class="sidenav" data-name="AI Results Main Content">
+        <div class="page mt-5" data-name="AI Results Page Container">
+            <div class="d-flex align-items-center justify-content-end mb-5" data-name="Top Action Buttons">
                 <!-- <a id="btnHome" class="ts-5 rounded-pill p-2 border text-decoration-none text-nowrap me-4">Return Home</a> -->
-                <div id="btnPrintAIResults" class="btn btn-link">
-                    <a href="#btnPrintPage" class=" ts-5 mt-5 p-2 text-decoration-none text-nowrap">
-                        <i class="bi bi-printer-fill "></i>
+                <div id="btnPrintAIResults" class="btn btn-link" data-name="Print Results Button">
+                    <a href="#btnPrintPage" class=" ts-5 mt-5 p-2 text-decoration-none text-nowrap" data-name="Print Page Link">
+                        <i class="bi bi-printer-fill " data-name="Print Icon"></i>
                         Print Page</a>
                 </div>
             </div>
-            <div class="img-text-lg" style="font-size: 5vh;" id="txtHeader">
+            <div class="img-text-lg" style="font-size: 5vh;" id="txtHeader" data-name="Results Introduction Text">
                 Based on what you told us, here are three recommended resources...
             </div>
-            <div id="suggestedResources" class="suggested-resources">
+            <div id="suggestedResources" class="suggested-resources" data-name="Recommended Resources List">
 
             </div>
         </div>
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -48,5 +48,6 @@
     <script type="module"  src="/Gov-AI/js/ai_results.js"></script>
     <script  src="../../js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>

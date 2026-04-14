@@ -11,18 +11,18 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-  <div id="navbar"></div>
-  <header>
-    <div class="overflow-visible">
-        <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
-            <h1 class="ps-5 fw-bold white">Registration Form</h1>    
-            <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                <li class="text-white mx-2 fs-6">›</li> 
-                <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white">Provider</a></li>
-                <li class="text-white mx-2 fs-6">›</li> 
-                <li class="breadcrumb-item active text-white fs-6" aria-current="page">Register Now</li>
+  <div id="navbar" data-name="Navigation Bar"></div>
+  <header data-name="Page Header Section">
+    <div class="overflow-visible" data-name="Header Container">
+        <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative" data-name="Blue Header Background">
+            <h1 class="ps-5 fw-bold white" data-name="Registration Form Title">Registration Form</h1>    
+            <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Navigation Breadcrumb">
+            <ol class="breadcrumb mb-0" data-name="Breadcrumb Links">
+                <li class="breadcrumb-item fs-6" data-name="Breadcrumb Home Link"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li> 
+                <li class="breadcrumb-item fs-6" data-name="Breadcrumb Provider Link"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white">Provider</a></li>
+                <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li> 
+                <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Current Page in Breadcrumb">Register Now</li>
             </ol>
             </nav>
         </div>
@@ -39,17 +39,17 @@
     </nav> -->
   </header>
     
-    <main class="">
-        <div class="container">
-            <div class="row">
-                <div class="col-5">
-                    <h2>New Provider?</h2>
-                    <h5>Register your company and your services here.</h5>
+    <main class="" data-name="Main Content Area">
+        <div class="container" data-name="Content Container">
+            <div class="row" data-name="Provider Options Section">
+                <div class="col-5" data-name="New Provider Information">
+                    <h2 data-name="New Provider Title">New Provider?</h2>
+                    <h5 data-name="New Provider Instructions">Register your company and your services here.</h5>
                 </div>
-                <div class="col-1 me-3 divider-vertical d-flex align-items-center"></div>
-                <div class="col-5">
-                    <h2>Need to Edit Your Information?</h2>
-                    <h5>Change your company or service information here.</h5>
+                <div class="col-1 me-3 divider-vertical d-flex align-items-center" data-name="Vertical Divider"></div>
+                <div class="col-5" data-name="Edit Provider Information">
+                    <h2 data-name="Edit Provider Title">Need to Edit Your Information?</h2>
+                    <h5 data-name="Edit Provider Instructions">Change your company or service information here.</h5>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
         </div> -->
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -84,5 +84,6 @@
     <!-- <script type="module"  src="/Gov-AI/js/ai_results.js"></script> -->
     <script  src="../../js/navbar.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>

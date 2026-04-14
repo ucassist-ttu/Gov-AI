@@ -11,69 +11,69 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="white">
-    <div id="navbar"></div>
-    <main>
-        <div id="overlay"></div>
-        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative">
-            <h1 class="fw-bold white">Find Services</h1>               
-             <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-                <ol class="breadcrumb mb-0">
-                   <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                   <li class="text-white mx-2 fs-6">›</li>                 
-                   <li class="breadcrumb-item active text-white fs-6" aria-current="page">Find Services</li>
+    <div id="navbar" data-name="Navigation Bar"></div>
+    <main data-name="Services Search Main Content">
+        <div id="overlay" data-name="Search Overlay"></div>
+        <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative" data-name="Page Header Bar">
+            <h1 class="fw-bold white" data-name="Page Title">Find Services</h1>               
+             <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Navigation Breadcrumb">
+                <ol class="breadcrumb mb-0" data-name="Breadcrumb Links">
+                   <li class="breadcrumb-item fs-6" data-name="Breadcrumb Home Item"><a href="/../Gov-AI/index.html" class="text-white" data-name="Breadcrumb Home Link">Home</a></li>
+                   <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">›</li>                 
+                   <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Current Page in Breadcrumb">Find Services</li>
                 </ol>
                 </nav> 
 
         </div>
-        <div id="mySidenav" class="sidenav">
-            <h3>Filter & Sort</h3>
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div id="mySidenav" class="sidenav" data-name="Filter and Sort Sidebar">
+            <h3 data-name="Filter and Sort Title">Filter & Sort</h3>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" data-name="Close Sidebar Button">&times;</a>
             <hr />
-            <div id="divAllFilter" class="sidenav-scroll form-check">
-                <div class="stickytitle">
-                    <a id="btnCounties">Counties <i class="bi bi-caret-down-fill"></i></a>
+            <div id="divAllFilter" class="sidenav-scroll form-check" data-name="Filter Options Container">
+                <div class="stickytitle" data-name="Counties Filter Section Heading">
+                    <a id="btnCounties" data-name="Counties Filter Toggle">Counties <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
                 </div>
-                <div id="divOuterCounties" class="form-check outer-layer" style="display: none;">
-                    <div id="divCounties" class="form-check">
+                <div id="divOuterCounties" class="form-check outer-layer" style="display: none;" data-name="Counties Filter Options Container">
+                    <div id="divCounties" class="form-check" data-name="Counties Filter List">
                     </div>
-                    <div id="divMoreCounties" style="display:none">
+                    <div id="divMoreCounties" style="display:none" data-name="Overflow Counties Section">
                     </div>
-                    <button id="btnShowMoreCounties" class="btn btn-link"></button>
+                    <button id="btnShowMoreCounties" class="btn btn-link" data-name="Show More Counties Button"></button>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnServiceType">Service Type <i class="bi bi-caret-down-fill"></i></a>
+                <div class="stickytitle" data-name="Service Type Filter Section Heading">
+                    <a id="btnServiceType" data-name="Service Type Filter Toggle">Service Type <i class="bi bi-caret-down-fill"></i></a>
                     <hr />
                 </div>
-                <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;">
-                    <div id="divServiceType" class="form-check">
+                <div id="divOuterServiceTypes" class="form-check outer-layer" style="display: none;" data-name="Service Types Filter Options Container">
+                    <div id="divServiceType" class="form-check" data-name="Service Types Filter List">
                     </div>
-                    <div id="divMoreServiceTypes" style="display:none">
+                    <div id="divMoreServiceTypes" style="display:none" data-name="Overflow Service Types Section">
                     </div>
-                    <button id="btnShowMoreServices" class="btn btn-link"></button>
+                    <button id="btnShowMoreServices" class="btn btn-link" data-name="Show More Services Button"></button>
                 </div>
             </div>
-            <div class="sidenav-footer">
+            <div class="sidenav-footer" data-name="Filter and Sort Sidebar Footer">
                 <hr />
-                <button id="btnClearFilter" class="btn btn-secondary col-5">Clear Filters</button>
-                <button id="btnSeeResults" class="btn btn-primary col-5">See Results</button>
+                <button id="btnClearFilter" class="btn btn-secondary col-5" data-name="Clear All Filters Button">Clear Filters</button>
+                <button id="btnSeeResults" class="btn btn-primary col-5" data-name="Apply Filters Button">See Results</button>
             </div>
         </div>
-        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../../assets/images/error-rodney-truitt-jf.png" class="background_filter_image z-0" alt="...">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100 col-11 col-md-9 col-lg-7 mx-auto start-0 end-0">
+        <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" data-name="Services Banner Carousel">
+            <div class="carousel-inner" data-name="Carousel Content Container">
+                <div class="carousel-item active" data-name="Carousel Slide">
+                    <img src="../../assets/images/error-rodney-truitt-jf.png" class="background_filter_image z-0" alt="..." data-name="Carousel Background Image">
+                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100 col-11 col-md-9 col-lg-7 mx-auto start-0 end-0" data-name="Carousel Search Section">
                         <!-- search bar -->
-                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center">
-                            <i class="bi bi-search ps-2"></i>
-                            <div class="divider-vertical d-flex align-items-center"></div>
-                            <input id="txtSearchServices" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?">
+                        <div class="ai-search-bar mt-md-3 mt-lg-5 d-flex align-items-center" data-name="Service Search Bar">
+                            <i class="bi bi-search ps-2" data-name="Search Icon"></i>
+                            <div class="divider-vertical d-flex align-items-center" data-name="Search Bar Divider"></div>
+                            <input id="txtSearchServices" class="search-input" type="text" placeholder="What are you looking for?" aria-label="What are you looking for?" data-name="Service Search Input">
                             <!-- submit button -->
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between" data-name="Search Button Container">
                                 <!-- TODO: extend button (stretch goal) -->
                                 <!-- <button class="btn search-btn fs-3" aria-label="Dropdown"><i class="bi bi-caret-down-fill"></i></span> -->
-                                <button id="btnSearchServices" class="btn search-btn fs-3" aria-label="Search"><i class="bi bi-arrow-right-circle-fill mt-2"></i></button>
+                                <button id="btnSearchServices" class="btn search-btn fs-3" aria-label="Search" data-name="Service Search Button"><i class="bi bi-arrow-right-circle-fill mt-2"></i></button>
                                 </span>
                             </div>
                         </div>
@@ -81,18 +81,18 @@
                 </div>
                 </div>
                 
-        <div id="divServiceMain"> 
-        <div class="row align-items-center mt-3">
-            <div id="divFilterButtons" class="filter">
-                <button id="btnFilterSort">Filter & Sort <i class="bi bi-sliders"></i></button>
-                <button id="btnLearnServices" class="btn btn-link" style="border: none; font-size: 25px;"><i class="bi bi-question-circle"></i></button>
+        <div id="divServiceMain" data-name="Services Results Section"> 
+        <div class="row align-items-center mt-3" data-name="Filter Control Row">
+            <div id="divFilterButtons" class="filter" data-name="Filter Control Buttons">
+                <button id="btnFilterSort" data-name="Filter and Sort Button">Filter & Sort <i class="bi bi-sliders"></i></button>
+                <button id="btnLearnServices" class="btn btn-link" style="border: none; font-size: 25px;" data-name="Service Information Button"><i class="bi bi-question-circle"></i></button>
             </div>
         </div>
-        <div id="divServices" class="mb-3"></div>
+        <div id="divServices" class="mb-3" data-name="Service Results List"></div>
         </div>
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -107,5 +107,6 @@
     <script src="../../js/services.js"></script>
     <script  src="../../js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>
