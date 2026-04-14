@@ -273,8 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const newService = firstService.cloneNode(true);
       suffixIds(newService, serviceCount);
       newService.setAttribute('data-service', serviceCount);
-      const servicesContainer = document.getElementById('services-container');
-      servicesContainer.insertBefore(newService, addServiceBtn);
+      // const servicesContainer = document.getElementById('services-container');
+      // servicesContainer.insertBefore(newService, addServiceBtn);
 
       const serviceListContainer = document.getElementById('service-list');
       if (serviceListContainer) {
@@ -473,7 +473,17 @@ document.addEventListener('DOMContentLoaded', () => {
           title: "Success",
           text: "Registration form submitted successfully!",
           icon: "success"
-        });
+        }).then((result) => {
+          let activeForm = document.getElementById("divPage4AddServiceInfo");
+          let remove = document.getElementById("btnRemoveServiceBtn");
+          let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+          let btns = document.getElementById("divFinalSubCanBtn");
+          activeForm.style.display = "none"; 
+          remove.style.display = "none"; 
+          inactiveForm.style.display = "none"; 
+          btns.classList.remove("d-none");
+          btns.classList.add("d-flex");
+        })
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
         Swal.fire({
@@ -484,6 +494,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  document.getElementById('btnLeave').addEventListener('click', () => {
+    window.location.href = `registration_landing.html`
+  });
 
   // Cancel/Back buttons
   document.querySelector('#step-1 .cancel-btn')?.addEventListener('click', () => window.location.href = 'registration_landing.html');
@@ -503,17 +516,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeForm = document.getElementById("divPage4AddServiceInfo");
     let remove = document.getElementById("btnRemoveServiceBtn");
     let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+    let btns = document.getElementById("divFinalSubCanBtn");
     activeForm.style.display = "none"; 
     remove.style.display = "none"; 
     inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
   });
   document.querySelector('#step-4 .cancel-btn-2')?.addEventListener('click', () => {
     let activeForm = document.getElementById("divPage4AddServiceInfo");
     let remove = document.getElementById("btnRemoveServiceBtn");
     let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+    let btns = document.getElementById("divFinalSubCanBtn");
     activeForm.style.display = "none"; 
     remove.style.display = "none"; 
     inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
   });
 
   // Logo upload
@@ -690,16 +709,20 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeForm = document.getElementById("divPage4EditServiceInfo");
   let remove = document.getElementById("btnRemoveServiceBtn");
   let inactiveForm = document.getElementById("divPage4AddServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
   console.log(e.target.value)
   if (e.target.value != '') {
     activeForm.style.display = "block"; 
     remove.style.display = "block"; 
     inactiveForm.style.display = "none"; 
+    btns.classList.add("d-none");
   }
   else {
     activeForm.style.display = "none"; 
     remove.style.display = "none"; 
     inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
   }
 })
 
@@ -732,9 +755,11 @@ document.querySelector('#addServiceBtn').addEventListener("click", (e) => {
   let activeForm = document.getElementById("divPage4AddServiceInfo");
   let remove = document.getElementById("btnRemoveServiceBtn");
   let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
   activeForm.style.display = "block"; 
   remove.style.display = "none"; 
   inactiveForm.style.display = "none"; 
+  btns.classList.add("d-none");
 })
 
 // document.getElementById('same-info-checkbox').addEventListener('change', (e) => {
