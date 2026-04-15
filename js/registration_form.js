@@ -1,3 +1,5 @@
+emailjs.init("YOUR_PUBLIC_KEY");
+
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3'];
   let currentStep = 0;
@@ -611,5 +613,72 @@ fetchAndPopulateAllData();
       if (value.length > 5) value = value.substring(0, 5);
       target.value = value;
     }
+  });
+});
+
+//EMAILJS CODE - UPDATE TO COLLECT MULTIPLE SERVICES
+document.getElementById("form-step-3").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  // --- Collect Step 1 data ---
+  const companyName = document.querySelector('[data-name="Company Name Input"]').value;
+  const description = document.querySelector('[data-name="Organization Description Input"]').value;
+  const phone = document.getElementById("phone").value;
+  const website = document.getElementById("website").value;
+
+  // --- Collect Step 2 data ---
+  const primaryName = document.getElementById("primaryName").value;
+  const primaryEmail = document.getElementById("primaryEmail").value;
+  const primaryPhone = document.getElementById("primaryPhone").value;
+
+  // --- Collect Step 3 (first service only for now) ---
+  const serviceName = document.getElementById("serviceName").value;
+  const serviceDescription = document.getElementById("serviceDescription").value;
+
+  // --- Build template params ---
+  const templateParams = {
+    action: "New Submission",
+
+    company_name: companyName,
+    company_description: description,
+    company_phone: phone,
+    company_website: website,
+
+    name: primaryName,
+    email: primaryEmail,
+    primary_phone: primaryPhone,
+
+    services: services.join("\n"),
+
+    admin_link: "http://127.0.0.1:5500/Gov-AI/html/pages/view_submissions.html", // or dynamic link
+    reference_id: "REQ-" + Date.now(),
+
+    platform_name: "UCAssist" // or your actual name
+  };
+
+  // --- Send email ---
+  emailjs.send(
+    "YOUR_SERVICE_ID",
+    "YOUR_TEMPLATE_ID",
+    templateParams
+  )
+  .then(function (response) {
+    Swal.fire({
+      icon: "success",
+      title: "Submitted!",
+      text: "Your registration has been received.",
+      // confirmButtonColor: "#0d6efd"
+    });
+
+    document.getElementById("form-step-3").reset();
+  })
+  .catch(function (error) {
+    console.error("EmailJS Error:", error);
+
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "Something went wrong. Please try again."
+    });
   });
 });
