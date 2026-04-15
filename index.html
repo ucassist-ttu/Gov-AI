@@ -13,225 +13,225 @@
     <link rel="stylesheet" href="manifest.json">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar" data-name="Navigation Bar"></div>
 
-    <main>
-        <div id="overlay"></div>
-        <div class="position-relative">
+    <main data-name="Homepage Main Content">
+        <div id="overlay" data-name="Search Overlay"></div>
+        <div class="position-relative" data-name="Hero Section">
             <!-- crisis tag -->
-            <div class="index-crisis rounded-bottom pt-3 pt-md-0">
-                <h6><a class="fw-bold white text-decoration-none" href="/Gov-AI/html/pages/crisis.html">Crisis Hotlines</a></h6>
+            <div class="index-crisis rounded-bottom pt-3 pt-md-0" data-name="Crisis Hotlines Quick Access">
+                <h6 data-name="Crisis Tag Title"><a class="fw-bold white text-decoration-none" href="/Gov-AI/html/pages/crisis.html" data-name="Crisis Hotlines Link">Crisis Hotlines</a></h6>
             </div>
 
             <!-- carousel -->
-            <div id="countyCarousel"></div>
+            <div id="countyCarousel" data-name="Carousel Banner"></div>
         </div>
 
         <!-- I need: -->
-        <div id="iNeed"></div>
+        <div id="iNeed" data-name="IMeed Section"></div>
 
         <!-- Map Filter -->
-        <div id="mySidenav" class="sidenav">
-            <h3>Map Filter & Sort</h3>
-            <a href="javascript:void(0)" class="closebtn" id="btnTopClose">&times;</a>
+        <div id="mySidenav" class="sidenav" data-name="Map Filter and Sort Sidebar">
+            <h3 data-name="Map Filter Title">Map Filter & Sort</h3>
+            <a href="javascript:void(0)" class="closebtn" id="btnTopClose" data-name="Close Sidebar Button">&times;</a>
             <hr />
-            <div id="divAllFilter" class="sidenav-scroll form-check">
-                <div class="stickytitle">
-                    <a id="btnCrisisServices">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;"></i>
+            <div id="divAllFilter" class="sidenav-scroll form-check" data-name="Filter Options Container">
+                <div class="stickytitle" data-name="Abuse and Crisis Filter Section Heading">
+                    <a id="btnCrisisServices" data-name="Abuse and Crisis Filter Toggle">
+                    <div class="row align-items-center" data-name="Abuse and Crisis Filter Row">
+                        <div class="col col-2" data-name="Abuse and Crisis Icon Column">
+                            <i class="bi bi-exclamation-triangle-fill" style="font-size: 25px; color: #B71C1C;" data-name="Abuse and Crisis Icon"></i>
                         </div>
-                        <div class="col">
+                        <div class="col" data-name="Abuse and Crisis Text Column">
                             Abuse and Crisis Intervention <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterCrisisServices" class="form-check outer-layer" style="display: none;">
-                    <div id="divCrisisServices" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="abuse-checkbox" value="abuse">
-                            <label class="form-check-label" for="abuse-checkbox">Abuse</label>
+                <div id="divOuterCrisisServices" class="form-check outer-layer" style="display: none;" data-name="Abuse and Crisis Filter Options Container">
+                    <div id="divCrisisServices" class="form-check" data-name="Abuse and Crisis Filter List">
+                        <div class="checkbox" data-name="Abuse Option Checkbox Wrapper">
+                            <input type="checkbox" class="form-check-input" id="abuse-checkbox" value="abuse" data-name="Abuse Option Checkbox" />
+                            <label class="form-check-label" for="abuse-checkbox" data-name="Abuse Option Label">Abuse</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="crisis-hotlines-checkbox" value="crisis hotlines">
-                            <label class="form-check-label" for="crisis-hotlines-checkbox">Crisis Hotlines</label>
+                        <div class="checkbox" data-name="Crisis Hotlines Option Checkbox Wrapper">
+                            <input type="checkbox" class="form-check-input" id="crisis-hotlines-checkbox" value="crisis hotlines" data-name="Crisis Hotlines Option Checkbox" />
+                            <label class="form-check-label" for="crisis-hotlines-checkbox" data-name="Crisis Hotlines Option Label">Crisis Hotlines</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="emergency-shelter-checkbox" value="emergency shelter">
-                            <label class="form-check-label" for="emergency-shelter-checkbox">Emergency Shelter</label>
+                        <div class="checkbox" data-name="Emergency Shelter Option Checkbox Wrapper">
+                            <input type="checkbox" class="form-check-input" id="emergency-shelter-checkbox" value="emergency shelter" data-name="Emergency Shelter Option Checkbox" />
+                            <label class="form-check-label" for="emergency-shelter-checkbox" data-name="Emergency Shelter Option Label">Emergency Shelter</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnHousing">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;"></i> 
+                <div class="stickytitle" data-name="Housing Sticky Title">
+                    <a id="btnHousing" data-name="Housing Button">
+                    <div class="row align-items-center" data-name="Housing Row">
+                        <div class="col col-2" data-name="Housing Icon Col">
+                            <i class="bi bi-house-heart-fill" style="font-size: 25px; color: #5D4037;" data-name="Housing Icon"></i> 
                         </div>
-                        <div class="col">
+                        <div class="col" data-name="Housing Text Col">
                             Housing and Home Repair <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterHousing" class="form-check outer-layer" style="display: none;">
-                    <div id="divHousing" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="housing-checkbox" value="housing">
-                            <label class="form-check-label" for="housing-checkbox">Housing</label>
+                <div id="divOuterHousing" class="form-check outer-layer" style="display: none;" data-name="Housing Outer">
+                    <div id="divHousing" class="form-check" data-name="Housing List">
+                        <div class="checkbox" data-name="Housing Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="housing-checkbox" value="housing" data-name="Housing Checkbox" />
+                            <label class="form-check-label" for="housing-checkbox" data-name="Housing Label">Housing</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="in-home-services-checkbox" value="in home services">
-                            <label class="form-check-label" for="in-home-services-checkbox">In Home Services</label>
+                        <div class="checkbox" data-name="In Home Services Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="in-home-services-checkbox" value="in home services" data-name="In Home Services Checkbox" />
+                            <label class="form-check-label" for="in-home-services-checkbox" data-name="In Home Services Label">In Home Services</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnFood" style="padding-top: 14px; padding-bottom: 14px;">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;"></i> 
+                <div class="stickytitle" data-name="Food Sticky Title">
+                    <a id="btnFood" style="padding-top: 14px; padding-bottom: 14px;" data-name="Food Button">
+                    <div class="row align-items-center" data-name="Food Row">
+                        <div class="col col-2" data-name="Food Icon Col">
+                            <i class="bi bi-basket-fill" style="font-size: 25px; color: #880E4F;" data-name="Food Icon"></i> 
                         </div>
-                        <div class="col pe-0">
+                        <div class="col pe-0" data-name="Food Text Col">
                             Food and Basic <br>Needs <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterFood" class="form-check outer-layer" style="display: none;">
-                    <div id="divFood" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="food-checkbox" value="food">
-                            <label class="form-check-label" for="food-checkbox">Meals</label>
+                <div id="divOuterFood" class="form-check outer-layer" style="display: none;" data-name="Food Outer">
+                    <div id="divFood" class="form-check" data-name="Food List">
+                        <div class="checkbox" data-name="Meals Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="food-checkbox" value="food" data-name="Meals Checkbox" />
+                            <label class="form-check-label" for="food-checkbox" data-name="Meals Label">Meals</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="toiletries-checkbox" value="toiletries">
-                            <label class="form-check-label" for="toiletries-checkbox">Toiletries</label>
+                        <div class="checkbox" data-name="Toiletries Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="toiletries-checkbox" value="toiletries" data-name="Toiletries Checkbox" />
+                            <label class="form-check-label" for="toiletries-checkbox" data-name="Toiletries Label">Toiletries</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="clothing-checkbox" value="clothing">
-                            <label class="form-check-label" for="clothing-checkbox">Clothing</label>
+                        <div class="checkbox" data-name="Clothing Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="clothing-checkbox" value="clothing" data-name="Clothing Checkbox" />
+                            <label class="form-check-label" for="clothing-checkbox" data-name="Clothing Label">Clothing</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="animals-checkbox" value="animals">
-                            <label class="form-check-label" for="animals-checkbox">Animals</label>
+                        <div class="checkbox" data-name="Animals Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="animals-checkbox" value="animals" data-name="Animals Checkbox" />
+                            <label class="form-check-label" for="animals-checkbox" data-name="Animals Label">Animals</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnLegal">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;"></i>
+                <div class="stickytitle" data-name="Legal Sticky Title">
+                    <a id="btnLegal" data-name="Legal Button">
+                    <div class="row align-items-center" data-name="Legal Row">
+                        <div class="col col-2" data-name="Legal Icon Col">
+                            <i class="bi bi-piggy-bank-fill" style="font-size: 25px; color: #1B5E20;" data-name="Legal Icon"></i>
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Legal Text Col"> 
                             Financial and Legal Assistance <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterLegal" class="form-check outer-layer" style="display: none;">
-                    <div id="divLegal" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="legal-checkbox" value="legal">
-                            <label class="form-check-label" for="legal-checkbox">Legal Assistance</label>
+                <div id="divOuterLegal" class="form-check outer-layer" style="display: none;" data-name="Legal Outer">
+                    <div id="divLegal" class="form-check" data-name="Legal List">
+                        <div class="checkbox" data-name="Legal Assistance Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="legal-checkbox" value="legal" data-name="Legal Assistance Checkbox" />
+                            <label class="form-check-label" for="legal-checkbox" data-name="Legal Assistance Label">Legal Assistance</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="housing-financial-assistance-checkbox" value="housing - financial assistance">
-                            <label class="form-check-label" for="housing-financial-assistance-checkbox">Financial Assistance (Housing)</label>
+                        <div class="checkbox" data-name="Housing Financial Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="housing-financial-assistance-checkbox" value="housing - financial assistance" data-name="Housing Financial Checkbox" />
+                            <label class="form-check-label" for="housing-financial-assistance-checkbox" data-name="Housing Financial Label">Financial Assistance (Housing)</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="utilities-financial-assistance-checkbox" value="utilities - financial assistance">
-                            <label class="form-check-label" for="utilities-financial-assistance-checkbox">Financial Assistance (Utilities)</label>
+                        <div class="checkbox" data-name="Utilities Financial Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="utilities-financial-assistance-checkbox" value="utilities - financial assistance" data-name="Utilities Financial Checkbox" />
+                            <label class="form-check-label" for="utilities-financial-assistance-checkbox" data-name="Utilities Financial Label">Financial Assistance (Utilities)</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnTransportation" style="padding-top: 14px; padding-bottom: 14px;">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;"></i> 
+                <div class="stickytitle" data-name="Transportation Sticky Title">
+                    <a id="btnTransportation" style="padding-top: 14px; padding-bottom: 14px;" data-name="Transportation Button">
+                    <div class="row align-items-center" data-name="Transportation Row">
+                        <div class="col col-2" data-name="Transportation Icon Col">
+                            <i class="bi bi-taxi-front-fill" style="font-size: 25px; color: #E65100;" data-name="Transportation Icon"></i> 
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Transportation Text Col"> 
                             Transportation <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterTransportation" class="form-check outer-layer" style="display: none;">
-                    <div id="divTransportation" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="transportation-checkbox" value="transportation">
-                            <label class="form-check-label" for="transportation-checkbox">Transportation</label>
+                <div id="divOuterTransportation" class="form-check outer-layer" style="display: none;" data-name="Transportation Outer">
+                    <div id="divTransportation" class="form-check" data-name="Transportation List">
+                        <div class="checkbox" data-name="Transportation Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="transportation-checkbox" value="transportation" data-name="Transportation Checkbox" />
+                            <label class="form-check-label" for="transportation-checkbox" data-name="Transportation Label">Transportation</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="drivers-ed/dui-classes-checkbox" value="drivers ed/dui classes">
-                            <label class="form-check-label" for="drivers-ed/dui-classes-checkbox">Drivers ED/DUI Classes</label>
+                        <div class="checkbox" data-name="Drivers Ed Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="drivers-ed/dui-classes-checkbox" value="drivers ed/dui classes" data-name="Drivers Ed Checkbox" />
+                            <label class="form-check-label" for="drivers-ed/dui-classes-checkbox" data-name="Drivers Ed Label">Drivers ED/DUI Classes</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnFamily" style="padding-top: 14px; padding-bottom: 14px;">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;"></i> 
+                <div class="stickytitle" data-name="Family Sticky Title">
+                    <a id="btnFamily" style="padding-top: 14px; padding-bottom: 14px;" data-name="Family Button">
+                    <div class="row align-items-center" data-name="Family Row">
+                        <div class="col col-2" data-name="Family Icon Col">
+                            <i class="bi bi-backpack2-fill" style="font-size: 25px; color: #1565C0;" data-name="Family Icon"></i> 
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Family Text Col"> 
                             Children and Youth <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterFamily" class="form-check outer-layer" style="display: none;">
-                    <div id="divFamily" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="child-care-checkbox" value="child care">
-                            <label class="form-check-label" for="child-care-checkbox">Child Care</label>
+                <div id="divOuterFamily" class="form-check outer-layer" style="display: none;" data-name="Family Outer">
+                    <div id="divFamily" class="form-check" data-name="Family List">
+                        <div class="checkbox" data-name="Child Care Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="child-care-checkbox" value="child care" data-name="Child Care Checkbox" />
+                            <label class="form-check-label" for="child-care-checkbox" data-name="Child Care Label">Child Care</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="parenting-checkbox" value="parenting">
-                            <label class="form-check-label" for="parenting-checkbox">Parenting</label>
+                        <div class="checkbox" data-name="Parenting Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="parenting-checkbox" value="parenting" data-name="Parenting Checkbox" />
+                            <label class="form-check-label" for="parenting-checkbox" data-name="Parenting Label">Parenting</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="youth-services-checkbox" value="youth services">
-                            <label class="form-check-label" for="youth-services-checkbox">Youth Services</label>
+                        <div class="checkbox" data-name="Youth Services Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="youth-services-checkbox" value="youth services" data-name="Youth Services Checkbox" />
+                            <label class="form-check-label" for="youth-services-checkbox" data-name="Youth Services Label">Youth Services</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnSeniorServices">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
+                <div class="stickytitle" data-name="Senior Services Sticky Title">
+                    <a id="btnSeniorServices" data-name="Senior Services Button">
+                    <div class="row align-items-center" data-name="Senior Services Row">
+                        <div class="col col-2" data-name="Senior Services Icon Col">
+                            <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;" data-name="Senior Services Icon"></i> 
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Senior Services Text Col"> 
                             Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterSeniorServices" class="form-check outer-layer" style="display: none;">
-                    <div id="divSeniorServices" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="seniors-checkbox" value="seniors">
-                            <label class="form-check-label" for="seniors-checkbox">Seniors</label>
+                <div id="divOuterSeniorServices" class="form-check outer-layer" style="display: none;" data-name="Senior Services Outer">
+                    <div id="divSeniorServices" class="form-check" data-name="Senior Services List">
+                        <div class="checkbox" data-name="Seniors Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="seniors-checkbox" value="seniors" data-name="Seniors Checkbox" />
+                            <label class="form-check-label" for="seniors-checkbox" data-name="Seniors Label">Seniors</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="veterans-checkbox" value="veterans">
-                            <label class="form-check-label" for="veterans-checkbox">Veterans</label>
+                        <div class="checkbox" data-name="Veterans Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="veterans-checkbox" value="veterans" data-name="Veterans Checkbox" />
+                            <label class="form-check-label" for="veterans-checkbox" data-name="Veterans Label">Veterans</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="veteran-services-checkbox" value="veteran services">
-                            <label class="form-check-label" for="veteran-services-checkbox">Veteran Services</label>
+                        <div class="checkbox" data-name="Veteran Services Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="veteran-services-checkbox" value="veteran services" data-name="Veteran Services Checkbox" />
+                            <label class="form-check-label" for="veteran-services-checkbox" data-name="Veteran Services Label">Veteran Services</label>
                         </div>
                     </div>
                 </div>
@@ -305,111 +305,111 @@
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnEmployment">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;"></i> 
+                <div class="stickytitle" data-name="Employment Sticky Title">
+                    <a id="btnEmployment" data-name="Employment Button">
+                    <div class="row align-items-center" data-name="Employment Row">
+                        <div class="col col-2" data-name="Employment Icon Col">
+                            <i class="bi bi-building-fill" style="font-size: 25px; color: #2E7D32;" data-name="Employment Icon"></i> 
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Employment Text Col"> 
                             Small Buisness and Entreprenueur <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterEmployment" class="form-check outer-layer" style="display: none;">
-                    <div id="divEmployment" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="employment-checkbox" value="employment">
-                            <label class="form-check-label" for="employment-checkbox">Employment</label>
+                <div id="divOuterEmployment" class="form-check outer-layer" style="display: none;" data-name="Employment Outer">
+                    <div id="divEmployment" class="form-check" data-name="Employment List">
+                        <div class="checkbox" data-name="Employment Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="employment-checkbox" value="employment" data-name="Employment Checkbox" />
+                            <label class="form-check-label" for="employment-checkbox" data-name="Employment Label">Employment</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="small-business-checkbox" value="small business">
-                            <label class="form-check-label" for="small-business-checkbox">Small Business/Entrepreneur</label>
+                        <div class="checkbox" data-name="Small Business Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="small-business-checkbox" value="small business" data-name="Small Business Checkbox" />
+                            <label class="form-check-label" for="small-business-checkbox" data-name="Small Business Label">Small Business/Entrepreneur</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="economic-development-checkbox" value="economic development">
-                            <label class="form-check-label" for="economic-development-checkbox">Economic Development</label>
+                        <div class="checkbox" data-name="Economic Development Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="economic-development-checkbox" value="economic development" data-name="Economic Development Checkbox" />
+                            <label class="form-check-label" for="economic-development-checkbox" data-name="Economic Development Label">Economic Development</label>
                         </div>
                     </div>
                 </div>
-                <div class="stickytitle">
-                    <a id="btnCommunity">
-                    <div class="row align-items-center">
-                        <div class="col col-2">
-                            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;"></i>
+                <div class="stickytitle" data-name="Community Sticky Title">
+                    <a id="btnCommunity" data-name="Community Button">
+                    <div class="row align-items-center" data-name="Community Row">
+                        <div class="col col-2" data-name="Community Icon Col">
+                            <i class="bi bi-people-fill" style="font-size: 25px; color: #004D40;" data-name="Community Icon"></i>
                         </div>
-                        <div class="col pe-0"> 
+                        <div class="col pe-0" data-name="Community Text Col"> 
                             Economic and Community Development <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
                     <hr />
                 </div>
-                <div id="divOuterCommunity" class="form-check outer-layer" style="display: none;">
-                    <div id="divCommunity" class="form-check">
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="community-development-checkbox" value="community development">
-                            <label class="form-check-label" for="community-development-checkbox">Community Development</label>
+                <div id="divOuterCommunity" class="form-check outer-layer" style="display: none;" data-name="Community Outer">
+                    <div id="divCommunity" class="form-check" data-name="Community List">
+                        <div class="checkbox" data-name="Community Development Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="community-development-checkbox" value="community development" data-name="Community Development Checkbox" />
+                            <label class="form-check-label" for="community-development-checkbox" data-name="Community Development Label">Community Development</label>
                         </div>
-                        <div class="checkbox">
-                            <input type="checkbox" class="form-check-input" id="recreation-checkbox" value="recreation">
-                            <label class="form-check-label" for="recreation-checkbox">Recreation</label>
+                        <div class="checkbox" data-name="Recreation Checkbox Div">
+                            <input type="checkbox" class="form-check-input" id="recreation-checkbox" value="recreation" data-name="Recreation Checkbox" />
+                            <label class="form-check-label" for="recreation-checkbox" data-name="Recreation Label">Recreation</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="sidenav-footer">
-                <hr />
-                <button id="btnClearFilter" class="btn btn-secondary col-5">Clear Filters</button>
-                <button id="btnSeeResults" class="btn btn-primary col-5">See Results</button>
+            <div class="sidenav-footer" data-name="Sidenav Footer">
+                <hr data-name="Sidenav Footer HR" />
+                <button id="btnClearFilter" class="btn btn-secondary col-5" data-name="Clear Filters Button">Clear Filters</button>
+                <button id="btnSeeResults" class="btn btn-primary col-5" data-name="See Results Button">See Results</button>
             </div>
         </div>
-        <div class="row align-items-center mt-3">
-            <div id="divFilterButtons" class="filter">
-                <button id="btnFilterSort">Map Filter & Sort <i class="bi bi-sliders"></i></button>
-                <button id="btnLearnPinMap" class="btn btn-link" style="border: none; font-size: 25px;"><i class="bi bi-question-circle"></i></button>
+        <div class="row align-items-center mt-3" data-name="Filter Buttons Row">
+            <div id="divFilterButtons" class="filter" data-name="Filter Buttons Div">
+                <button id="btnFilterSort" data-name="Map Filter Sort Button">Map Filter & Sort <i class="bi bi-sliders" data-name="Sliders Icon"></i></button>
+                <button id="btnLearnPinMap" class="btn btn-link" style="border: none; font-size: 25px;" data-name="Learn PinMap Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
             </div>
         </div>
 
         <!-- PinMap -->
-        <div id="pinmap"></div>
-        <div class="filter text-center">
-            <p><i><i class="bi bi-boxes"></i> - Services with this icon matches multiple keywords</i></p>
+        <div id="pinmap" data-name="PinMap Div"></div>
+        <div class="filter text-center" data-name="Filter Text Center">
+            <p data-name="Filter Text Paragraph"><i data-name="Filter Text Italic"><i class="bi bi-boxes" data-name="Boxes Icon"></i> - Services with this icon matches multiple keywords</i></p>
         </div>
 
-        <div class="m-5"></div>
+        <div class="m-5" data-name="Margin Negative 5 Top"></div>
         <!-- Snap Link -->
-        <div class="text-center p-5 fs-5">
-            <span><a href="html/pages/snap.html" class="text-dark">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
+        <div class="text-center p-5 fs-5" data-name="Snap Link Div">
+            <span data-name="Snap Link Span"><a href="html/pages/snap.html" class="text-dark" data-name="Snap Link Anchor">Are you a SNAP benefits recipient?   Click here to see additional resources that are available to you!</a></span>
         </div>
-        <div class="m-5"></div>
-        <div class="row mt-5">
-            <div class="card-group justify-content-evenly">
+        <div class="m-5" data-name="Margin Negative 5 Bottom"></div>
+        <div class="row mt-5" data-name="Cards Row">
+            <div class="card-group justify-content-evenly" data-name="Card Group">
                 <!-- Services Page Link -->
-                <div class="col-12 col-md-5">
-                    <div class="card mx-3 mb-3 border-0 home-card col-sm-12">
-                        <img src="assets\images\ucdd.webp"  class="card-img-top" alt="...">
-                        <div class="card-body">
-                        <h4 class="card-title">Need Help?</h4>
-                        <p class="card-text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
+                <div class="col-12 col-md-5" data-name="Need Help Card Col">
+                    <div class="card mx-3 mb-3 border-0 home-card col-sm-12" data-name="Need Help Card">
+                        <img src="assets\images\ucdd.webp" class="card-img-top" alt="..." data-name="Need Help Card Image">
+                        <div class="card-body" data-name="Need Help Card Body">
+                        <h4 class="card-title" data-name="Need Help Card Title">Need Help?</h4>
+                        <p class="card-text" data-name="Need Help Card Text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
                         </div>
-                        <div class="card-footer">
-                        <p class="text-muted"><a href="html/pages/needHelp.html" class="text-dark">See more!</a></p>
+                        <div class="card-footer" data-name="Need Help Card Footer">
+                        <p class="text-muted" data-name="Need Help Card Footer Text"><a href="html/pages/needHelp.html" class="text-dark" data-name="Need Help Card Link">See more!</a></p>
                         </div>
                     </div>
                 </div>
                 <!-- Provider Page Link -->
-                <div class="col-12 col-md-5">
-                    <div class="card mx-3 mb-3 border-0 rounded-0 home-card"> 
-                        <img src="assets\images\Pick-Up-Mayors-February-2025.png" class="card-img-top " alt="...">
-                        <div class="card-body">
-                        <h4 class="card-title">Are You A Service Provider?</h4>
-                        <p class="card-text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                <div class="col-12 col-md-5" data-name="Service Provider Card Col">
+                    <div class="card mx-3 mb-3 border-0 rounded-0 home-card" data-name="Service Provider Card"> 
+                        <img src="assets\images\Pick-Up-Mayors-February-2025.png" class="card-img-top " alt="..." data-name="Service Provider Card Image">
+                        <div class="card-body" data-name="Service Provider Card Body">
+                        <h4 class="card-title" data-name="Service Provider Card Title">Are You A Service Provider?</h4>
+                        <p class="card-text" data-name="Service Provider Card Text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
                         </div>
-                        <div class="card-footer">
-                        <p class="text-muted"><a href="html/pages/registration_landing.html" class="text-dark">Enroll Now!<a></small>
+                        <div class="card-footer" data-name="Service Provider Card Footer">
+                        <p class="text-muted" data-name="Service Provider Card Footer Text"><a href="html/pages/registration_landing.html" class="text-dark" data-name="Service Provider Card Link">Enroll Now!<a></small>
                         </div>
                     </div>
                 </div>
@@ -418,38 +418,50 @@
     </div>
 </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Footer Div"></div>
 
     <script>
         fetch('partials/navbar.html')
             .then(response => response.text())
-            .then(data => document.getElementById('navbar').innerHTML = data);
+            .then((data) => {document.getElementById('navbar').innerHTML = data;});
         fetch('partials/indexCarousel.html')
             .then(response => response.text())
-            .then(data => document.getElementById('countyCarousel').innerHTML = data);
+            .then((data) => {
+                document.getElementById('countyCarousel').innerHTML = data;
+
+                const script = document.createElement('script');
+                script.src = 'js/indexCarousel.js';
+                script.type = 'text/javascript';
+                document.body.appendChild(script);
+            });
         fetch('partials/iNeed.html')
             .then(response => response.text())
-            .then(data => document.getElementById('iNeed').innerHTML = data);
+            .then((data) => {
+                document.getElementById('iNeed').innerHTML = data;
+
+                const script = document.createElement('script');
+                script.src = 'js/iNeed.js';
+                script.type = 'module';
+                document.body.appendChild(script);
+            });
         fetch('partials/pinmap.html')
             .then(response => response.text())
             .then(data => document.getElementById('pinmap').innerHTML = data);
         fetch('partials/footer.html')
             .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
+            .then((data) => {document.getElementById('footer').innerHTML = data;});
     </script>
     <!-- more libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!-- <script src="https://unpkg.com/@mapbox/polylabel@1.0.2/polylabel.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="js/navbar.js" defer></script>
     <script type="module" src="js/pinmap.js" ></script>
-    <script type="module" src="js/iNeed.js"></script>
-    <script src="js/indexCarousel.js"></script>
     <script src="js/index.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/analytics.js"></script>
 </body>
 </html>

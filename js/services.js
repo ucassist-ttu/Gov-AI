@@ -191,6 +191,7 @@ function getTagList(service) {
 
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
+    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
     window.location.href = `service.html?id=${page_id}`;
 }
 

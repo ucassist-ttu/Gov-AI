@@ -8,72 +8,72 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css"/>
   <title>Service Referral Form</title>
-  <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
+  <link rel="icon" type="image" href="../../assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
-<div id="navbar"></div>
 <body class="white">
-      <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="position-relative overflow-hidden" style="max-height: 350px;">
-                <div class="carousel-item active">
-                    <img src="..\..\assets\images\referral-form.png" class="w-100 h-100 object-fit-cover"  style=" max-height: 350px;" alt="Hero Background">
-    <div class="position-absolute top-50 start-50 translate-middle text-center w-75 text-white fw-bold fs-2" >
+  <div id="navbar"></div>
+ <main>
+    <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative" data-name="Referral Form Header">
+            <h1 class="fw-bold white" data-name="Referral Form Title">Referral Form</h1>               
+             <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Referral Form Breadcrumb">
+                <ol class="breadcrumb mb-0" data-name="Referral Form Breadcrumb List">
+                   <li class="breadcrumb-item fs-6" data-name="Referral Form Breadcrumb Home Item"><a href="/../Gov-AI/index.html" class="text-white" data-name="Referral Form Breadcrumb Home Link">Home</a></li>
+          <li class="text-white mx-2 fs-6" data-name="Referral Form Breadcrumb Separator">›</li> 
+          <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Referral Form Breadcrumb Current Item">Referral form</li>
+                </ol>
+                </nav> 
+
+        </div>
+      <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel" data-name="Referral Form Carousel">
+            <div class="position-relative overflow-hidden" data-name="Carousel Container" style="max-height: 350px;">
+                <div class="carousel-item active" data-name="Carousel Item">
+                    <img src="...\assets\images\referral-form.png" class="w-100 h-100 object-fit-cover" style=" max-height: 350px;" alt="Hero Background" data-name="Carousel Hero Image">
+    <div class="position-absolute top-50 start-50 translate-middle text-center w-75 text-white fw-bold fs-2" data-name="Carousel Title Overlay" >
       Know a service provider we should add?</div>
-      <div class="position-absolute bottom-0 end-0 text-white-50 fst-italic small pe-3 pb-2 user-select-none fs-7" >
-        Photo by Toa Heftiba on <a href="https://unsplash.com" target="_blank" class="text-white-50 text-decoration-underline">Unsplash</a>
+      <div class="position-absolute bottom-0 end-0 text-white-50 fst-italic small pe-3 pb-2 user-select-none fs-7" data-name="Photo Attribution">
+        Photo by Toa Heftiba on <a href="https://unsplash.com" target="_blank" class="text-white-50 text-decoration-underline" data-name="Photo Source Link">Unsplash</a>
       </div>
     </div>
   </div>
 </div>
-  <div class="overflow-visible">
-  <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
-    <h1 class="ps-5 fw-bold white">Referral Form</h1>
-  <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-  <ol class="breadcrumb mb-0">
-    <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-    <li class="text-white mx-2 fs-6">›</li> 
-    <li class="breadcrumb-item active text-white fs-6" aria-current="page">Referral form</li>
-  </ol>
-</nav>
+<div class="container-fluid p-4" data-name="Referral Form Main Container">
+    <div class="row justify-content-left" data-name="Referral Form Row">
+      <div class="col-12 col-lg-6 px-3 px-lg-4" data-name="Referral Form Column">
+        <p class="mb-4" data-name="Referral Form Instructions">Share their details below, and we'll contact them.</p>
+
+    <form novalidate data-name="Referral Form">
+    <div class="mb-3" data-name="First Name Section">
+      <label for="firstName" class="fw-semibold dark-navy required" data-name="First Name Label">First Name <span class="text-danger" data-name="First Name Required">*</span></label>
+      <input type="text" id="firstName" name="firstName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="First Name Input" />
+    </div>
+
+    <div class="mb-3" data-name="Last Name Section">
+      <label for="lastName" class="fw-semibold dark-navy required" data-name="Last Name Label">Last Name <span class="text-danger" data-name="Last Name Required">*</span></label>
+      <input type="text" id="lastName" name="lastName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Last Name Input" />
+    </div>
+
+    <div class="mb-3" data-name="Email Section">
+      <label for="email" class="fw-semibold dark-navy required" data-name="Email Label">Email <span class="text-danger" data-name="Email Required">*</span></label>
+      <input type="email" id="email" name="email" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Email Input" />
+    </div>
+
+    <div class="mb-3" data-name="Phone Section">
+      <label for="phone" class="fw-semibold dark-navy required" data-name="Phone Label">Phone Number <span class="text-danger" data-name="Phone Required">*</span></label>
+      <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Phone Input" />
+    </div>
+    
+    <div class="mb-3" data-name="Message Section">
+      <label for="message" class="fw-semibold dark-navy" data-name="Message Label">Message</label>
+      <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider name and contact info that you are wanting to refer" data-name="Message Input"></textarea>
+    </div>
+
+    <div class="d-flex gap-3 mt-3" data-name="Referral Form Actions">
+      <button type="submit" class="submit-btn " data-name="Submit Referral Button">Next</button>
+    </div>
+  </form>
 </div>
-</div>
-
- <main class="container-fluid px-4 px-md-5">
-    <div class="row justify-content-left">
-      <div class="col-12 col-lg-6 px-3 px-lg-4">
-        <p class="mb-4">Share their details below, and we'll contact them.</p>
-
-  <form novalidate>
-  <div class="mb-3">
-    <label for="firstName" class="fw-semibold dark-navy required">First Name</label>
-    <input type="text" id="firstName" name="firstName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
-  </div>
-
-  <div class="mb-3">
-    <label for="lastName" class="fw-semibold dark-navy required">Last Name </label>
-    <input type="text" id="lastName" name="lastName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
-  </div>
-
-  <div class="mb-3">
-    <label for="email" class="fw-semibold dark-navy required">Email </label>
-    <input type="email" id="email" name="email" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
-  </div>
-
-  <div class="mb-3">
-    <label for="phone" class="fw-semibold dark-navy required">Phone Number</label>
-    <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
-  </div>
-  
-  <div class="mb-3">
-    <label for="message" class="fw-semibold dark-navy">Message</label>
-    <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider name and contact info that you are wanting to refer"></textarea>
-  </div>
-
-  <div class="d-flex gap-3 mt-3">
-    <button type="submit" class="submit-btn ">Next</button>
-  </div>
-</form>
 </main>                 
-<div id="footer"></div>
+<div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -86,5 +86,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
     <script src="/Gov-AI/js/referral_form.js"></script>
+    <script src="../../js/analytics.js"></script>
+    <script src="../../js/navbar.js"></script>
 </body>
 </html>

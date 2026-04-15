@@ -7,13 +7,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/style.css"/>
   <title>Registration Form</title>
+  <link rel="icon" type="image" href="../../assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
 <body>
   <div id="navbar"></div>
+  <main>
   <header>
-        <div class="overflow-visible">
-            <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
-                <h1 class="ps-5 fw-bold white">Registration Form</h1>    
+    <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative">
+      <h1 class="fw-bold white">Registration Form</h1>               
       <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
@@ -22,12 +23,12 @@
           <li class="text-white mx-2 fs-6">›</li> 
           <li class="breadcrumb-item active text-white fs-6" aria-current="page">Register Now</li>
         </ol>
-      </nav>
-    </div>
+      </nav> 
+
     </div>
   </header>
   <!-- Progress bar -->
-  <nav aria-label="Progress" class="mb-4 w-100">
+  <nav aria-label="Progress" class="w-100">
     <div class="progress-steps" role="list" aria-label="progress steps">
       <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1">1</div>
       <div class="progress-line"></div>
@@ -37,45 +38,45 @@
     </div>
   </nav>
   
- <main class="container-fluid px-4 px-md-5">
+ <div class="container-fluid p-4">
     <div class="row justify-content-left">
     <div class="col-12 col-lg-6 px-3 px-lg-4">
     <!-- Step 1: Organization Information - Public -->
-    <section id="step-1" class="d-none" aria-labelledby="public-info-title">
-      <div class="mb-4" role="region" aria-labelledby="public-info-title">
-        <strong id="public-info-title" class="d-block mb-1 fw-bold">Organization Information - Public</strong>
-        <small class="text-muted d-block mt-1 fst-italic">
+    <section id="step-1" class="d-none" aria-labelledby="public-info-title" data-name="Organization Information Public Section">
+      <div class="mb-4" role="region" aria-labelledby="public-info-title" data-name="Organization Information Public Info">
+        <strong id="public-info-title" class="d-block mb-1 fw-bold" data-name="Organization Information Public Title">Organization Information - Public</strong>
+        <small class="text-muted d-block mt-1 fst-italic" data-name="Organization Information Public Description">
           This information will be displayed to customers searching for resources.
         </small>
       </div>
-      <form id="form-step-1" novalidate>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Company Name <span class="text-danger">*</span></label>
-          <input type="text" class="form-control border-2 rounded p-2 px-3" required />
+      <form id="form-step-1" novalidate data-name="Organization Information Public Form">
+        <div class="mb-3" data-name="Company Name Section">
+          <label class="fw-semibold dark-navy" data-name="Company Name Label">Company Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control border-2 rounded p-2 px-3" required data-name="Company Name Input" />
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Organization Description <span class="text-danger">*</span></label>
-          <textarea class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" required></textarea>
+        <div class="mb-3" data-name="Organization Description Section">
+          <label class="fw-semibold dark-navy" data-name="Organization Description Label">Organization Description <span class="text-danger">*</span></label>
+          <textarea class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" required data-name="Organization Description Input"></textarea>
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Phone Number <span class="text-danger">*</span></label>
-          <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+        <div class="mb-3" data-name="Organization Phone Number Section">
+          <label class="fw-semibold dark-navy" data-name="Organization Phone Number Label">Phone Number <span class="text-danger">*</span></label>
+          <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Organization Phone Number Input" />
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Website / URL <span class="text-danger">*</span></label>
-          <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" required />
+        <div class="mb-3" data-name="Organization Website Section">
+          <label class="fw-semibold dark-navy" data-name="Organization Website Label">Website / URL <span class="text-danger">*</span></label>
+          <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" required data-name="Organization Website Input" />
         </div>
-        <fieldset class="mb-2">
-          <label class="fw-semibold dark-navy">Physical Address <span class="text-danger">*</span></label>
-          <input type="text" name="address1" id="physicalAddress" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." required aria-required="true" />
-          <div class="row g-2 mb-2">
-            <div class="col">
-              <select id="cityPublic" name="cityPublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" required>
+        <fieldset class="mb-2" data-name="Organization Physical Address Group">
+          <label class="fw-semibold dark-navy" data-name="Organization Physical Address Label">Physical Address <span class="text-danger">*</span></label>
+          <input type="text" name="address1" id="physicalAddress" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." required aria-required="true" data-name="Organization Street Address Input" />
+          <div class="row g-2 mb-2" data-name="Organization Address Input Row">
+            <div class="col" data-name="Organization City Input Column">
+              <select id="cityPublic" name="cityPublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" required data-name="Organization City Select">
                 <option value="" disabled selected>City</option>
               </select>
             </div>
-            <div class="col-auto" style="min-width: 110px;">
-              <select id="statePublic" name="statePublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" aria-label="State" required>
+            <div class="col-auto" style="min-width: 110px;" data-name="Organization State Input Column">
+              <select id="statePublic" name="statePublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" aria-label="State" required data-name="Organization State Select">
                 <option value="" disabled selected>State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -130,23 +131,23 @@
               </select>
             </div>
           </div>
-          <div class="mb-2" style="max-width: 150px;">
-            <input type="text" id="zipPublic" name="zipPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="Zip Code" required aria-required="true" />
+          <div class="mb-2" style="max-width: 150px;" data-name="Organization Zip Code Input Column">
+            <input type="text" id="zipPublic" name="zipPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="Zip Code" required aria-required="true" data-name="Organization Zip Code Input" />
           </div>
         </fieldset>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Keywords <span class="text-danger">*</span></label>
-          <div id="btnKeywordsReg1" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2"><span>All That Apply</span><i class="bi bi-caret-down-fill"></i></div>
-          <div id="divOuterKeywordsReg1" class="form-check outer-layer">
+        <div class="mb-3" data-name="Organization Keywords Section">
+          <label class="fw-semibold dark-navy" data-name="Organization Keywords Label">Keywords <span class="text-danger">*</span></label>
+          <div id="btnKeywordsReg1" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Organization Keywords Dropdown"><span>All That Apply</span><i class="bi bi-caret-down-fill"></i></div>
+          <div id="divOuterKeywordsReg1" class="form-check outer-layer" data-name="Organization Keywords Options Container">
             <hr />
-            <div id="divKeywordsReg1" class="form-check"></div>
+            <div id="divKeywordsReg1" class="form-check" data-name="Organization Keywords List"></div>
           </div>
         </div>
-        <div class="mb-3">
-          <div class="time-ranges">
-            <label class="fw-semibold dark-navy">Hours of Operation <span class="text-danger">*</span></label>
-            <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2">
-              <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" required>
+        <div class="mb-3" data-name="Organization Hours Section">
+          <div class="time-ranges" data-name="Organization Hours Input Wrapper">
+            <label class="fw-semibold dark-navy" data-name="Organization Hours Label">Hours of Operation <span class="text-danger">*</span></label>
+            <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Organization Hours Input Row">
+              <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" required data-name="Organization Hours Day Select">
                 <option value="" disabled selected>Day</option>
                 <option value="Monday">Monday</option>
                 <option value="Tuesday">Tuesday</option>
@@ -156,177 +157,177 @@
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
               </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required>
+              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours Start Time Select">
                 <option value="" disabled selected>Start</option>
               </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required>
+              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours Start AM/PM Select">
                 <option value="" disabled selected>AM/PM</option>
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
               </select>
-              <span class="me-2">-</span>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required>
+              <span class="me-2" data-name="Organization Hours Time Range Separator">-</span>
+              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours End Time Select">
                 <option value="" disabled selected>End</option>
               </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required>
+              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours End AM/PM Select">
                 <option value="" disabled selected>AM/PM</option>
                 <option value="AM">AM</option>
                 <option value="PM">PM</option>
               </select>
-              <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2">Remove</button>
+              <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Remove Organization Hours Button">Remove</button>
             </div>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary add-hours">+ Add Hours</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Add More Hours Button">+ Add Hours</button>
         </div>
-   <div class="mb-4">
-  <label class="fw-semibold">
-    Logo <small class="text-muted mt-1 fst-italic">(Please keep in mind the logo will be placed on a dark navy background)</small>
+   <div class="mb-4" data-name="Organization Logo Upload Section">
+  <label class="fw-semibold" data-name="Organization Logo Label">
+    Logo <small class="text-muted mt-1 fst-italic" data-name="Organization Logo Upload Note">(Please keep in mind the logo will be placed on a dark navy background)</small>
   </label>
 
   <label for="upload"
          class="custom-dark-border form-control d-block p-3 text-center fw-semibold rounded-3 user-select-none cursor-pointer"
-         tabindex="0" role="button" aria-label="Upload logo file">
+         tabindex="0" role="button" aria-label="Upload logo file" data-name="Organization Logo Upload Area">
     Drag and drop your file here<br>or<br>
     <a href="#" class="clr-dark-navy fw-semibold text-decoration-underline"
-       onclick="document.getElementById('upload').click(); return false;">
+       onclick="document.getElementById('upload').click(); return false;" data-name="Choose Logo File Link">
        upload from your computer
     </a>
   </label>
 
-  <input type="file" id="upload" name="upload" class="d-none" accept="image/*" aria-label="Logo file upload" />
+  <input type="file" id="upload" name="upload" class="d-none" accept="image/*" aria-label="Logo file upload" data-name="Organization Logo File Input" />
 
-  <div id="logo-preview" class="mt-3 text-center d-none">
-    <img id="logo-image" src="" alt="Logo Preview" class="img-fluid w-75 h-50" />
+  <div id="logo-preview" class="mt-3 text-center d-none" data-name="Organization Logo Preview Container">
+    <img id="logo-image" src="" alt="Logo Preview" class="img-fluid w-75 h-50" data-name="Organization Logo Preview Image" />
     <br>
-    <button type="button" id="clear-logo" class="btn btn-sm btn-outline-secondary mt-2">Remove Image</button>
+    <button type="button" id="clear-logo" class="btn btn-sm btn-outline-secondary mt-2" data-name="Remove Logo Image Button">Remove Image</button>
   </div>
 </div>
 
-    <div class="d-flex gap-3 mt-3">
-      <button type="submit" class="submit-btn">Next</button>
-      <button type="button" class="btn btn-light cancel-btn fw-bold">Cancel</button>
+    <div class="d-flex gap-3 mt-3" data-name="Organization Information Public Actions">
+      <button type="submit" class="submit-btn" data-name="Go to Step 2 Button">Next</button>
+      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Cancel Registration Button">Cancel</button>
     </div>
   </form>
 </section>
 
 <!-- Step 2: Organization Information - Private -->
-<section id="step-2" class="form-step d-none" aria-labelledby="private-info-title">
-  <div class="form-info mb-4" role="region" aria-labelledby="private-info-title">
-    <strong id="private-info-title" class="d-block mb-1">Organization Information - Private</strong>
-    <small class="text-muted mt-1 d-block fst-italic">
+<section id="step-2" class="form-step d-none" aria-labelledby="private-info-title" data-name="Organization Information Private Section">
+  <div class="form-info mb-4" role="region" aria-labelledby="private-info-title" data-name="Organization Information Private Info">
+    <strong id="private-info-title" class="d-block mb-1" data-name="Organization Information Private Title">Organization Information - Private</strong>
+    <small class="text-muted mt-1 d-block fst-italic" data-name="Organization Information Private Description">
       This information is for UCAssist staff to reach out to you and will not be displayed to the customers.
     </small>
   </div>
 
-  <form id="form-step-2" novalidate>
-    <h5 class="mb-3">Primary Contact</h5>
-    <div class="mb-3">
-      <label for="primaryName" class="fw-semibold dark-navy">Name <span class="text-danger">*</span></label>
-      <input type="text" id="primaryName" name="primaryName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+  <form id="form-step-2" novalidate data-name="Organization Information Private Form">
+    <h5 class="mb-3" data-name="Primary Contact Information Heading">Primary Contact</h5>
+    <div class="mb-3" data-name="Primary Contact Name Section">
+      <label for="primaryName" class="fw-semibold dark-navy" data-name="Primary Contact Name Label">Name <span class="text-danger">*</span></label>
+      <input type="text" id="primaryName" name="primaryName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Primary Contact Name Input" />
     </div>
-    <div class="mb-3">
-      <label for="primaryEmail" class="fw-semibold dark-navy">Email <span class="text-danger">*</span></label>
-      <input type="email" id="primaryEmail" name="primaryEmail" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+    <div class="mb-3" data-name="Primary Contact Email Section">
+      <label for="primaryEmail" class="fw-semibold dark-navy" data-name="Primary Contact Email Label">Email <span class="text-danger">*</span></label>
+      <input type="email" id="primaryEmail" name="primaryEmail" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Primary Contact Email Input" />
     </div>
-    <div class="mb-3">
-      <label for="primaryPhone" class="fw-semibold dark-navy">Phone Number <span class="text-danger">*</span></label>
-      <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+    <div class="mb-3" data-name="Primary Contact Phone Number Section">
+      <label for="primaryPhone" class="fw-semibold dark-navy" data-name="Primary Contact Phone Number Label">Phone Number <span class="text-danger">*</span></label>
+      <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Primary Contact Phone Number Input" />
     </div>
-    <div class="mb-3">
-      <label for="primaryPosition" class="fw-semibold dark-navy">Organization Position</label>
-      <input type="text" id="primaryPosition" name="primaryPosition" class="form-control border-2 rounded p-2 px-3" />
+    <div class="mb-3" data-name="Primary Contact Position Section">
+      <label for="primaryPosition" class="fw-semibold dark-navy" data-name="Primary Contact Position Label">Organization Position</label>
+      <input type="text" id="primaryPosition" name="primaryPosition" class="form-control border-2 rounded p-2 px-3" data-name="Primary Contact Position Input" />
     </div>
 
-    <h5 class="mb-3 mt-4">Secondary Contact</h5>
-    <div class="mb-3">
-      <label for="secondaryName" class="fw-semibold dark-navy">Name</label>
-      <input type="text" id="secondaryName" name="secondaryName" class="form-control border-2 rounded p-2 px-3" />
+    <h5 class="mb-3 mt-4" data-name="Secondary Contact Information Heading">Secondary Contact</h5>
+    <div class="mb-3" data-name="Secondary Contact Name Section">
+      <label for="secondaryName" class="fw-semibold dark-navy" data-name="Secondary Contact Name Label">Name</label>
+      <input type="text" id="secondaryName" name="secondaryName" class="form-control border-2 rounded p-2 px-3" data-name="Secondary Contact Name Input" />
     </div>
-    <div class="mb-3">
-      <label for="secondaryEmail" class="fw-semibold dark-navy">Email</label>
-      <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control border-2 rounded p-2 px-3" />
+    <div class="mb-3" data-name="Secondary Contact Email Section">
+      <label for="secondaryEmail" class="fw-semibold dark-navy" data-name="Secondary Contact Email Label">Email</label>
+      <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control border-2 rounded p-2 px-3" data-name="Secondary Contact Email Input" />
     </div>
-    <div class="mb-3">
-      <label for="secondaryPhone" class="fw-semibold dark-navy">Phone Number</label>
-      <input type="tel" id="secondaryPhone" name="secondaryPhone" class="form-control border-2 rounded p-2 px-3" />
+    <div class="mb-3" data-name="Secondary Contact Phone Number Section">
+      <label for="secondaryPhone" class="fw-semibold dark-navy" data-name="Secondary Contact Phone Number Label">Phone Number</label>
+      <input type="tel" id="secondaryPhone" name="secondaryPhone" class="form-control border-2 rounded p-2 px-3" data-name="Secondary Contact Phone Number Input" />
     </div>
-    <div class="mb-3">
-      <label for="secondaryPosition" class="fw-semibold dark-navy">Organization Position</label>
-      <input type="text" id="secondaryPosition" name="secondaryPosition" class="form-control border-2 rounded p-2 px-3" />
+    <div class="mb-3" data-name="Secondary Contact Position Section">
+      <label for="secondaryPosition" class="fw-semibold dark-navy" data-name="Secondary Contact Position Label">Organization Position</label>
+      <input type="text" id="secondaryPosition" name="secondaryPosition" class="form-control border-2 rounded p-2 px-3" data-name="Secondary Contact Position Input" />
     </div>
-    <div class="d-flex gap-3 mt-3">
-      <button type="submit" class="submit-btn">Next</button>
-      <button type="button" class="btn btn-light cancel-btn fw-bold">Cancel</button>
+    <div class="d-flex gap-3 mt-3" data-name="Organization Information Private Actions">
+      <button type="submit" class="submit-btn" data-name="Go to Step 3 Button">Next</button>
+      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 1 Button">Previous</button>
     </div>
   </form>
 </section>
 
 <!-- Step 3: Register Services -->
-<section id="step-3" class="form-step d-none" aria-labelledby="register-services-title">
-  <div class="form-info mb-4" role="region" aria-labelledby="register-services-title">
-    <strong id="register-services-title" class="d-block mb-1">Register Services</strong>
-    <small class="text-muted mt-1 d-block fst-italic">
+<section id="step-3" class="form-step d-none" aria-labelledby="register-services-title" data-name="Register Services Section">
+  <div class="form-info mb-4" role="region" aria-labelledby="register-services-title" data-name="Register Services Info">
+    <strong id="register-services-title" class="d-block mb-1" data-name="Register Services Title">Register Services</strong>
+    <small class="text-muted mt-1 d-block fst-italic" data-name="Register Services Description">
       Register all of your services or resources your organization offers.<br />Once you register your services you will be able to edit them using our edit service form from the previous page.
     </small>
   </div>
 
-  <form id="form-step-3" aria-label="Register Services Form" novalidate>
-    <div id="services-container">
-      <div class="service-block mb-4" data-service="1">
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Service Name <span class="text-danger">*</span></label>
-          <input type="text" id="serviceName" name="serviceName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+  <form id="form-step-3" aria-label="Register Services Form" novalidate data-name="Register Services Form">
+    <div id="services-container" data-name="Services List Container">
+      <div class="service-block mb-4" data-service="1" data-name="Service Block">
+        <div class="mb-3" data-name="Service Name Section">
+          <label class="fw-semibold dark-navy" data-name="Service Name Label">Service Name <span class="text-danger">*</span></label>
+          <input type="text" id="serviceName" name="serviceName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Service Name Input" />
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Service Description <span class="text-danger">*</span></label>
-          <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4"></textarea>
+        <div class="mb-3" data-name="Service Description Section">
+          <label class="fw-semibold dark-navy" data-name="Service Description Label">Service Description <span class="text-danger">*</span></label>
+          <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Service Description Input"></textarea>
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Service Criteria <small class="text-muted d-block mt-1 fst-italic">This will be displayed to the customer.</small></label>
-          <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" />
+        <div class="mb-3" data-name="Service Criteria Section">
+          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Service Criteria Information">This will be displayed to the customer.</small></label>
+          <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Service Criteria Input" />
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Counties Offered In <span class="text-danger">*</span></label>
-          <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
-          <div id="divOuterCountiesReg" class="form-check outer-layer">
+        <div class="mb-3" data-name="Service Counties Offered Section">
+          <label class="fw-semibold dark-navy" data-name="Service Counties Offered Label">Counties Offered In <span class="text-danger">*</span></label>
+          <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Service Counties Dropdown"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
+          <div id="divOuterCountiesReg" class="form-check outer-layer" data-name="Service Counties Options Container">
             <hr />
-            <div id="divCountiesReg" class="form-check"></div>
+            <div id="divCountiesReg" class="form-check" data-name="Service Counties List"></div>
           </div>
         </div>
-        <div class="mb-3">
-          <label class="fw-semibold dark-navy">Keywords <span class="text-danger">*</span></label>
-          <div id="btnKeywordsReg" class="form-control d-flex justify-content-between align-items-center border-2 rounded p-2 px-3 mb-2"><span>Check All That Apply </span> <i class="bi bi-caret-down-fill"></i></div>
-          <div id="divOuterKeywordsReg" class="form-check outer-layer">
+        <div class="mb-3" data-name="Service Keywords Section">
+          <label class="fw-semibold dark-navy" data-name="Service Keywords Label">Keywords <span class="text-danger">*</span></label>
+          <div id="btnKeywordsReg" class="form-control d-flex justify-content-between align-items-center border-2 rounded p-2 px-3 mb-2" data-name="Service Keywords Dropdown"><span>Check All That Apply </span> <i class="bi bi-caret-down-fill"></i></div>
+          <div id="divOuterKeywordsReg" class="form-check outer-layer" data-name="Service Keywords Options Container">
             <hr />
-            <div id="divKeywordsReg" class="form-check"></div>
+            <div id="divKeywordsReg" class="form-check" data-name="Service Keywords List"></div>
           </div>
         </div>
 <!-- Phone Number Section -->
-<div class="checkbox mb-3" style="padding-left: 0;">
-  <input type="checkbox" class="form-check-input" id="separatePhone1" name="separatePhone1" />
-  <label for="separatePhone1" class="form-check-label dark-navy">Separate phone number for this service?</label>
+<div class="checkbox mb-3" style="padding-left: 0;" data-name="Service Phone Number Override Option">
+  <input type="checkbox" class="form-check-input" id="separatePhone1" name="separatePhone1" data-name="Use Separate Phone for This Service Checkbox" />
+  <label for="separatePhone1" class="form-check-label dark-navy" data-name="Use Separate Phone for This Service Label">Separate phone number for this service?</label>
 </div>
-<div class="service-phone-container mb-3" style="display: none;">
-  <label class="fw-semibold dark-navy">Phone Number</label>
-  <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" />
+<div class="service-phone-container mb-3" style="display: none;" data-name="Service Phone Number Input Container">
+  <label class="fw-semibold dark-navy" data-name="Service Phone Number Label">Phone Number</label>
+  <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" data-name="Service Phone Number Input" />
 </div>
 
 <!-- Physical Address Section -->
-<div class="checkbox mb-3" style="padding-left: 0;">
-  <input type="checkbox" class="form-check-input" id="separateAddress1" name="separateAddress1" />
-  <label for="separateAddress1" class="form-check-label dark-navy">Separate address for this service?</label>
+<div class="checkbox mb-3" style="padding-left: 0;" data-name="Service Address Override Option">
+  <input type="checkbox" class="form-check-input" id="separateAddress1" name="separateAddress1" data-name="Use Separate Address for This Service Checkbox" />
+  <label for="separateAddress1" class="form-check-label dark-navy" data-name="Use Separate Address for This Service Label">Separate address for this service?</label>
 </div>
-<div class="service-address-container mb-3" style="display: none;">
-  <label class="fw-semibold dark-navy">Physical Address</label>
-  <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." />
-  <div class="row g-2">
-    <div class="col-md-6">
-      <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select">
+<div class="service-address-container mb-3" style="display: none;" data-name="Service Address Input Container">
+  <label class="fw-semibold dark-navy" data-name="Service Address Label">Physical Address</label>
+  <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." data-name="Service Street Address Input" />
+  <div class="row g-2" data-name="Service Address Input Row">
+    <div class="col-md-6" data-name="Service City Input Column">
+      <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select" data-name="Service City Select">
         <option value="" disabled selected>Select City</option>
       </select>
     </div>
-    <div class="col-md-3">
-      <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3">
+    <div class="col-md-3" data-name="Service State Input Column">
+      <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3" data-name="Service State Select">
                 <option value="" disabled selected>State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -380,27 +381,27 @@
                 <option value="WY">Wyoming</option>
       </select>
     </div>
-    <div class="col-md-3">
-        <input type="text" id="serviceZip1" name="serviceZip1" class="form-control border-2 rounded p-2 px-3" placeholder="Zip Code" />
+    <div class="col-md-3" data-name="Service Zip Code Input Column">
+        <input type="text" id="serviceZip1" name="serviceZip1" class="form-control border-2 rounded p-2 px-3" placeholder="Zip Code" data-name="Service Zip Code Input" />
       </div>
     </div>
   </div>
 </div>
 
 <!-- Hours Section -->
-<div class="checkbox mb-3" style="padding-left: 0;">
-  <input type="checkbox" class="form-check-input" id="separateHours1" name="separateHours1" />
-  <label for="separateHours1" class="form-check-label dark-navy">Do service hours of operation differ from organization hours of operation?
-    <small class="text-muted d-block mt-1 fst-italic">
+<div class="checkbox mb-3" style="padding-left: 0;" data-name="Service Hours Override Option">
+  <input type="checkbox" class="form-check-input" id="separateHours1" name="separateHours1" data-name="Use Separate Hours for This Service Checkbox" />
+  <label for="separateHours1" class="form-check-label dark-navy" data-name="Use Separate Hours for This Service Label">Do service hours of operation differ from organization hours of operation?
+    <small class="text-muted d-block mt-1 fst-italic" data-name="Service Hours Format Example">
       ex: Monday 8am - 2pm
     </small>
   </label>
 </div>
-<div class="service-hours-container mb-3" style="display: none;">
-  <label class="fw-semibold dark-navy">Hours of Operation</label>
-  <div class="time-ranges">
-    <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2">
-      <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" >
+<div class="service-hours-container mb-3" style="display: none;" data-name="Service Hours Input Container">
+  <label class="fw-semibold dark-navy" data-name="Service Hours Label">Hours of Operation</label>
+  <div class="time-ranges" data-name="Service Hours Input Wrapper">
+    <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Service Hours Input Row">
+      <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" data-name="Service Hours Day Select" >
         <option value="" disabled selected>Day</option>
         <option value="Monday">Monday</option>
         <option value="Tuesday">Tuesday</option>
@@ -410,48 +411,52 @@
         <option value="Saturday">Saturday</option>
         <option value="Sunday">Sunday</option>
       </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3" >
+      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours Start Time Select" >
         <option value="" disabled selected>Start</option>
       </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3" >
+      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours Start AM/PM Select" >
         <option value="" disabled selected>AM/PM</option>
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <span class="me-2">-</span>
-      <select class="form-select form-control border-2 rounded p-2 px-3" >
+      <span class="me-2" data-name="Service Hours Time Range Separator">-</span>
+      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours End Time Select" >
         <option value="" disabled selected>End</option>
       </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3">
+      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours End AM/PM Select">
         <option value="" disabled selected>AM/PM</option>
         <option value="AM">AM</option>
         <option value="PM">PM</option>
       </select>
-      <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2">Remove</button>
+      <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Remove Service Hours Button">Remove</button>
     </div>
   </div>
-  <button type="button" class="btn btn-sm btn-outline-secondary add-hours">+ Add Hours</button>
+  <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Add More Service Hours Button">+ Add Hours</button>
 </div>
-      <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn">+ Add Another Service</button>
-      <div class="d-flex gap-3 mt-3">
-        <button type="submit" class="submit-btn">Submit</button>
-        <button type="button" class="btn btn-light cancel-btn fw-bold">Cancel</button>
+      <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn" data-name="Add Another Service Button">+ Add Another Service</button>
+      <div class="d-flex gap-3 mt-3" data-name="Register Services Actions">
+        <button type="submit" class="submit-btn" data-name="Submit Registration Button">Submit</button>
+        <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 2 Button">Previous</button>
       </div>
     </div>
   </form>
 </section>
+    </div>
   </main>
   <div id="footer"></div>
-  <script>
-    fetch('../../partials/footer.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('footer').innerHTML = data);
-    fetch('../../partials/navbar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('navbar').innerHTML = data);
-  </script>
+
+    <script>
+        fetch('../../partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('../../partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/registration_form.js"></script>
+  <script src="../../js/analytics.js"></script>
+  <script  src="../../js/navbar.js"></script>
 </body>
-</html>        
+</html>

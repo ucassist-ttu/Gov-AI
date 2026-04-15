@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UC Assist</title>
-    <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
+    <link rel="icon" type="image" href="../../assets/images/cropped-Seal_JPEG-32x32.jpg">
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-    <div id="navbar"></div>
+    <div id="navbar" data-name="Navigation Bar"></div>
     
-    <main>
+    <main data-name="Error Page Main Content">
 
-        <div class="image-fade error-image"></div>
+        <div class="image-fade error-image" data-name="Error Page Image"></div>
 
-        <div class="m-5 w-25">
-            <h1 class="ms-5 fw-bold text-nowrap"><i class="bi bi-tools"></i>Uh Oh!</h1>
-            <hr class="ms-5">
-            <p class="ms-5">This page is currently under construction.</p>
+        <div class="m-5 w-25" data-name="Error Message Container">
+            <h1 class="ms-5 fw-bold text-nowrap" data-name="Error Heading"><i class="bi bi-tools"></i>Uh Oh!</h1>
+            <hr class="ms-5" data-name="Horizontal Line">
+            <p class="ms-5" data-name="Error Message Text">This page is currently under construction.</p>
             <br />
-            <a href="/Gov-AI/index.html" class="text-dark rounded-pill ms-5 p-2 border border-dark text-decoration-none text-nowrap">Return Home</a>
+            <a href="/Gov-AI/index.html" class="text-dark rounded-pill ms-5 p-2 border border-dark text-decoration-none text-nowrap" data-name="Return to Home Link">Return Home</a>
         </div>
 
     </main>
 
-    <div id="footer"></div>
+    <div id="footer" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
@@ -41,5 +41,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../js/navbar.js"></script>
+    <script src="../../js/analytics.js"></script>
 </body>
 </html>

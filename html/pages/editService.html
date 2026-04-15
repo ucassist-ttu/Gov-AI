@@ -1,99 +1,681 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UC Assist</title>
-    <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
-    <!-- bootstrap library and custom css link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <title>Provider Edit Form</title>
+  <link rel="icon" type="image" href="../../assets/images/cropped-Seal_JPEG-32x32.jpg">
 </head>
 <body>
+  <div id="navbar"></div>
+  <main>
   <header>
-    <div id="navbar"></div>
-  <div class="header-crisis-wrapper position-relative">
-    <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start">
-        <h1 class="fw-bold white">Provider Registration</h1> 
-            <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right position-relative">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                <li class="text-white mx-2 fs-6">›</li>                     
-                <li class="breadcrumb-item active text-white fs-6" aria-current="page">Provider</li>
-            </ol>
-            </nav>             
+    <div class="jumbotron page-tag rounded-bottom z-3 position-relative dark_navy align-items-center justify-content-start position-relative" data-name="Edit Service Header">
+      <h1 class="fw-bold white" data-name="Update Request Form Title">Update Request Form</h1>               
+      <!-- <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Edit Service Breadcrumb">
+        <ol class="breadcrumb mb-0" data-name="Edit Service Breadcrumb List">
+          <li class="breadcrumb-item fs-6" data-name="Edit Service Breadcrumb Home Item"><a href="/../Gov-AI/index.html" class="text-white" data-name="Edit Service Breadcrumb Home Link">Home</a></li>
+          <li class="text-white mx-2 fs-6" data-name="Edit Service Breadcrumb Separator">›</li> 
+          <li class="breadcrumb-item fs-6" data-name="Edit Service Breadcrumb Provider Item"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white" data-name="Edit Service Breadcrumb Provider Link">Provider</a></li>
+          <li class="text-white mx-2 fs-6" data-name="Edit Service Breadcrumb Separator 2">›</li> 
+          <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="Edit Service Breadcrumb Current Item">Edit Services</li>
+        </ol>
+      </nav>  -->
+
     </div>
-    <div class="overflow-visible">
-        <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative">
-            <h1 class="ps-5 fw-bold white">Registration Form</h1>    
-            <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                <li class="text-white mx-2 fs-6">›</li> 
-                <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/html/pages/registration_landing.html" class="text-white">Provider</a></li>
-                <li class="text-white mx-2 fs-6">›</li> 
-                <li class="breadcrumb-item active text-white fs-6" aria-current="page">Register Now</li>
-            </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Progress bar -->
-    <!-- <nav aria-label="Progress" class="mb-4 w-100">
-        <div class="progress-steps" role="list" aria-label="progress steps">
-        <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1">1</div>
-        <div class="progress-line"></div>
-        <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 2">2</div>
-        <div class="progress-line"></div>
-        <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3">3</div>
-        </div>
-    </nav> -->
   </header>
-    
-    <main class="">
-        <div class="container">
-            <div class="row">
-                <div class="col-5">
-                    <h2>New Provider?</h2>
-                    <h5>Register your company and your services here.</h5>
-                </div>
-                <div class="col-1 me-3 divider-vertical d-flex align-items-center"></div>
-                <div class="col-5">
-                    <h2>Need to Edit Your Information?</h2>
-                    <h5>Change your company or service information here.</h5>
-                </div>
-            </div>
+  <!-- Progress bar -->
+  <nav aria-label="Progress" class="w-100" data-name="Edit Service Progress Navigation">
+    <div class="progress-steps" role="list" aria-label="progress steps" data-name="Edit Service Progress Steps Container">
+      <div class="progress-step active" role="listitem" tabindex="0" aria-label="Step 1" data-name="Edit Service Progress Step 1">1</div>
+      <div class="progress-line" data-name="Edit Service Progress Line 1"></div>
+      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 2" data-name="Edit Service Progress Step 2">2</div>
+      <div class="progress-line" data-name="Edit Service Progress Line 2"></div>
+      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3" data-name="Edit Service Progress Step 3">3</div>
+      <div class="progress-line" data-name="Edit Service Progress Line 3"></div>
+      <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 4" data-name="Edit Service Progress Step 4">4</div>
+    </div>
+  </nav>
+  
+ <div class="container-fluid p-4" data-name="Edit Service Main Container">
+    <div class="row justify-content-left" data-name="Edit Service Row">
+    <div class="col-12 col-lg-6 px-3 px-lg-4" data-name="Edit Service Column">
+
+    <!-- Step 1: Editor Information -->
+    <section id="step-1" class="form-step d-none" aria-labelledby="private-info-title" data-name="Step 1 Editor Information Section">
+        <div class="form-info mb-4" role="region" aria-labelledby="private-info-title" data-name="Step 1 Editor Information Header">
+            <strong id="private-info-title" class="d-block mb-1" data-name="Step 1 Title">Editor Information</strong>
+            <small class="text-muted mt-1 d-block fst-italic" data-name="Step 1 Description">
+            This information is for USAssist staff to reach out to you and will not be displayed to the public.
+            </small>
         </div>
-        <!-- <div class="page mt-5">
-            <div class="row">
-                <div clas="col-5">
-                    <h2>New Provider?</h2>
-                    <h5>Register your company and your services here.</h5>
-                </div>
-                <div class="divider-vertical">
-                <div clas="col-5 ">
-                    <h2>Need to Edit Your Information?</h2>
-                    <h5>Change your company or service information here.</h5>
-                </div>
+
+        <form id="form-step-1" novalidate data-name="Step 1 Form">
+            <div class="mb-3" data-name="Step 1 Name Section">
+            <label for="editorName" class="fw-semibold dark-navy" data-name="Step 1 Name Label">Name <span class="text-danger" data-name="Step 1 Name Required">*</span></label>
+            <input type="text" id="primaryName" name="primaryName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Step 1 Name Input" />
             </div>
-        </div> -->
-    </main>
+            <div class="mb-3" data-name="Step 1 Email Section">
+            <label for="editorEmail" class="fw-semibold dark-navy" data-name="Step 1 Email Label">Email <span class="text-danger" data-name="Step 1 Email Required">*</span></label>
+            <input type="email" id="primaryEmail" name="primaryEmail" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Step 1 Email Input" />
+            </div>
+            <div class="mb-3" data-name="Step 1 Phone Section">
+            <label for="editorPhone" class="fw-semibold dark-navy" data-name="Step 1 Phone Label">Phone Number <span class="text-danger" data-name="Step 1 Phone Required">*</span></label>
+            <input type="tel" id="primaryPhone" name="primaryPhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Step 1 Phone Input" />
+            </div>
+            <div class="mb-3" data-name="Step 1 Position Section">
+              <label for="primaryPosition" class="fw-semibold dark-navy" data-name="Step 1 Position Label">Organization Position</label>
+              <input type="text" id="primaryPosition" name="primaryPosition" class="form-control border-2 rounded p-2 px-3" data-name="Step 1 Position Input" />
+            </div>
+            <!-- <label for="divEditorServiceorOrg" class="fw-semibold dark-navy">Are you editing an organization or service? <span class="text-danger">*</span></label> -->
+            <!-- <div id="divEditorServiceorOrg">
+                <div class="checkbox">
+                    <input name="editOptions" type="radio" class="form-check-input" id="org-checkbox" value="organization" required aria-required="true">
+                    <label class="form-check-label" for="org-checkbox">Organization</label>
+                </div>
+                <div class="checkbox">
+                    <input name="editOptions" type="radio" class="form-check-input" id="service-checkbox" value="service" required aria-required="true">
+                    <label class="form-check-label" for="service-checkbox">Service</label>
+                </div>
+                <div class="checkbox">
+                    <input name="editOptions" type="radio" class="form-check-input" id="both-checkbox" value="both" required aria-required="true">
+                    <label class="form-check-label" for="both-checkbox">Both</label>
+                </div>
+            </div> -->
+            <div class="d-flex gap-3 mt-3" data-name="Step 1 Actions">
+                <button type="submit" class="submit-btn" data-name="Step 1 Next Button">Next</button>
+                <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Step 1 Cancel Button">Cancel</button>
+            </div>
+        </form>
+    </section>
 
-    <div id="footer"></div>
+    <!-- Step 2: Organization Information - Public -->
+    <section id="step-2" class="d-none" aria-labelledby="public-info-title" data-name="Step 2 Organization Public Section">
+      <div class="mb-4" role="region" aria-labelledby="public-info-title" data-name="Step 2 Info Header">
+        <strong id="public-info-title" class="d-block mb-1 fw-bold" data-name="Step 2 Title">Edit Organization Information - Public</strong>
+        <small class="text-muted d-block mt-1 fst-italic" data-name="Step 2 Description">
+          Anything you enter will overwrite your current information. This information will be displayed publicly for anyone searching for resources.
+        </small>
+      </div>
+      <form id="form-step-2" novalidate data-name="Step 2 Form">
+        <div class="mb-3" data-name="Step 2 Company Name Section">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Company Name Label">Company Name <span class="text-danger" data-name="Step 2 Company Name Required">*</span></label>
+          <input type="text" class="form-control border-2 rounded p-2 px-3" required data-name="Step 2 Company Name Input" />
+        </div>
+        <div class="mb-3" data-name="Step 2 Description Section">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Description Label">Organization Description</label>
+          <textarea class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" data-name="Step 2 Description Input"></textarea>
+        </div>
+        <div class="mb-3" data-name="Step 2 Phone Section">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Phone Label">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3" data-name="Step 2 Phone Input" />
+        </div>
+        <div class="mb-3" data-name="Step 2 Website Section">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Website Label">Website / URL</label>
+          <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Step 2 Website Input" />
+        </div>
+        <fieldset class="mb-2" data-name="Step 2 Address Group">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Address Label">Physical Address</label>
+          <input type="text" name="address1" id="physicalAddress" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." data-name="Step 2 Street Address Input" />
+          <div class="row g-2 mb-2" data-name="Step 2 Address Input Row">
+            <div class="col" data-name="Step 2 City Column">
+              <select id="cityPublic" name="cityPublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" data-name="Step 2 City Select">
+                <option value="" disabled selected>City</option>
+              </select>
+            </div>
+            <div class="col-auto" style="min-width: 110px;" data-name="Step 2 State Column">
+              <select id="statePublic" name="statePublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" aria-label="State" data-name="Step 2 State Select">
+                <option value="" disabled selected>State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-2" style="max-width: 150px;" data-name="Step 2 Zip Column">
+            <input type="text" id="zipPublic" name="zipPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="Zip Code" data-name="Step 2 Zip Input" />
+          </div>
+        </fieldset>
+        <div class="mb-3" data-name="Step 2 Keywords Section">
+          <label class="fw-semibold dark-navy" data-name="Step 2 Keywords Label">Keywords</label>
+          <div id="btnKeywordsReg1" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Step 2 Keywords Dropdown"><span>All That Apply</span><i class="bi bi-caret-down-fill"></i></div>
+          <div id="divOuterKeywordsReg1" class="form-check outer-layer" data-name="Step 2 Keywords Container">
+            <hr />
+            <div id="divKeywordsReg1" class="form-check" data-name="Step 2 Keywords List"></div>
+          </div>
+        </div>
+        <div class="mb-3" data-name="Step 2 Hours Section">
+          <div class="time-ranges" data-name="Step 2 Hours Wrapper">
+            <label class="fw-semibold dark-navy" data-name="Step 2 Hours Label">Hours of Operation</label>
+            <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Step 2 Hours Input Row">
+              <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" data-name="Step 2 Hours Day Select">
+                <option value="" disabled selected>Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+              <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 2 Hours Start Time Select">
+                <option value="" disabled selected>Start</option>
+              </select>
+              <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 2 Hours Start AM/PM Select">
+                <option value="" disabled selected>AM/PM</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+              <span class="me-2" data-name="Step 2 Hours Time Separator">-</span>
+              <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 2 Hours End Time Select">
+                <option value="" disabled selected>End</option>
+              </select>
+              <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 2 Hours End AM/PM Select">
+                <option value="" disabled selected>AM/PM</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+              <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Step 2 Remove Hours Button">Remove</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Step 2 Add Hours Button">+ Add Hours</button>
+        </div>
+   <div class="mb-4" data-name="Step 2 Logo Section">
+  <label class="fw-semibold" data-name="Step 2 Logo Label">
+    Logo <small class="text-muted mt-1 fst-italic" data-name="Step 2 Logo Note">(Please keep in mind the logo will be placed on a dark navy background)</small>
+  </label>
 
-    <script>
-        fetch('../../partials/footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-        fetch('../../partials/navbar.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar').innerHTML = data);
-    </script>
-    <!-- more bootsrap libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
-    <!-- <script type="module"  src="/Gov-AI/js/ai_results.js"></script> -->
-    <script  src="../../js/navbar.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+  <label for="upload"
+         class="custom-dark-border form-control d-block p-3 text-center fw-semibold rounded-3 user-select-none cursor-pointer"
+         tabindex="0" role="button" aria-label="Upload logo file" data-name="Step 2 Logo Upload Area">
+    Drag and drop your file here<br>or<br>
+    <a href="#" class="clr-dark-navy fw-semibold text-decoration-underline"
+       onclick="document.getElementById('upload').click(); return false;" data-name="Step 2 Logo Upload Link">
+       upload from your computer
+    </a>
+  </label>
+
+  <input type="file" id="upload" name="upload" class="d-none" accept="image/*" aria-label="Logo file upload" data-name="Step 2 Logo File Input" />
+
+  <div id="logo-preview" class="mt-3 text-center d-none" data-name="Step 2 Logo Preview Container">
+    <img id="logo-image" src="" alt="Logo Preview" class="img-fluid w-75 h-50" data-name="Step 2 Logo Preview Image" />
+    <br>
+    <button type="button" id="clear-logo" class="btn btn-sm btn-outline-secondary mt-2" data-name="Step 2 Remove Logo Button">Remove Image</button>
+  </div>
+</div>
+
+    <div class="d-flex gap-3 mt-3" data-name="Step 2 Actions">
+      <button type="submit" class="submit-btn" data-name="Step 2 Next Button">Next</button>
+      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Step 2 Previous Button">Previous</button>
+    </div>
+  </form>
+</section>
+
+<!-- Step 3: Organization Information - Private -->
+<section id="step-3" class="form-step d-none" aria-labelledby="private-info-title">
+  <div class="form-info mb-4" role="region" aria-labelledby="private-info-title">
+    <strong id="private-info-title" class="d-block mb-1">Edit Organization Information - Private</strong>
+    <small class="text-muted mt-1 d-block fst-italic">
+      Anything you enter will overwrite your current information. This information is for USAssist staff to reach out to you and will not be displayed to the public.
+    </small>
+  </div>
+
+  <form id="form-step-3" novalidate>
+    <h5 class="mb-3">Primary Contact</h5>
+    <div class="mb-3">
+      <label for="primaryName" class="fw-semibold dark-navy">Name <span class="text-danger">*</span></label>
+      <input type="text" id="primaryName" name="primaryContactName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+    </div>
+    <div class="mb-3">
+      <label for="primaryEmail" class="fw-semibold dark-navy">Email <span class="text-danger">*</span></label>
+      <input type="email" id="primaryEmail" name="primaryContactEmail" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+    </div>
+    <div class="mb-3">
+      <label for="primaryPhone" class="fw-semibold dark-navy">Phone Number <span class="text-danger">*</span></label>
+      <input type="tel" id="primaryPhone" name="primaryContactPhone" class="form-control border-2 rounded p-2 px-3" required aria-required="true" />
+    </div>
+    <div class="mb-3">
+      <label for="primaryPosition" class="fw-semibold dark-navy">Organization Position</label>
+      <input type="text" id="primaryPosition" name="primaryContactPosition" class="form-control border-2 rounded p-2 px-3" />
+    </div>
+    <!-- <div class="checkbox">
+        <input name="editOptions" type="checkbox" class="form-check-input" id="same-info-checkbox" value="same info">
+        <label class="form-check-label" for="same-info-checkbox">The primary contact information is the same as the editor’s information.</label>
+    </div> -->
+
+    <h5 class="mb-3 mt-4" data-name="Step 3 Secondary Contact Heading">Secondary Contact</h5>
+    <div class="mb-3" data-name="Step 3 Secondary Name Section">
+      <label for="secondaryName" class="fw-semibold dark-navy" data-name="Step 3 Secondary Name Label">Name</label>
+      <input type="text" id="secondaryName" name="secondaryName" class="form-control border-2 rounded p-2 px-3" data-name="Step 3 Secondary Name Input" />
+    </div>
+    <div class="mb-3" data-name="Step 3 Secondary Email Section">
+      <label for="secondaryEmail" class="fw-semibold dark-navy" data-name="Step 3 Secondary Email Label">Email</label>
+      <input type="email" id="secondaryEmail" name="secondaryEmail" class="form-control border-2 rounded p-2 px-3" data-name="Step 3 Secondary Email Input" />
+    </div>
+    <div class="mb-3" data-name="Step 3 Secondary Phone Section">
+      <label for="secondaryPhone" class="fw-semibold dark-navy" data-name="Step 3 Secondary Phone Label">Phone Number</label>
+      <input type="tel" id="secondaryPhone" name="secondaryPhone" class="form-control border-2 rounded p-2 px-3" data-name="Step 3 Secondary Phone Input" />
+    </div>
+    <div class="mb-3" data-name="Step 3 Secondary Position Section">
+      <label for="secondaryPosition" class="fw-semibold dark-navy" data-name="Step 3 Secondary Position Label">Organization Position</label>
+      <input type="text" id="secondaryPosition" name="secondaryPosition" class="form-control border-2 rounded p-2 px-3" data-name="Step 3 Secondary Position Input" />
+    </div>
+    <div class="d-flex gap-3 mt-3" data-name="Step 3 Actions">
+      <button type="submit" class="submit-btn" data-name="Step 3 Next Button">Next</button>
+      <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Step 3 Previous Button">Previous</button>
+    </div>
+  </form>
+</section>
+
+<!-- Step 4: Register Services -->
+<section id="step-4" class="form-step d-none" aria-labelledby="register-services-title" data-name="Step 4 Register Services Section">
+  <div class="form-info mb-4" role="region" aria-labelledby="register-services-title" data-name="Step 4 Info Header">
+    <strong id="register-services-title" class="d-block mb-1" data-name="Step 4 Title">Edit Services</strong>
+    <small class="text-muted mt-1 d-block fst-italic" data-name="Step 4 Description">
+      Edit all of your services or resources your organization offers.  Anything you enter will overwrite your current information.
+    </small>
+  </div>
+    <form id="form-step-4" aria-label="Register Services Form" novalidate data-name="Step 4 Form">
+      <div id="divSelectEditService" data-name="Step 4 Select Service Container">
+        <div class="d-flex align-items-center gap-2 mb-3" data-name="Step 4 Service Selector">
+          <select id="selectService" name="selectService" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 Service Select">
+            <option value="">Select a Service</option>
+            <option value="Service 1">Service 1</option>
+          </select>
+
+          <button type="button" class="btn btn-outline-danger accent-btn" id="btnRemoveServiceBtn" style="display: none" data-name="Step 4 Remove Service Button"><i class="bi bi-trash3-fill" style="color: inherit"></i></button>
+        </div>
+      </div>
+      <div id="divPage4EditServiceInfo" style="display: none" data-name="Step 4 Edit Service Info">
+      <div id="services-container" data-name="Step 4 Services Container">
+          <div class="mb-3" data-name="Step 4 Service Name Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 Service Name Label">Service Name</label>
+            <input type="text" id="serviceName" name="serviceName" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 Service Name Input" />
+          </div>
+          <div class="mb-3" data-name="Step 4 Service Description Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 Service Description Label">Service Description</label>
+            <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" rows="4" data-name="Step 4 Service Description Input"></textarea>
+          </div>
+          <div class="mb-3" data-name="Step 4 Service Criteria Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Step 4 Service Criteria Note">This will be displayed to the customer.</small></label>
+            <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 Service Criteria Input" />
+          </div>
+          <div class="mb-3" data-name="Step 4 Counties Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 Counties Label">Counties Offered In</label>
+            <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Step 4 Counties Dropdown"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
+            <div id="divOuterCountiesReg" class="form-check outer-layer" data-name="Step 4 Counties Container">
+              <hr />
+              <div id="divCountiesReg" class="form-check" data-name="Step 4 Counties List"></div>
+            </div>
+          </div>
+          <div class="mb-3" data-name="Step 4 Keywords Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 Keywords Label">Keywords</label>
+            <div id="btnKeywordsReg" class="form-control d-flex justify-content-between align-items-center border-2 rounded p-2 px-3 mb-2" data-name="Step 4 Keywords Dropdown"><span>Check All That Apply </span> <i class="bi bi-caret-down-fill"></i></div>
+            <div id="divOuterKeywordsReg" class="form-check outer-layer" data-name="Step 4 Keywords Container">
+              <hr />
+              <div id="divKeywordsReg" class="form-check" data-name="Step 4 Keywords List"></div>
+            </div>
+          </div>
+          <!-- Phone Number Section -->
+          <div class="mb-3" data-name="Step 4 Phone Section">
+              <label class="fw-semibold dark-navy" data-name="Step 4 Phone Label">Phone Number</label>
+              <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" data-name="Step 4 Phone Input" />
+            </div>
+
+            <!-- Physical Address Section -->
+            <div class="mb-3" data-name="Step 4 Address Section">
+                <label class="fw-semibold dark-navy" data-name="Step 4 Address Label">Physical Address</label>
+                <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." data-name="Step 4 Street Address Input" />
+                <div class="row g-2" data-name="Step 4 Address Row">
+                  <div class="col-md-6" data-name="Step 4 City Column">
+                    <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select" data-name="Step 4 City Select">
+                      <option value="" disabled selected>Select City</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3" data-name="Step 4 State Column">
+                    <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 State Select">
+                              <option value="" disabled selected>State</option>
+                              <option value="AL">Alabama</option>
+                              <option value="AK">Alaska</option>
+                              <option value="AZ">Arizona</option>
+                              <option value="AR">Arkansas</option>
+                              <option value="CA">California</option>
+                              <option value="CO">Colorado</option>
+                              <option value="CT">Connecticut</option>
+                              <option value="DE">Delaware</option>
+                              <option value="FL">Florida</option>
+                              <option value="GA">Georgia</option>
+                              <option value="HI">Hawaii</option>
+                              <option value="ID">Idaho</option>
+                              <option value="IL">Illinois</option>
+                              <option value="IN">Indiana</option>
+                              <option value="IA">Iowa</option>
+                              <option value="KS">Kansas</option>
+                              <option value="KY">Kentucky</option>
+                              <option value="LA">Louisiana</option>
+                              <option value="ME">Maine</option>
+                              <option value="MD">Maryland</option>
+                              <option value="MA">Massachusetts</option>
+                              <option value="MI">Michigan</option>
+                              <option value="MN">Minnesota</option>
+                              <option value="MS">Mississippi</option>
+                              <option value="MO">Missouri</option>
+                              <option value="MT">Montana</option>
+                              <option value="NE">Nebraska</option>
+                              <option value="NV">Nevada</option>
+                              <option value="NH">New Hampshire</option>
+                              <option value="NJ">New Jersey</option>
+                              <option value="NM">New Mexico</option>
+                              <option value="NY">New York</option>
+                              <option value="NC">North Carolina</option>
+                              <option value="ND">North Dakota</option>
+                              <option value="OH">Ohio</option>
+                              <option value="OK">Oklahoma</option>
+                              <option value="OR">Oregon</option>
+                              <option value="PA">Pennsylvania</option>
+                              <option value="RI">Rhode Island</option>
+                              <option value="SC">South Carolina</option>
+                              <option value="SD">South Dakota</option>
+                              <option value="TN">Tennessee</option>
+                              <option value="TX">Texas</option>
+                              <option value="UT">Utah</option>
+                              <option value="VT">Vermont</option>
+                              <option value="VA">Virginia</option>
+                              <option value="WA">Washington</option>
+                              <option value="WV">West Virginia</option>
+                              <option value="WI">Wisconsin</option>
+                              <option value="WY">Wyoming</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3" data-name="Step 4 Zip Column">
+                      <input type="text" id="serviceZip1" name="serviceZip1" class="form-control border-2 rounded p-2 px-3" placeholder="Zip Code" data-name="Step 4 Zip Input" />
+                    </div>
+                  </div>
+              </div>
+
+  <!-- Hours Section -->
+   <div class="mb-3" data-name="Step 4 Hours Section">
+    <label class="fw-semibold dark-navy" data-name="Step 4 Hours Label">Hours of Operation</label>
+      <div class="time-ranges" data-name="Step 4 Hours Wrapper">
+        <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Step 4 Hours Input Row">
+          <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" data-name="Step 4 Hours Day Select" >
+            <option value="" disabled selected>Day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+          </select>
+          <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Hours Start Time Select" >
+            <option value="" disabled selected>Start</option>
+          </select>
+          <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Hours Start AM/PM Select" >
+            <option value="" disabled selected>AM/PM</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+          <span class="me-2" data-name="Step 4 Hours Time Separator">-</span>
+          <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Hours End Time Select" >
+            <option value="" disabled selected>End</option>
+          </select>
+          <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Hours End AM/PM Select">
+            <option value="" disabled selected>AM/PM</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+          <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Step 4 Remove Hours Button">Remove</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Step 4 Add Hours Button">+ Add Hours</button>
+        <div class="d-flex gap-3 mt-3 mb-3" data-name="Step 4 Edit Actions">
+          <button type="submit" class="submit-btn" data-name="Step 4 Submit Button">Submit</button>
+          <button type="button" class="btn btn-light cancel-btn-1 fw-bold" data-name="Step 4 Cancel Button">Cancel</button>
+        </div>
+      </div>
+      </div>
+      <div class="mt-3 mb-3" data-name="Step 4 Add Service Button Container">
+        <button type="button" class="btn btn-outline-secondary mb-3 accent-btn col-12" id="addServiceBtn" data-name="Step 4 Add Service Button">+ Add Service</button>
+      </div>
+      <div id="divPage4AddServiceInfo" style="display: none" data-name="Step 4 Add Service Info">
+      <div id="services-container" data-name="Step 4 New Services Container">
+        <div class="service-block mb-4" data-service="1" data-name="Step 4 Service Block">
+          <div class="mb-3" data-name="Step 4 New Service Name Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Service Name Label">Service Name <span class="text-danger" data-name="Step 4 New Service Name Required">*</span></label>
+            <input type="text" id="serviceName" name="serviceName" class="form-control border-2 rounded p-2 px-3" required aria-required="true" data-name="Step 4 New Service Name Input" />
+          </div>
+          <div class="mb-3" data-name="Step 4 New Service Description Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Service Description Label">Service Description <span class="text-danger" data-name="Step 4 New Service Description Required">*</span></label>
+            <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Step 4 New Service Description Input"></textarea>
+          </div>
+          <div class="mb-3" data-name="Step 4 New Service Criteria Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Step 4 New Service Criteria Note">This will be displayed to the customer.</small></label>
+            <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 New Service Criteria Input" />
+          </div>
+          <div class="mb-3" data-name="Step 4 New Counties Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Counties Label">Counties Offered In <span class="text-danger" data-name="Step 4 New Counties Required">*</span></label>
+            <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Step 4 New Counties Dropdown"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
+            <div id="divOuterCountiesReg" class="form-check outer-layer" data-name="Step 4 New Counties Container">
+              <hr />
+              <div id="divCountiesReg" class="form-check" data-name="Step 4 New Counties List"></div>
+            </div>
+          </div>
+          <div class="mb-3" data-name="Step 4 New Keywords Section">
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Keywords Label">Keywords <span class="text-danger" data-name="Step 4 New Keywords Required">*</span></label>
+            <div id="btnKeywordsReg" class="form-control d-flex justify-content-between align-items-center border-2 rounded p-2 px-3 mb-2" data-name="Step 4 New Keywords Dropdown"><span>Check All That Apply </span> <i class="bi bi-caret-down-fill"></i></div>
+            <div id="divOuterKeywordsReg" class="form-check outer-layer" data-name="Step 4 New Keywords Container">
+              <hr />
+              <div id="divKeywordsReg" class="form-check" data-name="Step 4 New Keywords List"></div>
+            </div>
+          </div>
+  <!-- Phone Number Section -->
+  <div class="checkbox mb-3" style="padding-left: 0;" data-name="Step 4 Separate Phone Option">
+    <input type="checkbox" class="form-check-input" id="separatePhone1" name="separatePhone1" data-name="Step 4 Separate Phone Checkbox" />
+    <label for="separatePhone1" class="form-check-label dark-navy" data-name="Step 4 Separate Phone Label">Separate phone number for this service?</label>
+  </div>
+  <div class="service-phone-container mb-3" style="display: none;" data-name="Step 4 Phone Input Container">
+    <label class="fw-semibold dark-navy" data-name="Step 4 Separate Phone Field Label">Phone Number</label>
+    <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" data-name="Step 4 Separate Phone Input" />
+  </div>
+
+  <!-- Physical Address Section -->
+  <div class="checkbox mb-3" style="padding-left: 0;" data-name="Step 4 Separate Address Option">
+    <input type="checkbox" class="form-check-input" id="separateAddress1" name="separateAddress1" data-name="Step 4 Separate Address Checkbox" />
+    <label for="separateAddress1" class="form-check-label dark-navy" data-name="Step 4 Separate Address Label">Separate address for this service?</label>
+  </div>
+  <div class="service-address-container mb-3" style="display: none;" data-name="Step 4 Address Input Container">
+    <label class="fw-semibold dark-navy" data-name="Step 4 Separate Address Field Label">Physical Address</label>
+    <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." data-name="Step 4 Separate Street Address Input" />
+    <div class="row g-2" data-name="Step 4 Separate Address Row">
+      <div class="col-md-6" data-name="Step 4 Separate City Column">
+        <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select" data-name="Step 4 Separate City Select">
+          <option value="" disabled selected>Select City</option>
+        </select>
+      </div>
+      <div class="col-md-3" data-name="Step 4 Separate State Column">
+        <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 Separate State Select">
+                  <option value="" disabled selected>State</option>
+                  <option value="AL">Alabama</option>
+                  <option value="AK">Alaska</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option>
+                  <option value="CA">California</option>
+                  <option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="DE">Delaware</option>
+                  <option value="FL">Florida</option>
+                  <option value="GA">Georgia</option>
+                  <option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option>
+                  <option value="IL">Illinois</option>
+                  <option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
+        </select>
+      </div>
+      <div class="col-md-3" data-name="Step 4 Separate Zip Column">
+          <input type="text" id="serviceZip1" name="serviceZip1" class="form-control border-2 rounded p-2 px-3" placeholder="Zip Code" data-name="Step 4 Separate Zip Input" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hours Section -->
+  <div class="checkbox mb-3" style="padding-left: 0;" data-name="Step 4 Separate Hours Option">
+    <input type="checkbox" class="form-check-input" id="separateHours1" name="separateHours1" data-name="Step 4 Separate Hours Checkbox" />
+    <label for="separateHours1" class="form-check-label dark-navy" data-name="Step 4 Separate Hours Label">Do service hours of operation differ from organization hours of operation?
+      <small class="text-muted d-block mt-1 fst-italic" data-name="Step 4 Hours Format Example">
+        ex: Monday 8am - 2pm
+      </small>
+    </label>
+  </div>
+  <div class="service-hours-container mb-3" style="display: none;" data-name="Step 4 Hours Input Container">
+    <label class="fw-semibold dark-navy" data-name="Step 4 Separate Hours Label">Hours of Operation</label>
+    <div class="time-ranges" data-name="Step 4 Separate Hours Wrapper">
+      <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Step 4 Separate Hours Input Row">
+        <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" data-name="Step 4 Separate Hours Day Select" >
+          <option value="" disabled selected>Day</option>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </select>
+        <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Separate Hours Start Time Select" >
+          <option value="" disabled selected>Start</option>
+        </select>
+        <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Separate Hours Start AM/PM Select" >
+          <option value="" disabled selected>AM/PM</option>
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+        <span class="me-2" data-name="Step 4 Separate Hours Time Separator">-</span>
+        <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Separate Hours End Time Select" >
+          <option value="" disabled selected>End</option>
+        </select>
+        <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Step 4 Separate Hours End AM/PM Select">
+          <option value="" disabled selected>AM/PM</option>
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Step 4 Separate Remove Hours Button">Remove</button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Step 4 Separate Add Hours Button">+ Add Hours</button>
+  </div>
+        <div class="d-flex gap-3 mt-3 mb-3" data-name="Step 4 Add Service Actions">
+          <button type="submit" class="btn btn-primary submit-btn fw-bold" data-name="Step 4 Add Service Submit Button">Submit</button>
+          <button type="button" class="btn btn-light cancel-btn-2 fw-bold" data-name="Step 4 Add Service Cancel Button">Cancel</button>
+        </div>
+      </div>
+      </div>
+      <div id="divFinalSubCanBtn" class="d-flex gap-3 mt-3 mb-3" data-name="Step 4 Final Actions">
+        <button type="button" id="btnLeave" class="submit-btn" data-name="Step 4 Finish Button">Finish</button>
+        <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Step 4 Final Previous Button">Previous</button>
+      </div>
+    </form>
+</section>
+    </div>
+  </main>
+  <div id="footer" data-name="Page Footer"></div>
+  <script>
+    fetch('../../partials/footer.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('footer').innerHTML = data);
+    fetch('../../partials/navbar.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('navbar').innerHTML = data);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../js/editService.js"></script>
 </body>
-</html>
+</html>        
