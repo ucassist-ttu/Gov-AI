@@ -137,7 +137,7 @@ function createPills(keyword, fullword){
 // creates the html for the cards
 function createCard(service, category) {
   const col = document.createElement("div");
-  col.className = "card m-2 col-12 border border-2 border-secondary rounded";
+  col.className = "card m-2 col-12 border border-2 border-secondary rounded d-flex flex-column";
   col.style.maxWidth = "14rem";
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
@@ -164,13 +164,16 @@ function createCard(service, category) {
 
 
   col.innerHTML = `
-    <img src="${imgPhoto}" class="card-img-top p-3" alt="${service.OrganizationName}" style="max-height: 150px; object-fit: contain;">
-    <div class="card-body">
-      ${getCounties(service)}
-      <h5 class="card-title">${service.NameOfService}</h5>
-      <div class="service m-0">
-        <button onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
+    <div class="card-body d-flex flex-column">
+      <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 150px; overflow: hidden;">
+        <img src="${imgPhoto}" alt="${service.OrganizationName}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
       </div>
+      <div class="card-body d-flex flex-column">
+        ${getCounties(service)}
+        <h5 class="card-title">${service.NameOfService}</h5>
+        <div class="mt-auto service m-0" style="margin-bottom: 15px;">
+          <button onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
+        </div>
       </div>`;
 
       // col.querySelector('.service button').addEventListener('click', () => {
@@ -320,9 +323,10 @@ function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
-  let innerHTML = `<div class="row mx-auto">`
+  let innerHTML = `<div class="row">`
+  let exCounty
 
-  const userSelectedCounty = sessionStorage.getItem("currCounty")
+  let userSelectedCounty = sessionStorage.getItem("currCounty")
 
   // if(!strCounties.includes(userSelectedCounty)){
   //   return;
@@ -331,6 +335,7 @@ function getCounties(service){
   arrCounties.forEach(county => {
     if (count < 1){ // displays max three counties
       innerHTML += `<span class="col-auto badge rounded-pill gold me-1 mb-2">${county}</span>`
+      exCounty = county
       count++
     }
     else{
@@ -342,10 +347,16 @@ function getCounties(service){
   if (count == 14){ // in the case of "All Counties", which is the only instance of 14 counties
     innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">All Counties</span>`
   } else if (count == 2) { // tells user how many more counties are available if there are more than three
+    if (userSelectedCounty == 'all') {
+      userSelectedCounty = exCounty
+    }
     innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
     innerHTML += `<smaller class="col-auto"> + ${count - 1} county</smaller>`
     // console.log("[getCounties] arrCounties: ", arrCounties)
   } else if (count > 2) {
+    if (userSelectedCounty == 'all') {
+      userSelectedCounty = exCounty
+    }
     innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
     innerHTML += `<smaller class="col-auto"> + ${count - 1} counties</smaller>`
   }
