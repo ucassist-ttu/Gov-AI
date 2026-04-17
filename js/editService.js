@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (errors.length === 0) {
         Swal.fire({
           title: "Success",
-          text: "Registration form submitted successfully!",
+          text: "Your request has been submitted. It is pending review.",
           icon: "success"
         }).then((result) => {
           let activeForm = document.getElementById("divPage4AddServiceInfo");
