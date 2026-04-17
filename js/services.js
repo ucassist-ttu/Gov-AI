@@ -8,11 +8,38 @@ let arrCurrentServices = []
 let boolSearched = false
 let boolResourceFound = false
 let dataSearch
+const defaultLogoPath = "/assets/images/placeholder-img.png";
+
+function getLogoSrc(rawLogo) {
+    if (typeof rawLogo !== "string") {
+        return "";
+    }
+
+    const logo = rawLogo.trim();
+    if (!logo) {
+        return "";
+    }
+
+    const lowered = logo.toLowerCase();
+    if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+        return "";
+    }
+
+    if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+        return logo;
+    }
+
+    if (logo.startsWith("www.")) {
+        return `https://${logo}`;
+    }
+
+    return `/assets/images/${logo}`;
+}
 
 async function getServices() {
     try{
         //Get the list of services from api
-        let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+        let servResponse = await fetchApi(`/services`)
         let servData = await servResponse.json()
         arrAllServices = servData
         arrCurrentServices = servData
@@ -134,8 +161,9 @@ function createServiceCard(arrCards) {
         strDiv += `<h2>${service.NameOfService}</h2>`
 
         //Checks to see if service provider has a logo and uses it if so
-        if (service.ProviderLogo != 'N/A'){
-            strDiv += `<h3>Offered by: <img src="${service.ProviderLogo}" alt="${service.OrganizationName}"></h3>`
+        const logoSrc = getLogoSrc(service.ProviderLogo);
+        if (logoSrc){
+            strDiv += `<h3>Offered by: <img src="${logoSrc}" alt="${service.OrganizationName}" onerror="this.onerror=null;this.src='${defaultLogoPath}';"></h3>`
         }
         // Uses organization name if service does not have a logo
         else{
@@ -181,7 +209,7 @@ function createServiceCard(arrCards) {
 function getTagList(service) {
     strKeywords = service.Keywords
     if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
+        strKeywords = JSON.parse(strKeywords.replace(/'/g, '"'));
     }
     // Returns keywords seperated by a ','
     if (Array.isArray(strKeywords)) {
@@ -191,7 +219,7 @@ function getTagList(service) {
 
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
-    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
+    fetchApi(`/add-monthly-view?service_id=${page_id}`)
     window.location.href = `service.html?id=${page_id}`;
 }
 
@@ -199,7 +227,7 @@ function callServicePage (page_id) {
 function getCountyList(service) {
     strCounties = service.CountiesAvailable
     if (typeof strCounties === 'string') {
-        strCounties = JSON.parse(strCounties);
+        strCounties = JSON.parse(strCounties.replace(/'/g, '"'));
     }
 
     // Returns an array of strCounties

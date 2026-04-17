@@ -76,5 +76,5 @@ function getLogoSrc(rawLogo) {
       return `https://${logo}`;
   }
 
-  return `/Gov-AI/assets/images/${logo}`;
+  return `/assets/images/${logo}`;
 }
