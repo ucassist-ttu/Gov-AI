@@ -1,4 +1,4 @@
-import {getCounties} from "../js/iNeed.js"
+    import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
 let printed = false;
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!prompt) {
         strHeader.innerHTML = "<h1>Oops! Looks like you didn't enter anything.</h1>"
         console.log("No prompt found in sessionStorage.");
-        AIContainer.innerHTML = `<p class="mt-3 ">Please return to home and try again.</p>`; //error message
+        AIContainer.innerHTML = `<p class="mt-3 text-dark">Please return to home and try again.</p>`; //error message
         return;
     }
     else{ getAIRecommendations(prompt)}
@@ -50,7 +50,7 @@ async function getAIRecommendations(userPrompt) {
 
     //placeholder text while loading the ai results
 
-    AIContainer.innerHTML = `<p class="loading">Loading suggestions...</p>`; 
+    AIContainer.innerHTML = `<p class="loading text-dark">Loading suggestions...</p>`; 
     
     //calls ai api
     try{
@@ -99,7 +99,7 @@ async function getAIRecommendations(userPrompt) {
             let strEmail = element.EmailContact || "No Email available.";
             console.log(strResourceName);
 
-            txtHTML +=`<div class="flex-row">`;
+            txtHTML +=`<div class="flex-row text-dark">`;
             txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`;
             txtHTML +=`    <p class="ai-company-name">`;
             txtHTML +=`        by ${strCompany}`;
@@ -130,7 +130,7 @@ async function getAIRecommendations(userPrompt) {
                 txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
             }
             // callServicePage(serviceId)
-            txtHTML +=`<button class="btn btn-link" onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${element.ID}'); window.location.href='html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            txtHTML +=`<button class="btn btn-link text-dark" onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${element.ID}'); window.location.href='html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
             intCount++;
         });
 
@@ -145,7 +145,7 @@ async function getAIRecommendations(userPrompt) {
 
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
-            AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try rephrasing your question or browse all available services on the Find Services page.</p>
+            AIContainer.innerHTML = `<p class="mt-5 mb-4 text-dark">Please try rephrasing your question or browse all available services on the Find Services page.</p>
                                      <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Find Services <i class="bi bi-caret-right-fill"></i></a>`;
 
             // console.log("0 Result AI Search", {
@@ -164,8 +164,8 @@ async function getAIRecommendations(userPrompt) {
             headerEl.innerHTML = "<h1>Oops! We're having trouble answering your request.</h1>";
         }
         //error message
-        AIContainer.innerHTML = `<p class="mt-5 mb-4">Please try again later. In the meantime, feel free to browse all available services in the Find Services tab. </p>
-                                 <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Go Now <i class="bi bi-caret-right-fill"></i></a>`;
+        AIContainer.innerHTML = `<p class="mt-5 mb-4 text-dark">Please try again later. In the meantime, feel free to browse all available services in the Find Services tab. </p>
+                                 <a href="./services.html" class="rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-dark text-decoration-none text-nowrap">Go Now <i class="bi bi-caret-right-fill"></i></a>`;
     }
 }
 
