@@ -1,40 +1,40 @@
-<div class="p-2 pt-3 p-md-5 accent_blue">
-    <div class="d-flex align-items-center">
-        <h3 class="mb-0 fw-light white ps-5 pb-4">I Need:</h3>
-        <button id="btnLearnINeed" class="btn btn-link p-0 ps-2 pb-4" style="border: none; font-size: 25px;"><i class="bi bi-question-circle" style="color: white;"></i></button>
+<div class="p-2 pt-3 p-md-5 accent_blue" data-name="Quick Access Services Section">
+    <div class="d-flex align-items-center" data-name="Quick Access Header">
+        <h3 class=" white ps-5 pb-4" data-name="Quick Access Title">I Need:</h3>
+        <button id="btnLearnINeed" class="btn btn-link p-0 ps-2 pb-4" style="border: none; font-size: 25px;" data-name="Quick Access Help Button"><i class="bi bi-question-circle" style="color: white;" data-name="Help Icon"></i></button>
     </div>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center" data-name="Service Categories Container">
         <!-- LEFT ARROW -->
-        <button class="btn btn-light me-2" id="scrollLeftPills">
+        <button class="btn btn-light me-2" id="scrollLeftPills" data-name="Scroll Left Button">
         ❮
         </button>
 
         <!-- SCROLL PILL AREA -->
-        <div id="wrapperINeedPills" class="flex-grow-1 overflow-hidden">
-        <div id="divINeedPills" class="d-flex overflow-auto scrollmenu">
+        <div id="wrapperINeedPills" class="flex-grow-1 overflow-hidden" data-name="Service Category Buttons Wrapper">
+        <div id="divINeedPills" class="d-flex overflow-auto scrollmenu" data-name="Service Category Buttons Container">
             <!-- pills populate here -->
         </div>
         </div>
 
         <!-- RIGHT ARROW -->
-        <button class="btn btn-light ms-2" id="scrollRightPills">
+        <button class="btn btn-light ms-2" id="scrollRightPills" data-name="Scroll Right Button">
         ❯
         </button>
     </div>
-  <hr> 
+  <hr data-name="Section Divider"> 
 
 
-  <div class="p-2 mt-3">
-    <div class="d-flex align-items-center">
+  <div class="p-2 mt-3" data-name="Service Results Section">
+    <div class="d-flex align-items-center" data-name="Service Results Container">
       <!-- <button class="btn btn-light me-2" id="scrollLeftContent">
         ❮
       </button> -->
 
-      <div id="wrapperINeedContent" class="flex-grow-1 overflow-hidden">
+      <div id="wrapperINeedContent" class="flex-grow-1 overflow-hidden" data-name="Service Results Wrapper">
         <div id="divINeedDescription" class="d-flex overflow-auto">
           <!-- service card category descriptions go here -->
         </div>
-        <div id="divINeedContent" class="d-flex overflow-auto">
+        <div id="divINeedContent" class="d-flex overflow-auto data-name="Service Cards Container"">
           <!-- service cards go here -->
         </div>
       </div>

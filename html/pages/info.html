@@ -11,38 +11,38 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="white info-page">
-    <div id="navbar" class="info-hidden"></div>
-    <main>
-        <div class="info-hidden d-flex dark_navy p-4">
-            <h1 class="ps-md-4 fw-bold white">Site Data Analytics</h1>
-                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right">
-                <ol class="breadcrumb mb-0">
-                   <li class="breadcrumb-item fs-6"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
-                   <li class="text-white mx-2 fs-6">></li> 
-                   <li class="breadcrumb-item active text-white fs-6" aria-current="page">Site Statistics</li>
+    <div id="navbar" class="info-hidden" data-name="Navigation Bar"></div>
+    <main  data-name="Statistics Dashboard">
+        <div class="info-hidden d-flex dark_navy p-4"  data-name="Statistics Page Header">
+            <h1 class="ps-md-4 fw-bold white"  data-name="Page Title">Website Analytics</h1>
+                <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="Navigation Breadcrumb">
+                <ol class="breadcrumb mb-0"  data-name="Breadcrumb Links">
+                   <li class="breadcrumb-item fs-6"  data-name="Breadcrumb Home Link"><a href="/../Gov-AI/index.html" class="text-white">Home</a></li>
+                   <li class="text-white mx-2 fs-6" data-name="Breadcrumb Separator">></li> 
+                   <li class="breadcrumb-item active text-white fs-6" aria-current="page"  data-name="Current Page in Breadcrumb">Site Statistics</li>
                 </ol>
                 </nav>             
         </div>
 
-        <div id="accordion" class="mt-5 text-center">
+        <div id="accordion" class="mt-5 text-center" data-name="Statistics Sections">
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingOne">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingOne" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Services Viewed Per County
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body col-12 col-md-6 mx-auto">
-                        <canvas id="pieChart"></canvas>
+                    <div class="card-body col-12 col-md-6 mx-auto" data-name="Card Content">
+                        <canvas id="pieChart" data-name="Services Per County Chart"></canvas>
                     </div>
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
                 <div class="card-header" id="headingTwo">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -52,19 +52,19 @@
                     </h2>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                        <div class="col-lg-6 col-12 stats-select mt-3 mb-0">
-                            <label for="countyFilter" aria-label="Filter by county:">Filter by county:</label>
-                            <select id="countyFilter" class="form-select">
+                    <div class="card-body" data-name="Card Content">
+                        <div class="col-lg-6 col-12 stats-select mt-3 mb-0" data-name="County Filter Options">
+                            <label for="countyFilter" aria-label="Filter by county:" data-name="County Selection Label">Filter by county:</label>
+                            <select id="countyFilter" class="form-select" data-name="County Dropdown">
                                 <option value="all">All Counties</option>
                             </select>
                         </div>
-                        <div class="row" id="info-board" style="padding: 0px 30px 0px 30px;">
-                            <div class="col col-12 col-lg-6" style="text-align: center;">
-                                <h3 class="mt-3">Most used services</h3>
-                                <hr class="hr-blue m-4 mt-2" />
-                                <div id="divMostViewed" class="m-4" style="text-align: start;">
-                                    <ul id="listMostViewed">
+                        <div class="row" id="info-board" style="padding: 0px 30px 0px 30px;" data-name="Statistics Display Row">
+                            <div class="col col-12 col-lg-6" style="text-align: center;" data-name="Popular Services Column">
+                                <h3 class="mt-3" data-name="Most Popular Services Title">Most used services</h3>
+                                <hr class="hr-blue m-4 mt-2" data-name="Dividing Line" />
+                                <div id="divMostViewed" class="m-4" style="text-align: start;" data-name="Popular Services List Area">
+                                    <ul id="listMostViewed" data-name="Popular Services List">
                                         <li id="top1"></li>
                                         <li id="top2"></li>
                                         <li id="top3"></li>
@@ -76,11 +76,11 @@
                             <div class="d-lg-none col-12">
                                 <hr class="hr-gold" />
                             </div>
-                            <div class="col col-md-12 col-lg-6" style="text-align: center;">
-                                <h3 class="mt-3">Least used services</h3>
-                                <hr class="hr-blue m-4 mt-2" />
-                                <div id="divLeastViewed" class="m-3" style="text-align: start;">
-                                    <ul id="listLeastViewed">
+                            <div class="col col-md-12 col-lg-6" style="text-align: center;" data-name="Least Popular Services Column">
+                                <h3 class="mt-3" data-name="Least Popular Services Title">Least used services</h3>
+                                <hr class="hr-blue m-4 mt-2" data-name="Dividing Line" />
+                                <div id="divLeastViewed" class="m-3" style="text-align: start;" data-name="Least Popular Services List Area">
+                                    <ul id="listLeastViewed" data-name="Least Popular Services List">
                                         <li id="bottom1"></li>
                                         <li id="bottom2"></li>
                                         <li id="bottom3"></li>
@@ -90,12 +90,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="chart-container" id="info-bar">
-                            <canvas id="barChart"></canvas>
+                        <div class="chart-container" id="info-bar" data-name="Service Type Chart Area">
+                            <canvas id="barChart" data-name="Service Types Bar Chart"></canvas>
                         </div>
-                        <div class="col-lg-6 col-12 stats-select mt-2 mb-0">
-                            <label for="chartFilter" aria-label="Show services:">Show services:</label>
-                            <select id="chartFilter" class="form-select">
+                        <div class="col-lg-6 col-12 stats-select mt-2 mb-0" data-name="Chart Display Options">
+                            <label for="chartFilter" aria-label="Show services:" data-name="Service Display Setting Label">Show services:</label>
+                            <select id="chartFilter" class="form-select" data-name="Service Display Dropdown">
                                 <option value="top10">Top 10</option>
                                 <option value="all">All Services</option>
                             </select>
@@ -104,25 +104,25 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingThree">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingThree" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                             Page Visits
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                    <div class="card-body">
-                        <canvas id="visitsChart"></canvas>
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">
+                        <canvas id="visitsChart" data-name="Page Traffic Chart"></canvas>
+                        <div class="mt-3 d-flex gap-2" data-name="Page Traffic Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
 
-                            <select class="form-select filter-value">
+                            <select class="form-select filter-value" data-name="Specific Time Selection">
                                 <!-- dynamically filled -->
                             </select>
                         </div>
@@ -130,25 +130,25 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingFour">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingFour" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                             Average Time On Page
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                    <div class="card-body">
-                        <canvas id="timeChart"></canvas>
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">
+                        <canvas id="timeChart" data-name="Time Spent on Page Chart"></canvas>
+                        <div class="mt-3 d-flex gap-2" data-name="Time Spent Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
 
-                            <select class="form-select filter-value">
+                            <select class="form-select filter-value" data-name="Specific Time Selection">
                                 <!-- dynamically filled -->
                             </select>
                         </div>
@@ -156,20 +156,20 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingFive">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingFive" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="#collapseFive">
                             Average Scroll Depth
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
-                    <div class="card-body">      
-                        <canvas id="scrollChart"></canvas>      
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">      
+                        <canvas id="scrollChart" data-name="User Scroll Activity Chart"></canvas>      
+                        <div class="mt-3 d-flex gap-2" data-name="Scroll Activity Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
@@ -182,29 +182,29 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingSix">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingSix" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
                             RageClicks
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
-                    <div class="card-body">      
-                        <canvas id="rageClickChart"></canvas>      
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">      
+                        <canvas id="rageClickChart" data-name="Frustrated Click Behavior Chart"></canvas>      
+                        <div class="mt-3 d-flex gap-2" data-name="Frustrated Click Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
 
-                            <select class="form-select filter-value">
+                            <select class="form-select filter-value" data-name="Specific Time Selection">
                                 <!-- dynamically filled -->
                             </select>
 
-                            <select class="form-select filter-amount">
+                            <select class="form-select filter-amount" data-name="Number of Results Selection">
                                 <option value="5">Top 5</option>
                                 <option value="15">Top 15</option>
                                 <option value="all">Top 30</option>
@@ -214,29 +214,29 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingSeven">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingSeven" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
                             AI Search Statistics
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
-                    <div class="card-body">      
-                        <canvas id="aiSearchChart"></canvas>      
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">      
+                        <canvas id="aiSearchChart" data-name="AI Search Activity Chart"></canvas>      
+                        <div class="mt-3 d-flex gap-2" data-name="AI Search Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
 
-                            <select class="form-select filter-value">
+                            <select class="form-select filter-value" data-name="Specific Time Selection">
                                 <!-- dynamically filled -->
                             </select>
 
-                            <select class="form-select search-filter">
+                            <select class="form-select search-filter" data-name="Search Results Filter">
                                 <option value="all">All Searches</option>
                                 <option value="zero">0 Results Only</option>
                             </select>
@@ -251,34 +251,34 @@
                 </div>
             </div>
 
-            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8">
-                <div class="card-header" id="headingEight">
+            <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
+                <div class="card-header" id="headingEight" data-name="Section Header">
                     <h2 class="mb-0">
-                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                        <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
                             Database Search Statistics
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
                 </div>
                 <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
-                    <div class="card-body">      
-                        <canvas id="dbSearchChart"></canvas>      
-                        <div class="mt-3 d-flex gap-2">
-                            <select class="form-select filter-mode">
+                    <div class="card-body" data-name="Card Content">      
+                        <canvas id="dbSearchChart" data-name="Database Search Activity Chart"></canvas>      
+                        <div class="mt-3 d-flex gap-2" data-name="Database Search Filter Options">
+                            <select class="form-select filter-mode" data-name="Time Period Selection">
                                 <option value="recent">Show Recent</option>
                                 <option value="year">Show By Year</option>
                             </select>
 
-                            <select class="form-select filter-value">
+                            <select class="form-select filter-value" data-name="Specific Time Selection">
                                 <!-- dynamically filled -->
                             </select>
 
-                            <select class="form-select search-filter">
+                            <select class="form-select search-filter" data-name="Search Results Filter">
                                 <option value="all">All Searches</option>
                                 <option value="zero">0 Results Only</option>
                             </select>
 
-                            <select class="form-select filter-amount">
+                            <select class="form-select filter-amount" data-name="Number of Results Selection">
                                 <option value="5">Top 5</option>
                                 <option value="15">Top 15</option>
                                 <option value="all">Top 30</option>
@@ -290,13 +290,13 @@
 
         </div>
 
-        <div class="text-end me-5 mb-3 info-hidden">
-            <button id="btnExport" class="btn btn-secondary mt-3">Print Expanded Charts</button>
+        <div class="text-end me-5 mb-3 info-hidden" data-name="Export Options Section">
+            <button id="btnExport" class="btn btn-secondary mt-3" data-name="Print Statistics Button">Print Expanded Charts</button>
         </div>
 
     </main>
 
-    <div id="footer" class="info-hidden"></div>
+    <div id="footer" class="info-hidden" data-name="Page Footer"></div>
 
     <script>
         fetch('../../partials/footer.html')
