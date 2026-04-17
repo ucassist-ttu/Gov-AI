@@ -57,7 +57,7 @@ async function getAIRecommendations(userPrompt) {
         // console.log("Sending response:", data);
         // res.json(data);
         
-        const servResponse = await fetch(`https://ucassist.duckdns.org/prompt`, {
+        const servResponse = await fetchApi(`/prompt`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({user_input: userPrompt})
@@ -67,10 +67,8 @@ async function getAIRecommendations(userPrompt) {
         if (!servResponse.ok) {
             throw new Error(`HTTP error! status: ${servResponse.status}`);
         }
-        // const text = await servResponse.text();
         let aiData = await servResponse.json()
-
-        console.log("RAW RESPONSE:", text);
+        console.log("RAW RESPONSE:", aiData);
 
 
         AIContainer.innerHTML = ""; //clears away loading placeholder text
@@ -130,7 +128,7 @@ async function getAIRecommendations(userPrompt) {
                 txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
             }
             // callServicePage(serviceId)
-            txtHTML +=`<button class="btn btn-link text-dark" onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${element.ID}'); window.location.href='html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            txtHTML +=`<button class="btn btn-link text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
             intCount++;
         });
 
@@ -138,7 +136,7 @@ async function getAIRecommendations(userPrompt) {
             searchType: "AI",
             timeStamp: new Date().toISOString(),
             search: userPrompt,
-            results: aiData.length(),
+            results: aiData.length,
             county: sessionStorage.getItem("currCounty"),
             checked: null
         })

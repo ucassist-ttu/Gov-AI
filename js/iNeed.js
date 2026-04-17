@@ -51,30 +51,31 @@ let sortedIDCategories = {
 }
 
 window.addEventListener('load', (event) => {
+  const container = document.getElementById("divINeedPills");
+  const pillsContainer = document.getElementById("divINeedPills");
+  const scrollLeftPills = document.getElementById("scrollLeftPills");
+  const scrollRightPills = document.getElementById("scrollRightPills");
+  const contentContainer = document.getElementById("divINeedContent");
+
+  if (!container || !pillsContainer || !scrollLeftPills || !scrollRightPills || !contentContainer) {
+    return;
+  }
+
   // gets database keywords and populates sortedIDCategories
   getUniqueKeywords()
   //populating pills
-  const container = document.getElementById("divINeedPills");
   Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
     const pill = createPills(keyword, fullword);
     container.innerHTML += pill;
   })
 
   //javascript for scroll buttons
-  const pillsContainer = document.getElementById("divINeedPills");
-  document.getElementById("scrollLeftPills").onclick = () => {
+  scrollLeftPills.onclick = () => {
     pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
   };
-  document.getElementById("scrollRightPills").onclick = () => {
+  scrollRightPills.onclick = () => {
     pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
   };
-  const contentContainer = document.getElementById("divINeedContent");
-  document.getElementById("scrollLeftContent").onclick = () => {
-    contentContainer.scrollBy({ left: -300, behavior: "smooth" });
-  };
-  document.getElementById("scrollRightContent").onclick = () => {
-    contentContainer.scrollBy({ left: 300, behavior: "smooth" });
-};
 })
 
 //EVENT LISTENER for pills (delegated to the document since pills are generated dynamically)
@@ -172,7 +173,7 @@ function createCard(service, category) {
         ${getCounties(service)}
         <h5 class="card-title">${service.NameOfService}</h5>
         <div class="mt-auto service m-0" style="margin-bottom: 15px;">
-          <button onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
+          <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
         </div>
       </div>`;
 
@@ -188,7 +189,7 @@ function createCard(service, category) {
 async function getUniqueKeywords(){
   try{
     //call database api to get all services
-    let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+    let servResponse = await fetchApi(`/services`)
     let servData = await servResponse.json()
     let arrTagList = []
 
@@ -266,12 +267,12 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = uniqueIDs.map(id => {
-      const url = `https://ucassist.duckdns.org/service?id=${id}`;
+      const url = `/service?id=${id}`;
       // console.log("[loadCardsByCategory] Fetching service ID:", id, "with URL:", url);
 
       // console.log("[loadCardsByCategory] Fetching service ID:", id);
 
-      return fetch(url)
+      return fetchApi(url)
         .then(res => {
           return res.json();
         });
@@ -319,7 +320,7 @@ function isInCounty(service){
 }
 
 
-function getCounties(service){
+export function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
@@ -368,8 +369,8 @@ function getCounties(service){
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
   console.log("ID being passed:", page_id);
-    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
-    window.location.href = `/Gov-AI/html/pages/service.html?id=${page_id}`;
+    fetchApi(`/add-monthly-view?service_id=${page_id}`)
+    window.location.href = `/html/pages/service.html?id=${page_id}`;
 }
 
 function getLogoSrc(rawLogo) {
@@ -379,7 +380,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.png`;
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.png`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
@@ -387,22 +388,25 @@ function getLogoSrc(rawLogo) {
   if (logo.startsWith("www.")) {
     return `https://${logo}`;
   }
-  return `/Gov-AI/assets/images/${logo}`;
+  return `/assets/images/${logo}`;
 }
 
-document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
-  let strDiv = `
-    <ol style="text-align:left; padding-left: 20px;">
-      <li>Select a county above to view services in your area.</li>
-      <li>Choose a category below to find what you need.</li>
-    </ol>
-  `;
-  Swal.fire({
-    title: "How to use this section.",
-    html: strDiv,
-    icon: "question"
+const btnLearnINeed = document.querySelector('#btnLearnINeed');
+if (btnLearnINeed) {
+  btnLearnINeed.addEventListener("click", (e) => {
+    let strDiv = `
+      <ol style="text-align:left; padding-left: 20px;">
+        <li>Select a county above to view services in your area.</li>
+        <li>Choose a category below to find what you need.</li>
+      </ol>
+    `;
+    Swal.fire({
+      title: "How to use this section.",
+      html: strDiv,
+      icon: "question"
+    });
   });
-})
+}
 function getCategoryDescription(category) {
   switch(category) {
     case "Crisis":
