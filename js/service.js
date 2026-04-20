@@ -1,5 +1,5 @@
 let arrRecomendedServices = []
-const defaultLogoPath = "/Gov-AI/assets/images/placeholder-img.png";
+const defaultLogoPath = "/assets/images/placeholder-img.png";
 
 function getLogoSrc(rawLogo) {
     if (typeof rawLogo !== "string") {
@@ -24,7 +24,7 @@ function getLogoSrc(rawLogo) {
         return `https://${logo}`;
     }
 
-    return `/Gov-AI/assets/images/${logo}`;
+    return `/assets/images/${logo}`;
 }
 
 const params = new URLSearchParams(window.location.search);
@@ -33,7 +33,7 @@ const serviceId = params.get('id');
 async function getServiceInformaion () {
     try{
         //Get the list of services from api
-        let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
+        let servResponse = await fetchApi(`/service?id=${serviceId}`)
         let servData = await servResponse.json()
 
         let strTagList = getTagList(servData)
@@ -215,7 +215,7 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetch(`https://ucassist.duckdns.org/recommendations?id=${serviceId}`)
+        let servResponse = await fetchApi(`/recommendations?id=${serviceId}`)
         let servData = await servResponse.json()
         arrRecomendedServices = servData
         printRecomendedServices ()

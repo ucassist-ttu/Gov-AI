@@ -597,7 +597,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch and populate data
   async function fetchAndPopulateAllData() {
     try {
-      const response = await fetch('https://ucassist.duckdns.org/services');
+      const response = await fetchApi('/services');
       const data = await response.json();
       const cities = [];
       data.forEach(service => {
@@ -614,14 +614,14 @@ document.addEventListener('DOMContentLoaded', () => {
       data.forEach(element => {
         let strKeywords = element.Keywords;
         if (typeof strKeywords === 'string') {
-          try { strKeywords = JSON.parse(strKeywords); } catch (e) { strKeywords = []; }
+          try { strKeywords = JSON.parse(strKeywords.replace(/'/g, '"')); } catch (e) { strKeywords = []; }
         }
         if (Array.isArray(strKeywords)) {
           strKeywords.forEach(tag => arrServiceType.push(tag));
         }
         let strCounties = element.CountiesAvailable;
         if (typeof strCounties === 'string') {
-          try { strCounties = JSON.parse(strCounties); } catch (e) { strCounties = []; }
+          try { strCounties = JSON.parse(strCounties.replace(/'/g, '"')); } catch (e) { strCounties = []; }
         }
         if (Array.isArray(strCounties)) {
           strCounties.forEach(county => arrCounties.push(county));
