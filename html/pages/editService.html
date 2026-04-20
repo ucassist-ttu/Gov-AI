@@ -321,7 +321,7 @@
   <div class="form-info mb-4" role="region" aria-labelledby="register-services-title" data-name="Step 4 Info Header">
     <strong id="register-services-title" class="d-block mb-1" data-name="Step 4 Title">Edit Services</strong>
     <small class="text-muted mt-1 d-block fst-italic" data-name="Step 4 Description">
-      Edit all of your services or resources your organization offers.  Anything you enter will overwrite your current information.
+      Edit all of your services or resources your organization offers.  Anything you enter will overwrite your current information and will be displayed to the public.
     </small>
   </div>
     <form id="form-step-4" aria-label="Register Services Form" novalidate data-name="Step 4 Form">
@@ -346,7 +346,7 @@
             <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" rows="4" data-name="Step 4 Service Description Input"></textarea>
           </div>
           <div class="mb-3" data-name="Step 4 Service Criteria Section">
-            <label class="fw-semibold dark-navy" data-name="Step 4 Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Step 4 Service Criteria Note">This will be displayed to the customer.</small></label>
+            <label class="fw-semibold dark-navy" data-name="Step 4 Service Criteria Label">Service Eligibility</label>
             <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 Service Criteria Input" />
           </div>
           <div class="mb-3" data-name="Step 4 Counties Section">
@@ -441,6 +441,10 @@
                     </div>
                   </div>
               </div>
+    <div class="mb-3" data-name="Service Website Section">
+      <label class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
+      <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
+    </div>
 
   <!-- Hours Section -->
    <div class="mb-3" data-name="Step 4 Hours Section">
@@ -500,7 +504,7 @@
             <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Step 4 New Service Description Input"></textarea>
           </div>
           <div class="mb-3" data-name="Step 4 New Service Criteria Section">
-            <label class="fw-semibold dark-navy" data-name="Step 4 New Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Step 4 New Service Criteria Note">This will be displayed to the customer.</small></label>
+            <label class="fw-semibold dark-navy" data-name="Step 4 New Service Criteria Label">Service Eligibility</label>
             <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Step 4 New Service Criteria Input" />
           </div>
           <div class="mb-3" data-name="Step 4 New Counties Section">
@@ -603,6 +607,11 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="mb-3" data-name="Service Website Section">
+    <label class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
+    <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
   </div>
 
   <!-- Hours Section -->
