@@ -55,3 +55,27 @@ if ($path === '/add-monthly-view' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode(['success' => $success]);
     exit;
 }
+if ($path === '/page-analytics' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header(header: 'Content-Type: application/json');
+    echo json_encode(value: get_page_analytics());
+    exit;
+}
+if ($path === '/add-page-analytics' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $success = add_page_analytics(request_payload());
+
+    header(header: 'Content-Type: application/json');
+    echo json_encode(['success' => $success]);
+    exit;
+}
+if ($path === '/search-analytics' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header(header: 'Content-Type: application/json');
+    echo json_encode(value: get_search_analytics());
+    exit;
+}
+if ($path === '/add-search-analytics' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $success = add_search_analytics(request_payload());
+
+    header(header: 'Content-Type: application/json');
+    echo json_encode(['success' => $success]);
+    exit;
+}

@@ -1,6 +1,8 @@
 <?php
 
 $services_table = 'tblServices';
+$page_analytics_table = 'tblPageAnalytics';
+$search_analytics_table = 'tblSearchAnalytics';
 
 function db(): PDO
 {
@@ -52,6 +54,80 @@ function add_monthly_views(int $service_id)
     $pdo = db();
     $stmt = $pdo->prepare('INSERT INTO tblMonthlyViews (service_id) VALUES (:service_id)');
     $stmt->execute([':service_id' => $service_id]);
+    return true;
+}
+
+function get_page_analytics(): array
+{
+    global $page_analytics_table;
+    $pdo = db();
+
+    $rows = $pdo->query(query: "SELECT * FROM {$page_analytics_table}");
+    if ($rows === false)
+        return [];
+
+    return $rows ? $rows->fetchAll(mode: PDO::FETCH_ASSOC) : [];
+}
+
+function add_page_analytics(array $page_analytics): bool
+{
+    global $page_analytics_table;
+    $pdo = db();
+
+    $stmt = $pdo->prepare(
+        "INSERT INTO {$page_analytics_table}
+        (page, timeViewed, timeLeft, timeSpent, maxScoll, pageViews, clickLogs, county)
+        VALUES
+        (:page, :timeViewed, :timeLeft, :timeSpent, :maxScoll, :pageViews, :clickLogs, :county)"
+    );
+
+    $stmt->execute([
+        ':page' => $page_analytics['page'] ?? null,
+        ':timeViewed' => $page_analytics['timeViewed'] ?? null,
+        ':timeLeft' => $page_analytics['timeLeft'] ?? null,
+        ':timeSpent' => $page_analytics['timeSpent'] ?? null,
+        ':maxScoll' => $page_analytics['maxScoll'] ?? null,
+        ':pageViews' => $page_analytics['pageViews'] ?? null,
+        ':clickLogs' => isset($page_analytics['clickLogs']) ? json_encode($page_analytics['clickLogs']) : null,
+        ':county' => $page_analytics['county'] ?? null,
+    ]);
+
+    return true;
+}
+
+function get_search_analytics(): array
+{
+    global $search_analytics_table;
+    $pdo = db();
+
+    $rows = $pdo->query(query: "SELECT * FROM {$search_analytics_table}");
+    if ($rows === false)
+        return [];
+
+    return $rows ? $rows->fetchAll(mode: PDO::FETCH_ASSOC) : [];
+}
+
+function add_search_analytics(array $search_analytics): bool
+{
+    global $search_analytics_table;
+    $pdo = db();
+
+    $stmt = $pdo->prepare(
+        "INSERT INTO {$search_analytics_table}
+        (searchType, timeStamp, search, results, county, checked)
+        VALUES
+        (:searchType, :timeStamp, :search, :results, :county, :checked)"
+    );
+
+    $stmt->execute([
+        ':searchType' => $search_analytics['searchType'] ?? null,
+        ':timeStamp' => $search_analytics['timeStamp'] ?? null,
+        ':search' => $search_analytics['search'] ?? null,
+        ':results' => $search_analytics['results'] ?? null,
+        ':county' => $search_analytics['county'] ?? null,
+        ':checked' => isset($search_analytics['checked']) ? json_encode($search_analytics['checked']) : null,
+    ]);
+
     return true;
 }
 

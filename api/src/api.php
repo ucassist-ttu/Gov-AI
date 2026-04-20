@@ -1,8 +1,19 @@
 <?php declare(strict_types=1);
 
+function request_payload(): array
+{
+  static $payload = null;
+
+  if ($payload === null) {
+    $payload = json_decode(json: file_get_contents(filename: 'php://input'), associative: true) ?? [];
+  }
+
+  return is_array($payload) ? $payload : [];
+}
+
 function request_body(string $key): mixed
 {
-  return json_decode(json: file_get_contents(filename: 'php://input'), associative: true)[$key] ?? '';
+  return request_payload()[$key] ?? '';
 }
 
 function prompt_db(): string
