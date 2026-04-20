@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNAP Benefits</title>
-    <link rel="icon" type="image" href="/assets/images/cropped-Seal_JPEG-32x32.jpg">
+    <link rel="icon" type="image" href="../../assets/images/cropped-Seal_JPEG-32x32.jpg">
     <!-- bootstrap library and custom css link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -13,12 +13,12 @@
 <body>
     <div id="navbar"></div>
     <main>
-        <div class="overflow-visible">
-            <div class="p-4 dark_navy d-flex align-items-center justify-content-start position-relative" data-name="SNAP Benefits Header">
-            <h1 class="ps-5 fw-bold white" data-name="SNAP Benefits Title">SNAP Benefits</h1>
+        <div class="position-relative">
+            <div class="d-flex dark_navy p-4" data-name="SNAP Benefits Header">
+            <h1 class="ps-md-5 fw-bold white" data-name="SNAP Benefits Title">SNAP Benefits</h1>
                 <nav aria-label="breadcrumb" class="position-absolute top-0 end-0 me-3 mt-2 breadcrumb-top-right" data-name="SNAP Benefits Breadcrumb Navigation">
                 <ol class="breadcrumb mb-0" data-name="SNAP Benefits Breadcrumb List">
-                   <li class="breadcrumb-item fs-6" data-name="SNAP Benefits Breadcrumb Home Item"><a href="/../Gov-AI/index.html" class="text-white" data-name="SNAP Benefits Breadcrumb Home Link">Home</a></li>
+                   <li class="breadcrumb-item fs-6" data-name="SNAP Benefits Breadcrumb Home Item"><a href="/index.html" class="text-white" data-name="SNAP Benefits Breadcrumb Home Link">Home</a></li>
                    <li class="text-white mx-2 fs-6" data-name="SNAP Benefits Breadcrumb Separator">›</li>                   
                    <li class="breadcrumb-item active text-white fs-6" aria-current="page" data-name="SNAP Benefits Breadcrumb Current Item">SNAP Benefits</li>
                 </ol>
@@ -33,30 +33,21 @@
                 <a class="clr-dark-navy text-decoration-underline" href="">Check Here</a>
                 </div> -->
             </div>
-            <div class="h4 text-start ps-4 px-2" data-name="SNAP Resources Description"> As a SNAP recipient, you can also take advantage of the resources below.</div>
-            <div class="row d-flex pt-5" data-name="Benefits Tab Row">
+            <div class="ps-3" data-name="SNAP Resources Description">
+                <h4 class="text-start ps-5 px-3"> As a SNAP recipient, you can also take advantage of the resources below.</h4>
+            </div>
+            <div class="row d-flex justify-content-center py-5 " data-name="SNAP Benefits Tab Row"><!-- <div class="row d-flex pt-5"> -->
                 <!--navigation tabs-->
-                <div class="col-sm-12 col-md-5 col-lg-4" data-name="Benefits Tab Column">
-                    <ul class="nav nav-tabs p-0" id="snap-pills-tabs" role="tablist" aria-orientation="vertical" data-name="Benefits Tab List">
-                        <li class="nav-item" role="presentation" data-name="Phone and Wireless Plan Tab Item">
-                            <button type="button" class="nav-link active clr-dark-navy mx-3 mb-0" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone" data-name="Phone and Wireless Plan Tab Button">Phone & Wireless Plans</button>
-                        </li>
-                        <li class="nav-item" role="presentation" data-name="Internet Assistance Tab Item">
-                            <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet" data-name="Internet Assistance Tab Button">Internet Assistance</button>
-                        </li>
-                        <li class="nav-item" role="presentation" data-name="Utility and Health Programs Tab Item">
-                            <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities" data-name="Utility and Health Programs Tab Button">Utility & Health Programs</button>
-                        </li>
-                        <li class="nav-item" role="presentation" data-name="Family and Health Programs Tab Item">
-                            <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health" data-name="Family and Health Programs Tab Button">Family & Health Programs</button>
-                        </li>
-                        <li class="nav-item" role="presentation" data-name="Discounts and Memberships Tab Item">
-                            <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts" data-name="Discounts and Memberships Tab Button">Discounts & Memberships</button>
-                        </li>
-                        <!-- <li class="nav-item" role="presentation">
-                            <button type="button" class="nav-link clr-dark-navy mx-3 mb-0" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button>
-                        </li> -->
-                    </ul>
+                <div class="col-sm-12 col-md-3 col-lg-4"  data-name="SNAP Benefits Tab Column">
+                    <!-- <ul class="nav nav-tabs p-0" id="snap-pills-tabs" role="tablist" aria-orientation="vertical"> -->
+                    <div class="nav flex-column nav-pills" id="snap-pills-tabs" role="tablist" aria-orientation="vertical"  data-name="SNAP Benefits Tab List">
+                        <button type="button" class="nav-link active fs-4 clr-dark-navy rounded-top-2 rounded-bottom-0 text-start mx-3 mb-0" id="snap-pills-tab-phone" data-bs-toggle="pill" data-bs-target="#snap-pills-content-phone" role="tab" aria-controls="snap-pills-content-phone" data-name="Phone and Wireless Plan Tab Button">Phone & Wireless Plans</button>
+                        <button type="button" class="nav-link fs-4 clr-dark-navy rounded-top-0 rounded-bottom-0 text-start mx-3 mb-0" id="snap-pills-tab-internet" data-bs-toggle="pill" data-bs-target="#snap-pills-content-internet" role="tab" aria-controls="snap-pills-content-internet"  data-name="Internet Assistance Tab Button">Internet Assistance</button>
+                        <button type="button" class="nav-link fs-4 clr-dark-navy rounded-top-0 rounded-bottom-0 text-start mx-3 mb-0" id="snap-pills-tab-utilities" data-bs-toggle="pill" data-bs-target="#snap-pills-content-utilities" role="tab" aria-controls="snap-pills-content-utilities"  data-name="Utility and Health Programs Tab Button">Utility & Health Programs</button>
+                        <button type="button" class="nav-link fs-4 clr-dark-navy rounded-top-0 rounded-bottom-0 text-start mx-3 mb-0" id="snap-pills-tab-health" data-bs-toggle="pill" data-bs-target="#snap-pills-content-health" role="tab" aria-controls="snap-pills-content-health" data-name="Family and Health Programs Tab Button">Family & Health Programs</button>
+                        <button type="button" class="nav-link fs-4 clr-dark-navy rounded-top-0 rounded-bottom-2 text-start mx-3 mb-0" id="snap-pills-tab-discounts" data-bs-toggle="pill" data-bs-target="#snap-pills-content-discounts" role="tab" aria-controls="snap-pills-content-discounts" data-name="Discounts and Memberships Tab Button">Discounts & Memberships</button>
+                        <!-- <button type="button" class="nav-link fs-4 clr-dark-navy text-start mx-3 mb-0" id="snap-pills-tab-misc" data-bs-toggle="pill" data-bs-target="#snap-pills-content-misc" role="tab" aria-controls="snap-pills-content-misc">Other Assistance</button> -->
+                    </div>
                 </div>
                 <!--tab content-->
                 <div class="col-sm-12 col-md-7 col-lg-7 px-5 py-5 py-md-0" data-name="Tab Content Display Column">

@@ -54,7 +54,7 @@ let colors = [
 async function getServices() {
     try{
         //Get the list of services from api
-        let servResponse = await fetch(`https://ucassist.duckdns.org/monthly-views`)
+        let servResponse = await fetchApi(`/monthly-views`)
         servData = await servResponse.json()
 
         getCounts ()
@@ -86,7 +86,7 @@ function createColorList (arrServiceTypes) {
 function getCountyList(service) {
     strCounties = service.CountiesAvailable
     if (typeof strCounties === 'string') {
-        strCounties = JSON.parse(strCounties);
+        strCounties = JSON.parse(strCounties.replace(/'/g, '"'));
     }
 
     // Returns an array of strCounties
@@ -133,11 +133,11 @@ function createCountyClicksList(countyFilterText, servData) {
         allCounty.push({'id': id, 'value': count})
 
         if (typeof tags === "string") {
-            try { tags = JSON.parse(tags); } catch { tags = []; }
+            try { tags = JSON.parse(tags.replace(/'/g, '"')); } catch { tags = []; }
         }
 
         if (typeof counties === "string") {
-            try { counties = JSON.parse(counties); } catch { counties = []; }
+            try { counties = JSON.parse(counties.replace(/'/g, '"')); } catch { counties = []; }
         }
 
         if (search && Array.isArray(counties)) {
@@ -400,7 +400,7 @@ function getCounts () {
             let tags = service.Keywords;
 
             if (typeof tags === 'string') {
-                tags = JSON.parse(tags);
+                tags = JSON.parse(tags.replace(/'/g, '"'));
             }
 
             const views = service.view_count
@@ -436,7 +436,7 @@ function getCounts () {
 }
 async function getServiceName(serviceId, serviceCount, order) {
     try{
-        let servResponse = await fetch(`https://ucassist.duckdns.org/service?id=${serviceId}`)
+        let servResponse = await fetchApi(`/service?id=${serviceId}`)
         newData = await servResponse.json()
         serviceName = newData.NameOfService
         if(serviceCount == 1) {
