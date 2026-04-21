@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <title>Referral SubmissionReview</title>
+</head>
+<body class="white">
+  <div id="navbar"></div>
+  <main>
+    <div class="overflow-visible">
+      <div class="d-flex dark_navy p-4" data-name="Referral Form Header">
+        <h1 class="ps-md-4 fw-bold white" data-name="Referral Form Title">Referral Submission Review</h1>               
+      </div>
+    </div>
+    <div class="container-fluid p-4" data-name="Referral Form Main Container">
+      <div class="row justify-content-left" data-name="Referral Form Row">
+        <div class="col-12 col-lg-6 px-3 px-lg-4" data-name="Referral Form Column">
+          <p class="mb-4" data-name="Referral Form Instructions">Someone has referred a service provider. Please review the information to contact the provider.</p>
+
+      <form novalidate data-name="Referral Form">
+      <div class="mb-3" data-name="First Name Section">
+        <label for="firstName" class="fw-semibold dark-navy required" data-name="First Name Label">First Name</label>
+        <input type="text" id="firstName" name="firstName" class="form-control border-2 rounded p-2 px-3"  data-name="First Name Input" />
+      </div>
+
+    <div class="mb-3" data-name="Last Name Section">
+      <label for="lastName" class="fw-semibold dark-navy required" data-name="Last Name Label">Last Name</label>
+      <input type="text" id="lastName" name="lastName" class="form-control border-2 rounded p-2 px-3"  data-name="Last Name Input" />
+    </div>
+
+    <div class="mb-3" data-name="Email Section">
+      <label for="email" class="fw-semibold dark-navy required" data-name="Email Label">Email</label>
+      <input type="email" id="email" name="email" class="form-control border-2 rounded p-2 px-3"  data-name="Email Input" />
+    </div>
+
+    <div class="mb-3" data-name="Phone Section">
+      <label for="phone" class="fw-semibold dark-navy required" data-name="Phone Label">Phone Number</label>
+      <input type="tel" id="phone" name="phone" class="form-control border-2 rounded p-2 px-3"  data-name="Phone Input" />
+    </div>
+    
+    <div class="mb-3" data-name="Message Section">
+      <label for="message" class="fw-semibold dark-navy" data-name="Message Label">Message</label>
+      <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider name and contact info that you are wanting to refer" data-name="Message Input"></textarea>
+    </div>
+
+    <div class="d-flex gap-3 mt-3" data-name="Referral Form Actions">
+      <button type="submit" class="submit-btn " data-name="Submit Referral Button">Next</button>
+    </div>
+  </form>
+</div>
+</main>                 
+<div id="footer" data-name="Page Footer"></div>
+
+    <script>
+        fetch('../../partials/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+        fetch('../../partials/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/js/referral_form.js"></script>
+    <script src="../../js/analytics.js"></script>
+    <script src="../../js/navbar.js"></script>
+</body>
+</html>
