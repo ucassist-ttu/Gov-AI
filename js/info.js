@@ -777,7 +777,12 @@ function extractKeywords(search) {
         .toLowerCase()
         .replace(/[^\w\s]/g, "") // remove punctuation
         .split(/\s+/)
-        .filter(word => word && !stopWords.has(word));
+        .filter(word => word && !stopWords.has(word))
+        .map(capitalizeFirstLetter);
+}
+function capitalizeFirstLetter(word) {
+  if (!word) return word; // Handle empty strings
+  return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 function getWordCounts(filteredMonths, type, zeroOnly, amount) {
@@ -839,3 +844,113 @@ collapses.forEach(el => {
         el.parentElement.classList.add('info-hidden');
     });
 });
+
+// Learn Chart Buttons - SweetAlert Functions
+
+function createLearnButtonHandler(buttonId, title, content) {
+    const button = document.querySelector(buttonId);
+    if (button) {
+        button.addEventListener("click", (e) => {
+            Swal.fire({
+                title: title,
+                html: content,
+                icon: "question"
+            });
+        });
+    }
+}
+
+// 1. Services Viewed Per County
+createLearnButtonHandler('#btnLearnPieChart', 'How to use County Chart', 
+    `
+        <h5>This chart shows in which counties are services being used the most</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Click the names of the county to remove or add them to the chart</li>
+        </ol>
+    `
+);
+
+// 2. Service Type Viewed
+createLearnButtonHandler('#btnLearnBarChart', 'How to use Service Type Chart', 
+    `
+        <h5>This chart shows which types of services are being used the most</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Select a county from the drop down, or select all counties to view that county's statistics</li>
+        <li>Select to only view the 10 most common viewed service type, or all</li>
+        </ol>
+    `
+);
+
+// 3. Page Visits
+createLearnButtonHandler('#btnLearnVisitsChart', 'How to use Page Visits Chart', 
+    `
+        <h5>This chart shows how many times each page is being visited within the site</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Click the names of the page to remove or add them to the chart</li>
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        </ol>
+    `
+);
+
+// 4. Average Time On Page
+createLearnButtonHandler('#btnLearnTimeChart', 'How to use Time Spent Chart',
+    `
+        <h5>This chart shows how long each page is being visited within the site (on average)</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Click the names of the page to remove or add them to the chart</li>
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        </ol>
+    `
+);
+
+// 5. Average Scroll Depth
+createLearnButtonHandler('#btnLearnScrollChart', 'How to use Scroll Depth Chart',
+    `
+        <h5>This chart shows how far down users scroll on each page within the site (on average)</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Click the names of the page to remove or add them to the chart</li>
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        </ol>
+    `
+);
+
+// 6. RageClicks
+createLearnButtonHandler('#btnLearnRageClickChart', 'How to use Rage Clicks Chart', 
+    `
+        <h5>This chart shows which elements are being clicked rapidly within the website</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Each bar within the chart has the name of the page, as well as the name of the element being clicked on that page</li>
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        <li>Select how many bars you would like to see on the chart</li>
+        </ol>
+    `
+);
+
+// 7. AI Search Statistics
+createLearnButtonHandler('#btnLearnAiSearchChart', 'How to use AI Search Chart',
+    `
+        <h5>This chart shows the most searched terms within the find services page</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        <li>Select how many bars you would like to see on the chart</li>
+        </ol>
+    `
+);
+
+// 8. Database Search Statistics
+createLearnButtonHandler('#btnLearnDbSearchChart', 'How to use Database Search Chart',
+    `
+        <h5>This chart shows the most searched terms within the AI search bar</h4>
+        <ol style="text-align:left; padding-left: 20px;">
+        <li>Select whether you would like to view recent months, or view statistics for a specific year</li>
+        <li>Select the timeframe for which you would like to view</li>
+        <li>Select how many bars you would like to see on the chart</li>
+        </ol>
+    `
+);
+
