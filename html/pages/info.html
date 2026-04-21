@@ -27,13 +27,14 @@
         <div id="accordion" class="mt-5 text-center" data-name="Statistics Sections">
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingOne" data-name="Section Header">
+                <div class="card-header position-relative" id="headingOne" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Services Viewed Per County
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnPieChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Services Per County Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body col-12 col-md-6 mx-auto" data-name="Card Content">
@@ -43,13 +44,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingTwo">
+                <div class="card-header position-relative" id="headingTwo">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                             Service Type Viewed
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnBarChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Service Types Bar Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">
@@ -105,13 +107,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingThree" data-name="Section Header">
+                <div class="card-header position-relative" id="headingThree" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                             Page Visits
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnVisitsChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Page Traffic Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">
@@ -131,13 +134,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingFour" data-name="Section Header">
+                <div class="card-header position-relative" id="headingFour" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                             Average Time On Page
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnTimeChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Time Spent on Page Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">
@@ -157,13 +161,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingFive" data-name="Section Header">
+                <div class="card-header position-relative" id="headingFive" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="#collapseFive">
                             Average Scroll Depth
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnScrollChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn User Scroll Activity Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">      
@@ -183,13 +188,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingSix" data-name="Section Header">
+                <div class="card-header position-relative" id="headingSix" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
                             RageClicks
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnRageClickChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Frustrated Click Behavior Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">      
@@ -215,13 +221,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingSeven" data-name="Section Header">
+                <div class="card-header position-relative" id="headingSeven" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
                             AI Search Statistics
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnAiSearchChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn AI Search Activity Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">      
@@ -252,13 +259,14 @@
             </div>
 
             <div class="card mb-3 mx-auto info-hidden col-12 col-md-8" data-name="Statistics Card">
-                <div class="card-header" id="headingEight" data-name="Section Header">
+                <div class="card-header position-relative" id="headingEight" data-name="Section Header">
                     <h2 class="mb-0">
                         <button class="accordion-button collapsed text-dark shadow-none d-flex justify-content-between align-items-center" data-name="Expand/Collapse Button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
                             Database Search Statistics
                             <i class="bi bi-chevron-down ms-2"></i>
                         </button>
                     </h2>
+                    <button id="btnLearnDbSearchChart" class="info-hidden btn btn-link position-absolute end-0 top-50 translate-middle-y me-3" style="border: none; font-size: 25px;" data-name="Learn Database Search Activity Chart Button"><i class="bi bi-question-circle" data-name="Question Circle Icon"></i></button>
                 </div>
                 <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
                     <div class="card-body" data-name="Card Content">      
