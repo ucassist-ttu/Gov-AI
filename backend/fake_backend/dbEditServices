@@ -1,0 +1,27 @@
+const dbEditServices = {
+//   ...referralBE.find(entry => entry.id === 2),
+
+    id: 'S2',
+
+  // --- UPDATED ORG INFO ---
+  company_name: "Hope Housing & Support Services",
+  organization_description: "Provides housing assistance, case management, and long-term stability programs.",
+
+  // --- UPDATED CONTACT ---
+  primary_name: "David Ramirez",
+  primary_email: "d.ramirez@hopehousing.org",
+
+  // --- UPDATED SERVICE ---
+  service_name: "Expanded Rental & Utility Assistance",
+  service_description: "Offers rental, utility, and emergency housing assistance for qualifying individuals.",
+  service_criteria: "Must demonstrate financial hardship and reside in Upper Cumberland region.",
+
+  // --- UPDATED ADDRESS ---
+  service_address_street: "789 New Hope Ave",
+  service_zip: "38502",
+
+  // --- UPDATED FILE ---
+  logo_file: "hopehousing_updated_logo.png"
+};
+
+export default dbEditServices;

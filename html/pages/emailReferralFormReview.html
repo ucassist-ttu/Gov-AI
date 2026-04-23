@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <ent="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
@@ -13,49 +13,48 @@
   <div id="navbar"></div>
   <main>
     <div class="overflow-visible">
-      <div class="d-flex dark_navy p-4" Header">
-        <h1 class="ps-md-4 fw-bold white" Title">Referral Submission Review</h1>               
+      <div class="d-flex dark_navy p-4">
+        <h1 class="ps-md-4 fw-bold white">Referral Submission Review</h1>               
       </div>
     </div>
     <div class="container-fluid p-4">
       <div class="row justify-content-left">
         <div class="col-12 col-lg-6 px-3 px-lg-4">
           <p class="mb-4">Someone has referred a service provider. Please review the information to contact the provider.</p>
-
       <form novalidate >
       <div class="mb-3">
         <label for="firstName" class="fw-semibold dark-navy required">First Name</label>
-        <input type="text" id="firstName" class="form-control border-2 rounded p-2 px-3" placeholder="Enter your first name" />
+        <input type="text" id="emailFirstName" class="form-control border-2 rounded p-2 px-3" placeholder="Ashley" aria-label="Disabled input example" disabled/>
       </div>
 
-    <div class="mb-3" ion">
+    <div class="mb-3">
       <label for="lastName" class="fw-semibold dark-navy required">Last Name</label>
-      <input type="text" id="lastName" class="form-control border-2 rounded p-2 px-3" placeholder="Enter your last name" />
+      <input type="text" id="emailLastName" class="form-control border-2 rounded p-2 px-3" placeholder="Porter" aria-label="Disabled input example" disabled/>
     </div>
 
     <div class="mb-3" >
       <label for="email" class="fw-semibold dark-navy required" mail></label>
-      <input type="email" id="email" class="form-control border-2 rounded p-2 px-3" placeholder="Enter your email" >
+      <input type="email" id="emailEmail" class="form-control border-2 rounded p-2 px-3" placeholder="ashley.porter@example.com" aria-label="Disabled input example" disabled/    >
     </div>
 
     <div class="mb-3" >
       <label for="phone" class="fw-semibold dark-navy">Phone Number</label>
-      <input type="tel" id="phone" class="form-control border-2 rounded p-2 px-3" placeholder="Enter your phone number" >
+      <input type="tel" id="emailPhone" class="form-control border-2 rounded p-2 px-3" placeholder="(555) 123-4567" aria-label="Disabled input example" disabled/>
     </div>
     
     <div class="mb-3">
       <label for="message" class="fw-semibold dark-navy" >Message</label>
-      <textarea id="message" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="Enter the provider that you are wanting to refer" ></textarea>
+      <textarea id="emailMessage" rows="4" class="form-control border-2 rounded p-2 px-3" placeholder="I would like to refer Olivia Henry's Turoring Services. You can reach her at (123)456-7890." aria-label="Disabled input example" disabled></textarea>
     </div>
 
     <div class="d-flex gap-3 mt-3">
-      <button type="submit" class="submit-btn">Next</button>
+      <button id="btnDeleteReferral"type="submit" class="submit-btn">Delete Referral</button>
     </div>
   </form>
 </div>
 </main>                 
 <div id="footer"></div>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         fetch('../../partials/footer.html')
             .then(response => response.text())
@@ -63,10 +62,21 @@
         fetch('../../partials/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
+            
+        document.querySelector('#btnDeleteReferral').addEventListener("click", (e) => {
+            Swal.fire({
+                title: "Wait!",
+                text: "Once deleted, this referral cannot be recovered. Are you sure you want to delete this referral?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="/js/referral_form.js"></script>
+    <script src="../../js/emailReferralFormReview.js" type="module"></script>
     <script src="../../js/analytics.js"></script>
     <script src="../../js/navbar.js"></script>
 </body>
