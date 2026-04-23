@@ -26,7 +26,6 @@
         </nav>
       </div>
     </div>
-  <div class="px-4 px-md-5">
   <!-- Progress bar -->
   <nav aria-label="Progress" class="mb-4 w-100">
     <div class="progress-steps" role="list" aria-label="progress steps">
@@ -37,7 +36,7 @@
       <div class="progress-step" role="listitem" tabindex="0" aria-label="Step 3">3</div>
     </div>
   </nav>
-  
+  <div class="container-fluid p-4" data-name="Register Service Main Container">
     <div class="row justify-content-left">
     <div class="col-12 col-lg-6 px-3 px-lg-4">
     <!-- Step 1: Organization Information - Public -->
@@ -45,7 +44,7 @@
       <div class="mb-4" role="region" aria-labelledby="public-info-title" data-name="Organization Information Public Info">
         <strong id="public-info-title" class="d-block mb-1 fw-bold" data-name="Organization Information Public Title">Organization Information - Public</strong>
         <small class="text-muted d-block mt-1 fst-italic" data-name="Organization Information Public Description">
-          This information will be displayed to customers searching for resources.
+          This information will be displayed publicly for anyone searching for resources.
         </small>
       </div>
       <form id="form-step-1" novalidate data-name="Organization Information Public Form">
@@ -142,6 +141,10 @@
             <div id="divKeywordsReg1" class="form-check" data-name="Organization Keywords List"></div>
           </div>
         </div>
+        <div class="mb-3" data-name="Service Website Section">
+          <label class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
+          <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
+        </div>
         <div class="mb-3" data-name="Organization Hours Section">
           <div class="time-ranges" data-name="Organization Hours Input Wrapper">
             <label class="fw-semibold dark-navy" data-name="Organization Hours Label">Hours of Operation <span class="text-danger">*</span></label>
@@ -214,7 +217,7 @@
   <div class="form-info mb-4" role="region" aria-labelledby="private-info-title" data-name="Organization Information Private Info">
     <strong id="private-info-title" class="d-block mb-1" data-name="Organization Information Private Title">Organization Information - Private</strong>
     <small class="text-muted mt-1 d-block fst-italic" data-name="Organization Information Private Description">
-      This information is for UCAssist staff to reach out to you and will not be displayed to the customers.
+      This information is for USAssist staff to reach out to you and will not be displayed to the public.
     </small>
   </div>
 
@@ -282,7 +285,7 @@
           <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Service Description Input"></textarea>
         </div>
         <div class="mb-3" data-name="Service Criteria Section">
-          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Service Criteria <small class="text-muted d-block mt-1 fst-italic" data-name="Service Criteria Information">This will be displayed to the customer.</small></label>
+          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Service Eligibility</label>
           <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Service Criteria Input" />
         </div>
         <div class="mb-3" data-name="Service Counties Offered Section">
@@ -386,6 +389,10 @@
     </div>
   </div>
 </div>
+<div class="mb-3" data-name="Service Website Section">
+    <label class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
+    <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
+  </div>
 
 <!-- Hours Section -->
 <div class="checkbox mb-3" style="padding-left: 0;" data-name="Service Hours Override Option">
@@ -437,6 +444,7 @@
         <button type="submit" class="submit-btn" data-name="Submit Registration Button">Submit</button>
         <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 2 Button">Previous</button>
       </div>
+    </div>
     </div>
   </form>
 </section>

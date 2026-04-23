@@ -637,7 +637,7 @@ document.querySelector("#btnSeniorServices").addEventListener("click", () => {
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
                         </div>
                         <div class="col pe-0"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-up-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-up-fill"></i>
                         </div>
                     </div>`;
     } else {
@@ -647,7 +647,7 @@ document.querySelector("#btnSeniorServices").addEventListener("click", () => {
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
                         </div>
                         <div class="col pe-0"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>`;
     }

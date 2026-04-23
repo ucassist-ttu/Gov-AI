@@ -19,7 +19,7 @@
         <div id="overlay" data-name="Search Overlay"></div>
         <div class="position-relative" data-name="Hero Section">
             <!-- crisis tag -->
-            <button class="position-absolute z-1 end-0 py-3 px-5 red rounded-bottom border-0" data-name="Crisis Tag Title"><a class="white text-decoration-none" href="/html/pages/crisis.html" data-name="Crisis Hotlines Link">Crisis Hotlines</a></button>
+            <button class="position-absolute z-1 end-0 py-4 px-5 red rounded-bottom border-0" data-name="Crisis Tag Title"><a class="white text-decoration-none" href="/html/pages/crisis.html" data-name="Crisis Hotlines Link">Crisis Hotlines</a></button>
 
             <!-- carousel -->
             <div id="countyCarousel" data-name="Carousel Banner"></div>
@@ -211,7 +211,7 @@
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;" data-name="Senior Services Icon"></i> 
                         </div>
                         <div class="col pe-0" data-name="Senior Services Text Col"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
@@ -221,7 +221,7 @@
                     <div id="divSeniorServices" class="form-check" data-name="Senior Services List">
                         <div class="checkbox" data-name="Seniors Checkbox Div">
                             <input type="checkbox" class="form-check-input" id="seniors-checkbox" value="seniors" data-name="Seniors Checkbox" />
-                            <label class="form-check-label" for="seniors-checkbox" data-name="Seniors Label">Seniors</label>
+                            <label class="form-check-label" for="seniors-checkbox" data-name="Seniors Label">Older Persons</label>
                         </div>
                         <div class="checkbox" data-name="Veterans Checkbox Div">
                             <input type="checkbox" class="form-check-input" id="veterans-checkbox" value="veterans" data-name="Veterans Checkbox" />
@@ -430,7 +430,8 @@
 
                 const script = document.createElement('script');
                 script.src = 'js/indexCarousel.js';
-                script.type = 'text/javascript';
+                // script.type = 'text/javascript';
+                script.type = 'module';
                 document.body.appendChild(script);
             });
         fetch('partials/iNeed.html')
