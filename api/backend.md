@@ -2,19 +2,25 @@
 
 ## Overview
 
-The backend now lives under `api/`. The entrypoint is `api/index.php`, which loads environment variables from `api/.env`, connects to either the local SQLite database or the production MySQL database, and exposes a small set of JSON endpoints.
+The backend lives under `api/`. The entrypoint is `api/index.php`, which loads environment variables from `api/.env`, connects to either the local SQLite database or the production MySQL database, and exposes the current JSON endpoints.
+
+In the current frontend, browser requests usually go through `js/api.js`, which calls:
+
+`/api/index.php?route=/your-endpoint`
+
+The route list below describes the logical route values such as `/services` or `/referral`.
 
 ## File Layout
 
 - `api/index.php`: Route handling for all public endpoints.
 - `api/src/loadenv.php`: Lightweight `.env` loader.
-- `api/src/database.php`: Database connection logic and query helpers.
-- `api/src/api.php`: Prompt/recommendation helpers that build Gemini prompts from service data.
+- `api/src/database.php`: Database connection logic and persistence helpers.
+- `api/src/api.php`: Request helpers plus prompt/recommendation helpers that build Gemini prompts from service data.
 - `api/src/gemini.php`: Raw Gemini API call wrapper.
 - `api/src/distance.php`: Haversine distance helper. Present in the codebase, but not currently wired into any route.
 - `api/src/UCAssist.db`: Local SQLite database used when the server is running on `localhost` or `127.0.0.1`.
 
-## API Endpoints
+## Core Endpoints
 
 - `POST /prompt`
   - Body: JSON `{"user_input": "<text>"}`
@@ -38,18 +44,57 @@ The backend now lives under `api/`. The entrypoint is `api/index.php`, which loa
   - Query param: `service_id`
   - Response: JSON object like `{"success": true}` after inserting a row into `tblMonthlyViews`.
 
-## Service Object Shape
+- `GET /page-analytics`
+  - Response: JSON array of rows from `tblPageAnalytics`
 
-The service payloads come directly from `tblServices`. The current checked-in SQLite schema includes these columns:
+- `POST /add-page-analytics`
+  - Body: JSON with fields such as `page`, `timeViewed`, `timeLeft`, `timeSpent`, `maxScoll`, `pageViews`, `clickLogs`, `county`
+  - Response: JSON object like `{"success": true}`
 
-`ID`, `OrganizationName`, `OrganizationDescription`, `Website`, `MinorityOwned`, `FaithBasedProvider`, `NonProfitProvider`, `ProviderLogo`, `NameOfService`, `ServiceDescription`, `ProgramCriteria`, `Keywords`, `CountiesAvailable`, `TelephoneContact`, `EmailContact`, `ServiceAddress`, `CityStateZip`, `HoursOfOperation`
+- `GET /search-analytics`
+  - Response: JSON array of rows from `tblSearchAnalytics`
+
+- `POST /add-search-analytics`
+  - Body: JSON with fields such as `searchType`, `timeStamp`, `search`, `results`, `county`, `checked`
+  - Response: JSON object like `{"success": true}`
+
+## EmailJS Branch Replacements
+
+These are the only fake-backend replacements kept from the `emailjs` branch work.
+
+- `POST /referral`
+  - Body: JSON with either
+    `{"firstName","lastName","email","phone","message"}`
+    or the original emailjs branch keys
+    `{"newFirstName","newLastName","newEmail","newPhone","newMessage"}`
+  - Response: referral object with
+    `id`, `firstName`, `lastName`, `email`, `phone`, `message`
+
+- `GET /referral?id=<int>`
+  - Query param: `id`
+  - Response: one referral object
+
+- `GET /create-service?uuid=<request-id>`
+- `POST /create-service`
+  - Query or body value: `uuid` or `id`
+  - Behavior: loads an existing pending create request from `tblServiceRequests`, maps the saved payload into the real `tblServices` schema, inserts the service row, deletes the processed request, and returns the created service object as JSON
+
+There is currently no public route that creates rows in `tblServiceRequests`. `create-service` only consumes an already-existing pending `CREATE` request.
+
+This matches the minimal fake-backend behavior those frontend files were asking for:
+- referral creation
+- referral lookup by id
+- approving a pending service by request id
 
 ## Database Behavior
 
 - Local development uses SQLite at `api/src/UCAssist.db`.
 - Non-local hosts use MySQL with credentials hardcoded in `api/src/database.php` except for `DB_PASSWORD`, which comes from the environment.
+- `tblReferrals` is created automatically if it does not exist.
+- `tblServiceRequests` is created automatically if it does not exist because `create-service` reads pending create requests from it.
+- The backend expects `tblMonthlyViews`, `tblPageAnalytics`, and `tblSearchAnalytics` to already exist.
 - `tblCountyCoordinates` is available through `get_county_coordinates()`, but there is currently no public route exposing it.
-- The code expects a `tblMonthlyViews` table for the monthly views endpoints.
+- There is also no public `/service-coordinates` route in the current backend.
 
 ## Environment Variables
 
@@ -57,10 +102,6 @@ These variables are currently read from `api/.env`:
 
 - `GOOGLE_API_KEY`: Required for `/prompt` and `/recommendations`
 - `DB_PASSWORD`: Required for production MySQL connections
-
-## Removed From Current Backend
-
-The old documentation referenced request approval endpoints such as `request-create-service`, `request-update-service`, `request-delete-service`, and the corresponding approval links. Those routes are not present in the current `api/index.php` and are no longer part of the active backend.
 
 ## Running the Server
 

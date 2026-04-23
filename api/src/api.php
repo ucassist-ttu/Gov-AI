@@ -16,6 +16,31 @@ function request_body(string $key): mixed
   return request_payload()[$key] ?? '';
 }
 
+function request_value(array $keys, mixed $default = null): mixed
+{
+  foreach ($keys as $key) {
+    if (array_key_exists($key, $_GET)) {
+      return $_GET[$key];
+    }
+  }
+
+  $payload = request_payload();
+  foreach ($keys as $key) {
+    if (array_key_exists($key, $payload)) {
+      return $payload[$key];
+    }
+  }
+
+  return $default;
+}
+
+function json_response(mixed $value, int $status = 200): void
+{
+  http_response_code(response_code: $status);
+  header(header: 'Content-Type: application/json');
+  echo json_encode(value: $value);
+}
+
 function prompt_db(): string
 {
   $services = ['Columns' => [], 'Rows' => []];

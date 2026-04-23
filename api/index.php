@@ -12,70 +12,112 @@ header(header: 'Access-Control-Allow-Origin: *');
 header(header: 'Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header(header: 'Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+$method = $_SERVER['REQUEST_METHOD'];
+
+if ($method === 'OPTIONS') {
     http_response_code(response_code: 204);
     exit;
 }
 
 $path = $_GET['route'] ?? parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 
-if ($path === '/prompt' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_services_from_user_input(user_input: request_body(key: 'user_input')));
+if ($path === '/prompt' && $method === 'POST') {
+    json_response(get_services_from_user_input(user_input: request_body(key: 'user_input')));
     exit;
 }
 
-if ($path === '/recommendations' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_similar_services(id: (int) request_body(key: 'service_id')));
+if ($path === '/recommendations' && $method === 'POST') {
+    json_response(get_similar_services(id: (int) request_body(key: 'service_id')));
     exit;
 }
 
 // Database endpoints
 
-if ($path === '/services' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_services());
+if ($path === '/services' && $method === 'GET') {
+    json_response(get_services());
     exit;
 }
 
-if ($path === '/service' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_service(id: (int) $_GET['id']));
-}
-if ($path === '/monthly-views' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_monthly_views());
+if ($path === '/service' && $method === 'GET') {
+    json_response(get_service(id: (int) ($_GET['id'] ?? 0)));
     exit;
 }
-if ($path === '/add-monthly-view' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+
+if ($path === '/monthly-views' && $method === 'GET') {
+    json_response(get_monthly_views());
+    exit;
+}
+
+if ($path === '/add-monthly-view' && $method === 'GET') {
     $success = add_monthly_views((int) $_GET['service_id']);
 
-    header(header: 'Content-Type: application/json');
-    echo json_encode(['success' => $success]);
+    json_response(['success' => $success]);
     exit;
 }
-if ($path === '/page-analytics' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_page_analytics());
+
+if ($path === '/page-analytics' && $method === 'GET') {
+    json_response(get_page_analytics());
     exit;
 }
-if ($path === '/add-page-analytics' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+if ($path === '/add-page-analytics' && $method === 'POST') {
     $success = add_page_analytics(request_payload());
 
-    header(header: 'Content-Type: application/json');
-    echo json_encode(['success' => $success]);
+    json_response(['success' => $success]);
     exit;
 }
-if ($path === '/search-analytics' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-    header(header: 'Content-Type: application/json');
-    echo json_encode(value: get_search_analytics());
+
+if ($path === '/search-analytics' && $method === 'GET') {
+    json_response(get_search_analytics());
     exit;
 }
-if ($path === '/add-search-analytics' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+if ($path === '/add-search-analytics' && $method === 'POST') {
     $success = add_search_analytics(request_payload());
 
-    header(header: 'Content-Type: application/json');
-    echo json_encode(['success' => $success]);
+    json_response(['success' => $success]);
     exit;
 }
+
+// Minimal emailjs-branch replacements
+
+if ($path === '/referral' && $method === 'POST') {
+    json_response(create_referral(request_payload()), 201);
+    exit;
+}
+
+if ($path === '/referral' && $method === 'GET') {
+    $referral = get_referral((int) request_value(['id'], 0));
+    if ($referral === []) {
+        json_response(['error' => 'Referral not found.'], 404);
+        exit;
+    }
+
+    json_response($referral);
+    exit;
+}
+
+if ($path === '/create-service' && ($method === 'GET' || $method === 'POST')) {
+    $id = (string) request_value(['id', 'uuid'], '');
+    if ($id === '') {
+        json_response(['error' => 'Missing pending service id.'], 400);
+        exit;
+    }
+
+    $service_request = get_service_request($id);
+    if ($service_request === []) {
+        json_response(['error' => 'Pending service not found.'], 404);
+        exit;
+    }
+
+    $created_service = approve_service_request($id);
+    if ($created_service === []) {
+        json_response(['error' => 'Pending service could not be created.'], 422);
+        exit;
+    }
+
+    json_response($created_service);
+    exit;
+}
+
+json_response(['error' => 'Route not found.'], 404);
