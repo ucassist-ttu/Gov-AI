@@ -1,6 +1,24 @@
-const newServiceDB = [
-  {
-    id: 'S1',
+//organizationDB, pendingOrganizationDB
+
+// company_name, 
+//     organization_description, 
+//     phone, 
+//     website, 
+//     address1, 
+//     city_public, 
+//     state_public, 
+//     zip_public, 
+//     primary_name, 
+//     primary_email, 
+//     primary_phone, 
+//     primary_position, 
+//     secondary_name, 
+//     secondary_email, 
+//     secondary_phone, 
+//     secondary_position,
+const organizationsDB = [
+    {
+    id: 'C1',
 
     // --- ORG PUBLIC ---
     company_name: "Upper Cumberland Food Bank",
@@ -23,23 +41,12 @@ const newServiceDB = [
     secondary_phone: "(931) 555-8765",
     secondary_position: "Coordinator",
 
-    // --- SERVICE ---
-    service_name: "Emergency Food Assistance",
-    service_description: "Provides weekly food boxes to individuals and families experiencing food insecurity.",
-    service_criteria: "Must reside in Putnam County and provide proof of income.",
-
-    service_phone: "(931) 555-1234",
-    service_address_street: "123 Main St",
-    service_city: "Cookeville",
-    service_state: "TN",
-    service_zip: "38501",
-
     // --- FILE ---
     logo_file: "foodbank_logo.png"
   },
 
   {
-    id: 'S2',
+    id: 'C2',
 
     // --- ORG PUBLIC ---
     company_name: "Hope Housing Services",
@@ -62,24 +69,16 @@ const newServiceDB = [
     secondary_phone: "(931) 555-4444",
     secondary_position: "Case Worker",
 
-    // --- SERVICE ---
-    service_name: "Rental Assistance Program",
-    service_description: "Provides short-term rental assistance for individuals facing eviction.",
-    service_criteria: "Must show proof of financial hardship and lease agreement.",
-
-    service_phone: "(931) 555-2222",
-    service_address_street: "456 Oak Ave",
-    service_city: "Cookeville",
-    service_state: "TN",
-    service_zip: "38501",
-
     // --- FILE ---
     logo_file: "housing_logo.png"
-  },
+  }
+]
 
+
+const pendingOrganizationDB = [
   {
-    id: 'S3',
-
+    service_id: 'S3',
+    company_id: 'C3',
     // --- ORG PUBLIC ---
     company_name: "Community Health Outreach",
     organization_description: "Delivers free and low-cost healthcare services to underserved populations.",
@@ -101,20 +100,5 @@ const newServiceDB = [
     secondary_phone: "",
     secondary_position: "",
 
-    // --- SERVICE ---
-    service_name: "Free Health Clinic",
-    service_description: "Provides basic medical care, screenings, and referrals at no cost.",
-    service_criteria: "Open to uninsured or underinsured individuals.",
-
-    service_phone: "(931) 555-9999",
-    service_address_street: "789 Pine Rd",
-    service_city: "Cookeville",
-    service_state: "TN",
-    service_zip: "38506",
-
-    // --- FILE ---
-    logo_file: "health_logo.png"
   }
 ];
-
-export default newServiceDB;

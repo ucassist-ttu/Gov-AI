@@ -664,6 +664,7 @@ function logFormData() {
 
   console.log("====== FORM DATA DEBUG ======");
   console.table(data);
+  addServiceToPendingDB(data) // ENPOINT TO ADD SERVICE TO DATABASE
 
   // OPTIONAL: log complex stuff separately
   console.log("Org Keywords:", getSelectedKeywords?.());
@@ -673,23 +674,24 @@ function logFormData() {
   console.log("Service Hours:", getServiceHours?.());
 
   console.log("============================");
+
+  return data.id; // Return the new ID for email linking
 }
 
 // SENDING SERVICE TO DATABASE + SENDING EMAIL
 document.getElementById("form-step-3").addEventListener("submit", function (e) {
     e.preventDefault();
-    logFormData(); // debug before sending email
+    const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
+
+    console.log("newServiceID: ", newServiceID);
 
     //CHANGE THESE IDs AS SOON
     emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
-
     // SENDING ID TO EMAIL JS TO CREATE LINK
     emailjs.send(
       "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-      {
-      // id: newID,
-      })
+      {id: newServiceID}) // sends service ID so EmailJS can use it to create link to service page in email
   .then(function (response) {
     Swal.fire({
       icon: "success",
