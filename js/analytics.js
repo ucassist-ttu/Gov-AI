@@ -136,7 +136,7 @@ window.addEventListener("beforeunload", () => {
 
 function generateMockAnalytics() {
 
-const pages = ["/", "/services", "/snap", "/crisis", "/error"];
+const pages = ["Home", "Services", "Snap", "Crisis", "Error"];
 
 const pageVisits = []
 
