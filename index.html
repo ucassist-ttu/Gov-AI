@@ -434,14 +434,13 @@
                 document.body.appendChild(script);
             });
         fetch('partials/iNeed.html')
-            .then(response => response.text())
-            .then((data) => {
-                document.getElementById('iNeed').innerHTML = data;
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById('iNeed').innerHTML = html;
 
-                const script = document.createElement('script');
-                script.src = 'js/iNeed.js';
-                script.type = 'module';
-                document.body.appendChild(script);
+                import('./js/iNeed.js').then(module => {
+                module.initINeed();
+                });
             });
         fetch('partials/pinmap.html')
             .then(response => response.text())
@@ -458,6 +457,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="js/navbar.js" defer></script>
     <script type="module" src="js/pinmap.js" ></script>
+    <!-- <script type="module" src="js/iNeed.js"></script> -->
     <script src="js/index.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
