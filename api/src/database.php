@@ -1,6 +1,8 @@
 <?php
 
 $services_table = 'tblServices';
+$service_coordinates_table = 'tblCoordinates';
+$county_coordinates_table = 'tblCountyCoordinates';
 $service_requests_table = 'tblServiceRequests';
 $referrals_table = 'tblReferrals';
 $page_analytics_table = 'tblPageAnalytics';
@@ -99,6 +101,14 @@ function ensure_support_tables(PDO $pdo): void
                 service_id INTEGER NOT NULL
             )'
         );
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS tblCoordinates (
+                service_id INTEGER PRIMARY KEY,
+                latitude REAL NOT NULL,
+                longitude REAL NOT NULL,
+                FOREIGN KEY (service_id) REFERENCES tblServices(ID)
+            )'
+        );
     } else {
         $pdo->exec(
             'CREATE TABLE IF NOT EXISTS tblReferrals (
@@ -123,6 +133,14 @@ function ensure_support_tables(PDO $pdo): void
             'CREATE TABLE IF NOT EXISTS tblMonthlyViews (
                 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 service_id INT NOT NULL
+            )'
+        );
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS tblCoordinates (
+                service_id INT NOT NULL PRIMARY KEY,
+                latitude DOUBLE NOT NULL,
+                longitude DOUBLE NOT NULL,
+                FOREIGN KEY (service_id) REFERENCES tblServices(ID)
             )'
         );
     }
@@ -263,14 +281,145 @@ function create_service(array $service): array
 
     $statement->execute($params);
 
-    return get_service((int) $pdo->lastInsertId());
+    $created_service = get_service((int) $pdo->lastInsertId());
+    hydrate_service_coordinates($created_service, true);
+
+    return $created_service;
+}
+
+function get_service_coordinates(int $service_id): array
+{
+    global $service_coordinates_table;
+    $pdo = db();
+
+    $id_column = get_service_coordinates_id_column();
+    $statement = $pdo->prepare(query: "SELECT {$id_column} AS service_id, latitude, longitude FROM {$service_coordinates_table} WHERE {$id_column} = :service_id");
+    $statement->execute(params: [':service_id' => $service_id]);
+    $row = $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
+
+    if ($row === []) {
+        return [];
+    }
+
+    return [
+        'service_id' => (int) ($row['service_id'] ?? 0),
+        'latitude' => (float) ($row['latitude'] ?? 0),
+        'longitude' => (float) ($row['longitude'] ?? 0),
+    ];
+}
+
+function upsert_service_coordinates(int $service_id, float $latitude, float $longitude): array
+{
+    global $service_coordinates_table;
+    $pdo = db();
+    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    $id_column = get_service_coordinates_id_column();
+
+    if ($driver === 'sqlite') {
+        $statement = $pdo->prepare(
+            "INSERT INTO {$service_coordinates_table} ({$id_column}, latitude, longitude)
+             VALUES (:service_id, :latitude, :longitude)
+             ON CONFLICT({$id_column}) DO UPDATE SET
+                latitude = excluded.latitude,
+                longitude = excluded.longitude"
+        );
+    } else {
+        $statement = $pdo->prepare(
+            "INSERT INTO {$service_coordinates_table} ({$id_column}, latitude, longitude)
+             VALUES (:service_id, :latitude, :longitude)
+             ON DUPLICATE KEY UPDATE
+                latitude = VALUES(latitude),
+                longitude = VALUES(longitude)"
+        );
+    }
+
+    $statement->execute([
+        ':service_id' => $service_id,
+        ':latitude' => $latitude,
+        ':longitude' => $longitude,
+    ]);
+
+    return get_service_coordinates($service_id);
+}
+
+function get_service_coordinates_id_column(): string
+{
+    global $service_coordinates_table;
+
+    static $cached = null;
+    if ($cached !== null) {
+        return $cached;
+    }
+
+    $pdo = db();
+    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    $columns = [];
+
+    if ($driver === 'sqlite') {
+        $rows = $pdo->query("PRAGMA table_info({$service_coordinates_table})");
+        $columns = $rows === false ? [] : array_map(
+            static fn(array $row): string => strtolower((string) ($row['name'] ?? '')),
+            $rows->fetchAll(mode: PDO::FETCH_ASSOC) ?: []
+        );
+    } else {
+        $rows = $pdo->query("SHOW COLUMNS FROM {$service_coordinates_table}");
+        $columns = $rows === false ? [] : array_map(
+            static fn(array $row): string => strtolower((string) ($row['Field'] ?? '')),
+            $rows->fetchAll(mode: PDO::FETCH_ASSOC) ?: []
+        );
+    }
+
+    if (in_array('service_id', $columns, true)) {
+        $cached = 'service_id';
+        return $cached;
+    }
+
+    if (in_array('id', $columns, true)) {
+        $cached = 'id';
+        return $cached;
+    }
+
+    $cached = 'service_id';
+    return $cached;
+}
+
+function hydrate_service_coordinates(array $service, bool $attempt_geocode = false): array
+{
+    $service_id = (int) ($service['ID'] ?? 0);
+    if ($service_id <= 0) {
+        return [];
+    }
+
+    $coordinates = get_service_coordinates($service_id);
+    if ($coordinates !== []) {
+        return $coordinates;
+    }
+
+    if ($attempt_geocode) {
+        $coordinates = geocode_service_address_with_census($service);
+    }
+
+    if ($coordinates === []) {
+        $coordinates = fallback_service_coordinates_from_county($service);
+    }
+
+    if ($coordinates === []) {
+        return [];
+    }
+
+    return upsert_service_coordinates(
+        $service_id,
+        (float) $coordinates['latitude'],
+        (float) $coordinates['longitude']
+    );
 }
 
 function get_county_coordinates(): array
 {
+    global $county_coordinates_table;
     $pdo = db();
 
-    $rows = $pdo->query(query: 'SELECT * FROM tblCountyCoordinates');
+    $rows = $pdo->query(query: "SELECT * FROM {$county_coordinates_table}");
     if ($rows === false) {
         return [];
     }
@@ -563,4 +712,183 @@ function normalize_service_request_action(string $action): string
     $normalized = strtoupper(trim($action));
 
     return $normalized === 'CREATE' ? 'CREATE' : '';
+}
+
+function geocode_service_address_with_census(array $service): array
+{
+    $address = build_census_lookup_address($service);
+    if ($address === '') {
+        return [];
+    }
+
+    $query = http_build_query([
+        'address' => $address,
+        'benchmark' => 'Public_AR_Current',
+        'format' => 'json',
+    ]);
+
+    $response = fetch_json_response('https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?' . $query);
+    $coordinates = $response['result']['addressMatches'][0]['coordinates'] ?? null;
+
+    if (!is_array($coordinates)) {
+        return [];
+    }
+
+    $longitude = $coordinates['x'] ?? null;
+    $latitude = $coordinates['y'] ?? null;
+
+    if (!is_numeric($latitude) || !is_numeric($longitude)) {
+        return [];
+    }
+
+    return [
+        'latitude' => (float) $latitude,
+        'longitude' => (float) $longitude,
+    ];
+}
+
+function fallback_service_coordinates_from_county(array $service): array
+{
+    foreach (extract_service_counties($service) as $county) {
+        $coordinates = get_county_coordinate($county);
+        if ($coordinates !== []) {
+            return [
+                'latitude' => (float) $coordinates['latitude'],
+                'longitude' => (float) $coordinates['longitude'],
+            ];
+        }
+    }
+
+    return [];
+}
+
+function get_county_coordinate(string $county): array
+{
+    global $county_coordinates_table;
+    $pdo = db();
+
+    $statement = $pdo->prepare(
+        query: "SELECT county, latitude, longitude
+                FROM {$county_coordinates_table}
+                WHERE LOWER(county) = LOWER(:county)
+                LIMIT 1"
+    );
+    $statement->execute(params: [':county' => trim($county)]);
+    $row = $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
+
+    if ($row === []) {
+        return [];
+    }
+
+    return [
+        'county' => (string) ($row['county'] ?? ''),
+        'latitude' => (float) ($row['latitude'] ?? 0),
+        'longitude' => (float) ($row['longitude'] ?? 0),
+    ];
+}
+
+function extract_service_counties(array $service): array
+{
+    $value = $service['CountiesAvailable'] ?? [];
+    if (is_array($value)) {
+        return array_values(array_filter(array_map('stringify_value', $value), static fn(string $county): bool => $county !== ''));
+    }
+
+    $text = trim((string) $value);
+    if ($text === '' || $text === '[]') {
+        return [];
+    }
+
+    $decoded = json_decode(str_replace("'", '"', $text), true);
+    if (is_array($decoded)) {
+        return array_values(array_filter(array_map('stringify_value', $decoded), static fn(string $county): bool => $county !== ''));
+    }
+
+    $counties = [];
+    foreach (explode(',', trim($text, '[]')) as $county) {
+        $clean = trim($county, " \t\n\r\0\x0B'\"");
+        if ($clean !== '') {
+            $counties[] = $clean;
+        }
+    }
+
+    return $counties;
+}
+
+function build_census_lookup_address(array $service): string
+{
+    $street = sanitize_address_component((string) ($service['ServiceAddress'] ?? ''));
+    $city_state_zip = sanitize_address_component((string) ($service['CityStateZip'] ?? ''));
+
+    if ($street === '' || $city_state_zip === '') {
+        return '';
+    }
+
+    if (!preg_match('/\d/', $street)) {
+        return '';
+    }
+
+    return "{$street}, {$city_state_zip}";
+}
+
+function sanitize_address_component(string $value): string
+{
+    $value = trim($value);
+    if ($value === '') {
+        return '';
+    }
+
+    $normalized = strtolower($value);
+    if (in_array($normalized, ['n/a', 'na', 'none'], true)) {
+        return '';
+    }
+    if (str_contains($normalized, 'call for specifics')) {
+        return '';
+    }
+
+    return $value;
+}
+
+function fetch_json_response(string $url): array
+{
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        if ($ch === false) {
+            return [];
+        }
+
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_HTTPHEADER => [
+                'Accept: application/json',
+                'User-Agent: Gov-AI/1.0',
+            ],
+        ]);
+
+        $body = curl_exec($ch);
+        $status = (int) curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        curl_close($ch);
+
+        if (!is_string($body) || $status < 200 || $status >= 300) {
+            return [];
+        }
+    } else {
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'GET',
+                'timeout' => 10,
+                'header' => "Accept: application/json\r\nUser-Agent: Gov-AI/1.0\r\n",
+            ],
+        ]);
+
+        $body = @file_get_contents($url, false, $context);
+        if (!is_string($body) || $body === '') {
+            return [];
+        }
+    }
+
+    $decoded = json_decode($body, true);
+    return is_array($decoded) ? $decoded : [];
 }

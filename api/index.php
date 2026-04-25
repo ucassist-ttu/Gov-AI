@@ -49,6 +49,29 @@ if ($path === '/service' && $method === 'GET') {
     exit;
 }
 
+if ($path === '/service-coordinates' && $method === 'GET') {
+    $service_id = (int) request_value(['service_id', 'id'], 0);
+    if ($service_id <= 0) {
+        json_response(['error' => 'Missing service id.'], 400);
+        exit;
+    }
+
+    $service = get_service($service_id);
+    if ($service === []) {
+        json_response(['error' => 'Service not found.'], 404);
+        exit;
+    }
+
+    $coordinates = hydrate_service_coordinates($service, false);
+    if ($coordinates === []) {
+        json_response(['error' => 'Service coordinates not found.'], 404);
+        exit;
+    }
+
+    json_response($coordinates);
+    exit;
+}
+
 if ($path === '/monthly-views' && $method === 'GET') {
     json_response(get_monthly_views());
     exit;

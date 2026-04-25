@@ -41,6 +41,11 @@ The route list below describes the logical route values such as `/services` or `
   - Query param: `id`
   - Response: JSON object for the matching service, or an empty array if no row is found.
 
+- `GET /service-coordinates?service_id=<int>`
+  - Query param: `service_id` or `id`
+  - Response: JSON object with `service_id`, `latitude`, and `longitude`
+  - Behavior: returns the stored `tblCoordinates` row for the service, or falls back to the matching county center and stores that as the service coordinate when no service-specific row exists yet
+
 - `GET /monthly-views`
   - Response: JSON array of per-service view counts produced from `tblServices` joined with `tblMonthlyViews`.
 
@@ -81,7 +86,7 @@ These are the only fake-backend replacements kept from the `emailjs` branch work
 - `GET /create-service?uuid=<request-id>`
 - `POST /create-service`
   - Query or body value: `uuid` or `id`
-  - Behavior: loads an existing pending create request from `tblServiceRequests`, maps the saved payload into the real `tblServices` schema, inserts the service row, deletes the processed request, and returns the created service object as JSON
+  - Behavior: loads an existing pending create request from `tblServiceRequests`, maps the saved payload into the real `tblServices` schema, inserts the service row, attempts to geocode the service address with the U.S. Census Geocoder, falls back to the first matching county center when geocoding fails, stores the result in `tblCoordinates`, deletes the processed request, and returns the created service object as JSON
 
 There is currently no public route that creates rows in `tblServiceRequests`. `create-service` only consumes an already-existing pending `CREATE` request.
 
@@ -95,9 +100,9 @@ This matches the minimal fake-backend behavior those frontend files were asking 
 - Local development uses SQLite at `api/src/UCAssist.db`.
 - Non-local hosts use MySQL with credentials hardcoded in `api/src/database.php` except for `DB_PASSWORD`, which comes from the environment.
 - `tblMonthlyViews`, `tblReferrals`, and `tblServiceRequests` are created automatically if they do not exist.
+- `tblCoordinates` is also created automatically if it does not exist.
 - The backend expects `tblPageAnalytics` and `tblSearchAnalytics` to already exist.
 - `tblCountyCoordinates` is available through `get_county_coordinates()`, but there is currently no public route exposing it.
-- There is also no public `/service-coordinates` route in the current backend.
 
 ## Environment Variables
 
