@@ -1,5 +1,8 @@
 (function () {
-  const API_BASE_URL = "http://s1092595647.onlinehome.us/";
+  const REMOTE_API_BASE_URL = "http://s1092595647.onlinehome.us/";
+  const LOCAL_API_BASE_URL = "http://127.0.0.1:8000/";
+  const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  const API_BASE_URL = isLocalHost ? LOCAL_API_BASE_URL : REMOTE_API_BASE_URL;
   const base = API_BASE_URL.replace(/\/$/, "");
 
   function fetchApi(path, options) {

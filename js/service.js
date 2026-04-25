@@ -215,7 +215,16 @@ function returnToServiceList () {
 //Get the list of recommended services from api
 async function getRecommendedServices () {
     try{
-        let servResponse = await fetchApi(`/recommendations?id=${serviceId}`)
+        let servResponse = await fetchApi(`/recommendations`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ service_id: Number(serviceId) })
+        })
+        if (!servResponse.ok) {
+            throw new Error(`Recommendations request failed with ${servResponse.status}`);
+        }
         let servData = await servResponse.json()
         arrRecomendedServices = servData
         printRecomendedServices ()

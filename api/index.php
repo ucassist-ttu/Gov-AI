@@ -26,8 +26,14 @@ if ($path === '/prompt' && $method === 'POST') {
     exit;
 }
 
-if ($path === '/recommendations' && $method === 'POST') {
-    json_response(get_similar_services(id: (int) request_body(key: 'service_id')));
+if ($path === '/recommendations' && ($method === 'GET' || $method === 'POST')) {
+    $service_id = (int) request_value(['service_id', 'id'], 0);
+    if ($service_id <= 0) {
+        json_response(['error' => 'Missing service id.'], 400);
+        exit;
+    }
+
+    json_response(get_similar_services(id: $service_id));
     exit;
 }
 

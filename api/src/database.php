@@ -93,6 +93,12 @@ function ensure_support_tables(PDO $pdo): void
                 Expire INTEGER NOT NULL
             )'
         );
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS tblMonthlyViews (
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                service_id INTEGER NOT NULL
+            )'
+        );
     } else {
         $pdo->exec(
             'CREATE TABLE IF NOT EXISTS tblReferrals (
@@ -111,6 +117,12 @@ function ensure_support_tables(PDO $pdo): void
                 Action VARCHAR(16) NOT NULL,
                 Body LONGTEXT NOT NULL,
                 Expire BIGINT NOT NULL
+            )'
+        );
+        $pdo->exec(
+            'CREATE TABLE IF NOT EXISTS tblMonthlyViews (
+                ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                service_id INT NOT NULL
             )'
         );
     }

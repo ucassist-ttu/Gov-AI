@@ -30,6 +30,10 @@ The route list below describes the logical route values such as `/services` or `
   - Body: JSON `{"service_id": <int>}`
   - Response: JSON array of service objects Gemini considers similar to the selected service.
 
+- `GET /recommendations?id=<int>`
+  - Query param: `id`
+  - Response: JSON array of service objects Gemini considers similar to the selected service.
+
 - `GET /services`
   - Response: JSON array containing every row in `tblServices`.
 
@@ -90,9 +94,8 @@ This matches the minimal fake-backend behavior those frontend files were asking 
 
 - Local development uses SQLite at `api/src/UCAssist.db`.
 - Non-local hosts use MySQL with credentials hardcoded in `api/src/database.php` except for `DB_PASSWORD`, which comes from the environment.
-- `tblReferrals` is created automatically if it does not exist.
-- `tblServiceRequests` is created automatically if it does not exist because `create-service` reads pending create requests from it.
-- The backend expects `tblMonthlyViews`, `tblPageAnalytics`, and `tblSearchAnalytics` to already exist.
+- `tblMonthlyViews`, `tblReferrals`, and `tblServiceRequests` are created automatically if they do not exist.
+- The backend expects `tblPageAnalytics` and `tblSearchAnalytics` to already exist.
 - `tblCountyCoordinates` is available through `get_county_coordinates()`, but there is currently no public route exposing it.
 - There is also no public `/service-coordinates` route in the current backend.
 
