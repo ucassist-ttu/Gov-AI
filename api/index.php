@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/src/loadenv.php';
 require_once __DIR__ . '/src/database.php';
+require_once __DIR__ . '/src/distance.php';
 require_once __DIR__ . '/src/api.php';
 require_once __DIR__ . '/src/gemini.php';
 
@@ -22,7 +23,12 @@ if ($method === 'OPTIONS') {
 $path = $_GET['route'] ?? parse_url(url: $_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 
 if ($path === '/prompt' && $method === 'POST') {
-    json_response(get_services_from_user_input(user_input: request_body(key: 'user_input')));
+    json_response(get_services_from_user_input(
+        user_input: request_body(key: 'user_input'),
+        user_county: (string) request_value(['user_county', 'county'], ''),
+        user_latitude: request_value(['user_latitude', 'latitude', 'lat']),
+        user_longitude: request_value(['user_longitude', 'longitude', 'lng', 'lon']),
+    ));
     exit;
 }
 

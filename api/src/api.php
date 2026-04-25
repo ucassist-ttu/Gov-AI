@@ -41,32 +41,194 @@ function json_response(mixed $value, int $status = 200): void
   echo json_encode(value: $value);
 }
 
-function prompt_db(): string
+function prompt_db(array $user_location = []): string
 {
-  $services = ['Columns' => [], 'Rows' => []];
-  foreach (get_services()[0] as $key => $value) {
-    $services['Columns'][] = $key;
-  }
-  foreach (get_services() as $service) {
-    $row = [];
-    foreach ($service as $key => $value) {
-      $row[] = $value;
-    }
-    $services['Rows'][] = $row;
-  }
-  return json_encode(value: $services);
+  return json_encode(value: build_prompt_service_dataset($user_location));
 }
 
-function get_services_from_user_input(string $user_input): array
+function build_prompt_service_dataset(array $user_location = []): array
 {
-  $prompt = "You will be provided with a database of services and a prompt from the user. Use the user's request to search the database and identify the three services that would best assist the user with the issue they are having. Respond with only a valid, unformatted array of json objects containing the 'id', 'service_name', and a 'reason_for_selection' of why you believe that service would be helpful to them. Do not include any markdown formatting in your response. Services: " . prompt_db() . ' User input: ' . $user_input;
-  $services = gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt);
-  $services = json_decode(json: $services, associative: true);
+  $dataset = [];
+
+  foreach (get_services() as $service) {
+    $service_counties = extract_service_counties($service);
+    $coordinates = hydrate_service_coordinates($service, false);
+
+    $record = [
+      'ID' => (int) ($service['ID'] ?? 0),
+      'NameOfService' => (string) ($service['NameOfService'] ?? ''),
+      'OrganizationName' => (string) ($service['OrganizationName'] ?? ''),
+      'ServiceDescription' => (string) ($service['ServiceDescription'] ?? ''),
+      'ProgramCriteria' => (string) ($service['ProgramCriteria'] ?? ''),
+      'Keywords' => $service['Keywords'] ?? '',
+      'CountiesAvailable' => $service_counties,
+      'ServiceAddress' => (string) ($service['ServiceAddress'] ?? ''),
+      'CityStateZip' => (string) ($service['CityStateZip'] ?? ''),
+    ];
+
+    if ($coordinates !== []) {
+      $record['ServiceCoordinates'] = [
+        'latitude' => round((float) $coordinates['latitude'], 6),
+        'longitude' => round((float) $coordinates['longitude'], 6),
+      ];
+    }
+
+    if (($user_location['county'] ?? '') !== '') {
+      $record['MatchesUserCounty'] = service_matches_user_county(
+        $service_counties,
+        (string) $user_location['county']
+      );
+    }
+
+    if (
+      isset($record['ServiceCoordinates']) &&
+      isset($user_location['latitude'], $user_location['longitude']) &&
+      $user_location['latitude'] !== null &&
+      $user_location['longitude'] !== null
+    ) {
+      $record['DistanceFromUserMiles'] = round(
+        haversine(
+          lat1: (float) $user_location['latitude'],
+          lon1: (float) $user_location['longitude'],
+          lat2: (float) $record['ServiceCoordinates']['latitude'],
+          lon2: (float) $record['ServiceCoordinates']['longitude']
+        ),
+        1
+      );
+    }
+
+    $dataset[] = $record;
+  }
+
+  return $dataset;
+}
+
+function normalize_request_float(mixed $value): ?float
+{
+  if (is_int($value) || is_float($value)) {
+    return (float) $value;
+  }
+
+  $text = trim((string) $value);
+  if ($text === '' || !is_numeric($text)) {
+    return null;
+  }
+
+  return (float) $text;
+}
+
+function normalize_county_name(string $value): string
+{
+  $county = strtolower(trim($value));
+  if ($county === '' || in_array($county, ['all', 'null', 'undefined'], true)) {
+    return '';
+  }
+
+  $county = str_replace(['_', '-'], ' ', $county);
+  $county = preg_replace('/\s+county$/', '', $county) ?? $county;
+  $county = preg_replace('/\s+/', ' ', $county) ?? $county;
+
+  return trim($county);
+}
+
+function service_matches_user_county(array $service_counties, string $user_county): bool
+{
+  $normalized_user_county = normalize_county_name($user_county);
+  if ($normalized_user_county === '') {
+    return false;
+  }
+
+  foreach ($service_counties as $county) {
+    if (normalize_county_name($county) === $normalized_user_county) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function build_user_location_context(string $user_county, mixed $user_latitude, mixed $user_longitude): array
+{
+  $normalized_county = normalize_county_name($user_county);
+  $latitude = normalize_request_float($user_latitude);
+  $longitude = normalize_request_float($user_longitude);
+  $source = '';
+
+  if ($latitude !== null && $longitude !== null) {
+    $source = 'coordinates';
+  } elseif ($normalized_county !== '') {
+    $county_coordinates = get_county_coordinate($normalized_county);
+    if ($county_coordinates !== []) {
+      $latitude = (float) $county_coordinates['latitude'];
+      $longitude = (float) $county_coordinates['longitude'];
+      $source = 'county-center';
+    }
+  }
+
+  return [
+    'county' => $normalized_county,
+    'latitude' => $latitude,
+    'longitude' => $longitude,
+    'source' => $source,
+  ];
+}
+
+function get_services_from_user_input(
+  string $user_input,
+  string $user_county = '',
+  mixed $user_latitude = null,
+  mixed $user_longitude = null
+): array
+{
+  $user_location = build_user_location_context($user_county, $user_latitude, $user_longitude);
+  $location_context = [
+    'county' => $user_location['county'] !== '' ? $user_location['county'] : null,
+  ];
+
+  if ($user_location['latitude'] !== null && $user_location['longitude'] !== null) {
+    $location_context['reference_coordinates'] = [
+      'latitude' => round((float) $user_location['latitude'], 6),
+      'longitude' => round((float) $user_location['longitude'], 6),
+      'source' => $user_location['source'],
+    ];
+  }
+
+  $prompt = "You will be provided with a database of services, the user's location context, and a prompt from the user. Use the user's request to identify the three services that would best assist them. Prioritize relevance to the stated need first, then use location information to prefer services in the user's county or services that are physically closer when they are still a strong fit. Use MatchesUserCounty and DistanceFromUserMiles when present. If the best topical match is farther away, you may still recommend it, but account for distance in your reasoning. Respond with only a valid, unformatted array of json objects containing the 'id', 'service_name', and a 'reason_for_selection'. Do not include any markdown formatting in your response. User location: " . json_encode(value: $location_context) . " Services: " . prompt_db($user_location) . ' User input: ' . $user_input;
+
+  $services = [];
+  $attempts = 0;
+  while ($attempts < 3) {
+    $services = json_decode(
+      json: gemini(google_api_key: getenv(name: 'GOOGLE_API_KEY'), prompt: $prompt),
+      associative: true
+    );
+    if (is_array($services)) {
+      break;
+    }
+    $attempts++;
+  }
+
+  if (!is_array($services)) {
+    return [];
+  }
 
   $ids = [];
+  $seen_ids = [];
   foreach ($services as $service) {
-    $ids[] = get_service(id: $service['id']);
+    $service_id = (int) ($service['id'] ?? 0);
+    if ($service_id <= 0 || isset($seen_ids[$service_id])) {
+      continue;
+    }
+
+    $matched_service = get_service(id: $service_id);
+    if ($matched_service === []) {
+      continue;
+    }
+
+    $seen_ids[$service_id] = true;
+    $ids[] = $matched_service;
   }
+
   return $ids;
 }
 

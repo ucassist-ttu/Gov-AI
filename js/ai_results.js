@@ -37,6 +37,20 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+function getStoredLocationPayload() {
+    const county = sessionStorage.getItem("currCounty");
+    const rawLatitude = sessionStorage.getItem("userLatitude");
+    const rawLongitude = sessionStorage.getItem("userLongitude");
+    const latitude = rawLatitude === null || rawLatitude === "" ? NaN : Number(rawLatitude);
+    const longitude = rawLongitude === null || rawLongitude === "" ? NaN : Number(rawLongitude);
+
+    return {
+        user_county: county && county !== "all" ? county : "",
+        user_latitude: Number.isFinite(latitude) ? latitude : null,
+        user_longitude: Number.isFinite(longitude) ? longitude : null,
+    };
+}
+
 async function getAIRecommendations(userPrompt) {
     printed = false;
 
@@ -54,13 +68,17 @@ async function getAIRecommendations(userPrompt) {
     
     //calls ai api
     try{
+        const locationPayload = getStoredLocationPayload();
         // console.log("Sending response:", data);
         // res.json(data);
         
         const servResponse = await fetchApi(`/prompt`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
-            body: JSON.stringify({user_input: userPrompt})
+            body: JSON.stringify({
+                user_input: userPrompt,
+                ...locationPayload
+            })
         });
 
         //validation

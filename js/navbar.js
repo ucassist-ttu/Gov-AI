@@ -63,26 +63,57 @@ function getCoordinates() {
   })
 }
 
-async function getCountyName(position) {
-
-  console.log("Latitude: " + position.coords.latitude +
-  "Longitude: " + position.coords.longitude)
-
-  const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
-  const geoData = await response.json()
-  let strCountyName = geoData.localityInfo.administrative[3].name
-
-
-  if (dictUpperCumbCounties[strStoredCounty]) {
-    let strCountyKey = dictUpperCumbCounties[strStoredCounty];
+function countyKeyFromName(countyName) {
+  if (typeof countyName !== "string") {
+    return "";
   }
-  else{
-    console.log("County not found in dictionary, setting county to null")
-    sessionStorage.setItem("currCounty", null)
+
+  const normalized = countyName
+    .toLowerCase()
+    .replace(/\s+county$/, "")
+    .replace(/[\s-]+/g, "_")
+    .trim();
+
+  if (dictUpperCumbCounties[normalized]) {
+    return normalized;
+  }
+
+  const match = Object.entries(dictUpperCumbCounties).find(([, label]) => {
+    const normalizedLabel = label.toLowerCase().replace(/\s+county$/, "").trim();
+    const normalizedCounty = countyName.toLowerCase().replace(/\s+county$/, "").trim();
+    return normalizedLabel === normalizedCounty;
+  });
+
+  return match?.[0] ?? "";
+}
+
+async function getCountyName(position) {
+  const latitude = Number(position?.coords?.latitude);
+  const longitude = Number(position?.coords?.longitude);
+
+  console.log("Latitude: " + latitude +
+  "Longitude: " + longitude)
+
+  if (Number.isFinite(latitude) && Number.isFinite(longitude)) {
+    sessionStorage.setItem("userLatitude", String(latitude));
+    sessionStorage.setItem("userLongitude", String(longitude));
+  }
+
+  const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+  const geoData = await response.json()
+  const administrative = Array.isArray(geoData?.localityInfo?.administrative) ? geoData.localityInfo.administrative : [];
+  const countyEntry = administrative.find(entry => typeof entry?.name === "string" && entry.name.toLowerCase().endsWith("county"));
+  const strCountyName = countyEntry?.name ?? administrative[3]?.name ?? "";
+  const strCountyKey = countyKeyFromName(strCountyName);
+
+  if (!strCountyKey) {
+    console.log("County not found in dictionary, clearing stored county")
+    sessionStorage.removeItem("currCounty")
     return;
   }
-  
+
   sessionStorage.setItem("currCounty", strCountyKey)
+  displayCounty()
 }
 
 function getCountyManually() {
@@ -113,11 +144,11 @@ function getCountyManually() {
       if (result.value == '') {
         result.value = 'all'
       }
-      location.reload();
-      console.log(result.value); // this will be 'value1', 'value2', etc
       sessionStorage.setItem("currCounty", result.value)
-
-      displayCounty()
+      sessionStorage.removeItem("userLatitude")
+      sessionStorage.removeItem("userLongitude")
+      console.log(result.value); // this will be 'value1', 'value2', etc
+      location.reload();
     }
   });
 }

@@ -23,8 +23,9 @@ The route list below describes the logical route values such as `/services` or `
 ## Core Endpoints
 
 - `POST /prompt`
-  - Body: JSON `{"user_input": "<text>"}`
+  - Body: JSON `{"user_input": "<text>", "user_county": "<optional-county-key-or-name>", "user_latitude": <optional-float>, "user_longitude": <optional-float>}`
   - Response: JSON array of service objects selected by Gemini from the current services table.
+  - Behavior: the prompt builder now includes normalized service counties, stored service coordinates, and distance-from-user metadata when a county or latitude/longitude is provided so recommendations can weigh both fit and proximity.
 
 - `POST /recommendations`
   - Body: JSON `{"service_id": <int>}`
