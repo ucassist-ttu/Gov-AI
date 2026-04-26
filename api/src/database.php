@@ -75,6 +75,8 @@ function ensure_support_tables(PDO $pdo): void
 
     $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
 
+    ensure_services_active_column($pdo, $driver);
+
     if ($driver === 'sqlite') {
         $pdo->exec(
             'CREATE TABLE IF NOT EXISTS tblReferrals (
@@ -148,10 +150,78 @@ function ensure_support_tables(PDO $pdo): void
     $initialized = true;
 }
 
+function ensure_services_active_column(PDO $pdo, string $driver): void
+{
+    global $services_table;
+
+    if (!database_table_exists($pdo, $driver, $services_table) || database_column_exists($pdo, $driver, $services_table, 'active')) {
+        return;
+    }
+
+    if ($driver === 'sqlite') {
+        $pdo->exec("ALTER TABLE {$services_table} ADD COLUMN active INTEGER NOT NULL DEFAULT 0");
+    } else {
+        $pdo->exec("ALTER TABLE {$services_table} ADD COLUMN active TINYINT(1) NOT NULL DEFAULT 0");
+    }
+
+    $pdo->exec("UPDATE {$services_table} SET active = 1");
+}
+
+function database_table_exists(PDO $pdo, string $driver, string $table): bool
+{
+    if ($driver === 'sqlite') {
+        $statement = $pdo->prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = :table");
+        $statement->execute([':table' => $table]);
+        return (bool) $statement->fetchColumn();
+    }
+
+    $statement = $pdo->prepare(
+        'SELECT COUNT(*)
+         FROM information_schema.tables
+         WHERE table_schema = DATABASE()
+           AND table_name = :table'
+    );
+    $statement->execute([':table' => $table]);
+
+    return ((int) $statement->fetchColumn()) > 0;
+}
+
+function database_column_exists(PDO $pdo, string $driver, string $table, string $column): bool
+{
+    if ($driver === 'sqlite') {
+        $statement = $pdo->query("PRAGMA table_info({$table})");
+        if ($statement === false) {
+            return false;
+        }
+
+        foreach ($statement->fetchAll(PDO::FETCH_ASSOC) ?: [] as $row) {
+            if (strcasecmp((string) ($row['name'] ?? ''), $column) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    $statement = $pdo->prepare(
+        'SELECT COUNT(*)
+         FROM information_schema.columns
+         WHERE table_schema = DATABASE()
+           AND table_name = :table
+           AND column_name = :column'
+    );
+    $statement->execute([
+        ':table' => $table,
+        ':column' => $column,
+    ]);
+
+    return ((int) $statement->fetchColumn()) > 0;
+}
+
 function get_monthly_views(): array
 {
     $pdo = db();
-    $stmt = $pdo->prepare('SELECT s.ID, s.Keywords, s.CountiesAvailable, count(v.service_id) AS view_count FROM tblServices s LEFT JOIN tblMonthlyViews v ON s.ID = v.service_id GROUP BY s.ID');
+    $stmt = $pdo->prepare('SELECT s.ID, s.Keywords, s.CountiesAvailable, count(v.service_id) AS view_count FROM tblServices s LEFT JOIN tblMonthlyViews v ON s.ID = v.service_id WHERE s.active = 1 GROUP BY s.ID');
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -240,12 +310,13 @@ function add_search_analytics(array $search_analytics): bool
     return true;
 }
 
-function get_services(): array
+function get_services(bool $active_only = true): array
 {
     global $services_table;
     $pdo = db();
 
-    $rows = $pdo->query(query: "SELECT * FROM {$services_table}");
+    $where = $active_only ? ' WHERE active = 1' : '';
+    $rows = $pdo->query(query: "SELECT * FROM {$services_table}{$where}");
     if ($rows === false) {
         return [];
     }
@@ -253,12 +324,13 @@ function get_services(): array
     return $rows->fetchAll(mode: PDO::FETCH_ASSOC) ?: [];
 }
 
-function get_service(int $id): array
+function get_service(int $id, bool $active_only = true): array
 {
     global $services_table;
     $pdo = db();
 
-    $statement = $pdo->prepare(query: "SELECT * FROM {$services_table} WHERE ID = :ID");
+    $active_clause = $active_only ? ' AND active = 1' : '';
+    $statement = $pdo->prepare(query: "SELECT * FROM {$services_table} WHERE ID = :ID{$active_clause}");
     $statement->execute(params: ['ID' => $id]);
 
     return $statement->fetch(mode: PDO::FETCH_ASSOC) ?: [];
@@ -281,7 +353,7 @@ function create_service(array $service): array
 
     $statement->execute($params);
 
-    $created_service = get_service((int) $pdo->lastInsertId());
+    $created_service = get_service((int) $pdo->lastInsertId(), false);
     hydrate_service_coordinates($created_service, true);
 
     return $created_service;

@@ -36,11 +36,11 @@ The route list below describes the logical route values such as `/services` or `
   - Response: JSON array of service objects Gemini considers similar to the selected service.
 
 - `GET /services`
-  - Response: JSON array containing every row in `tblServices`.
+  - Response: JSON array containing active rows from `tblServices`.
 
 - `GET /service?id=<int>`
   - Query param: `id`
-  - Response: JSON object for the matching service, or an empty array if no row is found.
+  - Response: JSON object for the matching active service, or an empty array if no row is found.
 
 - `GET /service-coordinates?service_id=<int>`
   - Query param: `service_id` or `id`
@@ -48,7 +48,7 @@ The route list below describes the logical route values such as `/services` or `
   - Behavior: returns the stored `tblCoordinates` row for the service, or falls back to the matching county center and stores that as the service coordinate when no service-specific row exists yet
 
 - `GET /monthly-views`
-  - Response: JSON array of per-service view counts produced from `tblServices` joined with `tblMonthlyViews`.
+  - Response: JSON array of per-service view counts for active services produced from `tblServices` joined with `tblMonthlyViews`.
 
 - `GET /add-monthly-view?service_id=<int>`
   - Query param: `service_id`
@@ -87,7 +87,7 @@ These are the only fake-backend replacements kept from the `emailjs` branch work
 - `GET /create-service?uuid=<request-id>`
 - `POST /create-service`
   - Query or body value: `uuid` or `id`
-  - Behavior: loads an existing pending create request from `tblServiceRequests`, maps the saved payload into the real `tblServices` schema, inserts the service row, attempts to geocode the service address with the U.S. Census Geocoder, falls back to the first matching county center when geocoding fails, stores the result in `tblCoordinates`, deletes the processed request, and returns the created service object as JSON
+  - Behavior: loads an existing pending create request from `tblServiceRequests`, maps the saved payload into the real `tblServices` schema, inserts the service row with `active` defaulting to `false`, attempts to geocode the service address with the U.S. Census Geocoder, falls back to the first matching county center when geocoding fails, stores the result in `tblCoordinates`, deletes the processed request, and returns the created service object as JSON
 
 There is currently no public route that creates rows in `tblServiceRequests`. `create-service` only consumes an already-existing pending `CREATE` request.
 
@@ -100,6 +100,7 @@ This matches the minimal fake-backend behavior those frontend files were asking 
 
 - Local development uses SQLite at `api/src/UCAssist.db`.
 - Non-local hosts use MySQL with credentials hardcoded in `api/src/database.php` except for `DB_PASSWORD`, which comes from the environment.
+- `tblServices.active` is created automatically if missing, defaults to `false` for new services, and existing services are backfilled to `true` only when the column is first added.
 - `tblMonthlyViews`, `tblReferrals`, and `tblServiceRequests` are created automatically if they do not exist.
 - `tblCoordinates` is also created automatically if it does not exist.
 - The backend expects `tblPageAnalytics` and `tblSearchAnalytics` to already exist.
