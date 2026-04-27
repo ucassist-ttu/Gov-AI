@@ -20,6 +20,7 @@ const organizationsDB = [
     {
     company_id: 'C1',
     service_id: 'S1',
+    status: "active",
 
     // --- ORG PUBLIC ---
     company_name: "Upper Cumberland Food Bank",
@@ -49,6 +50,7 @@ const organizationsDB = [
   {
     company_id: 'C2',
     service_id: 'S2',
+    status: "active",
 
     // --- ORG PUBLIC ---
     company_name: "Hope Housing Orgs",
@@ -73,14 +75,11 @@ const organizationsDB = [
 
     // --- FILE ---
     logo_file: "housing_logo.png"
-  }
-]
-
-
-const pendingOrganizationDB = [
-  {
+  },
+    {
     company_id: 'C3',
     service_id: 'S3',
+    status: "pending",
     // --- ORG PUBLIC ---
     company_name: "Community Health Outreach",
     organization_description: "Delivers free and low-cost healthcare organizations to underserved populations.",
@@ -103,7 +102,37 @@ const pendingOrganizationDB = [
     secondary_position: "",
 
   }
-];
+]
+
+
+// const pendingOrganizationDB = [
+//   {
+//     company_id: 'C3',
+//     service_id: 'S3',
+//     status: "pending",
+//     // --- ORG PUBLIC ---
+//     company_name: "Community Health Outreach",
+//     organization_description: "Delivers free and low-cost healthcare organizations to underserved populations.",
+//     phone: "(931) 555-9999",
+//     website: "https://communityhealthoutreach.org",
+//     address1: "789 Pine Rd",
+//     city_public: "Cookeville",
+//     state_public: "TN",
+//     zip_public: "38506",
+
+//     // --- CONTACTS ---
+//     primary_name: "Lisa Nguyen",
+//     primary_email: "lisa@healthoutreach.org",
+//     primary_phone: "(931) 555-8888",
+//     primary_position: "Clinic Director",
+
+//     secondary_name: "",
+//     secondary_email: "",
+//     secondary_phone: "",
+//     secondary_position: "",
+
+//   }
+// ];
 
 
 export function addOrgToPendingDB(organization){

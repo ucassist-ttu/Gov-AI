@@ -3,6 +3,7 @@ export const servicesDB = [
   {
     service_id: 'S1',
     company_id: 'C1',
+    status: "active",
 
     // --- SERVICE ---
     service_name: "Emergency Food Assistance",
@@ -22,6 +23,8 @@ export const servicesDB = [
   {
     service_id: 'S2',
     company_id: 'C2',
+    status: "active",
+
     // --- SERVICE ---
     service_name: "Rental Assistance Program",
     service_description: "Provides short-term rental assistance for individuals facing eviction.",
@@ -36,6 +39,24 @@ export const servicesDB = [
     // --- FILE ---
     logo_file: "housing_logo.png"
   },
+  {
+    service_id: 'S3',
+    company_id: 'C1',
+    status: "pending",
+    // --- SERVICE ---
+    service_name: "Free Health Clinic",
+    service_description: "Provides basic medical care, screenings, and referrals at no cost.",
+    service_criteria: "Open to uninsured or underinsured individuals.",
+
+    service_phone: "(931) 555-9999",
+    service_address_street: "789 Pine Rd",
+    service_city: "Cookeville",
+    service_state: "TN",
+    service_zip: "38506",
+
+    // --- FILE ---
+    logo_file: "health_logo.png"
+  }
 ];
 
 export const pendingServiceDB = [
