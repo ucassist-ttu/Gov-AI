@@ -624,7 +624,7 @@ fetchAndPopulateAllData();
 //EMAIL JS - COLLECT INFORMATION AND SEND EMAIL
 
 function logFormData() { // collects form data and returns unique ID for email linking
-  const data = {
+  const orgData = {
     id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
 
     // --- ORG PUBLIC ---
@@ -647,6 +647,10 @@ function logFormData() { // collects form data and returns unique ID for email l
     secondary_email: document.getElementById("secondaryEmail")?.value,
     secondary_phone: document.getElementById("secondaryPhone")?.value,
     secondary_position: document.getElementById("secondaryPosition")?.value,
+  }
+
+  const serviceData = {
+    company_id: orgData.id, // Foreign Key - Link service to org using org ID
 
     // --- SERVICE (FIRST BLOCK) ---
     service_name: document.getElementById("serviceName")?.value,
@@ -662,20 +666,14 @@ function logFormData() { // collects form data and returns unique ID for email l
     // --- FILE ---
     logo_file: document.getElementById("upload")?.files[0]?.name || "No file"
   };
+  
+  console.log("============================");
+  console.log("Organization Data to be sent to DB:", orgData);
+  console.log("Service Data to be sent to DB:", serviceData);
+  console.log("============================");
 
-  // console.log("====== FORM DATA DEBUG ======");
-  // console.table(data);
-  // addServiceToPendingDB(data) // ENPOINT TO ADD SERVICE TO DATABASE
-
-  // // OPTIONAL: log complex stuff separately
-  // console.log("Org Keywords:", getSelectedKeywords?.());
-  // console.log("Service Keywords:", getSelectedServiceKeywords?.());
-  // console.log("Counties:", getSelectedCounties?.());
-  // console.log("Org Hours:", getOrgHours?.());
-  // console.log("Service Hours:", getServiceHours?.());
-
-  // console.log("============================");
-
+  addOrgToPendingDB(orgData) // sends to database
+  addServiceToPendingDB(serviceData) 
   return data.id; // Return the new ID for email linking
 }
 
@@ -690,8 +688,11 @@ document.getElementById("form-step-3").addEventListener("submit", function (e) {
     emailjs.send(
       "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-      {id: newServiceID}) // sends service ID so EmailJS can use it to create link to service page in email
-      
+      {id: newServiceID}  // sends service ID so EmailJS can use it to create link to service page in email
+    )
+
+
+
     Swal.fire({
       icon: "success",
       title: "Submitted!",

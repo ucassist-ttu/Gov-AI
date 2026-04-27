@@ -61,19 +61,22 @@ const pendingServiceDB = [
 // FAKE ENDPOINTS
 
 //ADDS SERVICE TO PENDINGDB
-export function addServiceToPendingDB({company_name, organization_description, phone, website, address1, city_public, state_public, zip_public, primary_name, primary_email, primary_phone, primary_position, secondary_name, secondary_email, secondary_phone, secondary_position, service_name, service_description, service_criteria, service_phone, service_address_street, service_city, service_state, service_zip, logo_file}) {
-   const newService = {
-    id: Date.now(),
-    service_name, 
-    service_description, 
-    service_criteria, 
-    service_phone, 
-    service_address_street, 
-    service_city, 
-    service_state, 
-    service_zip, 
-    logo_file
-  };
+// export function addServiceToPendingDB({id,company_name, organization_description, phone, website, address1, city_public, state_public, zip_public, primary_name, primary_email, primary_phone, primary_position, secondary_name, secondary_email, secondary_phone, secondary_position, service_name, service_description, service_criteria, service_phone, service_address_street, service_city, service_state, service_zip, logo_file}) {
+//    const newService = {
+//     id: Date.now(),
+//     service_name, 
+//     service_description, 
+//     service_criteria, 
+//     service_phone, 
+//     service_address_street, 
+//     service_city, 
+//     service_state, 
+//     service_zip, 
+//     logo_file
+//   };
+
+export function addServiceToPendingDB(service){
+  const newService = service
 
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -119,4 +122,14 @@ export function getServiceForReview(id) {
   });
 }
 
-export default pendingServiceDB;
+// getOrganizationForService(id) {
+//   return new Promise((resolve) => {
+//     setTimeout(() => { 
+//       const referral = pendingServiceDB.find(item => item.id == id);
+//       resolve(referral);
+//     }, 500);
+//   });
+// }
+
+
+export default { pendingServiceDB, servicesDB, addServiceToPendingDB, addServiceToServicesDB, getServiceForReview };

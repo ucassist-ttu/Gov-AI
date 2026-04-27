@@ -41,15 +41,8 @@ const referralReviewDB =
 
 
 // FAKE ENDPOINTS
-export function addReferral({ firstName, lastName, email, phone, message }) {
-  const newReferral = {
-    id: Date.now(),
-    firstName,
-    lastName,
-    email,
-    phone,
-    message
-  };
+export function addReferral(service) {
+  const newReferral = service
 
   return new Promise((resolve) => {
     setTimeout(() => {
