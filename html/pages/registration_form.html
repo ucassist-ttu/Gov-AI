@@ -418,7 +418,7 @@
           <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Service Description Input"></textarea>
         </div>
         <div class="mb-3" data-name="Service Criteria Section">
-          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Service Eligibility</label>
+          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Requirements to Qualify</label>
           <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Service Criteria Input" />
         </div>
         <div class="mb-3" data-name="Service Counties Offered Section">
@@ -426,7 +426,84 @@
           <div id="btnCountiesReg" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Service Counties Dropdown"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
           <div id="divOuterCountiesReg" class="form-check outer-layer" data-name="Service Counties Options Container">
             <hr />
-            <div id="divCountiesReg" class="form-check" data-name="Service Counties List"></div>
+            <div id="divCountiesReg" class="form-check" data-name="Service Counties List">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="all" value="all">
+                  <label class="form-check-label" for="all">All Counties</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cannon" value="cannon">
+                  <label class="form-check-label" for="cannon">Cannon County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="clay" value="clay">
+                  <label class="form-check-label" for="clay">Clay County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cumberland" value="cumberland">
+                  <label class="form-check-label" for="cumberland">Cumberland County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="dekalb" value="dekalb">
+                  <label class="form-check-label" for="dekalb">DeKalb County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="fentress" value="fentress">
+                  <label class="form-check-label" for="fentress">Fentress County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="jackson" value="jackson">
+                  <label class="form-check-label" for="jackson">Jackson County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="macon" value="macon">
+                  <label class="form-check-label" for="macon">Macon County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="overton" value="overton">
+                  <label class="form-check-label" for="overton">Overton County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="pickett" value="pickett">
+                  <label class="form-check-label" for="pickett">Pickett County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="putnam" value="putnam">
+                  <label class="form-check-label" for="putnam">Putnam County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="smith" value="smith">
+                  <label class="form-check-label" for="smith">Smith County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="van_buren" value="van_buren">
+                  <label class="form-check-label" for="van_buren">Van Buren County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="warren" value="warren">
+                  <label class="form-check-label" for="warren">Warren County</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="white" value="white">
+                  <label class="form-check-label" for="white">White County</label>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
         <div class="mb-3" data-name="Service Keywords Section">
