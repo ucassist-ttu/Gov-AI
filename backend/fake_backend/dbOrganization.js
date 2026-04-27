@@ -144,13 +144,13 @@ export function addOrgToOrgsDB(pendingID){
 }
 
 // FIND SERVICE BY ID (for website link)
-export function getOrgForReview(id) {
+export function getOrgForService(id) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const referral = pendingOrganizationDB.find(item => item.company_id == id);
-      resolve(referral);
+      const organization = pendingOrganizationDB.find(item => item.service_id === id);
+      resolve(organization);
     }, 500);
   });
 }
 
-export default { pendingOrganizationDB, organizationsDB, addOrgToPendingDB, addOrgToOrgsDB, getOrgForReview };
+export default { pendingOrganizationDB, organizationsDB, addOrgToPendingDB, addOrgToOrgsDB, getOrgForService };

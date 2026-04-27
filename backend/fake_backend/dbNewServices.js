@@ -1,6 +1,6 @@
 //servicesDB
 
-const servicesDB = [
+export const servicesDB = [
   {
     service_id: 'S1',
     company_id: 'C1',
@@ -39,7 +39,7 @@ const servicesDB = [
   },
 ];
 
-const pendingServiceDB = [
+export const pendingServiceDB = [
   {
   service_id: 'S3',
   company_id: 'C1',
@@ -94,7 +94,7 @@ export function addServiceToPendingDB(service){
 // ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
 export function addServiceToServicesDB(pendingID){
   //search pendingServiceDB for service using ID
-  const pendingService = pendingServiceDB.find(service => service.id === newID);
+  const pendingService = pendingServiceDB.find(service => service.id === pendingID);
 
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -114,22 +114,15 @@ export function addServiceToServicesDB(pendingID){
 
 // FIND SERVICE BY ID (for website link)
 export function getServiceForReview(id) {
+  console.log("Searching for service with ID:", id);
   return new Promise((resolve) => {
     setTimeout(() => {
-      const referral = pendingServiceDB.find(item => item.id == id);
-      resolve(referral);
+      const service = pendingServiceDB.find(item => item.service_id === id);
+      resolve(service);
     }, 500);
   });
 }
 
-// getOrganizationForService(id) {
-//   return new Promise((resolve) => {
-//     setTimeout(() => { 
-//       const referral = pendingServiceDB.find(item => item.id == id);
-//       resolve(referral);
-//     }, 500);
-//   });
-// }
 
 
-export default { pendingServiceDB, servicesDB, addServiceToPendingDB, addServiceToServicesDB, getServiceForReview };
+export default { pendingServiceDB, servicesDB};
