@@ -451,8 +451,27 @@ async function getServiceName(serviceId, serviceCount, order) {
     }
 }
 
-const analytics = JSON.parse(localStorage.getItem("analytics")) || [];
-const searchAnalytics = JSON.parse(localStorage.getItem("searchAnalytics")) || [];
+async function getAnalytics(endpoint) {
+    try {
+        let servResponse = await fetchApi(endpoint)
+        let servData = await servResponse.json()
+        return servData
+    } catch (err) {
+        console.log("Error fetching service data")
+        return []
+    }
+}
+async function load() {
+    const [analytics, searchAnalytics] = await Promise.all([
+        getAnalytics("/page-analytics"),
+        getAnalytics("/search-analytics")
+    ])
+
+    console.log(analytics)
+    console.log(searchAnalytics)
+}
+
+load()
 
 const stopWords = new Set([
     "the","for","and","to","of","in","on","at","a","an",
