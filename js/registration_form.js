@@ -1,5 +1,6 @@
-emailjs.init("YOUR_PUBLIC_KEY");
-
+//CHANGE THESE IDs AS SOON
+  emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
+    
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3'];
   let currentStep = 0;
@@ -618,16 +619,14 @@ fetchAndPopulateAllData();
   });
 });
 
+
+
 //EMAIL JS - COLLECT INFORMATION AND SEND EMAIL
 
-// making unique ID for database
-// const newID = last id + 1
-
-function logFormData() {
-  // SEND INFORMATION TO DATABASE
+function logFormData() { // collects form data and returns unique ID for email linking
   const data = {
-    // making unique ID for database
-    // id = newID,
+    id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
+
     // --- ORG PUBLIC ---
     company_name: document.querySelector('[data-name="Company Name Input"]')?.value,
     organization_description: document.querySelector('[data-name="Organization Description Input"]')?.value,
@@ -664,18 +663,18 @@ function logFormData() {
     logo_file: document.getElementById("upload")?.files[0]?.name || "No file"
   };
 
-  console.log("====== FORM DATA DEBUG ======");
-  console.table(data);
-  addServiceToPendingDB(data) // ENPOINT TO ADD SERVICE TO DATABASE
+  // console.log("====== FORM DATA DEBUG ======");
+  // console.table(data);
+  // addServiceToPendingDB(data) // ENPOINT TO ADD SERVICE TO DATABASE
 
-  // OPTIONAL: log complex stuff separately
-  console.log("Org Keywords:", getSelectedKeywords?.());
-  console.log("Service Keywords:", getSelectedServiceKeywords?.());
-  console.log("Counties:", getSelectedCounties?.());
-  console.log("Org Hours:", getOrgHours?.());
-  console.log("Service Hours:", getServiceHours?.());
+  // // OPTIONAL: log complex stuff separately
+  // console.log("Org Keywords:", getSelectedKeywords?.());
+  // console.log("Service Keywords:", getSelectedServiceKeywords?.());
+  // console.log("Counties:", getSelectedCounties?.());
+  // console.log("Org Hours:", getOrgHours?.());
+  // console.log("Service Hours:", getServiceHours?.());
 
-  console.log("============================");
+  // console.log("============================");
 
   return data.id; // Return the new ID for email linking
 }
@@ -685,16 +684,14 @@ document.getElementById("form-step-3").addEventListener("submit", function (e) {
     e.preventDefault();
     const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
 
-    console.log("newServiceID: ", newServiceID);
+    console.log("New Service ID for EmailJS linking:", newServiceID);
 
-    //CHANGE THESE IDs AS SOON
-    emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
     // SENDING ID TO EMAIL JS TO CREATE LINK
     emailjs.send(
       "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
       {id: newServiceID}) // sends service ID so EmailJS can use it to create link to service page in email
-  .then(function (response) {
+      
     Swal.fire({
       icon: "success",
       title: "Submitted!",
@@ -702,7 +699,7 @@ document.getElementById("form-step-3").addEventListener("submit", function (e) {
       // confirmButtonColor: "#0d6efd"
     });
 
-    document.getElementById("form-step-3").reset();
+    // document.getElementById("form-step-3").reset();
   })
   .catch(function (error) {
     console.error("EmailJS Error:", error);
@@ -713,4 +710,3 @@ document.getElementById("form-step-3").addEventListener("submit", function (e) {
       text: "Something went wrong. Please try again."
     });
   });
-});

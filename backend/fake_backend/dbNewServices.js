@@ -39,7 +39,8 @@ const servicesDB = [
   },
 ];
 
-let pendingServiceDB = [{
+const pendingServiceDB = [
+  {
   service_id: 'S3',
   company_id: 'C1',
   // --- SERVICE ---
@@ -58,48 +59,46 @@ let pendingServiceDB = [{
 }]
 
 // FAKE ENDPOINTS
-// export function addService({company_name, organization_description, phone, website, address1, city_public, state_public, zip_public, primary_name, primary_email, primary_phone, primary_position, secondary_name, secondary_email, secondary_phone, secondary_position, service_name, service_description, service_criteria, service_phone, service_address_street, service_city, service_state, service_zip, logo_file}) {
-//    const newService = {
-//     id: Date.now(),
-//     oldID,  
-//     service_name, 
-//     service_description, 
-//     service_criteria, 
-//     service_phone, 
-//     service_address_street, 
-//     service_city, 
-//     service_state, 
-//     service_zip, 
-//     logo_file
-//   };
 
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       servicesDB.push(newService);
-
-//       localStorage.setItem(
-//         "newService",
-//         JSON.stringify(pendingServiceDB)
-//       );
-//       resolve(newService);
-//     }, 300);
-//   });
-// }
-
-// ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
-// export function addService({company_name, organization_description, phone, website, address1, city_public, state_public, zip_public, primary_name, primary_email, primary_phone, primary_position, secondary_name, secondary_email, secondary_phone, secondary_position, service_name, service_description, service_criteria, service_phone, service_address_street, service_city, service_state, service_zip, logo_file}) {
-export function addService(id){
-
-  //search pendingServiceDB matching id
-  // const pendingService = pendingServiceDB.find(service => service.id === id);
-
-  const currService = getService(id);
-
+//ADDS SERVICE TO PENDINGDB
+export function addServiceToPendingDB({company_name, organization_description, phone, website, address1, city_public, state_public, zip_public, primary_name, primary_email, primary_phone, primary_position, secondary_name, secondary_email, secondary_phone, secondary_position, service_name, service_description, service_criteria, service_phone, service_address_street, service_city, service_state, service_zip, logo_file}) {
+   const newService = {
+    id: Date.now(),
+    service_name, 
+    service_description, 
+    service_criteria, 
+    service_phone, 
+    service_address_street, 
+    service_city, 
+    service_state, 
+    service_zip, 
+    logo_file
+  };
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      //move to servicesDB
-      referralReviewDB.push(currService);
+      pendingServiceDB.push(newService);
+
+      localStorage.setItem(
+        "newService",
+        JSON.stringify(pendingServiceDB)
+      );
+      resolve(newService);
+    }, 300);
+  });
+}
+
+// ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
+export function addServiceToServicesDB(pendingID){
+  //search pendingServiceDB for service using ID
+  const pendingService = pendingServiceDB.find(service => service.id === newID);
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      //removes from pendingdb 
+      pendingServiceDB.pop(pendingService);
+      //moves to servicesDB
+      servicesDB.push(pendingService);
 
       localStorage.setItem(
         "newService",
@@ -110,7 +109,8 @@ export function addService(id){
   });
 }
 
-export function getService(id) {
+// FIND SERVICE BY ID (for website link)
+export function getServiceForReview(id) {
   return new Promise((resolve) => {
     setTimeout(() => {
       const referral = pendingServiceDB.find(item => item.id == id);
