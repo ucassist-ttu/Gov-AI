@@ -133,7 +133,7 @@ const organizationsDB = [
 // ];
 
 
-export function addOrgToPendingDB(organization){
+export function addOrgToOrgsDB(organization){
   const newOrg = organization
 
   return new Promise((resolve) => {
@@ -151,9 +151,6 @@ export function addOrgToPendingDB(organization){
 
 // ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
 // export function addOrgToOrgsDB(pendingID){
-//   //search pendingOrgDB for organization using ID
-//   const pendingOrg = pendingOrgDB.find(organization => organization.id === newID);
-
 //   return new Promise((resolve) => {
 //     setTimeout(() => {
 //       //removes from pendingdb 
@@ -180,4 +177,4 @@ export function getOrgForService(id) {
   });
 }
 
-export default {organizationsDB, addOrgToPendingDB, addOrgToOrgsDB, getOrgForService };
+export default {organizationsDB, addOrgToOrgsDB, getOrgForService };

@@ -2,8 +2,7 @@ const saved = localStorage.getItem("referrals");
 
 
 const referralReviewDB = 
-  [
-  {
+  [{
     id: "R1",
     firstName: "Ashley",
     lastName: "Porter",

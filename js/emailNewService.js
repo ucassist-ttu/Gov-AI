@@ -1,9 +1,9 @@
-import {pendingServiceDB, getServiceForReview, addServiceToServicesDB, addServiceToPendingDB } from "../backend/fake_backend/dbNewServices.js";
+import {getServiceForReview, servicesDB } from "../backend/fake_backend/dbNewServices.js";
 import { getOrgForService } from "../backend/fake_backend/dbOrganization.js";
 
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get("id");
-console.log(pendingServiceDB)
+console.log(servicesDB)
 
 // CALL ENDPOINT TO UPDATE DATABASE
 document.addEventListener('DOMContentLoaded', () => {
