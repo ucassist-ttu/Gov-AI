@@ -204,10 +204,10 @@ async function getAIRecommendations(userPrompt) {
 //     });
 // })
 
-document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
-    printed = true;
-    window.print();
-})
+//document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
+//    printed = true;
+//    window.print();
+//})
 // document.addEventListener("click", (e) => {
 //     if (e.target.closest("#btnPrintAIResults")) {
 //         printed = true;
