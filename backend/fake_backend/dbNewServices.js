@@ -59,24 +59,24 @@ export const servicesDB = [
   }
 ];
 
-export const pendingServiceDB = [
-  {
-  service_id: 'S3',
-  company_id: 'C1',
-  // --- SERVICE ---
-  service_name: "Free Health Clinic",
-  service_description: "Provides basic medical care, screenings, and referrals at no cost.",
-  service_criteria: "Open to uninsured or underinsured individuals.",
+// export const pendingServiceDB = [
+//   {
+//   service_id: 'S3',
+//   company_id: 'C1',
+//   // --- SERVICE ---
+//   service_name: "Free Health Clinic",
+//   service_description: "Provides basic medical care, screenings, and referrals at no cost.",
+//   service_criteria: "Open to uninsured or underinsured individuals.",
 
-  service_phone: "(931) 555-9999",
-  service_address_street: "789 Pine Rd",
-  service_city: "Cookeville",
-  service_state: "TN",
-  service_zip: "38506",
+//   service_phone: "(931) 555-9999",
+//   service_address_street: "789 Pine Rd",
+//   service_city: "Cookeville",
+//   service_state: "TN",
+//   service_zip: "38506",
 
-  // --- FILE ---
-  logo_file: "health_logo.png"
-}]
+//   // --- FILE ---
+//   logo_file: "health_logo.png"
+// }]
 
 // FAKE ENDPOINTS
 
@@ -95,26 +95,26 @@ export const pendingServiceDB = [
 //     logo_file
 //   };
 
-export function addServiceToPendingDB(service){
-  const newService = service
+// export function addServiceToPendingDB(service){
+//   const newService = service
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      pendingServiceDB.push(newService);
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       pendingServiceDB.push(newService);
 
-      localStorage.setItem(
-        "newService",
-        JSON.stringify(pendingServiceDB)
-      );
-      resolve(newService);
-    }, 300);
-  });
-}
+//       localStorage.setItem(
+//         "newService",
+//         JSON.stringify(pendingServiceDB)
+//       );
+//       resolve(newService);
+//     }, 300);
+//   });
+// }
 
 // ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
 export function addServiceToServicesDB(pendingID){
   //search pendingServiceDB for service using ID
-  const pendingService = pendingServiceDB.find(service => service.id === pendingID);
+  const pendingService = servicesDB.find(service => service.id === pendingID);
 
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -125,7 +125,7 @@ export function addServiceToServicesDB(pendingID){
 
       localStorage.setItem(
         "newService",
-        JSON.stringify(pendingServiceDB)
+        JSON.stringify(servicesDB)
       );
       resolve(currService);
     }, 300);
@@ -137,7 +137,7 @@ export function getServiceForReview(id) {
   console.log("Searching for service with ID:", id);
   return new Promise((resolve) => {
     setTimeout(() => {
-      const service = pendingServiceDB.find(item => item.service_id === id);
+      const service = servicesDB.find(item => item.service_id === id);
       resolve(service);
     }, 500);
   });
@@ -145,4 +145,4 @@ export function getServiceForReview(id) {
 
 
 
-export default { pendingServiceDB, servicesDB};
+export default {servicesDB};

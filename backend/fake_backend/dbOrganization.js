@@ -46,7 +46,6 @@ const organizationsDB = [
     // --- FILE ---
     logo_file: "foodbank_logo.png"
   },
-
   {
     company_id: 'C2',
     service_id: 'S2',
@@ -76,7 +75,7 @@ const organizationsDB = [
     // --- FILE ---
     logo_file: "housing_logo.png"
   },
-    {
+  {
     company_id: 'C3',
     service_id: 'S3',
     status: "pending",
@@ -100,7 +99,6 @@ const organizationsDB = [
     secondary_email: "",
     secondary_phone: "",
     secondary_position: "",
-
   }
 ]
 
@@ -140,11 +138,11 @@ export function addOrgToPendingDB(organization){
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      pendingOrgDB.push(newOrg);
+      organizationsDB.push(newOrg);
 
       localStorage.setItem(
         "newOrg",
-        JSON.stringify(pendingOrgDB)
+        JSON.stringify(organizationsDB)
       );
       resolve(newOrg);
     }, 300);
@@ -152,34 +150,34 @@ export function addOrgToPendingDB(organization){
 }
 
 // ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
-export function addOrgToOrgsDB(pendingID){
-  //search pendingOrgDB for organization using ID
-  const pendingOrg = pendingOrgDB.find(organization => organization.id === newID);
+// export function addOrgToOrgsDB(pendingID){
+//   //search pendingOrgDB for organization using ID
+//   const pendingOrg = pendingOrgDB.find(organization => organization.id === newID);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      //removes from pendingdb 
-      pendingOrgDB.pop(pendingOrg);
-      //moves to organizationsDB
-      organizationsDB.push(pendingOrg);
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       //removes from pendingdb 
+//       pendingOrgDB.pop(pendingOrg);
+//       //moves to organizationsDB
+//       organizationsDB.push(pendingOrg);
 
-      localStorage.setItem(
-        "newOrg",
-        JSON.stringify(pendingOrgDB)
-      );
-      resolve(currOrg);
-    }, 300);
-  });
-}
+//       localStorage.setItem(
+//         "newOrg",
+//         JSON.stringify(pendingOrgDB)
+//       );
+//       resolve(currOrg);
+//     }, 300);
+//   });
+// }
 
 // FIND SERVICE BY ID (for website link)
 export function getOrgForService(id) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const organization = pendingOrganizationDB.find(item => item.service_id === id);
+      const organization = organizationsDB.find(item => item.service_id === id);
       resolve(organization);
     }, 500);
   });
 }
 
-export default { pendingOrganizationDB, organizationsDB, addOrgToPendingDB, addOrgToOrgsDB, getOrgForService };
+export default {organizationsDB, addOrgToPendingDB, addOrgToOrgsDB, getOrgForService };
