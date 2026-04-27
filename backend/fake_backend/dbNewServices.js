@@ -1,5 +1,4 @@
 //servicesDB
-
 export const servicesDB = [
   {
     service_id: 'S1',
