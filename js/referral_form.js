@@ -1,4 +1,6 @@
 import { addReferral } from "../backend/fake_backend/dbReferrals.js";
+//CHANGE THESE IDs AS SOON
+emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
 
 async function addReferralToDB() {  
   //LOADING TO DATABASE
@@ -83,21 +85,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //SEND EMAIL JS
+console.log("about to send emailjs")
+sendEmail();
+console.log("emailjs sent")
 
-//CHANGE THESE IDs AS SOON
-emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
+
 function sendEmail(){
-  logFormData(); // 👈 run this before sending email
 
   emailjs.send(
     "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
-    "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
+    "template_ad1m3hq", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
     {
       first_name: document.getElementById('referFirstName').value,
       last_name: document.getElementById('referLastName').value,
       email: document.getElementById("referEmail").value,
-      phone: edocument.getElementById("referPhone").value,
+      phone: document.getElementById("referPhone").value,
       message: document.getElementById("referMessage").value
     }
   );
 }
+
+// emailjs.send("service_9byagl9","template_ad1m3hq",{
+// first_name: "Ashley",
+// last_name: "Porter",
+// email: "Ashley@gmail.com",
+// phone_number: 1234567890,
+// message: "hellloooo",
+// id: 101,
+// });

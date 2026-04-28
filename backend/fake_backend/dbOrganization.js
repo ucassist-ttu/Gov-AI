@@ -18,7 +18,9 @@
 //     secondary_position,
 const organizationsDB = [
     {
-    id: 'C1',
+    company_id: 'C1',
+    service_id: 'S1',
+    status: "active",
 
     // --- ORG PUBLIC ---
     company_name: "Upper Cumberland Food Bank",
@@ -44,12 +46,13 @@ const organizationsDB = [
     // --- FILE ---
     logo_file: "foodbank_logo.png"
   },
-
   {
-    id: 'C2',
+    company_id: 'C2',
+    service_id: 'S2',
+    status: "active",
 
     // --- ORG PUBLIC ---
-    company_name: "Hope Housing Services",
+    company_name: "Hope Housing Orgs",
     organization_description: "Offers temporary housing and rental assistance programs.",
     phone: "(931) 555-2222",
     website: "https://hopehousing.org",
@@ -71,17 +74,14 @@ const organizationsDB = [
 
     // --- FILE ---
     logo_file: "housing_logo.png"
-  }
-]
-
-
-const pendingOrganizationDB = [
+  },
   {
-    service_id: 'S3',
     company_id: 'C3',
+    service_id: 'S3',
+    status: "pending",
     // --- ORG PUBLIC ---
     company_name: "Community Health Outreach",
-    organization_description: "Delivers free and low-cost healthcare services to underserved populations.",
+    organization_description: "Delivers free and low-cost healthcare organizations to underserved populations.",
     phone: "(931) 555-9999",
     website: "https://communityhealthoutreach.org",
     address1: "789 Pine Rd",
@@ -99,6 +99,82 @@ const pendingOrganizationDB = [
     secondary_email: "",
     secondary_phone: "",
     secondary_position: "",
-
   }
-];
+]
+
+
+// const pendingOrganizationDB = [
+//   {
+//     company_id: 'C3',
+//     service_id: 'S3',
+//     status: "pending",
+//     // --- ORG PUBLIC ---
+//     company_name: "Community Health Outreach",
+//     organization_description: "Delivers free and low-cost healthcare organizations to underserved populations.",
+//     phone: "(931) 555-9999",
+//     website: "https://communityhealthoutreach.org",
+//     address1: "789 Pine Rd",
+//     city_public: "Cookeville",
+//     state_public: "TN",
+//     zip_public: "38506",
+
+//     // --- CONTACTS ---
+//     primary_name: "Lisa Nguyen",
+//     primary_email: "lisa@healthoutreach.org",
+//     primary_phone: "(931) 555-8888",
+//     primary_position: "Clinic Director",
+
+//     secondary_name: "",
+//     secondary_email: "",
+//     secondary_phone: "",
+//     secondary_position: "",
+
+//   }
+// ];
+
+
+export function addOrgToOrgsDB(organization){
+  const newOrg = organization
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      organizationsDB.push(newOrg);
+
+      localStorage.setItem(
+        "newOrg",
+        JSON.stringify(organizationsDB)
+      );
+      resolve(newOrg);
+    }, 300);
+  });
+}
+
+// ADDS SERVICE TO SERVICES DB, REMOVES FROM PENDING DB VIA ID (in website link)
+// export function addOrgToOrgsDB(pendingID){
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       //removes from pendingdb 
+//       pendingOrgDB.pop(pendingOrg);
+//       //moves to organizationsDB
+//       organizationsDB.push(pendingOrg);
+
+//       localStorage.setItem(
+//         "newOrg",
+//         JSON.stringify(pendingOrgDB)
+//       );
+//       resolve(currOrg);
+//     }, 300);
+//   });
+// }
+
+// FIND SERVICE BY ID (for website link)
+export function getOrgForService(id) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const organization = organizationsDB.find(item => item.service_id === id);
+      resolve(organization);
+    }, 500);
+  });
+}
+
+export default {organizationsDB, addOrgToOrgsDB, getOrgForService };

@@ -307,7 +307,13 @@ function isInCounty(service){
 
   const userSelectedCounty = sessionStorage.getItem("currCounty")
 
+
   if(strCounties.includes(userSelectedCounty)){
+    if (strCounties.includes("all counties")){
+      console.log("[isInCounty] all counties:", strCounties)
+      return false;
+    }
+    console.log("[isInCounty] NOT all counties:", strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
@@ -352,7 +358,6 @@ function isInCounty(service){
     }
     innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
     innerHTML += `<smaller class="col-auto"> + ${count - 1} county</smaller>`
-    // console.log("[getCounties] arrCounties: ", arrCounties)
   } else if (count > 2) {
     if (userSelectedCounty == 'all') {
       userSelectedCounty = exCounty

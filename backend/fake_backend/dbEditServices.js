@@ -33,7 +33,7 @@ const dbEditServices = {
   // --- UPDATED ADDRESS ---
   service_address_street: "789 New Hope Ave",
   service_city: "",
-    service_state: "",
+  service_state: "",
   service_zip: "38502",
 
   // --- UPDATED FILE ---
