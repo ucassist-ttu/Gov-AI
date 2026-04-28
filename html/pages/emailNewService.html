@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <title>Service Referral Form</title>
+  <link rel="icon" type="image" href="Gov-AI/assets/images/cropped-Seal_JPEG-32x32.jpg">
+</head>
+<body class="white">
+  <div id="navbar"></div>
+  <main>
+    <div class="overflow-visible ontainer row">
+        <div class="d-flex dark_navy p-4">
+            <h1 class="ps-md-4 fw-bold white">Service Update Review</h1>               
+        </div>
+        <!-- new information -->
+        <div id="formReviewNewInformation" class="col  p-5">
+            <h2 class="mb-4 fw-bold">Updated Information</h2>
+
+            <!-- ORGANIZATION PUBLIC -->
+            <h4 class="fw-light">Organization Information (Public)</h4>
+
+            <label for="updatedCompanyName">Company Name</label>
+            <input id="updatedCompanyName" class="form-control mb-2" placeholder="Helping Hands Outreach" aria-label="Disabled input example" disabled data-name="Company Name Input">
+            <label for="updatedOrgDescription">Organization Description</label>
+            <textarea id="updatedOrgDescription" class="form-control mb-2" placeholder="We provide food, shelter, finacial assistance, and support services to families in need." aria-label="Disabled input example" disabled data-name="Organization Description Input"></textarea>
+            <label for="updatedPhone">Phone</label>
+            <input id="updatedPhone" class="form-control mb-2" placeholder="(931) 555-1234" aria-label="Disabled input example" disabled>
+            <label for="updatedWebsite">Website</label>
+            <input id="updatedWebsite" class="form-control mb-2" placeholder="https://www.helpinghands.org" aria-label="Disabled input example" disabled>
+            <label for="updatedPhysicalAddress">Address</label>
+            <input id="updatedPhysicalAddress" class="form-control mb-2" placeholder="456 Oak Street" aria-label="Disabled input example" disabled>
+            <label for="updatedCityPublic">City</label>
+            <input id="updatedCityPublic" class="form-control mb-2" placeholder="Cookeville" aria-label="Disabled input example" disabled>
+            <label for="updatedStatePublic">State</label>
+            <input id="updatedStatePublic" class="form-control mb-2" placeholder="TN" aria-label="Disabled input example" disabled>
+            <label for="updatedZipPublic">Zip</label>
+            <input id="updatedZipPublic" class="form-control mb-2" placeholder="38501" aria-label="Disabled input example" disabled>
+            <label for="updatedOrgKeywords">Keywords (comma separated)</label>
+            <input id="updatedOrgKeywords" class="form-control mb-2" placeholder="Food, Shelter, Assistance, Finacial Assistance" aria-label="Disabled input example" disabled>
+            <label for="updatedOrgHours">Hours of Operation</label>
+            <textarea id="updatedOrgHours" class="form-control mb-3" placeholder="Mon-Fri 8am - 5pm" aria-label="Disabled input example" disabled></textarea>
+            <label for="updatedLogoUpload">Logo Upload</label>
+            <input type="file" id="updatedLogoUpload" class="form-control mb-4" aria-label="Disabled input example" disabled>
+
+
+            <!-- PRIMARY CONTACT -->
+            <h4 class="fw-light">Primary Contact</h4>
+
+            <label for="updatedPrimaryName">Name</label>
+            <input id="updatedPrimaryName" class="form-control mb-2" placeholder="Jane Doe" aria-label="Disabled input example" disabled>
+            <label for="updatedPrimaryEmail">Email</label>
+            <input id="updatedPrimaryEmail" class="form-control mb-2" placeholder="jane.doe@email.com" aria-label="Disabled input example" disabled>
+            <label for="updatedPrimaryPhone">Phone</label>
+            <input id="updatedPrimaryPhone" class="form-control mb-2" placeholder="(931) 555-5678" aria-label="Disabled input example" disabled>
+            <label for="updatedPrimaryPosition">Position</label>
+            <input id="updatedPrimaryPosition" class="form-control mb-4" placeholder="Program Director" aria-label="Disabled input example" disabled>
+
+            <!-- SECONDARY CONTACT -->
+            <h4 class="fw-light">Secondary Contact</h4>
+
+            <label for="updatedSecondaryName">Name</label>
+            <input id="updatedSecondaryName" class="form-control mb-2" placeholder="John Smith" aria-label="Disabled input example" disabled>
+            <label for="updatedSecondaryEmail">Email</label>
+            <input id="updatedSecondaryEmail" class="form-control mb-2" placeholder="john.smith@email.com" aria-label="Disabled input example" disabled>
+            <label for="updatedSecondaryPhone">Phone</label>
+            <input id="updatedSecondaryPhone" class="form-control mb-2" placeholder="(931) 555-9012" aria-label="Disabled input example" disabled>
+            <label for="updatedSecondaryPosition">Position</label>
+            <input id="updatedSecondaryPosition" class="form-control mb-4" placeholder="Assistant Manager" aria-label="Disabled input example" disabled>
+
+            <!-- SERVICE -->
+            <h4 class="fw-light">Service</h4>
+
+            <label for="updatedServiceName">Service Name</label>
+            <input id="updatedServiceName" class="form-control mb-2" placeholder="Emergency Food Assistance" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceDescription">Service Description</label>
+            <textarea id="updatedServiceDescription" class="form-control mb-2" placeholder="Provides free groceries to families experiencing food insecurity." aria-label="Disabled input example" disabled></textarea>
+            <label for="updatedServiceCriteria">Criteria</label>
+            <input id="updatedServiceCriteria" class="form-control mb-2" placeholder="Must reside in Putnam County" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceCounties">Counties (comma separated)</label>
+            <input id="updatedServiceCounties" class="form-control mb-2" placeholder="Putnam, White, Overton" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceKeywords">Keywords (comma separated)</label>
+            <input id="updatedServiceKeywords" class="form-control mb-2" placeholder="Food, Pantry, Emergency" aria-label="Disabled input example" disabled>
+            <label for="updatedServicePhone1">Service Phone</label>
+            <input id="updatedServicePhone1" class="form-control mb-2" placeholder="(931) 555-2222" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceAddressStreet1">Service Address</label>
+            <input id="updatedServiceAddressStreet1" class="form-control mb-2" placeholder="456 Elm St" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceCity1">City</label>
+            <input id="updatedServiceCity1" class="form-control mb-2" placeholder="Cookeville" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceState1">State</label>
+            <input id="updatedServiceState1" class="form-control mb-2" placeholder="TN" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceZip1">Zip</label>
+            <input id="updatedServiceZip1" class="form-control mb-2" placeholder="38501" aria-label="Disabled input example" disabled>
+            <label for="updatedServiceHours">Service Hours</label>
+            <textarea id="updatedServiceHours" class="form-control mb-4" placeholder="Mon, Wed, Fri 9am - 2pm" aria-label="Disabled input example" disabled></textarea>
+        </div>
+    </div>
+    <!-- UPDATE BUTTON - onclick="logFormData()" -->
+    <button id="btnUpdateDatabase" class="d-inline-flex btn submit-btn mb-4 ms-5">Update Information</button>
+</main>                 
+<div id="footer" data-name="Page Footer"></div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    fetch('../../partials/footer.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('footer').innerHTML = data);
+    fetch('../../partials/navbar.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('navbar').innerHTML = data);
+
+    document.querySelector('#btnUpdateDatabase').addEventListener("click", (e) => {
+        swal.fire({
+            title: "Wait!",
+            text: "Are you sure you want to update this information?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, update it!"
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../js/emailNewService.js" type="module"></script>
+<script src="../../js/navbar.js"></script>
+</body>
+</html>

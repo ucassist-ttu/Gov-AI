@@ -3,6 +3,66 @@ let strEditorEmail
 let strEditorPhoneNumber
 let strEditorOrgPosition
 
+let strCompanyName
+let strOrgDescription
+let strPhoneNumber
+let strWebsite
+let strPhysicalAddress
+let strAddressCity
+let strAddressState
+let strAddressZip
+let strKeywords
+let strStartDay
+let strStartHour
+let strStartAMPM
+let strEndHour
+let strEndAMPM
+let strLogo
+
+let strPrimaryName
+let strPrimaryEmail
+let strPrimaryPhoneNumber
+let strPrimaryOrgPosition
+let strSecondaryName
+let strSecondaryEmail
+let strSecondaryPhoneNumber
+let strSecondaryOrgPosition
+
+let strEditServiceName
+let strEditServiceDescription
+let strEditServiceElegibility
+let strEditServiceCounties
+let strEditServiceKeywords
+let strEditServicePhoneNumber
+let strEditServicePhysicalAddress
+let strEditServiceAddressCity
+let strEditServiceAddressState
+let strEditServiceAddressZip
+let strEditServiceWebsite
+let strEditServiceStartDay
+let strEditServiceStartHour
+let strEditServiceStartAMPM
+let strEditServiceEndHour
+let strEditServiceEndAMPM
+
+let strAddServiceName
+let strAddServiceDescription
+let strAddServiceElegibility
+let strAddServiceCounties
+let strAddServiceKeywords
+let strAddServicePhoneNumber
+let strAddServicePhysicalAddress
+let strAddServiceAddressCity
+let strAddServiceAddressState
+let strAddServiceAddressZip
+let strAddServiceWebsite
+let strAddServiceStartDay
+let strAddServiceStartHour
+let strAddServiceStartAMPM
+let strAddServiceEndHour
+let strAddServiceEndAMPM
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
   let currentStep = 0;
@@ -148,7 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setupDropdownTogglePairs([
     { buttonId: 'btnKeywordsReg1', containerId: 'divOuterKeywordsReg1' },
     { buttonId: 'btnKeywordsReg', containerId: 'divOuterKeywordsReg' },
-    { buttonId: 'btnCountiesReg', containerId: 'divOuterCountiesReg' }
+    { buttonId: 'btnKeywordsRegAdd', containerId: 'divOuterKeywordsRegAdd' },
+    { buttonId: 'btnCountiesReg', containerId: 'divOuterCountiesReg' },
+    { buttonId: 'btnCountiesRegAdd', containerId: 'divOuterCountiesRegAdd' }
   ]);
 
   function setupAllServiceCheckboxes() {
@@ -208,20 +270,14 @@ document.addEventListener('DOMContentLoaded', () => {
       handler(); 
     }
 
-    const hoursCheckbox = serviceBlock.querySelector('input[id^="separateHours"]');
-    const hoursContainer = serviceBlock.querySelector('.service-hours-container');
-    if (hoursCheckbox && hoursContainer) {
-      hoursCheckbox.removeEventListener('change', hoursCheckbox._listener);
-      const handler = () => {
-        hoursContainer.style.display = hoursCheckbox.checked ? 'block' : 'none';
-        if (!hoursCheckbox.checked) {
-          hoursContainer.querySelectorAll('select').forEach(sel => sel.value = '');
-        }
-      };
-      hoursCheckbox.addEventListener('change', handler);
-      hoursCheckbox._listener = handler;
-      handler(); 
-    }
+    document.querySelector("#separateHours1").addEventListener('click', () => {
+      if (document.querySelector("#separateHours1").checked = true) {
+        document.querySelector('#divServiceHoursAdd').style.display = 'inline-block'
+      }
+      else {
+        document.querySelector('#divServiceHoursAdd').style.display = 'none'
+      }
+    })
   }
 
   function setupAddHours(button, container, rangeSelector) {
@@ -286,7 +342,9 @@ document.addEventListener('DOMContentLoaded', () => {
       populateHourSelects();
       setupDropdownTogglePairs([
         { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
-        { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
+        { buttonId: `btnCountiesRegAdd${serviceCount}`, containerId: `divOuterCountiesRegAdd${serviceCount}` },
+        { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` },
+        { buttonId: `btnKeywordsRegAdd${serviceCount}`, containerId: `divOuterKeywordsRegAdd${serviceCount}` }
       ]);
 
       const newAddBtn = newService.querySelector('.add-hours');
@@ -347,9 +405,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let errors = [];
 
     const requiredFields = Array.from(form.querySelectorAll('[required]')).filter(field => {
-      if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
-        return false;
-      }
+      // if (field.id && (field.id.startsWith('serviceName') || field.id.startsWith('serviceDescription'))) {
+      //   return false;
+      // }
       return true;
     });
 
@@ -375,7 +433,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const desc = block.querySelector('textarea[id^="serviceDescription"]');
         if (!desc || !desc.value.trim()) errors.push(`Service Description for Service ${serviceNum}`);
         if (!isGroupChecked('[id^="divCountiesReg"]', block)) errors.push(`Counties for Service ${serviceNum}`);
+        if (!isGroupChecked('[id^="divCountiesRegAdd"]', block)) errors.push(`Counties for Service ${serviceNum}`);
         if (!isGroupChecked('[id^="divKeywordsReg"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
+        if (!isGroupChecked('[id^="divKeywordsRegAdd"]', block)) errors.push(`Keywords for Service ${serviceNum}`);
       });
     }
 
@@ -390,10 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep1.classList.add('was-validated');
       const errors = collectFormErrors(formStep1);
       if (errors.length === 0) {
-        strEditorName = document.getElementById('primaryName').value
-        strEditorEmail = document.getElementById('primaryEmail').value
-        strEditorPhoneNumber = document.getElementById('primaryPhone').value
-        strEditorOrgPosition = document.getElementById('primaryPosition').value
+        strEditorName = document.getElementById('editorName').value
+        strEditorEmail = document.getElementById('editorEmail').value
+        strEditorPhoneNumber = document.getElementById('editorPhone').value
+        strEditorOrgPosition = document.getElementById('editorPosition').value
+        console.log(strEditorName, strEditorEmail, strEditorPhoneNumber, strEditorOrgPosition)
         currentStep = 1;
         showStep(currentStep);
       } else {
@@ -419,6 +480,22 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep2.classList.add('was-validated');
       const errors = collectFormErrors(formStep2);
       if (errors.length === 0) {
+        strCompanyName = document.getElementById('companyName').value
+        strOrgDescription = document.getElementById('orgDescription').value
+        strPhoneNumber = document.getElementById('phoneNumber').value
+        strWebsite = document.getElementById('website').value
+        strPhysicalAddress = document.getElementById('physicalAddress').value
+        strAddressCity = document.getElementById('cityAddress').value
+        strAddressState = document.getElementById('statePublic').value
+        strAddressZip = document.getElementById('zipPublic').value
+        strKeywords = getSelectedKeywords('divOuterKeywordsReg1')
+        strStartDay = document.getElementById('startDay').value
+        strStartHour = document.getElementById('startHour').value
+        strStartAMPM = document.getElementById('startAMPM').value
+        strEndHour = document.getElementById('endHour').value
+        strEndAMPM = document.getElementById('endAMPM').value
+        strLogo = document.getElementById('oldUpload').value
+        console.log(strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strKeywords, strStartDay, strStartHour, strStartAMPM, strEndHour, strEndAMPM, strLogo)
         currentStep = 2;
         showStep(currentStep);
       } else {
@@ -444,6 +521,15 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
+        strPrimaryName = document.getElementById('primaryName').value
+        strPrimaryEmail = document.getElementById('primaryEmail').value
+        strPrimaryPhoneNumber = document.getElementById('primaryPhone').value
+        strPrimaryOrgPosition = document.getElementById('primaryPosition').value
+        strSecondaryName = document.getElementById('secondaryName').value
+        strSecondaryEmail = document.getElementById('secondaryEmail').value
+        strSecondaryPhoneNumber = document.getElementById('secondaryPhone').value
+        strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
+        console.log(strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition)
         currentStep = 3;
         showStep(currentStep);
       } else {
@@ -467,13 +553,86 @@ document.addEventListener('DOMContentLoaded', () => {
     formStep4.addEventListener('submit', e => {
       e.preventDefault();
       formStep4.classList.add('was-validated');
-      const errors = collectFormErrors(formStep4);
+      let errors = collectFormErrors(formStep4);
+      const button = e.submitter;
+      if (button.id == 'btnUpdateService') {
+        errors = []
+      }
       if (errors.length === 0) {
+        strEditServiceName = document.getElementById('serviceNameEdit').value
+        strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
+        strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
+        strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+        strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
+        strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
+        strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
+        strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
+        strEditServiceAddressState = document.getElementById('serviceStateEdit').value
+        strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
+        strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
+        strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
+        strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
+        strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
+        strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
+        strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
+        console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
+        
+        strAddServiceName = document.getElementById('serviceNameAdd').value
+        strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
+        strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
+        strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
+        strAddServicePhoneNumber = document.getElementById('servicePhone1').value
+        strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
+        strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
+        strAddServiceAddressState = document.getElementById('serviceStateAdd').value
+        strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
+        strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
+        strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
+        strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
+        strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
+        strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
+        strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
+        console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
+
         Swal.fire({
           title: "Success",
           text: "Your request has been submitted. It is pending review.",
           icon: "success"
         }).then((result) => {
+          document.getElementById('serviceNameEdit').value = ''
+          document.getElementById('serviceDescriptionEdit').value = ''
+          document.getElementById('serviceCriteriaEdit').value = ''
+          document.getElementById('servicePhoneEdit').value = ''
+          document.getElementById('servicePhysicalAddressEdit').value = ''
+          document.getElementById('ServicecityAddressEdit').value = ''
+          document.getElementById('serviceStateEdit').value = ''
+          document.getElementById('serviceZipEdit').value = ''
+          document.getElementById('serviceWebisteEdit').value = ''
+          document.getElementById('serviceStartDayEdit').value = ''
+          document.getElementById('serviceStartHourEdit').value = ''
+          document.getElementById('serviceStartAMPMEdit').value = ''
+          document.getElementById('serviceEndHourEdit').value = ''
+          document.getElementById('serviceEndAMPMEdit').value = ''
+          document.getElementById('selectService').value = ''
+          document.getElementById("form-step-4").reset();
+
+          document.getElementById('serviceNameAdd').value = ''
+          document.getElementById('serviceDescriptionAdd').value = ''
+          document.getElementById('serviceCriteriaAdd').value = ''
+          document.getElementById('servicePhone1').value = ''
+          document.getElementById('serviceAddressStreet1').value = ''
+          document.getElementById('ServicecityAddressAdd').value = ''
+          document.getElementById('serviceStateAdd').value = ''
+          document.getElementById('serviceZipAdd').value = ''
+          document.getElementById('serviceWebisteAdd').value = ''
+          document.getElementById('serviceStartDayAdd').value = ''
+          document.getElementById('serviceStartHourAdd').value = ''
+          document.getElementById('serviceStartAMPMAdd').value = ''
+          document.getElementById('serviceEndHourAdd').value = ''
+          document.getElementById('serviceEndAMPMAdd').value = ''
+          formStep4.classList.remove('was-validated');
+
           let activeForm = document.getElementById("divPage4AddServiceInfo");
           let remove = document.getElementById("btnRemoveServiceBtn");
           let inactiveForm = document.getElementById("divPage4EditServiceInfo");
@@ -535,6 +694,105 @@ document.addEventListener('DOMContentLoaded', () => {
     btns.classList.add("d-flex");
   });
 
+  // document.querySelector('#step-4 .submit-btn-1')?.addEventListener('click', (e) => {
+  //   e.preventDefault();
+  //     formStep4.classList.add('was-validated');
+  //     const errors = collectFormErrors(formStep4);
+  //     if (errors.length === 0) {
+  //       strEditServiceName = document.getElementById('serviceNameEdit').value
+  //       strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
+  //       strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
+  //       strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+  //       strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
+  //       strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
+  //       strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
+  //       strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
+  //       strEditServiceAddressState = document.getElementById('serviceStateEdit').value
+  //       strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
+  //       strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
+  //       strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
+  //       strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
+  //       strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
+  //       strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
+  //       strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
+  //       console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
+        
+  //       strAddServiceName = document.getElementById('serviceNameAdd').value
+  //       strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
+  //       strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+  //       strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
+  //       strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
+  //       strAddServicePhoneNumber = document.getElementById('servicePhone1').value
+  //       strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
+  //       strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
+  //       strAddServiceAddressState = document.getElementById('serviceStateAdd').value
+  //       strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
+  //       strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
+  //       strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
+  //       strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
+  //       strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
+  //       strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
+  //       strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
+  //       console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
+
+  //       Swal.fire({
+  //         title: "Success",
+  //         text: "Your request has been submitted. It is pending review.",
+  //         icon: "success"
+  //       }).then((result) => {
+  //         document.getElementById('serviceNameEdit').value = ''
+  //         document.getElementById('serviceDescriptionEdit').value = ''
+  //         document.getElementById('serviceCriteriaEdit').value = ''
+  //         document.getElementById('servicePhoneEdit').value = ''
+  //         document.getElementById('servicePhysicalAddressEdit').value = ''
+  //         document.getElementById('ServicecityAddressEdit').value = ''
+  //         document.getElementById('serviceStateEdit').value = ''
+  //         document.getElementById('serviceZipEdit').value = ''
+  //         document.getElementById('serviceWebisteEdit').value = ''
+  //         document.getElementById('serviceStartDayEdit').value = ''
+  //         document.getElementById('serviceStartHourEdit').value = ''
+  //         document.getElementById('serviceStartAMPMEdit').value = ''
+  //         document.getElementById('serviceEndHourEdit').value = ''
+  //         document.getElementById('serviceEndAMPMEdit').value = ''
+  //         document.getElementById('selectService').value = ''
+  //         document.getElementById("form-step-4").reset();
+
+  //         document.getElementById('serviceNameAdd').value = ''
+  //         document.getElementById('serviceDescriptionAdd').value = ''
+  //         document.getElementById('serviceCriteriaAdd').value = ''
+  //         document.getElementById('servicePhone1').value = ''
+  //         document.getElementById('serviceAddressStreet1').value = ''
+  //         document.getElementById('ServicecityAddressAdd').value = ''
+  //         document.getElementById('serviceStateAdd').value = ''
+  //         document.getElementById('serviceZipAdd').value = ''
+  //         document.getElementById('serviceWebisteAdd').value = ''
+  //         document.getElementById('serviceStartDayAdd').value = ''
+  //         document.getElementById('serviceStartHourAdd').value = ''
+  //         document.getElementById('serviceStartAMPMAdd').value = ''
+  //         document.getElementById('serviceEndHourAdd').value = ''
+  //         document.getElementById('serviceEndAMPMAdd').value = ''
+  //         formStep4.classList.remove('was-validated');
+
+  //         let activeForm = document.getElementById("divPage4AddServiceInfo");
+  //         let remove = document.getElementById("btnRemoveServiceBtn");
+  //         let inactiveForm = document.getElementById("divPage4EditServiceInfo");
+  //         let btns = document.getElementById("divFinalSubCanBtn");
+  //         activeForm.style.display = "none"; 
+  //         remove.style.display = "none"; 
+  //         inactiveForm.style.display = "none"; 
+  //         btns.classList.remove("d-none");
+  //         btns.classList.add("d-flex");
+  //       })
+  //     } else {
+  //       const errorList = errors.map(err => `• ${err}`).join('\n');
+  //       Swal.fire({
+  //         title: "Missing Information",
+  //         html: `Please complete the following:<br><br>${errorList.replace(/\n/g, "<br>")}`,
+  //         icon: "error"
+  //       });
+  //     }
+  //   });
+
   // Logo upload
   const uploadInput = document.getElementById('upload');
   const logoPreview = document.getElementById('logo-preview');
@@ -576,7 +834,7 @@ document.addEventListener('DOMContentLoaded', () => {
   showStep(currentStep);
 
   // Create checkboxes for counties/keywords
-  function createCheckbox(labelText, container, suffix = '') {
+  function createCheckbox(labelText, container, suffix) {
     const value = labelText.toLowerCase().replace(/\s+/g, "-");
     const wrapper = document.createElement("div");
     wrapper.className = "checkbox mb-1";
@@ -656,7 +914,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Counties
       const countiesContainer = document.getElementById("divCountiesReg");
       if (countiesContainer) {
-        uniqueCounties.forEach(county => createCheckbox(county, countiesContainer));
+        uniqueCounties.forEach(county => createCheckbox(county, countiesContainer, '-step3-1'));
+      }
+      const countiesContainerAdd = document.getElementById("divCountiesRegAdd");
+      if (countiesContainerAdd) {
+        uniqueCounties.forEach(county => createCheckbox(county, countiesContainerAdd, '-step3-2'));
       }
       
       // Keywords Step 1
@@ -668,7 +930,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Keywords Step 3
       const keywordsContainerStep3 = document.getElementById("divKeywordsReg");
       if (keywordsContainerStep3) {
-        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3, '-step3'));
+        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3, '-step3-1'));
+      }
+      const keywordsContainerStep3Add = document.getElementById("divKeywordsRegAdd");
+      if (keywordsContainerStep3) {
+        uniqueServiceTypes.forEach(keyword => createCheckbox(keyword, keywordsContainerStep3Add, '-step3-2'));
       }
 
     } catch (error) {
@@ -761,6 +1027,35 @@ document.querySelector('#addServiceBtn').addEventListener("click", (e) => {
   inactiveForm.style.display = "none"; 
   btns.classList.add("d-none");
 })
+
+// Returns an array of all selected check boxed from a container
+function getSelectedKeywords(containerId) {
+    return Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+    ).map(el => el.value);
+}
+
+// document.querySelector('#editOptions').addEventListener("click", (e) => {
+//   const name = document.getElementById('primaryName');
+//   const email = document.getElementById('primaryEmail');
+//   const phone = document.getElementById('primaryPhone');
+//   const position = document.getElementById('primaryPosition');
+//   const isChecked = document.getElementById('editOptions').checked;
+//   console.log(isChecked)
+//   if (isChecked) {
+//     console(name.value, email.value, phone.value, position.value)
+//     name.value = strEditorName;
+//     email.value = strEditorEmail;
+//     phone.value = strEditorPhoneNumber;
+//     position.value = strEditorOrgPosition;
+
+//     // Disable inputs
+//     name.disabled = true;
+//     email.disabled = true;
+//     phone.disabled = true;
+//     position.disabled = true;
+//   }
+// })
 
 // document.getElementById('same-info-checkbox').addEventListener('change', (e) => {
 //   const name = document.getElementById('primaryContactName');
