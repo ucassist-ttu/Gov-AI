@@ -413,9 +413,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (errors.length === 0) {
         Swal.fire({
           title: "Success",
-          text: "Registration form submitted successfully!",
+          text: "Your request has been submitted. It is pending review.",
           icon: "success"
-        });
+        }).then((result) => {
+          window.location.href = `registration_landing.html`
+        })
       } else {
         const errorList = errors.map(err => `• ${err}`).join('\n');
         Swal.fire({
