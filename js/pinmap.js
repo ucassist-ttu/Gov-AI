@@ -103,7 +103,7 @@ getServices()
 // -- Call to backend --
 async function getServices() {
     try{
-        let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+        let servResponse = await fetchApi(`/services`)
         let servData = await servResponse.json()
         servData.forEach(service => {
           if (service.ServiceAddress != 'N/A' || service.CityStateZip != 'N/A') {
@@ -140,7 +140,7 @@ function loadServices() {
 async function getGeoCode(service, iconTag) {
     try{
         let servID = service.ID
-        let servResponse = await fetch(`https://ucassist.duckdns.org/service-coordinates?service_id=${servID}`)
+        let servResponse = await fetchApi(`/service-coordinates?service_id=${servID}`)
         let servData = await servResponse.json()
         let strLat = servData.latitude
         let strLon = servData.longitude
@@ -166,7 +166,7 @@ function markService (service, iconTag, address, ) {
       let telNumber = service.TelephoneContact.replace(/[^\d+]/g, '');
       strPhoneContact = `<a href="tel:${telNumber}"><i class="bi bi-telephone pe-2"></i><u>${service.TelephoneContact}</u></a>`
   }          
-  marker.bindPopup(`<h3 class="mt-4 mb-1"><a onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" target="_blank" style="cursor: pointer;"><u>${service.NameOfService}</u></a></h3>
+  marker.bindPopup(`<h3 class="mt-4 mb-1"><a onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='/html/pages/service.html?id=${service.ID}';" target="_blank" style="cursor: pointer;"><u>${service.NameOfService}</u></a></h3>
     <hr class="hr-gold" />
     <p class="mt-1 mb-1">${strPhoneContact}</p>
     <p class="mt-1 mb-1"><a href="https://www.google.com/maps/search/?api=1&query=${strencoded}" target="_blank"><u><i class="bi bi-pin-map-fill pe-2"></i>${straddress}</u></a></p>`, {
@@ -227,7 +227,7 @@ function checkUserLocation (jsonData) {
 // -- Loads boundary data from geojson file to draw county borders --
 
 async function loadAndMaskCounties() {
-  const data = await fetch('/Gov-AI/assets/data/UC_counties.geojson')
+  const data = await fetch('/assets/data/UC_counties.geojson')
   const jsonData = await data.json()
 
   // set style for boundary and fill of county layers
@@ -321,7 +321,7 @@ function zoomToCounty(layer, feature) {
 function getCountyList(service) {
   let strCounties = service.CountiesAvailable
   if (typeof strCounties === 'string') {
-      strCounties = JSON.parse(strCounties);
+      strCounties = JSON.parse(strCounties.replace(/'/g, '"'));
   }
   if (Array.isArray(strCounties)) {
       return strCounties;
@@ -637,7 +637,7 @@ document.querySelector("#btnSeniorServices").addEventListener("click", () => {
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
                         </div>
                         <div class="col pe-0"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-up-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-up-fill"></i>
                         </div>
                     </div>`;
     } else {
@@ -647,7 +647,7 @@ document.querySelector("#btnSeniorServices").addEventListener("click", () => {
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;"></i> 
                         </div>
                         <div class="col pe-0"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>`;
     }
@@ -741,7 +741,7 @@ function getSelectedCheckboxes(containerId) {
 function getTagList(service) {
     let strKeywords = service.Keywords
     if (typeof strKeywords === 'string') {
-        strKeywords = JSON.parse(strKeywords);
+        strKeywords = JSON.parse(strKeywords.replace(/'/g, '"'));
     }
     // Returns keywords seperated by a ','
     if (Array.isArray(strKeywords)) {

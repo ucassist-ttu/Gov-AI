@@ -50,32 +50,32 @@ let sortedIDCategories = {
   "Community": []
 }
 
-window.addEventListener('load', (event) => {
-  // gets database keywords and populates sortedIDCategories
-  getUniqueKeywords()
-  //populating pills
+export function initINeed() {
   const container = document.getElementById("divINeedPills");
-  Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
-    const pill = createPills(keyword, fullword);
-    container.innerHTML += pill;
-  })
-
-  //javascript for scroll buttons
   const pillsContainer = document.getElementById("divINeedPills");
-  document.getElementById("scrollLeftPills").onclick = () => {
+  const scrollLeftPills = document.getElementById("scrollLeftPills");
+  const scrollRightPills = document.getElementById("scrollRightPills");
+  const contentContainer = document.getElementById("divINeedContent");
+
+  if (!container || !pillsContainer || !scrollLeftPills || !scrollRightPills || !contentContainer) {
+    console.error("iNeed DOM not ready");
+    return;
+  }
+
+  getUniqueKeywords();
+
+  Object.entries(keywordCategories).forEach(([keyword, fullword]) => {
+    container.innerHTML += createPills(keyword, fullword);
+  });
+
+  scrollLeftPills.onclick = () => {
     pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
   };
-  document.getElementById("scrollRightPills").onclick = () => {
+
+  scrollRightPills.onclick = () => {
     pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
   };
-  const contentContainer = document.getElementById("divINeedContent");
-  document.getElementById("scrollLeftContent").onclick = () => {
-    contentContainer.scrollBy({ left: -300, behavior: "smooth" });
-  };
-  document.getElementById("scrollRightContent").onclick = () => {
-    contentContainer.scrollBy({ left: 300, behavior: "smooth" });
-};
-})
+}
 
 //EVENT LISTENER for pills (delegated to the document since pills are generated dynamically)
 document.addEventListener("click", (e) => {
@@ -143,7 +143,7 @@ function createCard(service, category) {
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
   if(!isInCounty(service)){
-    return "";
+    return null;
   }
 
   // WEBSITE BUTTON
@@ -158,7 +158,11 @@ function createCard(service, category) {
 
 
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
-  } else {
+  }
+
+  // replaces missing or invalid photos with category placeholder photo
+  if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
+    imgPhoto = getImgSrc(category);
   }
 
 
@@ -172,7 +176,7 @@ function createCard(service, category) {
         ${getCounties(service)}
         <h5 class="card-title">${service.NameOfService}</h5>
         <div class="mt-auto service m-0" style="margin-bottom: 15px;">
-          <button onclick="fetch('https://ucassist.duckdns.org/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
+          <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
         </div>
       </div>`;
 
@@ -188,7 +192,7 @@ function createCard(service, category) {
 async function getUniqueKeywords(){
   try{
     //call database api to get all services
-    let servResponse = await fetch(`https://ucassist.duckdns.org/services`)
+    let servResponse = await fetchApi(`/services`)
     let servData = await servResponse.json()
     let arrTagList = []
 
@@ -228,19 +232,20 @@ function sortIDsByKeyword(arrKeywords, id){
 function getImgSrc(keyword) {
   let basePath = "assets/images/iNeed/"
   let imgSrcLookUp = {
-    "Crisis": " ",
-    "Housing": "INeedHousing.jpg", 
-    "BasicNeeds": "iNeedFood.jpg", 
-    "Financial": "",
-    "Transportation": "placeholder-img.png", 
-    "Youth": "iNeedChildCare.jpg",
-    "Seniors": "Seniors, Aging, and Veterans",
-    "Health": "Health and Wellness",
-    "Education": "Education and Workforce Development",
-    "Business": "Small Business and Entrepreneur",
-    "Tourism": "Tourism and Events",
-    "Community": "Economic and Community Development"
+    "Crisis": "iNeedCrisis.jpg",
+    "Housing": "iNeedHousing.jpg", 
+    "BasicNeeds": "iNeedBasicNeeds.jpg", 
+    "Financial": "iNeedFinacial.jpg",
+    "Transportation": "iNeedTransportation.jpg", 
+    "Youth": "iNeedYouth.jpg",
+    "Seniors": "iNeedSeniors.jpg",
+    "Health": "iNeedHealth.jpg",
+    "Education": "iNeedEducation.jpg",
+    "Business": "iNeedBusiness.jpg",
+    "Tourism": "iNeedTourism.jpg",
+    "Community": "iNeedCommunity.jpg"
   }
+
 
   return basePath + imgSrcLookUp[keyword]
 }
@@ -266,12 +271,12 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = uniqueIDs.map(id => {
-      const url = `https://ucassist.duckdns.org/service?id=${id}`;
+      const url = `/service?id=${id}`;
       // console.log("[loadCardsByCategory] Fetching service ID:", id, "with URL:", url);
 
       // console.log("[loadCardsByCategory] Fetching service ID:", id);
 
-      return fetch(url)
+      return fetchApi(url)
         .then(res => {
           return res.json();
         });
@@ -286,7 +291,7 @@ async function loadCardsByCategory(category) {
       let newCard = createCard(service, category)
       // console.log("[loadCardsByCategory] Created card for service ID:", service.ID, "with html:", newCard)
       // if(count < 7){
-        if (newCard == ""){
+        if (newCard == null){
           return;
         } else{
           count ++
@@ -307,7 +312,13 @@ function isInCounty(service){
 
   const userSelectedCounty = sessionStorage.getItem("currCounty")
 
+
   if(strCounties.includes(userSelectedCounty)){
+    if (strCounties.includes("all counties")){
+      console.log("[isInCounty] all counties:", strCounties)
+      return false;
+    }
+    console.log("[isInCounty] NOT all counties:", strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
@@ -319,7 +330,7 @@ function isInCounty(service){
 }
 
 
-function getCounties(service){
+ export function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0
@@ -352,7 +363,6 @@ function getCounties(service){
     }
     innerHTML = `<div><span class="col-auto badge rounded-pill gold me-1 mb-2">${userSelectedCounty}</span>`
     innerHTML += `<smaller class="col-auto"> + ${count - 1} county</smaller>`
-    // console.log("[getCounties] arrCounties: ", arrCounties)
   } else if (count > 2) {
     if (userSelectedCounty == 'all') {
       userSelectedCounty = exCounty
@@ -368,8 +378,8 @@ function getCounties(service){
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
   console.log("ID being passed:", page_id);
-    fetch(`https://ucassist.duckdns.org/add-monthly-view?service_id=${page_id}`)
-    window.location.href = `/Gov-AI/html/pages/service.html?id=${page_id}`;
+    fetchApi(`/add-monthly-view?service_id=${page_id}`)
+    window.location.href = `/html/pages/service.html?id=${page_id}`;
 }
 
 function getLogoSrc(rawLogo) {
@@ -379,7 +389,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.png`;
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.png`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
@@ -387,22 +397,25 @@ function getLogoSrc(rawLogo) {
   if (logo.startsWith("www.")) {
     return `https://${logo}`;
   }
-  return `/Gov-AI/assets/images/${logo}`;
+  return `/assets/images/${logo}`;
 }
 
-document.querySelector('#btnLearnINeed').addEventListener("click", (e) => {
-  let strDiv = `
-    <ol style="text-align:left; padding-left: 20px;">
-      <li>Select a county above to view services in your area.</li>
-      <li>Choose a category below to find what you need.</li>
-    </ol>
-  `;
-  Swal.fire({
-    title: "How to use this section.",
-    html: strDiv,
-    icon: "question"
+const btnLearnINeed = document.querySelector('#btnLearnINeed');
+if (btnLearnINeed) {
+  btnLearnINeed.addEventListener("click", (e) => {
+    let strDiv = `
+      <ol style="text-align:left; padding-left: 20px;">
+        <li>Select a county above to view services in your area.</li>
+        <li>Choose a category below to find what you need.</li>
+      </ol>
+    `;
+    Swal.fire({
+      title: "How to use this section.",
+      html: strDiv,
+      icon: "question"
+    });
   });
-})
+}
 function getCategoryDescription(category) {
   switch(category) {
     case "Crisis":

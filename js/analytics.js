@@ -111,6 +111,7 @@ document.addEventListener("click", (e) => {
       clickLogs.push({
         target: getElementSelector(target)
       })
+      target.classList.add("rageClicked")
       session.clickLogs = clickLogs
       // Send to backend
       clickHistory = [];
@@ -118,163 +119,192 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// composite method to track all analytics when leaving a page (completing a visit)
-window.addEventListener("beforeunload", () => {
-  const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
-
-  console.log({
+async function sendPageAnalytics(session, pageStartTime, maxScroll) {
+  const payload = {
     page: window.location.pathname,
     timeViewed: pageStartTime,
     timeLeft: new Date().toISOString(),
     timeSpent: Math.round((Date.now() - pageStartTime) / 1000),
-    maxScoll: maxScroll,
-    pageViews: session.pageViews,
-    clickLogs: session.clickLogs,
-    county: sessionStorage.getItem("currCounty")
-  })
-})
-
-function generateMockAnalytics() {
-
-const pages = ["/", "/services", "/snap", "/crisis", "/error"];
-
-const pageVisits = []
-
-for (let i = 0; i < 400; i++) {
-
-  const rageClicks = []
-  const page = pages[Math.floor(Math.random()*pages.length)];
-  const MONTH_RANGE = 18;
-  const now = new Date();
-  const randomMonthOffset = Math.floor(Math.random() * MONTH_RANGE);
-  const baseDate = new Date(
-    now.getFullYear(),
-    now.getMonth() - randomMonthOffset,
-    1
-  );
-  const randomDayOffset = Math.floor(Math.random() * 28);
-  const randomTimeOffset = Math.random() * 86400000;
-  const timeViewedDate = new Date(
-    baseDate.getTime() + (randomDayOffset * 86400000) + randomTimeOffset
-  );
-  const timeViewed = timeViewedDate.toISOString();
-  const timeLeft = new Date(Date.parse(timeViewed) + Math.random()*1800000).toISOString();
-  const timeSpent = Math.round(
-    (Date.parse(timeLeft) - Date.parse(timeViewed)) / 1000
-  );
-  const maxScroll = Math.floor(Math.random()*100)
-  const pageViews = Math.ceil(Math.random()*10)
-  let bounce = false;
-  if (Math.random() < 0.25 && pageViews === 1) {
-    bounce = true;
-  }
-  const targets = ["#map", "#btn-submit", ".nav-link", "#accordion"];
-  if(Math.random() < 0.15){
-    rageClicks.push({
-      target: targets[Math.floor(Math.random() * targets.length)]
-    });
-  }
-  if(Math.random() < 0.35){
-    rageClicks.push({
-      target: targets[Math.floor(Math.random() * targets.length)]
-    });
-  }
-  const counties = [
-    'all',
-    'cannon',
-    'clay',
-    'cumberland',
-    'dekalb',
-    'fentress',
-    'jackson',
-    'macon',
-    'overton',
-    'pickett',
-    'putnam',
-    'smith',
-    'van_buren',
-    'warren',
-    'white'
-  ]
-  const county = counties[Math.floor(Math.random() * counties.length)]
-
-  pageVisits.push({
-    page: page,
-    timeViewed: timeViewed,
-    timeLeft: timeLeft,
-    timeSpent: timeSpent,
     maxScroll: maxScroll,
-    pageViews: pageViews,
-    clickLogs: rageClicks,
-    bounce: bounce,
-    county: county
-  })
+    pageViews: session.pageViews,
+    clickLogs: JSON.stringify(Array.from(document.getElementsByClassName("rageClicked")).map(el => el.parentElement.closest('[data-name]').getAttribute("data-name"))),
+    county: sessionStorage.getItem("currCounty")
+  };
+  console.log(JSON.stringify(payload))
+  try {
+    const response = await fetchApi("/add-page-analytics", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload),
+        keepalive: true
+    });
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
 
-}
-
-  localStorage.setItem("analytics", JSON.stringify(pageVisits));
-
-}
-
-function generateMockSearch(count = 100) {
-    const counties = [
-        'all','cannon','clay','cumberland','dekalb','fentress',
-        'jackson','macon','overton','pickett','putnam',
-        'smith','van_buren','warren','white'
-    ];
-
-    const serviceSearches = [
-        "food stamps application",
-        "medicaid eligibility",
-        "housing assistance",
-        "utility bill help",
-        "unemployment benefits",
-        "child care assistance",
-        "transportation services",
-        "mental health services",
-        "substance abuse treatment",
-        "job training programs",
-        "senior services",
-        "disability services",
-        "public health clinic",
-        "vaccination locations",
-        "rental assistance"
-    ];
-
-    const data = [];
-
-    for (let i = 0; i < count; i++) {
-        const searchType = Math.random() < 0.5 ? "AI" : "database";
-
-        // Random timestamp within last 6 months
-        const now = new Date();
-        const past = new Date();
-        past.setMonth(now.getMonth() - 6);
-
-        const randomTime = new Date(
-            past.getTime() + Math.random() * (now.getTime() - past.getTime())
-        );
-
-        const results =
-            searchType === "AI"
-                ? Math.floor(Math.random() * 5) // 0–4
-                : Math.floor(Math.random() * 21); // 0–20
-
-        data.push({
-            searchType: searchType,
-            timeStamp: randomTime.toISOString(),
-            search: serviceSearches[Math.floor(Math.random() * serviceSearches.length)],
-            results: results,
-            county: counties[Math.floor(Math.random() * counties.length)],
-            checked: null
-        });
+    let data = null;
+    if (text) {
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.warn("Response was not JSON:", text);
+        }
     }
 
-    // Save to localStorage
-    localStorage.setItem("searchAnalytics", JSON.stringify(data));
-
     return data;
+
+  } catch (err) {
+    console.error("Failed to send analytics:", err);
+  }
 }
 
-generateMockAnalytics();
-generateMockSearch(200);
+// composite method to track all analytics when leaving a page (completing a visit)
+window.addEventListener("beforeunload", () => {
+  sendPageAnalytics(session, pageStartTime, maxScroll)
+})
+
+// function generateMockAnalytics() {
+
+// const pages = ["Home", "Services", "Snap", "Crisis", "Error"];
+
+// const pageVisits = []
+
+// for (let i = 0; i < 400; i++) {
+
+//   const rageClicks = []
+//   const page = pages[Math.floor(Math.random()*pages.length)];
+//   const MONTH_RANGE = 18;
+//   const now = new Date();
+//   const randomMonthOffset = Math.floor(Math.random() * MONTH_RANGE);
+//   const baseDate = new Date(
+//     now.getFullYear(),
+//     now.getMonth() - randomMonthOffset,
+//     1
+//   );
+//   const randomDayOffset = Math.floor(Math.random() * 28);
+//   const randomTimeOffset = Math.random() * 86400000;
+//   const timeViewedDate = new Date(
+//     baseDate.getTime() + (randomDayOffset * 86400000) + randomTimeOffset
+//   );
+//   const timeViewed = timeViewedDate.toISOString();
+//   const timeLeft = new Date(Date.parse(timeViewed) + Math.random()*1800000).toISOString();
+//   const timeSpent = Math.round(
+//     (Date.parse(timeLeft) - Date.parse(timeViewed)) / 1000
+//   );
+//   const maxScroll = Math.floor(Math.random()*100)
+//   const pageViews = Math.ceil(Math.random()*10)
+//   let bounce = false;
+//   if (Math.random() < 0.25 && pageViews === 1) {
+//     bounce = true;
+//   }
+//   const targets = ["#map", "#btn-submit", ".nav-link", "#accordion"];
+//   if(Math.random() < 0.15){
+//     rageClicks.push({
+//       target: targets[Math.floor(Math.random() * targets.length)]
+//     });
+//   }
+//   if(Math.random() < 0.35){
+//     rageClicks.push({
+//       target: targets[Math.floor(Math.random() * targets.length)]
+//     });
+//   }
+//   const counties = [
+//     'all',
+//     'cannon',
+//     'clay',
+//     'cumberland',
+//     'dekalb',
+//     'fentress',
+//     'jackson',
+//     'macon',
+//     'overton',
+//     'pickett',
+//     'putnam',
+//     'smith',
+//     'van_buren',
+//     'warren',
+//     'white'
+//   ]
+//   const county = counties[Math.floor(Math.random() * counties.length)]
+
+//   pageVisits.push({
+//     page: page,
+//     timeViewed: timeViewed,
+//     timeLeft: timeLeft,
+//     timeSpent: timeSpent,
+//     maxScroll: maxScroll,
+//     pageViews: pageViews,
+//     clickLogs: rageClicks,
+//     bounce: bounce,
+//     county: county
+//   })
+
+// }
+
+//   localStorage.setItem("analytics", JSON.stringify(pageVisits));
+
+// }
+
+// function generateMockSearch(count = 100) {
+//     const counties = [
+//         'all','cannon','clay','cumberland','dekalb','fentress',
+//         'jackson','macon','overton','pickett','putnam',
+//         'smith','van_buren','warren','white'
+//     ];
+
+//     const serviceSearches = [
+//         "food stamps application",
+//         "medicaid eligibility",
+//         "housing assistance",
+//         "utility bill help",
+//         "unemployment benefits",
+//         "child care assistance",
+//         "transportation services",
+//         "mental health services",
+//         "substance abuse treatment",
+//         "job training programs",
+//         "senior services",
+//         "disability services",
+//         "public health clinic",
+//         "vaccination locations",
+//         "rental assistance"
+//     ];
+
+//     const data = [];
+
+//     for (let i = 0; i < count; i++) {
+//         const searchType = Math.random() < 0.5 ? "AI" : "database";
+
+//         // Random timestamp within last 6 months
+//         const now = new Date();
+//         const past = new Date();
+//         past.setMonth(now.getMonth() - 6);
+
+//         const randomTime = new Date(
+//             past.getTime() + Math.random() * (now.getTime() - past.getTime())
+//         );
+
+//         const results =
+//             searchType === "AI"
+//                 ? Math.floor(Math.random() * 5) // 0–4
+//                 : Math.floor(Math.random() * 21); // 0–20
+
+//         data.push({
+//             searchType: searchType,
+//             timeStamp: randomTime.toISOString(),
+//             search: serviceSearches[Math.floor(Math.random() * serviceSearches.length)],
+//             results: results,
+//             county: counties[Math.floor(Math.random() * counties.length)],
+//             checked: null
+//         });
+//     }
+
+//     // Save to localStorage
+//     localStorage.setItem("searchAnalytics", JSON.stringify(data));
+
+//     return data;
+// }
+
+// generateMockAnalytics();
+// generateMockSearch(200);

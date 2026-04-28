@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-    <link rel="stylesheet" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div id="navbar" data-name="Navigation Bar"></div>
@@ -19,9 +19,7 @@
         <div id="overlay" data-name="Search Overlay"></div>
         <div class="position-relative" data-name="Hero Section">
             <!-- crisis tag -->
-            <div class="index-crisis rounded-bottom pt-3 pt-md-0" data-name="Crisis Hotlines Quick Access">
-                <h6 data-name="Crisis Tag Title"><a class="fw-bold white text-decoration-none" href="/Gov-AI/html/pages/crisis.html" data-name="Crisis Hotlines Link">Crisis Hotlines</a></h6>
-            </div>
+            <button class="position-absolute z-1 end-0 py-4 px-5 red rounded-bottom border-0" data-name="Crisis Tag Title"><a class="white text-decoration-none" href="/html/pages/crisis.html" data-name="Crisis Hotlines Link">Crisis Hotlines</a></button>
 
             <!-- carousel -->
             <div id="countyCarousel" data-name="Carousel Banner"></div>
@@ -213,7 +211,7 @@
                             <i class="bi bi-person-walking" style="font-size: 25px; color: #4A148C;" data-name="Senior Services Icon"></i> 
                         </div>
                         <div class="col pe-0" data-name="Senior Services Text Col"> 
-                            Seniors, Aging, and Veterans <i class="bi bi-caret-down-fill"></i>
+                            Older Persons and Veterans <i class="bi bi-caret-down-fill"></i>
                         </div>
                     </div>
                     </a>
@@ -223,7 +221,7 @@
                     <div id="divSeniorServices" class="form-check" data-name="Senior Services List">
                         <div class="checkbox" data-name="Seniors Checkbox Div">
                             <input type="checkbox" class="form-check-input" id="seniors-checkbox" value="seniors" data-name="Seniors Checkbox" />
-                            <label class="form-check-label" for="seniors-checkbox" data-name="Seniors Label">Seniors</label>
+                            <label class="form-check-label" for="seniors-checkbox" data-name="Seniors Label">Older Persons</label>
                         </div>
                         <div class="checkbox" data-name="Veterans Checkbox Div">
                             <input type="checkbox" class="form-check-input" id="veterans-checkbox" value="veterans" data-name="Veterans Checkbox" />
@@ -392,34 +390,34 @@
                     <div class="card mx-3 mb-3 border-0 home-card col-sm-12" data-name="Need Help Card">
                         <img src="assets\images\ucdd.webp" class="card-img-top" alt="..." data-name="Need Help Card Image">
                         <div class="card-body" data-name="Need Help Card Body">
-                        <h4 class="card-title" data-name="Need Help Card Title">Need Help?</h4>
-                        <p class="card-text" data-name="Need Help Card Text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
+                            <h4 class="card-title" data-name="Need Help Card Title">Need Help?</h4>
+                            <p class="card-text" data-name="Need Help Card Text">We are here to help you find the resources you need through our primary organizations, UCDD and UCHRA.</p>
                         </div>
                         <div class="card-footer" data-name="Need Help Card Footer">
-                        <p class="text-muted" data-name="Need Help Card Footer Text"><a href="html/pages/needHelp.html" class="text-dark" data-name="Need Help Card Link">See more!</a></p>
+                            <p class="text-muted" data-name="Need Help Card Footer Text"><a href="html/pages/needHelp.html" class="text-dark" data-name="Need Help Card Link">See more!</a></p>
                         </div>
                     </div>
                 </div>
                 <!-- Provider Page Link -->
                 <div class="col-12 col-md-5" data-name="Service Provider Card Col">
-                    <div class="card mx-3 mb-3 border-0 rounded-0 home-card" data-name="Service Provider Card"> 
+                    <div class="card mx-3 mb-3 border-0 home-card col-sm-12" data-name="Service Provider Card"> 
                         <img src="assets\images\Pick-Up-Mayors-February-2025.png" class="card-img-top " alt="..." data-name="Service Provider Card Image">
                         <div class="card-body" data-name="Service Provider Card Body">
-                        <h4 class="card-title" data-name="Service Provider Card Title">Are You A Service Provider?</h4>
-                        <p class="card-text" data-name="Service Provider Card Text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
+                            <h4 class="card-title" data-name="Service Provider Card Title">Are You A Service Provider?</h4>
+                            <p class="card-text" data-name="Service Provider Card Text">Want to get your services out to more people? Check out our registration page to find out more. Get Your Message Out!</p>
                         </div>
                         <div class="card-footer" data-name="Service Provider Card Footer">
-                        <p class="text-muted" data-name="Service Provider Card Footer Text"><a href="html/pages/registration_landing.html" class="text-dark" data-name="Service Provider Card Link">Enroll Now!<a></small>
+                            <p class="text-muted" data-name="Service Provider Card Footer Text"><a href="html/pages/registration_landing.html" class="text-dark" data-name="Service Provider Card Link">Enroll Now!</a></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
     <div id="footer" data-name="Footer Div"></div>
 
+    <script src="js/api.js"></script>
     <script>
         fetch('partials/navbar.html')
             .then(response => response.text())
@@ -431,18 +429,18 @@
 
                 const script = document.createElement('script');
                 script.src = 'js/indexCarousel.js';
-                script.type = 'text/javascript';
+                // script.type = 'text/javascript';
+                script.type = 'module';
                 document.body.appendChild(script);
             });
         fetch('partials/iNeed.html')
-            .then(response => response.text())
-            .then((data) => {
-                document.getElementById('iNeed').innerHTML = data;
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById('iNeed').innerHTML = html;
 
-                const script = document.createElement('script');
-                script.src = 'js/iNeed.js';
-                script.type = 'module';
-                document.body.appendChild(script);
+                import('./js/iNeed.js').then(module => {
+                module.initINeed();
+                });
             });
         fetch('partials/pinmap.html')
             .then(response => response.text())
@@ -459,6 +457,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
     <script src="js/navbar.js" defer></script>
     <script type="module" src="js/pinmap.js" ></script>
+    <!-- <script type="module" src="js/iNeed.js"></script> -->
     <script src="js/index.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
