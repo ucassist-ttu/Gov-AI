@@ -284,14 +284,7 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
     })
     uniqueSearch = [...new Set(arrFound)];
     // Search Analytics
-    console.log({
-        searchType: "Database",
-        timeStamp: new Date().toISOString(),
-        search: strSearch,
-        results: uniqueSearch.length,
-        county: sessionStorage.getItem("currCounty"),
-        checked: selectedCheckboxes
-    })
+    sendDatabaseSearchAnalytics(strSearch, uniqueSearch, selectedCheckboxes);
     dataSearch = {
         searchTerm: strSearch,
         checked: selectedCheckboxes, 
@@ -647,3 +640,41 @@ document.querySelector('#btnLearnServices').addEventListener("click", (e) => {
 //         })
 //     }
 // })
+
+async function sendDatabaseSearchAnalytics(strSearch, uniqueSearch, selectedCheckboxes) {
+    const payload = {
+        searchType: "Database",
+        timeStamp: new Date().toISOString(),
+        search: strSearch,
+        results: uniqueSearch.length,
+        county: sessionStorage.getItem("currCounty"),
+        checked: JSON.stringify(Array.from(selectedCheckboxes).map(el => el.value))
+    };
+    console.log(JSON.stringify(payload))
+    try {
+        const response = await fetchApi("/add-search-analytics", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data = null;
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.warn("Response was not JSON:", text);
+            }
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error("Failed to send database search analytics:", err);
+    }
+}

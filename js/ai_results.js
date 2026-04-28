@@ -98,7 +98,7 @@ async function getAIRecommendations(userPrompt) {
             console.log(strResourceName);
 
             txtHTML +=`<div class="flex-row text-dark">`;
-            txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`;
+            txtHTML +=`    <h4 class="ai-title mt-3">${intCount}. <a onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer"><u>${strResourceName}</u></a></h4>`;
             txtHTML +=`    <p class="ai-company-name">`;
             txtHTML +=`        by ${strCompany}`;
             txtHTML +=`    </p>`;
@@ -128,18 +128,14 @@ async function getAIRecommendations(userPrompt) {
                 txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
             }
             // callServicePage(serviceId)
-            txtHTML +=`<button class="btn btn-link text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            // txtHTML +=`<button class="btn btn-primary text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            if (intCount != 3) {
+                txtHTML += `<hr class="hr-gold"/>`
+            }
             intCount++;
         });
 
-        console.log({
-            searchType: "AI",
-            timeStamp: new Date().toISOString(),
-            search: userPrompt,
-            results: aiData.length,
-            county: sessionStorage.getItem("currCounty"),
-            checked: null
-        })
+        await sendSearchAnalytics(userPrompt, aiData);
 
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
@@ -222,3 +218,41 @@ document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
 //         printed: printed
 //     });
 // });
+
+async function sendSearchAnalytics(userPrompt, aiData) {
+    const payload = {
+        searchType: "AI",
+        timeStamp: new Date().toISOString(),
+        search: userPrompt,
+        results: aiData.length,
+        county: sessionStorage.getItem("currCounty"),
+        checked: null
+    };
+
+    try {
+        const response = await fetchApi("/add-search-analytics", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data = null;
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.warn("Response was not JSON:", text);
+            }
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error("Failed to send search analytics:", err);
+    }
+}
