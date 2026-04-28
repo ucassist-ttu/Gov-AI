@@ -461,393 +461,517 @@ async function getAnalytics(endpoint) {
         return []
     }
 }
+let analytics, searchAnalytics
 async function load() {
-    const [analytics, searchAnalytics] = await Promise.all([
+    const [analyticsData, searchAnalyticsData] = await Promise.all([
         getAnalytics("/page-analytics"),
         getAnalytics("/search-analytics")
     ])
-
-    console.log(analytics)
-    console.log(searchAnalytics)
+    analytics = analyticsData
+    searchAnalytics = searchAnalyticsData
+    
+    // Process analytics data after it's loaded
+    processAnalytics()
 }
 
 load()
 
-const stopWords = new Set([
-    "the","for","and","to","of","in","on","at","a","an",
-    "with","by","is","are","from","near","help"
-]);
-
-// Group by Month + Page
-const monthlyData = {};
-
-analytics.forEach(entry => {
-    const date = new Date(entry.timeViewed);
-
-    // Format: YYYY-MM
-    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-
-    if (!monthlyData[month]) {
-        monthlyData[month] = {};
-    }
-
-    if (!monthlyData[month][entry.page]) {
-        monthlyData[month][entry.page] = 0;
-    }
-
-    monthlyData[month][entry.page] += 1;
-});
-
-function groupMonthlyAverage(data, field) {
-    const result = {};
-
-    data.forEach(entry => {
-        const date = new Date(entry.timeViewed);
-
-        const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-
-        if (!result[month]) result[month] = {};
-        if (!result[month][entry.page]) result[month][entry.page] = [];
-
-        result[month][entry.page].push(entry[field] || 0);
-    });
-
-    return result;
-}
-
-function buildDatasets(monthlyData) {
-    return pages.map((page, index) => ({
-        label: page,
-        data: months.map(month => {
-        const values = monthlyData[month]?.[page];
-        return values ? average(values) : 0;
-        }),
-        borderColor: colors[index % colors.length],
-        backgroundColor: colors[index % colors.length],
-        tension: 0.3,
-        fill: false
-    }));
-}
-
-function average(arr) {
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-function updateSecondSelect(modeSelect, valueSelect) {
-    const mode = modeSelect.value;
-
-    valueSelect.innerHTML = "";
-
-    if (mode === "recent") {
-        ["3", "6", "12"].forEach(m => {
-            const opt = document.createElement("option");
-            opt.value = m;
-            opt.textContent = `Last ${m} Months`;
-            valueSelect.appendChild(opt);
-        });
-    } else {
-        years.forEach(y => {
-            const opt = document.createElement("option");
-            opt.value = y;
-            opt.textContent = y;
-            valueSelect.appendChild(opt);
-        });
-    }
-}
-
-function getFilteredMonths(mode, value) {
-    if (mode === "recent") {
-        return months.slice(-parseInt(value));
-    } else {
-        return months.filter(m => m.startsWith(value));
-    }
-}
-
-function getBarAmount(amount) {
-    switch(amount) {
-        case "5":
-            return 5
-        case "15":
-            return 15
-        case "30":
-            return 30
-    }
-}
-
-function triggerUpdate() {
-    const mode = modeSelects[0].value;
-    const value = valueSelects[0].value;
-
-    const filteredMonths = getFilteredMonths(mode, value);
-
-    renderCharts();
-}
-
-let visitsChart, scrollChart, timeChart, rageClickChart, aiSearchChart, dbSearchChart;
-
-function renderCharts() {
-
-    const visitsCard = document.querySelector("#collapseThree");
-    const timeCard = document.querySelector("#collapseFour");
-    const scrollCard = document.querySelector("#collapseFive");
-
-    const visitsMode = visitsCard.querySelector(".filter-mode")?.value;
-    const timeMode = timeCard.querySelector(".filter-mode")?.value;
-    const scrollMode = scrollCard.querySelector(".filter-mode")?.value;
-
-    const visitsValue = visitsCard.querySelector(".filter-value")?.value;
-    const timeValue = timeCard.querySelector(".filter-value")?.value;
-    const scrollValue = scrollCard.querySelector(".filter-value")?.value;
-
-    const visitsMonths = getFilteredMonths(visitsMode, visitsValue);
-    const timeMonths = getFilteredMonths(timeMode, timeValue);
-    const scrollMonths = getFilteredMonths(scrollMode, scrollValue);
-
-    const visitDatasets = pages.map((page, index) => ({
-        label: page,
-        data: visitsMonths.map(month => monthlyData[month]?.[page] || 0),
-        borderColor: colors[index % colors.length],
-        backgroundColor: colors[index % colors.length],
-        tension: 0.3,
-        fill: false
-    }));
-
-    const scrollDatasets = pages.map((page, index) => ({
-        label: page,
-        data: scrollMonths.map(month => {
-            const values = scrollData[month]?.[page];
-            return values ? average(values) : 0;
-        }),
-        borderColor: colors[index % colors.length],
-        backgroundColor: colors[index % colors.length],
-        tension: 0.3,
-        fill: false
-    }));
-
-    const timeDatasets = pages.map((page, index) => ({
-        label: page,
-        data: timeMonths.map(month => {
-            const values = timeData[month]?.[page];
-            return values ? average(values) : 0;
-        }),
-        borderColor: colors[index % colors.length],
-        backgroundColor: colors[index % colors.length],
-        tension: 0.3,
-        fill: false
-    }));
-
-
-    const rageCard = document.querySelector("#collapseSix");
-
-    let rageClicks = []
-
-    const rageMode = rageCard.querySelector(".filter-mode")?.value;
-    const rageValue = rageCard.querySelector(".filter-value")?.value;
-    const rageAmount = rageCard.querySelector(".filter-amount")?.value;
-
-    const rageMonths = getFilteredMonths(rageMode, rageValue);
-
-    rageClicks = getRageClickCounts(rageMonths, getBarAmount(rageAmount));
-
-
-    const aiCard = document.querySelector("#collapseSeven");
-
-    const aiMode = aiCard.querySelector(".filter-mode").value;
-    const aiValue = aiCard.querySelector(".filter-value").value;
-    const aiZeroOnly = aiCard.querySelector(".search-filter").value === "zero";
-    const aiAmount = aiCard.querySelector(".filter-amount").value;
-
-    const dbCard = document.querySelector("#collapseEight");
-
-    const dbMode = dbCard.querySelector(".filter-mode").value;
-    const dbValue = dbCard.querySelector(".filter-value").value;
-    const dbZeroOnly = dbCard.querySelector(".search-filter").value === "zero";
-    const dbAmount = dbCard.querySelector(".filter-amount").value;
-
-    // Compute filtered months
-    const aiMonths = getFilteredMonths(aiMode, aiValue);
-    const dbMonths = getFilteredMonths(dbMode, dbValue);
-
-    // Get word counts
-    const aiWords = getWordCounts(aiMonths, "AI", aiZeroOnly, getBarAmount(aiAmount));
-    const dbWords = getWordCounts(dbMonths, "database", dbZeroOnly, getBarAmount(dbAmount));
-
-
-    // Destroy old charts
-    visitsChart?.destroy();
-    scrollChart?.destroy();
-    timeChart?.destroy();
-    rageClickChart?.destroy();
-    aiSearchChart?.destroy();
-    dbSearchChart?.destroy();
-
-
-    visitsChart = new Chart(document.getElementById("visitsChart"), {
-        type: "line",
-        data: { labels: visitsMonths, datasets: visitDatasets }
-    });
-
-    scrollChart = new Chart(document.getElementById("scrollChart"), {
-        type: "line",
-        data: { labels: scrollMonths, datasets: scrollDatasets }
-    });
-
-    timeChart = new Chart(document.getElementById("timeChart"), {
-        type: "line",
-        data: { labels: timeMonths, datasets: timeDatasets }
-    });
-
-    rageClickChart = new Chart(document.getElementById("rageClickChart"), {
-        type: "bar",
-        data: {
-            labels: rageClicks.map(r => r[0]),
-            datasets: [{
-                label: "Rage Clicks",
-                data: rageClicks.map(r => r[1]),
-                backgroundColor: "#E15759"
-            }]
-        }
-    });
-
-    aiSearchChart = new Chart(document.getElementById("aiSearchChart"), {
-        type: "bar",
-        data: {
-            labels: aiWords.map(w => w[0]),
-            datasets: [{
-                label: "AI Search Keywords",
-                data: aiWords.map(w => w[1]),
-                backgroundColor: "#4E79A7"
-            }]
-        }
-    });
-
-    dbSearchChart = new Chart(document.getElementById("dbSearchChart"), {
-        type: "bar",
-        data: {
-            labels: dbWords.map(w => w[0]),
-            datasets: [{
-                label: "Database Search Keywords",
-                data: dbWords.map(w => w[1]),
-                backgroundColor: "#F28E2B"
-            }]
-        }
-    });
-}
-
-// Extract sorted months
-const months = Object.keys(monthlyData).sort();
-
-// Get all unique pages
-const pages = [...new Set(analytics.map(e => e.page))];
-
-// Get all unique years
-const years = [...new Set(months.map(m => m.split("-")[0]))].sort();
-
-const analyticsColors = [
-    "#4E79A7",
-    "#F28E2B",
-    "#E15759",
-    "#76B7B2",
-    "#59A14F"
-];
-
-const datasets = pages.map((page, index) => {
-    return {
-        label: page,
-        data: months.map(month => monthlyData[month][page] || 0),
-        borderColor: colors[index % colors.length],
-        backgroundColor: colors[index % colors.length],
-        tension: 0.3,
-        fill: false
-    };
-});
-const scrollData = groupMonthlyAverage(analytics, "maxScroll");
-const timeData = groupMonthlyAverage(analytics, "timeSpent");
-
-const modeSelects = document.querySelectorAll(".filter-mode");
-const valueSelects = document.querySelectorAll(".filter-value");
-
-// initialize all dropdowns
-modeSelects.forEach((modeSelect, i) => {
-    const valueSelect = valueSelects[i];
-
-    updateSecondSelect(modeSelect, valueSelect);
-
-    modeSelect.addEventListener("change", () => {
-        updateSecondSelect(modeSelect, valueSelect);
-        triggerUpdate();
-    });
-
-    valueSelect.addEventListener("change", triggerUpdate);
-});
-
-document.querySelectorAll(".search-filter").forEach(select => {
-    select.addEventListener("change", triggerUpdate);
-});
-
-document.querySelectorAll(".filter-amount").forEach(select => {
-    select.addEventListener("change", triggerUpdate);
-});
-
-triggerUpdate()
-
-function extractKeywords(search) {
-    return search
-        .toLowerCase()
-        .replace(/[^\w\s]/g, "") // remove punctuation
-        .split(/\s+/)
-        .filter(word => word && !stopWords.has(word))
-        .map(capitalizeFirstLetter);
-}
-function capitalizeFirstLetter(word) {
-  if (!word) return word; // Handle empty strings
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
-function getWordCounts(filteredMonths, type, zeroOnly, amount) {
-    const counts = {};
-
-    searchAnalytics.forEach(entry => {
-        const date = new Date(entry.timeStamp);
-        const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
-
-        if (!filteredMonths.includes(month)) return;
-        if (entry.searchType !== type) return;
-        if (zeroOnly && entry.results !== 0) return;
-
-        const words = extractKeywords(entry.search);
-
-        words.forEach(word => {
-            counts[word] = (counts[word] || 0) + 1;
-        });
-    });
-
-    // sort + take top x
-    return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, amount);
-}
-
-function getRageClickCounts(filteredMonths, amount) {
-    const counts = {};
+function processAnalytics() {
+    console.log(analytics)
+    console.log(searchAnalytics)
+    
+    // stop words generated by ChatGPT
+    const stopWords = new Set([
+        // Articles / basic
+        "a","an","the",
+
+        // Prepositions
+        "in","on","at","by","with","about","against","between","into","through",
+        "during","before","after","above","below","from","up","down","out","off",
+        "over","under","again","further","then","once","near",
+
+        // Conjunctions
+        "and","or","but","so","because","as","until","while","although","though",
+
+        // Pronouns
+        "i","me","my","mine","we","our","ours","you","your","yours",
+        "he","him","his","she","her","hers","it","its","they","them","their","theirs",
+
+        // Question words
+        "what","which","who","whom","whose","where","when","why","how",
+
+        // Common verbs (non-informational for your use case)
+        "is","are","was","were","be","been","being",
+        "do","does","did","doing",
+        "have","has","had","having",
+        "can","could","should","would","will","may","might","must",
+
+        // Search intent fluff
+        "need","needs","needed",
+        "want","wants","wanted",
+        "looking","look","find","search","searching",
+        "get","got","getting",
+        "help","helping",
+        "please","pls",
+
+        // Location fluff
+        "near","nearby","around","close","closest","area","local","location",
+        "me","myself","here",
+
+        // Time fluff
+        "now","today","tonight","tomorrow","soon","asap",
+
+        // Misc noise
+        "any","some","much","many","lot","lots",
+        "thing","things","something","anything",
+        "way","ways","place","places"
+    ]);
+
+    // Group by Month + Page
+    const monthlyData = {};
 
     analytics.forEach(entry => {
-        const date = new Date(entry.timeViewed);
+        if (!entry.timeViewed) return;
+        
+        // timeViewed is a millisecond timestamp
+        const timestamp = parseInt(entry.timeViewed);
+        if (isNaN(timestamp)) return;
+        
+        const date = new Date(timestamp);
+        if (isNaN(date.getTime())) return;
+
+        // Format: YYYY-MM
         const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
-        if (!filteredMonths.includes(month)) return;
+        if (!monthlyData[month]) {
+            monthlyData[month] = {};
+        }
 
-        (entry.clickLogs || []).forEach(click => {
-            const key = `${entry.page} | ${click.target}`;
+        const pageName = getFileName(entry.page);
+        if (!monthlyData[month][pageName]) {
+            monthlyData[month][pageName] = 0;
+        }
 
-            counts[key] = (counts[key] || 0) + 1;
-        });
+        monthlyData[month][pageName] += 1;
     });
 
-    // Sort + top x
-    return Object.entries(counts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, amount);
+    function groupMonthlyAverage(data, field) {
+        const result = {};
+
+        data.forEach(entry => {
+            if (!entry.timeViewed) return;
+            
+            // timeViewed is a millisecond timestamp
+            const timestamp = parseInt(entry.timeViewed);
+            if (isNaN(timestamp)) return;
+            
+            const date = new Date(timestamp);
+            if (isNaN(date.getTime())) return;
+
+            const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+            const pageName = getFileName(entry.page);
+            if (!result[month]) result[month] = {};
+            if (!result[month][pageName]) result[month][pageName] = [];
+
+            result[month][pageName].push(entry[field] || 0);
+        });
+
+        return result;
+    }
+
+    function buildDatasets(monthlyData) {
+        return pages.map((page, index) => ({
+            label: page,
+            data: months.map(month => {
+            const values = monthlyData[month]?.[page];
+            return values ? average(values) : 0;
+            }),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0.3,
+            fill: false
+        }));
+    }
+
+    function average(arr) {
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+
+    function updateSecondSelect(modeSelect, valueSelect) {
+        const mode = modeSelect.value;
+
+        valueSelect.innerHTML = "";
+
+        if (mode === "recent") {
+            ["3", "6", "12"].forEach(m => {
+                const opt = document.createElement("option");
+                opt.value = m;
+                opt.textContent = `Last ${m} Months`;
+                valueSelect.appendChild(opt);
+            });
+        } else {
+            years.forEach(y => {
+                const opt = document.createElement("option");
+                opt.value = y;
+                opt.textContent = y;
+                valueSelect.appendChild(opt);
+            });
+        }
+    }
+
+    function getFilteredMonths(mode, value) {
+        if (!mode || !value || !months || months.length === 0) {
+            return [];
+        }
+        const numValue = parseInt(value);
+        if (isNaN(numValue)) {
+            return [];
+        }
+        if (mode === "recent") {
+            return months.slice(-numValue);
+        } else {
+            return months.filter(m => m.startsWith(value));
+        }
+    }
+
+    function getBarAmount(amount) {
+        if (!amount) return 5;
+        switch(amount) {
+            case "5":
+                return 5
+            case "15":
+                return 15
+            case "30":
+                return 30
+            default:
+                return 5
+        }
+    }
+
+    function triggerUpdate() {
+        const mode = modeSelects[0].value;
+        const value = valueSelects[0].value;
+
+        const filteredMonths = getFilteredMonths(mode, value);
+
+        renderCharts();
+    }
+
+    let visitsChart, scrollChart, timeChart, rageClickChart, aiSearchChart, dbSearchChart;
+
+    function renderCharts() {
+
+        const visitsCard = document.querySelector("#collapseThree");
+        const timeCard = document.querySelector("#collapseFour");
+        const scrollCard = document.querySelector("#collapseFive");
+
+        const visitsMode = visitsCard.querySelector(".filter-mode")?.value;
+        const timeMode = timeCard.querySelector(".filter-mode")?.value;
+        const scrollMode = scrollCard.querySelector(".filter-mode")?.value;
+
+        const visitsValue = visitsCard.querySelector(".filter-value")?.value;
+        const timeValue = timeCard.querySelector(".filter-value")?.value;
+        const scrollValue = scrollCard.querySelector(".filter-value")?.value;
+
+        const visitsMonths = getFilteredMonths(visitsMode, visitsValue);
+        const timeMonths = getFilteredMonths(timeMode, timeValue);
+        const scrollMonths = getFilteredMonths(scrollMode, scrollValue);
+
+        const visitDatasets = pages.map((page, index) => ({
+            label: page,
+            data: visitsMonths.map(month => monthlyData[month]?.[page] || 0),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0.3,
+            fill: false
+        }));
+
+        const scrollDatasets = pages.map((page, index) => ({
+            label: page,
+            data: scrollMonths.map(month => {
+                const values = scrollData[month]?.[page];
+                return values ? average(values) : 0;
+            }),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0.3,
+            fill: false
+        }));
+
+        const timeDatasets = pages.map((page, index) => ({
+            label: page,
+            data: timeMonths.map(month => {
+                const values = timeData[month]?.[page];
+                return values ? average(values) : 0;
+            }),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0.3,
+            fill: false
+        }));
+
+
+        const rageCard = document.querySelector("#collapseSix");
+
+        let rageClicks = []
+
+        const rageMode = rageCard.querySelector(".filter-mode")?.value;
+        const rageValue = rageCard.querySelector(".filter-value")?.value;
+        const rageAmount = rageCard.querySelector(".filter-amount")?.value;
+
+        const rageMonths = getFilteredMonths(rageMode, rageValue);
+
+        rageClicks = getRageClickCounts(rageMonths, getBarAmount(rageAmount));
+
+
+        const aiCard = document.querySelector("#collapseSeven");
+
+        const aiMode = aiCard.querySelector(".filter-mode").value;
+        const aiValue = aiCard.querySelector(".filter-value").value;
+        const aiZeroOnly = aiCard.querySelector(".search-filter").value === "zero";
+        const aiAmount = aiCard.querySelector(".filter-amount").value;
+
+        const dbCard = document.querySelector("#collapseEight");
+
+        const dbMode = dbCard.querySelector(".filter-mode").value;
+        const dbValue = dbCard.querySelector(".filter-value").value;
+        const dbZeroOnly = dbCard.querySelector(".search-filter").value === "zero";
+        const dbAmount = dbCard.querySelector(".filter-amount").value;
+
+        // Compute filtered months
+        const aiMonths = getFilteredMonths(aiMode, aiValue);
+        const dbMonths = getFilteredMonths(dbMode, dbValue);
+
+        // Get word counts
+        const aiWords = getWordCounts(aiMonths, "AI", aiZeroOnly, getBarAmount(aiAmount));
+        const dbWords = getWordCounts(dbMonths, "Database", dbZeroOnly, getBarAmount(dbAmount));
+
+        console.log("AI words:", aiWords);
+        console.log("Database words:", dbWords);
+
+
+        // Destroy old charts
+        visitsChart?.destroy();
+        scrollChart?.destroy();
+        timeChart?.destroy();
+        rageClickChart?.destroy();
+        aiSearchChart?.destroy();
+        dbSearchChart?.destroy();
+
+
+        visitsChart = new Chart(document.getElementById("visitsChart"), {
+            type: "line",
+            data: { labels: visitsMonths, datasets: visitDatasets }
+        });
+
+        scrollChart = new Chart(document.getElementById("scrollChart"), {
+            type: "line",
+            data: { labels: scrollMonths, datasets: scrollDatasets }
+        });
+
+        timeChart = new Chart(document.getElementById("timeChart"), {
+            type: "line",
+            data: { labels: timeMonths, datasets: timeDatasets }
+        });
+
+        rageClickChart = new Chart(document.getElementById("rageClickChart"), {
+            type: "bar",
+            data: {
+                labels: rageClicks.map(r => r[0]),
+                datasets: [{
+                    label: "Rage Clicks",
+                    data: rageClicks.map(r => r[1]),
+                    backgroundColor: "#E15759"
+                }]
+            }
+        });
+
+        aiSearchChart = new Chart(document.getElementById("aiSearchChart"), {
+            type: "bar",
+            data: {
+                labels: aiWords.map(w => w[0]),
+                datasets: [{
+                    label: "AI Search Keywords",
+                    data: aiWords.map(w => w[1]),
+                    backgroundColor: "#4E79A7"
+                }]
+            }
+        });
+
+        dbSearchChart = new Chart(document.getElementById("dbSearchChart"), {
+            type: "bar",
+            data: {
+                labels: dbWords.map(w => w[0]),
+                datasets: [{
+                    label: "Database Search Keywords",
+                    data: dbWords.map(w => w[1]),
+                    backgroundColor: "#F28E2B"
+                }]
+            }
+        });
+    }
+
+    // Extract sorted months
+    const months = Object.keys(monthlyData).sort();
+
+    // Helper function to extract filename from path
+    function getFileName(path) {
+        if (!path) return path;
+        // Get the filename from the path
+        let fileName = path.split('/').pop();
+        // Remove .html extension
+        if (fileName.endsWith('.html')) {
+            fileName = fileName.replace('.html', '');
+        }
+        return capitalizeFirstLetter(fileName);
+    }
+
+    // Get all unique pages
+    const pages = [...new Set(analytics.map(e => e.page))].map(getFileName);
+
+    // Get all unique years
+    const years = [...new Set(months.map(m => m.split("-")[0]))].sort();
+
+    const analyticsColors = [
+        "#4E79A7",
+        "#F28E2B",
+        "#E15759",
+        "#76B7B2",
+        "#59A14F"
+    ];
+
+    const datasets = pages.map((page, index) => {
+        return {
+            label: page,
+            data: months.map(month => monthlyData[month][page] || 0),
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0.3,
+            fill: false
+        };
+    });
+    const scrollData = groupMonthlyAverage(analytics, "maxScroll");
+    const timeData = groupMonthlyAverage(analytics, "timeSpent");
+
+    const modeSelects = document.querySelectorAll(".filter-mode");
+    const valueSelects = document.querySelectorAll(".filter-value");
+
+    // initialize all dropdowns
+    modeSelects.forEach((modeSelect, i) => {
+        const valueSelect = valueSelects[i];
+
+        updateSecondSelect(modeSelect, valueSelect);
+
+        modeSelect.addEventListener("change", () => {
+            updateSecondSelect(modeSelect, valueSelect);
+            triggerUpdate();
+        });
+
+        valueSelect.addEventListener("change", triggerUpdate);
+    });
+
+    document.querySelectorAll(".search-filter").forEach(select => {
+        select.addEventListener("change", triggerUpdate);
+    });
+
+    document.querySelectorAll(".filter-amount").forEach(select => {
+        select.addEventListener("change", triggerUpdate);
+    });
+
+    triggerUpdate()
+
+    function extractKeywords(search) {
+        return search
+            .toLowerCase()
+            .replace(/[^\w\s]/g, "") // remove punctuation
+            .split(/\s+/)
+            .filter(word => word && !stopWords.has(word))
+            .map(capitalizeFirstLetter);
+    }
+    function capitalizeFirstLetter(word) {
+      if (!word) return word; // Handle empty strings
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    function getWordCounts(filteredMonths, type, zeroOnly, amount) {
+        const counts = {};
+
+        searchAnalytics.forEach(entry => {
+            if (!entry.timeStamp) return;
+            
+            const date = new Date(entry.timeStamp);
+            if (isNaN(date.getTime())) return;
+
+            const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+            if (!filteredMonths.includes(month)) return;
+            if (entry.searchType !== type) return;
+            if (zeroOnly && entry.results !== 0) return;
+
+            const words = extractKeywords(entry.search);
+
+            words.forEach(word => {
+                counts[word] = (counts[word] || 0) + 1;
+            });
+        });
+
+        // Debug: log the results
+        console.log(`Word counts for type "${type}":`, counts);
+        console.log(`Filtered months:`, filteredMonths);
+
+        // sort + take top x
+        return Object.entries(counts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, amount);
+    }
+
+    function getRageClickCounts(filteredMonths, amount) {
+        const counts = {};
+
+        analytics.forEach(entry => {
+            if (!entry.timeViewed) return;
+            
+            // timeViewed is a millisecond timestamp
+            const timestamp = parseInt(entry.timeViewed);
+            if (isNaN(timestamp)) return;
+            
+            const date = new Date(timestamp);
+            if (isNaN(date.getTime())) return;
+
+            const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+            if (!filteredMonths.includes(month)) return;
+
+            // clickLogs is a double-stringified JSON array: "\"[\\\"Homepage Search Overlay\\\",\\\"Quick Access Header\\\"]\""
+            let clickLogs = entry.clickLogs;
+            if (typeof clickLogs === 'string') {
+                try {
+                    // First parse gets us the inner string: "[\"Homepage Search Overlay\",\"Quick Access Header\"]"
+                    clickLogs = JSON.parse(clickLogs);
+                    // Second parse gets us the actual array: ["Homepage Search Overlay", "Quick Access Header"]
+                    clickLogs = JSON.parse(clickLogs);
+                } catch (e) {
+                    clickLogs = [];
+                }
+            }
+
+            if (!Array.isArray(clickLogs)) {
+                clickLogs = [];
+            }
+
+            clickLogs.forEach(target => {
+                const pageName = getFileName(entry.page);
+                const key = `${pageName} | ${target}`;
+                counts[key] = (counts[key] || 0) + 1;
+            });
+        });
+
+        // Sort + top x
+        return Object.entries(counts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, amount);
+    }
 }
 
 // whenever a collapse panel is shown/hidden, swap info-print and info-hidden classes
