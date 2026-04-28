@@ -158,7 +158,11 @@ function createCard(service, category) {
 
 
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
-  } else {
+  }
+
+  // replaces missing or invalid photos with category placeholder photo
+  if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
+    imgPhoto = getImgSrc(category);
   }
 
 
@@ -228,19 +232,20 @@ function sortIDsByKeyword(arrKeywords, id){
 function getImgSrc(keyword) {
   let basePath = "assets/images/iNeed/"
   let imgSrcLookUp = {
-    "Crisis": " ",
-    "Housing": "INeedHousing.jpg", 
-    "BasicNeeds": "iNeedFood.jpg", 
-    "Financial": "",
-    "Transportation": "placeholder-img.png", 
-    "Youth": "iNeedChildCare.jpg",
-    "Seniors": "Seniors, Aging, and Veterans",
-    "Health": "Health and Wellness",
-    "Education": "Education and Workforce Development",
-    "Business": "Small Business and Entrepreneur",
-    "Tourism": "Tourism and Events",
-    "Community": "Economic and Community Development"
+    "Crisis": "iNeedCrisis.jpg",
+    "Housing": "iNeedHousing.jpg", 
+    "BasicNeeds": "iNeedBasicNeeds.jpg", 
+    "Financial": "iNeedFinacial.jpg",
+    "Transportation": "iNeedTransportation.jpg", 
+    "Youth": "iNeedYouth.jpg",
+    "Seniors": "iNeedSeniors.jpg",
+    "Health": "iNeedHealth.jpg",
+    "Education": "iNeedEducation.jpg",
+    "Business": "iNeedBusiness.jpg",
+    "Tourism": "iNeedTourism.jpg",
+    "Community": "iNeedCommunity.jpg"
   }
+
 
   return basePath + imgSrcLookUp[keyword]
 }
