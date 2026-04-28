@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('emailFirstName').value = service.firstName;
     document.getElementById('emailLastName').value = service.lastName;
     document.getElementById('emailEmail').value = service.email;
-    document.getElementById('emailPhone').value = service.phone;
     document.getElementById('emailMessage').value = service.message;
   });
 })
