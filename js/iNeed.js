@@ -50,7 +50,7 @@ let sortedIDCategories = {
   "Community": []
 }
 
-window.addEventListener('load', (event) => {
+export function initINeed() {
   const container = document.getElementById("divINeedPills");
   const pillsContainer = document.getElementById("divINeedPills");
   const scrollLeftPills = document.getElementById("scrollLeftPills");
@@ -58,25 +58,24 @@ window.addEventListener('load', (event) => {
   const contentContainer = document.getElementById("divINeedContent");
 
   if (!container || !pillsContainer || !scrollLeftPills || !scrollRightPills || !contentContainer) {
+    console.error("iNeed DOM not ready");
     return;
   }
 
-  // gets database keywords and populates sortedIDCategories
-  getUniqueKeywords()
-  //populating pills
-  Object.entries(keywordCategories).forEach(([keyword, fullword]) => { 
-    const pill = createPills(keyword, fullword);
-    container.innerHTML += pill;
-  })
+  getUniqueKeywords();
 
-  //javascript for scroll buttons
+  Object.entries(keywordCategories).forEach(([keyword, fullword]) => {
+    container.innerHTML += createPills(keyword, fullword);
+  });
+
   scrollLeftPills.onclick = () => {
     pillsContainer.scrollBy({ left: -300, behavior: "smooth" });
   };
+
   scrollRightPills.onclick = () => {
     pillsContainer.scrollBy({ left: 300, behavior: "smooth" });
   };
-})
+}
 
 //EVENT LISTENER for pills (delegated to the document since pills are generated dynamically)
 document.addEventListener("click", (e) => {
@@ -144,7 +143,7 @@ function createCard(service, category) {
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
   if(!isInCounty(service)){
-    return "";
+    return null;
   }
 
   // WEBSITE BUTTON
@@ -287,7 +286,7 @@ async function loadCardsByCategory(category) {
       let newCard = createCard(service, category)
       // console.log("[loadCardsByCategory] Created card for service ID:", service.ID, "with html:", newCard)
       // if(count < 7){
-        if (newCard == ""){
+        if (newCard == null){
           return;
         } else{
           count ++
@@ -320,7 +319,7 @@ function isInCounty(service){
 }
 
 
-export function getCounties(service){
+ export function getCounties(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
   let count = 0

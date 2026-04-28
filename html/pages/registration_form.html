@@ -50,11 +50,11 @@
       <form id="form-step-1" novalidate data-name="Organization Information Public Form">
         <div class="mb-3" data-name="Company Name Section">
           <label class="fw-semibold dark-navy" data-name="Company Name Label">Company Name <span class="text-danger">*</span></label>
-          <input type="text" class="form-control border-2 rounded p-2 px-3" required data-name="Company Name Input" />
+          <input type="text" id="companyName" class="form-control border-2 rounded p-2 px-3" required data-name="Company Name Input" />
         </div>
         <div class="mb-3" data-name="Organization Description Section">
           <label class="fw-semibold dark-navy" data-name="Organization Description Label">Organization Description <span class="text-danger">*</span></label>
-          <textarea class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" required data-name="Organization Description Input"></textarea>
+          <textarea id="orgDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of your company" rows="5" required data-name="Organization Description Input"></textarea>
         </div>
         <div class="mb-3" data-name="Organization Phone Number Section">
           <label class="fw-semibold dark-navy" data-name="Organization Phone Number Label">Phone Number <span class="text-danger">*</span></label>
@@ -438,7 +438,7 @@
     </div>
   </div>
   <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Add More Service Hours Button">+ Add Hours</button>
-</div>
+  </div>
       <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn" data-name="Add Another Service Button">+ Add Another Service</button>
       <div class="d-flex gap-3 mt-3" data-name="Register Services Actions">
         <button type="submit" class="submit-btn" data-name="Submit Registration Button">Submit</button>
@@ -451,7 +451,7 @@
     </div>
   </main>
   <div id="footer"></div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         fetch('../../partials/footer.html')
             .then(response => response.text())
@@ -464,6 +464,7 @@
   <script src="../../js/api.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/registration_form.js"></script>
+  <script src="../../js/emailNewService.js" type="module"></script>
   <script src="../../js/analytics.js"></script>
   <script  src="../../js/navbar.js"></script>
 </body>

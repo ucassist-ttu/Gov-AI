@@ -1,5 +1,28 @@
+import { addReferral } from "../backend/fake_backend/dbReferrals.js";
+
+async function addReferralToDB() {  
+  //LOADING TO DATABASE
+  const formData = {
+    newFirstName: document.getElementById('referFirstName').value,
+    newLastName: document.getElementById('referLastName').value,
+    newEmail: document.getElementById("referEmail").value,
+    newPhone: document.getElementById("referPhone").value,
+    newMessage: document.getElementById("referMessage").value
+  }
+  addReferral(formData);
+
+  console.log("Referral added to database:", formData);
+
+  // remove later
+  localStorage.setItem(
+    "referrals",
+    JSON.stringify(formData)
+  );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('main form');
+
   function getFieldLabel(input) {
     if (input.id) {
       const label = document.querySelector(`label[for="${input.id}"]`);
@@ -18,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return errors;
   }
-  const phoneInput = document.getElementById('phone');
+  const phoneInput = document.getElementById('referPhone');
   if (phoneInput) {
     phoneInput.addEventListener('input', (e) => {
       let value = e.target.value.replace(/\D/g, '');
@@ -34,19 +57,47 @@ document.addEventListener('DOMContentLoaded', () => {
       e.target.value = value;
     });
   }
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  document.getElementById('referSubmit').addEventListener('click', async (e) => {
+-    e.preventDefault();
     form.classList.add('was-validated');
     const errors = collectFormErrors(form);
     if (errors.length === 0) {
-      swal("Success", "Service referral form submitted successfully!", "success");
-      form.reset();
-      form.classList.remove('was-validated');
+      try{
+
+        await addReferralToDB()
+
+        swal("Success", "Service referral form submitted successfully!", "success");
+        form.reset();
+        form.classList.remove('was-validated');
+      } catch (err) {
+        swal("Error", "Something went wrong saving the referral.", "error");
+        console.error(err);
+      }
     } else {
       const errorList = errors.map(err => `• ${err}`).join('\n');
       swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
-      const firstInvalid = form.querySelector(':invalid');
-      if (firstInvalid) firstInvalid.focus();
+      // const firstInvalid = form.querySelector(':invalid');
+      // if (firstInvalid) firstInvalid.focus();
     }
   });
 });
+
+//SEND EMAIL JS
+
+//CHANGE THESE IDs AS SOON
+emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
+function sendEmail(){
+  logFormData(); // 👈 run this before sending email
+
+  emailjs.send(
+    "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
+    "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
+    {
+      first_name: document.getElementById('referFirstName').value,
+      last_name: document.getElementById('referLastName').value,
+      email: document.getElementById("referEmail").value,
+      phone: edocument.getElementById("referPhone").value,
+      message: document.getElementById("referMessage").value
+    }
+  );
+}

@@ -98,7 +98,7 @@ async function getAIRecommendations(userPrompt) {
             console.log(strResourceName);
 
             txtHTML +=`<div class="flex-row text-dark">`;
-            txtHTML +=`    <h4 class="ai-title">${intCount}. ${strResourceName}</h4>`;
+            txtHTML +=`    <h4 class="ai-title mt-3">${intCount}. <a onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer"><u>${strResourceName}</u></a></h4>`;
             txtHTML +=`    <p class="ai-company-name">`;
             txtHTML +=`        by ${strCompany}`;
             txtHTML +=`    </p>`;
@@ -128,7 +128,10 @@ async function getAIRecommendations(userPrompt) {
                 txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
             }
             // callServicePage(serviceId)
-            txtHTML +=`<button class="btn btn-link text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            // txtHTML +=`<button class="btn btn-primary text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
+            if (intCount != 3) {
+                txtHTML += `<hr class="hr-gold"/>`
+            }
             intCount++;
         });
 
