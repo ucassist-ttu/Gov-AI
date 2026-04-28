@@ -135,14 +135,7 @@ async function getAIRecommendations(userPrompt) {
             intCount++;
         });
 
-        console.log({
-            searchType: "AI",
-            timeStamp: new Date().toISOString(),
-            search: userPrompt,
-            results: aiData.length,
-            county: sessionStorage.getItem("currCounty"),
-            checked: null
-        })
+        await sendSearchAnalytics(userPrompt, aiData);
 
         if (!txtHTML) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
@@ -225,3 +218,41 @@ document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
 //         printed: printed
 //     });
 // });
+
+async function sendSearchAnalytics(userPrompt, aiData) {
+    const payload = {
+        searchType: "AI",
+        timeStamp: new Date().toISOString(),
+        search: userPrompt,
+        results: aiData.length,
+        county: sessionStorage.getItem("currCounty"),
+        checked: null
+    };
+
+    try {
+        const response = await fetchApi("/add-search-analytics", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data = null;
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.warn("Response was not JSON:", text);
+            }
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error("Failed to send search analytics:", err);
+    }
+}
