@@ -19,6 +19,7 @@ let strEndHour
 let strEndAMPM
 let strLogo
 
+let strPreOrgID = 'Test Org ID'
 let strPreOrgDescription = 'Test Org Discription'
 let strPrePhoneNumber = 'Test Org Phone Number'
 let strPreWebsite = 'Test Org Website'
@@ -99,6 +100,8 @@ let strAddServiceStartAMPM
 let strAddServiceEndHour
 let strAddServiceEndAMPM
 
+let orgArray = []
+let serviceArray = []
 
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
@@ -891,7 +894,15 @@ document.addEventListener('DOMContentLoaded', () => {
           strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
         }
         console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
-
+        orgArray = [strPreOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strKeywords, strStartDay, strStartHour, strStartAMPM, strEndHour, strEndAMPM, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
+        if (button.id == 'btnUpdateService') {
+          serviceArray = [strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM]
+          addService(orgArray, serviceArray)
+        }
+        else {
+          serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM]
+          addService(orgArray, serviceArray)
+        }
         Swal.fire({
           title: "Success",
           text: "Your request has been submitted. It is pending review.",
@@ -1390,54 +1401,66 @@ function getSelectedKeywords(containerId) {
 // });
 });
 
-async function addService() {
+async function addService(orgArray, serviceArray) {
   try{
     let data = {
         "organization": {
-          "id": "NS123",
-          "company_name": "Example Org",
-          "organization_description": "Org description",
-          "phone": "(931) 555-1111",
-          "website": "https://example.org",
-          "address1": "123 Main St",
-          "city_public": "Cookeville",
-          "state_public": "TN",
-          "zip_public": "38501",
-          "primary_email": "contact@example.org"
+          "id": `${orgArray[0]}`,
+          "company_name": `${orgArray[1]}`,
+          "organization_description": `${orgArray[2]}`,
+          "phone": `${orgArray[3]}`,
+          "website": `${orgArray[4]}`,
+          "address1": `${orgArray[5]}`,
+          "city_public": `${orgArray[6]}`,
+          "state_public": `${orgArray[7]}`,
+          "zip_public": `${orgArray[8]}`,
+          "organization_keywords": `${orgArray[9]}`,
+          "organization_hours": `${orgArray[10], orgArray[11], orgArray[12], orgArray[13], orgArray[14]}`,
+          "logo": `${orgArray[15]}`,
+          "primary_name": `${orgArray[16]}`,
+          "primary_email": `${orgArray[17]}`,
+          "primary_phone": `${orgArray[18]}`,
+          "primary_orgposition": `${orgArray[19]}`,
+          "secondary_name": `${orgArray[20]}`,
+          "secondary_email": `${orgArray[21]}`,
+          "secondary_phone": `${orgArray[22]}`,
+          "secondary_orgposition": `${orgArray[23]}`
         },
         "service": {
-          "company_id": "NS123",
-          "service_name": "Example Service",
-          "service_description": "Service description",
-          "service_criteria": "Eligibility notes",
-          "service_phone": "(931) 555-2222",
-          "service_address_street": "456 Oak Ave",
-          "service_city": "Cookeville",
-          "service_state": "TN",
-          "service_zip": "38501",
-          "service_counties": ["Putnam"],
-          "service_keywords": ["Food"]
+          "company_id": `${orgArray[0]}`,
+          "service_name": `${serviceArray[0]}`,
+          "service_description": `${serviceArray[1]}`,
+          "service_criteria": `${serviceArray[2]}`,
+          "service_counties": `${serviceArray[3]}`,
+          "service_keywords": `${serviceArray[4]}`,
+          "service_phone": `${serviceArray[5]}`,
+          "service_address_street": `${serviceArray[6]}`,
+          "service_city": `${serviceArray[7]}`,
+          "service_state": `${serviceArray[8]}`,
+          "service_zip": `${serviceArray[9]}`,
+          "service_website": `${serviceArray[10]}`,
+          "organization_hours": `${serviceArray[11], serviceArray[12], serviceArray[13], serviceArray[14], serviceArray[15]}`,
         } 
       }
-    const response = await fetchApi(`/request-create-service`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json', // Sending JSON
-          'Accept': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+      console.log(data)
+    // const response = await fetchApi(`/request-create-service`, {
+    //   method: 'POST',
+    //   headers: {
+    //       'Content-Type': 'application/json', // Sending JSON
+    //       'Accept': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    // });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    // }
 
-    // Parse the JSON response
-    const result = await response.json();
-    console.log('Data sent successfully:', result);
+    // // Parse the JSON response
+    // const result = await response.json();
+    // console.log('Data sent successfully:', result);
 
   } catch (objError){
     console.log('Error sending request', objError)
   }
 }
-//addService()
