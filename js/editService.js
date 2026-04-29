@@ -475,7 +475,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
           strEditorOrgPosition = document.getElementById('editorPosition').value
         }
-        console.log(strEditorName, strEditorEmail, strEditorPhoneNumber, strEditorOrgPosition)
         currentStep = 1;
         showStep(currentStep);
       } else {
@@ -550,7 +549,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
           strLogo = document.getElementById('oldUpload').value
         }
-        console.log(strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo)
         currentStep = 2;
         showStep(currentStep);
       } else {
@@ -616,7 +614,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
           strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
         }
-        console.log(strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition)
         currentStep = 3;
         showStep(currentStep);
       } else {
@@ -1221,7 +1218,7 @@ async function addService(orgArray, serviceArray) {
           "organization_hours": `${serviceArray[11]}`,
         } 
       }
-    console.log(data)
+    // console.log(data)
     const response = await fetchApi(`/request-create-service`, {
       method: 'POST',
       headers: {
