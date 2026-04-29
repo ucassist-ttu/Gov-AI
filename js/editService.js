@@ -19,6 +19,21 @@ let strEndHour
 let strEndAMPM
 let strLogo
 
+let strPreOrgDescription = 'Test Org Discription'
+let strPrePhoneNumber = 'Test Org Phone Number'
+let strPreWebsite = 'Test Org Website'
+let strPrePhysicalAddress = 'Test Org Physical Address'
+let strPreAddressCity = 'Test Org City'
+let strPreAddressState = 'Test Org State'
+let strPreAddressZip ='Test Org Zip'
+let strPreKeywords = 'Test Org Keywords'
+let strPreStartDay = 'Test Org Start Day'
+let strPreStartHour = 'Test Org Start Hour'
+let strPreStartAMPM = 'Test Org Start AM PM'
+let strPreEndHour = 'Test Org End Hour'
+let strPreEndAMPM = 'Test Org End AMPM'
+let strPreLogo = 'Test Org Logo'
+
 let strPrimaryName
 let strPrimaryEmail
 let strPrimaryPhoneNumber
@@ -27,6 +42,11 @@ let strSecondaryName
 let strSecondaryEmail
 let strSecondaryPhoneNumber
 let strSecondaryOrgPosition
+
+let strPreSecondaryName = 'Test Secondary Contact Name'
+let strPreSecondaryEmail = 'Test Secondary Contact Email'
+let strPreSecondaryPhoneNumber = 'Test Secondary Contact Phone'
+let strPreSecondaryOrgPosition = 'Test Secondary Contact Org Position'
 
 let strEditServiceName
 let strEditServiceDescription
@@ -44,6 +64,23 @@ let strEditServiceStartHour
 let strEditServiceStartAMPM
 let strEditServiceEndHour
 let strEditServiceEndAMPM
+
+let strPreEditServiceName = 'Test Service Name'
+let strPreEditServiceDescription = 'Test Service Description'
+let strPreEditServiceElegibility = 'Test Service Elegibility'
+let strPreEditServiceCounties = ['Putnam']
+let strPreEditServiceKeywords = ['abuse']
+let strPreEditServicePhoneNumber = 'Test Service Phone Number'
+let strPreEditServicePhysicalAddress = 'Test Service Address'
+let strPreEditServiceAddressCity = 'Test Service City'
+let strPreEditServiceAddressState = 'Test Service State'
+let strPreEditServiceAddressZip = 'Test Zip'
+let strPreEditServiceWebsite = 'Test Service Website'
+let strPreEditServiceStartDay = 'Test Service Start Day'
+let strPreEditServiceStartHour = 'Test Service Start Hour'
+let strPreEditServiceStartAMPM = 'Test Service Start AMPM'
+let strPreEditServiceEndHour = 'Test Servie End Hour'
+let strPreEditServiceEndAMPM = 'Test Service End AMPM'
 
 let strAddServiceName
 let strAddServiceDescription
@@ -453,7 +490,12 @@ document.addEventListener('DOMContentLoaded', () => {
         strEditorName = document.getElementById('editorName').value
         strEditorEmail = document.getElementById('editorEmail').value
         strEditorPhoneNumber = document.getElementById('editorPhone').value
-        strEditorOrgPosition = document.getElementById('editorPosition').value
+        if (document.getElementById('orgDescription').value === ''){
+          strEditorOrgPosition = 'N/A'
+        }
+        else {
+          strEditorOrgPosition = document.getElementById('editorPosition').value
+        }
         console.log(strEditorName, strEditorEmail, strEditorPhoneNumber, strEditorOrgPosition)
         currentStep = 1;
         showStep(currentStep);
@@ -474,27 +516,98 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const formStep2 = document.getElementById('form-step-2');
-  if (formStep2) {
+  if (formStep2) { 
     formStep2.addEventListener('submit', e => {
       e.preventDefault();
       formStep2.classList.add('was-validated');
       const errors = collectFormErrors(formStep2);
       if (errors.length === 0) {
         strCompanyName = document.getElementById('companyName').value
-        strOrgDescription = document.getElementById('orgDescription').value
-        strPhoneNumber = document.getElementById('phoneNumber').value
-        strWebsite = document.getElementById('website').value
-        strPhysicalAddress = document.getElementById('physicalAddress').value
-        strAddressCity = document.getElementById('cityAddress').value
-        strAddressState = document.getElementById('statePublic').value
-        strAddressZip = document.getElementById('zipPublic').value
-        strKeywords = getSelectedKeywords('divOuterKeywordsReg1')
-        strStartDay = document.getElementById('startDay').value
-        strStartHour = document.getElementById('startHour').value
-        strStartAMPM = document.getElementById('startAMPM').value
-        strEndHour = document.getElementById('endHour').value
-        strEndAMPM = document.getElementById('endAMPM').value
-        strLogo = document.getElementById('oldUpload').value
+        if (document.getElementById('orgDescription').value === ''){
+          strOrgDescription = strPreOrgDescription
+        }
+        else {
+          strOrgDescription = document.getElementById('orgDescription').value
+        }
+        if (document.getElementById('phoneNumber').value == ''){
+          strPhoneNumber = strPrePhoneNumber
+        }
+        else {
+          strPhoneNumber = document.getElementById('phoneNumber').value
+        }
+        if (document.getElementById('website').value == ''){
+          strWebsite = strPreWebsite
+        }
+        else {
+          strWebsite = document.getElementById('website').value
+        }
+        if (document.getElementById('physicalAddress').value == ''){
+          strPhysicalAddress = strPrePhysicalAddress
+        }
+        else {
+          strPhysicalAddress = document.getElementById('physicalAddress').value
+        }
+        if (document.getElementById('cityAddress').value == ''){
+          strAddressCity = strPreAddressCity
+        }
+        else {
+          strAddressCity = document.getElementById('cityAddress').value
+        }
+        if (document.getElementById('statePublic').value == ''){
+          strAddressState = strPreAddressState
+        }
+        else {
+          strAddressState = document.getElementById('statePublic').value
+        }
+        if (document.getElementById('zipPublic').value == ''){
+          strAddressZip = strPreAddressZip
+        }
+        else {
+          strAddressZip = document.getElementById('zipPublic').value
+        }
+        keyLength = getSelectedKeywords("divOuterKeywordsReg1")
+        if (keyLength.length == 0){
+          strKeywords = strPreKeywords
+        }
+        else {
+          strKeywords = getSelectedKeywords('divOuterKeywordsReg1')
+        }
+        if (document.getElementById('startDay').value == ''){
+          strStartDay = strPreStartDay
+        }
+        else {
+          strStartDay = document.getElementById('startDay').value
+        }
+        if (document.getElementById('startHour').value == ''){
+          strStartHour = strPreStartHour
+        }
+        else {
+          strStartHour = document.getElementById('startHour').value
+        }
+        if (document.getElementById('startAMPM').value == ''){
+          strStartAMPM = strPreStartAMPM
+        }
+        else {
+          strStartAMPM = document.getElementById('startAMPM').value
+        }
+        if (document.getElementById('endHour').value == ''){
+          strEndHour = strPreEndHour
+        }
+        else {
+          strEndHour = document.getElementById('endHour').value
+        }
+        if (document.getElementById('endAMPM').value == ''){
+          strEndAMPM = strPreEndAMPM
+        }
+        else {
+          strEndAMPM = document.getElementById('endAMPM').value
+        }
+        if (document.getElementById('oldUpload').value == ''){
+          strLogo = strPreLogo
+        }
+        else {
+          strLogo = document.getElementById('oldUpload').value
+        }
         console.log(strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strKeywords, strStartDay, strStartHour, strStartAMPM, strEndHour, strEndAMPM, strLogo)
         currentStep = 2;
         showStep(currentStep);
@@ -521,14 +634,46 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
+        count = 0
         strPrimaryName = document.getElementById('primaryName').value
         strPrimaryEmail = document.getElementById('primaryEmail').value
         strPrimaryPhoneNumber = document.getElementById('primaryPhone').value
-        strPrimaryOrgPosition = document.getElementById('primaryPosition').value
-        strSecondaryName = document.getElementById('secondaryName').value
-        strSecondaryEmail = document.getElementById('secondaryEmail').value
-        strSecondaryPhoneNumber = document.getElementById('secondaryPhone').value
-        strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
+        if (document.getElementById('primaryPosition').value == ''){
+          strPrimaryOrgPosition = 'N/A'
+        }
+        else {
+          strPrimaryOrgPosition = document.getElementById('primaryPosition').value
+        }
+        if (document.getElementById('secondaryName').value == ''){
+          strSecondaryName = strPreSecondaryName
+        }
+        else {
+          strSecondaryName = document.getElementById('secondaryName').value
+          count ++
+        }
+        if (document.getElementById('secondaryEmail').value == ''){
+          strSecondaryEmail = strPreSecondaryEmail
+        }
+        else {
+          strSecondaryEmail = document.getElementById('secondaryEmail').value
+          count ++
+        }
+        if (document.getElementById('secondaryPhone').value == ''){
+          strSecondaryPhoneNumber = strPreSecondaryPhoneNumber
+        }
+        else {
+          strSecondaryPhoneNumber = document.getElementById('secondaryPhone').value
+          count ++
+        }
+        if (document.getElementById('secondaryPosition').value == ''){
+          strSecondaryOrgPosition = strPreSecondaryOrgPosition
+        }
+        else if (document.getElementById('secondaryPosition').value == '' && count == 3) {
+          strSecondaryOrgPosition = 'N/A'
+        }
+        else {
+          strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
+        }
         console.log(strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition)
         currentStep = 3;
         showStep(currentStep);
@@ -558,41 +703,193 @@ document.addEventListener('DOMContentLoaded', () => {
       if (button.id == 'btnUpdateService') {
         errors = []
       }
+      else {
+        countyLength = getSelectedKeywords("divOuterCountiesRegAdd")
+        if (countyLength.length == 0) {
+          errors.push('Counties Offered In')
+        }
+        keyLength = getSelectedKeywords("divOuterKeywordsRegAdd")
+        if (keyLength.length == 0) {
+          errors.push('Keywords')
+        }
+      }
       if (errors.length === 0) {
-        strEditServiceName = document.getElementById('serviceNameEdit').value
-        strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
-        strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
-        strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
-        strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
-        strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
-        strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
-        strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
-        strEditServiceAddressState = document.getElementById('serviceStateEdit').value
-        strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
-        strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
-        strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
-        strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
-        strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
-        strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
-        strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
+        if (document.getElementById('serviceNameEdit').value == ''){
+          strEditServiceName = strPreEditServiceName
+        }
+        else {
+          strEditServiceName = document.getElementById('serviceNameEdit').value
+        }
+        if (document.getElementById('serviceDescriptionEdit').value == ''){
+          strEditServiceDescription = strPreEditServiceDescription
+        }
+        else {
+          strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
+        }
+        if (document.getElementById('serviceCriteriaEdit').value == ''){
+          strEditServiceElegibility = strPreEditServiceElegibility
+        }
+        else {
+          strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
+        }
+        countyLength = getSelectedKeywords("divOuterCountiesReg")
+        if (countyLength.length == 0){
+          strEditServiceCounties = strPreEditServiceCounties
+        }
+        else {
+          strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+        }
+        keyLength = getSelectedKeywords("divOuterKeywordsReg")
+        if (keyLength.length == 0){
+          strEditServiceKeywords = strPreEditServiceKeywords
+        }
+        else {
+          strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
+        }
+        if (document.getElementById('servicePhoneEdit').value == ''){
+          strEditServicePhoneNumber = strPreEditServicePhoneNumber
+        }
+        else {
+          strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
+        }
+        if (document.getElementById('servicePhysicalAddressEdit').value == ''){
+          strEditServicePhysicalAddress = strPreEditServicePhysicalAddress
+        }
+        else {
+          strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
+        }
+        if (document.getElementById('ServicecityAddressEdit').value == ''){
+          strEditServiceAddressCity = strPreEditServiceAddressCity
+        }
+        else {
+          strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
+        }
+        if (document.getElementById('serviceStateEdit').value == ''){
+          strEditServiceAddressState = strPreEditServiceAddressState
+        }
+        else {
+          strEditServiceAddressState = document.getElementById('serviceStateEdit').value
+        }
+        if (document.getElementById('serviceZipEdit').value == ''){
+          strEditServiceAddressZip = strPreEditServiceAddressZip
+        }
+        else {
+          strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
+        }
+        if (document.getElementById('serviceWebisteEdit').value == ''){
+          strEditServiceWebsite = strPreEditServiceWebsite
+        }
+        else {
+          strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
+        }
+        if (document.getElementById('serviceStartDayEdit').value == ''){
+          strEditServiceStartDay = strPreEditServiceStartDay
+        }
+        else {
+          strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
+        }
+        if (document.getElementById('serviceStartHourEdit').value == ''){
+          strEditServiceStartHour = strPreEditServiceStartHour
+        }
+        else {
+          strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
+        }
+        if (document.getElementById('serviceStartAMPMEdit').value == ''){
+          strEditServiceStartAMPM = strPreEditServiceStartAMPM
+        }
+        else {
+          strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
+        }
+        if (document.getElementById('serviceEndHourEdit').value == ''){
+          strEditServiceEndHour = strPreEditServiceEndHour
+        }
+        else {
+          strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
+        }
+        if (document.getElementById('serviceEndAMPMEdit').value == ''){
+          strEditServiceEndAMPM = strPreEditServiceEndAMPM
+        }
+        else {
+          strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
+        }
         console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
         
         strAddServiceName = document.getElementById('serviceNameAdd').value
         strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
-        strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        if (document.getElementById('serviceCriteriaAdd').value === ''){
+          strAddServiceElegibility = 'N/A'
+        }
+        else {
+          strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        }
         strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
         strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
-        strAddServicePhoneNumber = document.getElementById('servicePhone1').value
-        strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
-        strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
-        strAddServiceAddressState = document.getElementById('serviceStateAdd').value
-        strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
-        strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
-        strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
-        strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
-        strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
-        strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
-        strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
+        if (document.getElementById('servicePhone1').value === ''){
+          strAddServicePhoneNumber = strPhoneNumber
+        }
+        else {
+          strAddServicePhoneNumber = document.getElementById('servicePhone1').value
+        }
+        if (document.getElementById('serviceAddressStreet1').value === ''){
+          strAddServicePhysicalAddress = strPhysicalAddress
+        }
+        else {
+          strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
+        }
+        if (document.getElementById('ServicecityAddressAdd').value === ''){
+          strAddServiceAddressCity = strAddressCity
+        }
+        else {
+          strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
+        }
+        if (document.getElementById('serviceStateAdd').value === ''){
+          strAddServiceAddressState = strAddressState
+        }
+        else {
+          strAddServiceAddressState = document.getElementById('serviceStateAdd').value
+        }
+        if (document.getElementById('serviceZipAdd').value === ''){
+          strAddServiceAddressZip = strAddressZip
+        }
+        else {
+          strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
+        }
+        if (document.getElementById('serviceWebisteAdd').value === ''){
+          strAddServiceWebsite = 'N/A'
+        }
+        else {
+          strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
+        }
+        if (document.getElementById('serviceStartDayAdd').value === ''){
+          strAddServiceStartDay = strStartDay
+        }
+        else {
+          strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
+        }
+        if (document.getElementById('serviceStartHourAdd').value === ''){
+          strAddServiceStartHour = strStartHour
+        }
+        else {
+          strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
+        }
+        if (document.getElementById('serviceStartAMPMAdd').value === ''){
+          strAddServiceStartAMPM = strStartAMPM
+        }
+        else {
+          strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
+        }
+        if (document.getElementById('serviceEndHourAdd').value === ''){
+          strAddServiceEndHour = strEndHour
+        }
+        else {
+          strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
+        }
+        if (document.getElementById('serviceEndAMPMAdd').value === ''){
+          strAddServiceEndAMPM = strEndAMPM
+        }
+        else {
+          strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
+        }
         console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
 
         Swal.fire({
@@ -1092,3 +1389,55 @@ function getSelectedKeywords(containerId) {
 //   }
 // });
 });
+
+async function addService() {
+  try{
+    let data = {
+        "organization": {
+          "id": "NS123",
+          "company_name": "Example Org",
+          "organization_description": "Org description",
+          "phone": "(931) 555-1111",
+          "website": "https://example.org",
+          "address1": "123 Main St",
+          "city_public": "Cookeville",
+          "state_public": "TN",
+          "zip_public": "38501",
+          "primary_email": "contact@example.org"
+        },
+        "service": {
+          "company_id": "NS123",
+          "service_name": "Example Service",
+          "service_description": "Service description",
+          "service_criteria": "Eligibility notes",
+          "service_phone": "(931) 555-2222",
+          "service_address_street": "456 Oak Ave",
+          "service_city": "Cookeville",
+          "service_state": "TN",
+          "service_zip": "38501",
+          "service_counties": ["Putnam"],
+          "service_keywords": ["Food"]
+        } 
+      }
+    const response = await fetchApi(`/request-create-service`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', // Sending JSON
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+
+  } catch (objError){
+    console.log('Error sending request', objError)
+  }
+}
+//addService()
