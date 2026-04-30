@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/style.css"/>
+  <title>Service Referral Form</title>
+  <link rel="icon" type="image" href="Gov-AI/assets/images/cropped-Seal_JPEG-32x32.jpg">
+</head>
+<body class="white">
+  <div id="navbar"></div>
+  <main>
+    <div class="overflow-visible ontainer row">
+        <div class="d-flex dark_navy p-4">
+            <h1 class="ps-md-4 fw-bold white">Service Update Review</h1>               
+        </div>
+        <!-- new information -->
+        <div id="formReviewNewInformation" class="col-7  p-5">
+            <h2 class="mb-4 fw-bold">New Information</h2>
+
+            <!-- ORGANIZATION PUBLIC -->
+            <h4 class="fw-light">Organization Information (Public)</h4>
+
+            <label for="newCompanyName">Company Name</label>
+            <input id="newCompanyName" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled data-name="Company Name Input">
+            <label for="newOrgDescription">Organization Description</label>
+            <textarea id="newOrgDescription" class="form-control mb-2" placeholder="" disabled data-name="Organization Description Input"></textarea>
+            <label for="newPhone">Phone</label>
+            <input id="newPhone" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newWebsite">Website</label>
+            <input id="newWebsite" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newPhysicalAddress">Address</label>
+            <input id="newPhysicalAddress" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newCityPublic">City</label>
+            <input id="newCityPublic" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newStatePublic">State</label>
+            <input id="newStatePublic" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newZipPublic">Zip</label>
+            <input id="newZipPublic" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newOrgKeywords">Keywords (comma separated)</label>
+            <input id="newOrgKeywords" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newOrgHours">Hours of Operation</label>
+            <textarea id="newOrgHours" class="form-control mb-3" placeholder="" aria-label="Disabled input example" disabled></textarea>
+            <label for="newLogoUpload">Logo Upload</label>
+            <input type="file" id="newLogoUpload" class="form-control mb-4" aria-label="Disabled input example" disabled>
+
+
+            <!-- PRIMARY CONTACT -->
+            <h4 class="fw-light">Primary Contact</h4>
+
+            <label for="newPrimaryName">Name</label>
+            <input id="newPrimaryName" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newPrimaryEmail">Email</label>
+            <input id="newPrimaryEmail" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newPrimaryPhone">Phone</label>
+            <input id="newPrimaryPhone" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newPrimaryPosition">Position</label>
+            <input id="newPrimaryPosition" class="form-control mb-4" placeholder="Program Director" aria-label="Disabled input example" disabled>
+
+            <!-- SECONDARY CONTACT -->
+            <h4 class="fw-light">Secondary Contact</h4>
+
+            <label for="newSecondaryName">Name</label>
+            <input id="newSecondaryName" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newSecondaryEmail">Email</label>
+            <input id="newSecondaryEmail" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newSecondaryPhone">Phone</label>
+            <input id="newSecondaryPhone" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newSecondaryPosition">Position</label>
+            <input id="newSecondaryPosition" class="form-control mb-4" placeholder="" aria-label="Disabled input example" disabled>
+
+            <!-- SERVICE -->
+            <h4 class="fw-light">Service</h4>
+
+            <label for="newServiceName">Service Name</label>
+            <input id="newServiceName" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceDescription">Service Description</label>
+            <textarea id="newServiceDescription" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled></textarea>
+            <label for="newServiceCriteria">Criteria</label>
+            <input id="newServiceCriteria" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceCounties">Counties (comma separated)</label>
+            <input id="newServiceCounties" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceKeywords">Keywords (comma separated)</label>
+            <input id="newServiceKeywords" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServicePhone1">Service Phone</label>
+            <input id="newServicePhone1" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceAddressStreet1">Service Address</label>
+            <input id="newServiceAddressStreet1" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceCity1">City</label>
+            <input id="newServiceCity1" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceState1">State</label>
+            <input id="newServiceState1" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceZip1">Zip</label>
+            <input id="newServiceZip1" class="form-control mb-2" placeholder="" aria-label="Disabled input example" disabled>
+            <label for="newServiceHours">Service Hours</label>
+            <textarea id="newServiceHours" class="form-control mb-4" placeholder="" aria-label="Disabled input example" disabled></textarea>
+        </div>
+    </div>
+    <!-- UPDATE BUTTON - onclick="logFormData()" -->
+    <button id="btnUpdateDatabase" class="d-inline-flex btn submit-btn mb-4 ms-5">Update Information</button>
+</main>                 
+<div id="footer" data-name="Page Footer"></div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    fetch('../../partials/footer.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('footer').innerHTML = data);
+    fetch('../../partials/navbar.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('navbar').innerHTML = data);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../js/emailNewService.js" type="module"></script>
+<script src="../../js/navbar.js"></script>
+</body>
+</html>
