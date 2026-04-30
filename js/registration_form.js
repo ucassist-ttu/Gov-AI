@@ -822,23 +822,23 @@ function logFormData() { // collects form data and returns unique ID for email l
           "organization_hours": `${serviceArray[11]}`,
         } 
       }
-    console.log(data)
-  //   const response = await fetchApi(`/request-create-service`, {
-  //     method: 'POST',
-  //     headers: {
-  //         'Content-Type': 'application/json', // Sending JSON
-  //         'Accept': 'application/json'
-  //     },
-  //     body: JSON.stringify(data)
-  //   });
+    // console.log(data)
+    const response = await fetchApi(`/request-create-service`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', // Sending JSON
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
 
-  //   if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //   }
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-  //   // Parse the JSON response
-  //   const result = await response.json();
-  //   console.log('Data sent successfully:', result);
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
 
   } catch (objError){
     console.log('Error sending request', objError)
