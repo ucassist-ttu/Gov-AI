@@ -106,7 +106,6 @@ function createPills(keyword, fullword){
   img.alt = fullword;
   img.style.maxHeight = "100px";
   img.style.objectFit = "cover";
-  // img.src = getImgSrc(keyword);
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
 
 
@@ -120,7 +119,6 @@ function createPills(keyword, fullword){
   // makes card clickable
   const btn = document.createElement("a");
   btn.className = "stretched-link";
-  // btn.href = "#";
 
   col.appendChild(img);
   body.appendChild(content);
@@ -314,10 +312,6 @@ function isInCounty(service){
   let exCounty
 
   let userSelectedCounty = sessionStorage.getItem("currCounty")
-
-  // if(!strCounties.includes(userSelectedCounty)){
-  //   return;
-  // }
 
   arrCounties.forEach(county => {
     if (count < 1){ // displays max three counties

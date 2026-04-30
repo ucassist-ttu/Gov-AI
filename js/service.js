@@ -264,12 +264,6 @@ function printRecomendedServices () {
     document.querySelector(`#btnService${arrRecomendedServices[0].ID}`).addEventListener('click', () => {
         window.location.href = `service.html?id=${arrRecomendedServices[0].ID}`;
     });
-    // document.querySelector(`#btnService${arrRecomendedServices[1].ID}`).addEventListener('click', () => {
-    //     window.location.href = `service.html?id=${arrRecomendedServices[1].ID}`;
-    // });
-    // document.querySelector(`#btnService${arrRecomendedServices[2].ID}`).addEventListener('click', () => {
-    //     window.location.href = `service.html?id=${arrRecomendedServices[2].ID}`;
-    // });
 }
 
 const stars = document.querySelectorAll('.star');
@@ -280,7 +274,6 @@ stars.forEach(star => {
   star.addEventListener('click', function () {
     const value = this.getAttribute('data-value');
     ratingValue.value = value;
-    console.log(value)
     ratingText.textContent = "Rating: " + value;
 
     stars.forEach(s => s.classList.remove('selected'));
