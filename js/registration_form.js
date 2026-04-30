@@ -625,7 +625,7 @@ fetchAndPopulateAllData();
 
 function logFormData() { // collects form data and returns unique ID for email linking
   const orgData = {
-    id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
+    // id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
 
     // --- ORG PUBLIC ---
     company_name: document.querySelector('[data-name="Company Name Input"]')?.value,
@@ -648,6 +648,8 @@ function logFormData() { // collects form data and returns unique ID for email l
     secondary_phone: document.getElementById("secondaryPhone")?.value,
     secondary_position: document.getElementById("secondaryPosition")?.value,
   }
+
+  // IF ID MADE IN DATABASE THEN ANOTHER FETCH FUNCTION TO GET ORGANIZATION ID AND USE IT AS FOREIGN KEY FOR SERVICE
 
   const serviceData = {
     company_id: orgData.id, // Foreign Key - Link service to org using org ID
@@ -672,8 +674,51 @@ function logFormData() { // collects form data and returns unique ID for email l
   console.log("Service Data to be sent to DB:", serviceData);
   console.log("============================");
 
-  addOrgToPendingDB(orgData) // sends to database
-  addServiceToPendingDB(serviceData) 
+
+  // sends to database
+  // addOrgToPendingDB(orgData) 
+  // addServiceToPendingDB(serviceData) 
+
+  fetch(`/api/index.php/route=request-create-service`,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+    organization: orgData,
+    // {
+    //   id: "NS123",
+    //   company_name: "Example Org",
+    //   organization_description: "Org description",
+    //   phone: "(931) 555-1111",
+    //   website: "https://example.org",
+    //   address1: "123 Main St",
+    //   city_public: "Cookeville",
+    //   state_public: "TN",
+    //   zip_public: "38501",
+    //   primary_email: "contact@example.org"
+    // },
+    service: serviceData
+    // {
+    //   company_id: "NS123",
+    //   service_name: "Example Service",
+    //   service_description: "Service description",
+    //   service_criteria: "Eligibility notes",
+    //   service_phone: "(931) 555-2222",
+    //   service_address_street: "456 Oak Ave",
+    //   service_city: "Cookeville",
+    //   service_state: "TN",
+    //   service_zip: "38501",
+    //   service_counties: ["Putnam"],
+    //   service_keywords: ["Food"]
+    // }
+  })
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Pending request created:", data);
+  });
+
   return data.id; // Return the new ID for email linking
 }
 

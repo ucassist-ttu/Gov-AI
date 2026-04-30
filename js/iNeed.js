@@ -113,6 +113,7 @@ function createPills(keyword, fullword){
   img.style.objectFit = "cover";
   // img.src = getImgSrc(keyword);
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
+  
 
 
   const body = document.createElement("div");
@@ -162,7 +163,7 @@ function createCard(service, category) {
 
   // replaces missing or invalid photos with category placeholder photo
   if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
-    imgPhoto = getImgSrc(category);
+    imgPhoto =`assets/images/iNeed/iNeed${category}.jpg`;
   }
 
 
@@ -179,12 +180,6 @@ function createCard(service, category) {
           <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
         </div>
       </div>`;
-
-      // col.querySelector('.service button').addEventListener('click', () => {
-      //   serveID = service.ID
-      //   callServicePage(serveID)
-      // })
-
   
   return col;
 }
@@ -314,11 +309,11 @@ function isInCounty(service){
 
 
   if(strCounties.includes(userSelectedCounty)){
-    if (strCounties.includes("all counties")){
-      console.log("[isInCounty] all counties:", strCounties)
+    if (strCounties.length() == 14){
+      console.log("[isInCounty] all counties(",strCounties.length(),"):", strCounties)
       return false;
     }
-    console.log("[isInCounty] NOT all counties:", strCounties)
+    console.log("[isInCounty] NOT all counties(",strCounties.length(),"):",strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){

@@ -1,4 +1,3 @@
-import { addReferral } from "../backend/fake_backend/dbReferrals.js";
 //CHANGE THESE IDs AS SOON
 emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
 
@@ -8,7 +7,6 @@ async function addReferralToDB() {
     newFirstName: document.getElementById('referFirstName').value,
     newLastName: document.getElementById('referLastName').value,
     newEmail: document.getElementById("referEmail").value,
-    newPhone: document.getElementById("referPhone").value,
     newMessage: document.getElementById("referMessage").value
   }
   addReferral(formData);
@@ -43,73 +41,86 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return errors;
   }
-  const phoneInput = document.getElementById('referPhone');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', (e) => {
-      let value = e.target.value.replace(/\D/g, '');
-      if (value.length > 0) {
-        if (value.length <= 3) {
-          value = `(${value}`;
-        } else if (value.length <= 6) {
-          value = `(${value.substring(0, 3)}) ${value.substring(3)}`;
-        } else {
-          value = `(${value.substring(0, 3)}) ${value.substring(3, 6)}-${value.substring(6, 10)}`;
-        }
-      }
-      e.target.value = value;
-    });
-  }
+  console.log("i work")
   document.getElementById('referSubmit').addEventListener('click', async (e) => {
--    e.preventDefault();
+    e.preventDefault();
     form.classList.add('was-validated');
     const errors = collectFormErrors(form);
+    console.log
     if (errors.length === 0) {
       try{
+        //SEND EMAIL JS
+        sendDBAndEmail();
 
-        await addReferralToDB()
-
-        swal("Success", "Service referral form submitted successfully!", "success");
-        form.reset();
+        //sweet alert for successful sending
+        Swal.fire({
+          title: "Missing Information",
+          icon: "error",
+          html: `
+            <div style="text-align: left;">
+              Please complete the following:<br><br>
+            </div>
+          `
+        });
+        // form.reset();
         form.classList.remove('was-validated');
       } catch (err) {
-        swal("Error", "Something went wrong saving the referral.", "error");
         console.error(err);
       }
     } else {
       const errorList = errors.map(err => `• ${err}`).join('\n');
-      swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
-      // const firstInvalid = form.querySelector(':invalid');
-      // if (firstInvalid) firstInvalid.focus();
+      //sweet alert for unsucessful sending
+      Swal.fire({
+        title: "Missing Information", 
+        content: `Please complete the following:\n\n${errorList}`,
+        html: `<div style="text-align: left;">error</div>`
+      });
     }
   });
 });
 
-//SEND EMAIL JS
-console.log("about to send emailjs")
-sendEmail();
-console.log("emailjs sent")
+const getValue = (id) => {
+  const value = document.getElementById(id)?.value.trim();
+  return value === "n/a" ? null : value;
+};
 
+async function sendDBAndEmail(){
+  try{
+    console.log(document.getElementById('referLastName').value)
+    const data = {
+      firstName: getValue("referFirstName"),
+      lastName: getValue("referLastName"),
+      email: getValue("referEmail"),
+      message: getValue("referMessage"),
+      phone: ""
+    };
+    //sending to database
+    console.log("fN: ", data)
+    const response = await fetch("http://s1092595647.onlinehome.us/api/index.php?route=/referral", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    console.log(response)
 
-function sendEmail(){
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
 
-  emailjs.send(
-    "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
-    "template_ad1m3hq", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-    {
-      first_name: document.getElementById('referFirstName').value,
-      last_name: document.getElementById('referLastName').value,
-      email: document.getElementById("referEmail").value,
-      phone: document.getElementById("referPhone").value,
-      message: document.getElementById("referMessage").value
-    }
-  );
+    // sending to emailJS to construct email
+    const emailResponse = await emailjs.send(
+      "service_9byagl9",
+      "template_ad1m3hq",{
+      first_name: result.firstName,
+      last_name: result.lastName,
+      email: result.email,
+      phone_number: result.phone,
+      message: result.message,
+      id: result.id,
+    });
+  }catch(err){
+    console.error("ERROR:", err);
+  }
 }
-
-// emailjs.send("service_9byagl9","template_ad1m3hq",{
-// first_name: "Ashley",
-// last_name: "Porter",
-// email: "Ashley@gmail.com",
-// phone_number: 1234567890,
-// message: "hellloooo",
-// id: 101,
-// });

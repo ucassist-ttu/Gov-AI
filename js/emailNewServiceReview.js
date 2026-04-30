@@ -1,14 +1,15 @@
-import {getServiceForReview, servicesDB } from "../backend/fake_backend/dbNewServices.js";
-import { getOrgForService } from "../backend/fake_backend/dbOrganization.js";
+// ASK FOR CHANGED ENDPOINTS - no more pending organization and services
 
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get("id");
-console.log(servicesDB)
 
-// CALL ENDPOINT TO UPDATE DATABASE
+// CALL ENDPOINT TO ADD TO DATABASE
 document.addEventListener('DOMContentLoaded', () => {
   // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
-  getOrgForService(serviceId).then((organization) => {
+  // getOrgForService(serviceId).then((organization) => {
+  fetch(`/api/index.php?route=pending-organization?uuid=${serviceId}`)
+  .then(res => res.json())
+  .then(organization => {
     console.log("Found organization:", organization);
 
     document.getElementById('newCompanyName').value = organization.company_name;
@@ -33,21 +34,43 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('newSecondaryPosition').value = organization.secondary_position;
   })
 
-  getServiceForReview(serviceId).then((service) => {
-    document.getElementById('newServiceName').value = service.service_name;
-    document.getElementById('newServiceDescription').value = service.service_description;
-    document.getElementById('newServiceCriteria').value = service.service_criteria;
-    document.getElementById('newServiceCounties').value = service.service_county;
-    document.getElementById('newServiceKeywords').value = service.service_keywords;
-    document.getElementById('newServicePhone1').value = service.service_phone;
-    document.getElementById('newServiceAddressStreet1').value = service.service_address_street;
-    document.getElementById('newServiceCity1').value = service.service_city;
-    document.getElementById('newServiceState1').value = service.service_state;
-    document.getElementById('newServiceZip1').value = service.service_zip;
-    document.getElementById('newServiceHours').value = service.service_phone;
-    document.getElementById('newLogoFile').value = service.logo_file;});
-  
-  })
+  // getServiceForReview(serviceId).then((service) => {
+  fetch(`/api/index.php?route=pending-service?uuid=${serviceId}`)
+    .then(res => res.json())
+    .then(service => {
+      document.getElementById('newServiceName').value = service.service_name;
+      document.getElementById('newServiceDescription').value = service.service_description;
+      document.getElementById('newServiceCriteria').value = service.service_criteria;
+      document.getElementById('newServiceCounties').value = service.service_county;
+      document.getElementById('newServiceKeywords').value = service.service_keywords;
+      document.getElementById('newServicePhone1').value = service.service_phone;
+      document.getElementById('newServiceAddressStreet1').value = service.service_address_street;
+      document.getElementById('newServiceCity1').value = service.service_city;
+      document.getElementById('newServiceState1').value = service.service_state;
+      document.getElementById('newServiceZip1').value = service.service_zip;
+      document.getElementById('newServiceHours').value = service.service_phone;
+      document.getElementById('newLogoFile').value = service.logo_file;
+  });
+
+  // adds service to database once aprove button is clicked
+  document.getElementById('btnUpdateDatabase').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try{
+
+      // await addServiceToServicesDB(serviceId)
+
+      // marks services as ACTIVE
+      await fetch(`/api/index.php/route=create-service`)
+
+      swal("Success", "Service(s) submitted successfully!", "success");
+      form.reset();
+      form.classList.remove('was-validated');
+    } catch (err) {
+      swal("Error", "Something went wrong saving the service(s).", "error");
+      console.error(err);
+    }
+  });
+})
 
 
 
