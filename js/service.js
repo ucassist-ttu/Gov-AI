@@ -156,6 +156,7 @@ async function getServiceInformaion () {
         }
         strDiv += `<h3 id="btnRelatedServices" class="mb-1"><b>More Like This</b><i class="bi bi-caret-down-fill"></i></h3>`
         strDiv += `<div id="related_services" style="display: none">`
+        strDiv += "<p>Loading services...</p>"
         strDiv += `</div>`
         strDiv += `</div>`
         document.querySelector('#divService').innerHTML += strDiv
@@ -233,7 +234,7 @@ function printRecomendedServices () {
     strDiv+= `<div class="col-12 col-md-3">`
     strDiv += `<h5>${arrRecomendedServices[0].NameOfService}</h5>`
     strDiv += `<h6>Offered by: ${arrRecomendedServices[0].OrganizationName}</h6>`
-    strDiv += `<button id="btnService${arrRecomendedServices[0].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<button id="btnService${arrRecomendedServices[0].ID}" onclick="fetchApi('/add-monthly-view?service_id=${arrRecomendedServices[0].ID}'); window.location.href='/html/pages/service.html?id=${arrRecomendedServices[0].ID}';">Learn More <i class="bi bi-caret-right-fill"></i></button>`
     strDiv += `<hr />`
     strDiv += `</div>`
 
@@ -244,7 +245,7 @@ function printRecomendedServices () {
     strDiv +=`<div class="col-12 col-md-3">`
     strDiv += `<h5>${arrRecomendedServices[1].NameOfService}</h5>`
     strDiv += `<h6>Offered by: ${arrRecomendedServices[1].OrganizationName}</h6>`
-    strDiv += `<button id="btnService${arrRecomendedServices[1].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<button id="btnService${arrRecomendedServices[1].ID}" onclick="fetchApi('/add-monthly-view?service_id=${arrRecomendedServices[1].ID}'); window.location.href='/html/pages/service.html?id=${arrRecomendedServices[1].ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>`
     strDiv += `<hr />`
     strDiv += `</div>`
 
@@ -255,15 +256,11 @@ function printRecomendedServices () {
     strDiv +=`<div class="col-12 col-md-3">`
     strDiv += `<h5>${arrRecomendedServices[2].NameOfService}</h5>`
     strDiv += `<h6>Offered by: ${arrRecomendedServices[2].OrganizationName}</h6>`
-    strDiv += `<button id="btnService${arrRecomendedServices[2].ID}">Learn More <i class="bi bi-caret-right-fill"></i></button>`
+    strDiv += `<button id="btnService${arrRecomendedServices[2].ID}" onclick="fetchApi('/add-monthly-view?service_id=${arrRecomendedServices[2].ID}'); window.location.href='/html/pages/service.html?id=${arrRecomendedServices[2].ID}';">Learn More <i class="bi bi-caret-right-fill"></i></button>`
     strDiv += `</div>`
     strDiv += `</div>`
     strDiv += `</div>`
-    document.querySelector('#related_services').innerHTML += strDiv
-
-    document.querySelector(`#btnService${arrRecomendedServices[0].ID}`).addEventListener('click', () => {
-        window.location.href = `service.html?id=${arrRecomendedServices[0].ID}`;
-    });
+    document.querySelector('#related_services').innerHTML = strDiv  
 }
 
 const stars = document.querySelectorAll('.star');
