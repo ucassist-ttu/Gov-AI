@@ -13,21 +13,23 @@
 <body>
     <div id="navbar" data-name="Navigation Bar"></div>
     
-    <main class="" data-name="AI Results Main Content">
-        <div class="px-5" data-name="AI Results Page Container">
-            <div class="d-flex align-items-center justify-content-end mb-5" data-name="Top Action Buttons">
-                <div id="btnPrintAIResults" data-name="Print Results Button">
-                    <a href="#btnPrintPage" class="btn btn-link mt-5 text-dark text-decoration-none" data-name="Print Page Link">
-                        <i class="bi bi-printer-fill " data-name="Print Icon"></i>
-                        Print Page
-                    </a>
-                </div>
-            </div>
+<main class="info-page" data-name="AI Results Main Content">
+    <div id="divService" class="px-5 info-print" data-name="AI Results Page Container">
+        <div class="d-flex align-items-center justify-content-end mb-5 info-hidden" data-name="Top Action Buttons">
+              <div id="btnPrintAIResults" data-name="Print Results Button">
+                  <a href="#btnPrintPage" class="btn btn-link mt-5 text-dark text-decoration-none" data-name="Print Page Link">
+                      <i class="bi bi-printer-fill " data-name="Print Icon"></i>
+                      Print Page
+                  </a>
+              </div>
+          </div>
+          <div class="service-header">
             <h2 id="txtHeader" class="mb-5" data-name="Results Introduction Text">
                 Based on what you told us, here are three recommended resources...
             </h2>
+          </div>
             <!-- AI suggestions -->
-            <div id="suggestedResources" class="" data-name="Recommended Resources List"></div>
+          <div id="suggestedResources" class="" data-name="Recommended Resources List"></div>
         
         </div>
     </main>
