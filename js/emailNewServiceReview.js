@@ -7,7 +7,7 @@ const serviceId = params.get("id");
 document.addEventListener('DOMContentLoaded', () => {
   // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
   // getOrgForService(serviceId).then((organization) => {
-  fetch(`/api/index.php?route=pending-organization?uuid=${serviceId}`)
+  const orgResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=pending-organization?uuid=${serviceId}`)
   .then(res => res.json())
   .then(organization => {
     console.log("Found organization:", organization);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // getServiceForReview(serviceId).then((service) => {
-  fetch(`/api/index.php?route=pending-service?uuid=${serviceId}`)
+  const serviceResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=pending-service?uuid=${serviceId}`)
     .then(res => res.json())
     .then(service => {
       document.getElementById('newServiceName').value = service.service_name;
@@ -52,6 +52,34 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('newLogoFile').value = service.logo_file;
   });
 
+  try{
+    console.log(document.getElementById('referLastName').value)
+    const data = {
+      firstName: getValue("referFirstName"),
+      lastName: getValue("referLastName"),
+      email: getValue("referEmail"),
+      message: getValue("referMessage"),
+      phone: ""
+    };
+    
+    //sending to database
+    console.log("fN: ", data)
+    const response = await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    console.log(response)
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+  }catch(err){
+    console.error("ERROR:", err);
+  }
+
   // adds service to database once aprove button is clicked
   document.getElementById('btnUpdateDatabase').addEventListener('click', async (e) => {
     e.preventDefault();
@@ -60,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // await addServiceToServicesDB(serviceId)
 
       // marks services as ACTIVE
-      await fetch(`/api/index.php/route=create-service`)
+      await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`)
 
       swal("Success", "Service(s) submitted successfully!", "success");
       form.reset();
@@ -72,10 +100,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })
 
+// async function sendDBAndEmail(){
+//   try{
+//     console.log(document.getElementById('referLastName').value)
+//     const data = {
+//       firstName: getValue("referFirstName"),
+//       lastName: getValue("referLastName"),
+//       email: getValue("referEmail"),
+//       message: getValue("referMessage"),
+//       phone: ""
+//     };
+//     //sending to database
+//     console.log("fN: ", data)
+//     const response = await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify(data)
+//     })
+//     console.log(response)
+
+//     // Parse the JSON response
+//     const result = await response.json();
+//     console.log('Data sent successfully:', result);
+//   }catch(err){
+//     console.error("ERROR:", err);
+//   }
+// }
 
 
 
-
+    // console.log(data)
+    // const response = await fetchApi("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-service", {
+    //   method: 'POST',
+    //   headers: {
+    //       'Content-Type': 'application/json', // Sending JSON
+    //       'Accept': 'application/json'
+    //   },
+    //   body: JSON.stringify(data)
+    // });
 
 
 

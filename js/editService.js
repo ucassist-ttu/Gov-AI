@@ -1,3 +1,6 @@
+// WORKS FINE DONT TOUCH
+// NVM CHANGE TO DYNAMICALLY GETTING VALUES FROM DB
+
 let strEditorName
 let strEditorEmail
 let strEditorPhoneNumber
@@ -804,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('serviceWebisteEdit').value = ''
           document.getElementById('updateServiceHours').value = ''
           document.getElementById('selectService').value = ''
-          document.getElementById("form-step-4").reset();
+          // document.getElementById("form-step-4").reset();
 
           document.getElementById('serviceNameAdd').value = ''
           document.getElementById('serviceDescriptionAdd').value = ''
@@ -879,80 +882,45 @@ document.addEventListener('DOMContentLoaded', () => {
     btns.classList.add("d-flex");
   });
 
-  document.getElementById('#sbtnSubmitService')?.addEventListener('click', (e) => {
+  document.getElementById('#btnSubmitService')?.addEventListener('click', (e) => {
     e.preventDefault();
     const errors = collectFormErrors(formStep4);
       if (errors.length === 0) {
-        const dataOrg = {
-          company_name: document.getElementById('companyName')?.value || "",
-          organization_description: document.getElementById('organizationDescription')?.value || "",
-          phone: document.getElementById('phone')?.value || "",
-          website: document.getElementById('website')?.value || "",
-          address1: document.getElementById('physicalAddress')?.value || "",
-          city_public: document.getElementById('cityPublic')?.value || "",
-          state_public: document.getElementById('statePublic')?.value || "",
-          zip_public: document.getElementById('zipPublic')?.value || "",
-
-          primary_name: document.getElementById('primaryName')?.value || "",
-          primary_email: document.getElementById('primaryEmail')?.value || "",
-          primary_phone: document.getElementById('primaryPhone')?.value || "",
-          primary_position: document.getElementById('primaryPosition')?.value || "",
-
-          secondary_name: document.getElementById('secondaryName')?.value || "",
-          secondary_email: document.getElementById('secondaryEmail')?.value || "",
-          secondary_phone: document.getElementById('secondaryPhone')?.value || "",
-          secondary_position: document.getElementById('secondaryPosition')?.value || ""
-        };
-        // strEditServiceName = document.getElementById('serviceNameEdit').value
-        // strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
-        // strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
-        // strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
-        // strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
-        // strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
-        // strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
-        // strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
-        // strEditServiceAddressState = document.getElementById('serviceStateEdit').value
-        // strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
-        // strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
-        // strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
-        // strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
-        // strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
-        // strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
-        // strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
-        // console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
+        strEditServiceName = document.getElementById('serviceNameEdit').value
+        strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
+        strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
+        strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+        strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
+        strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
+        strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
+        strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
+        strEditServiceAddressState = document.getElementById('serviceStateEdit').value
+        strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
+        strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
+        strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
+        strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
+        strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
+        strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
+        strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
+        console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
         
-        const dataService = {
-          company_id: dataOrg.company_id, // MUST match organization.id
-          service_name: document.getElementById('serviceNameAdd')?.value || "",
-          service_description: document.getElementById('serviceDescriptionAdd')?.value || "",
-          service_criteria: document.getElementById('serviceCriteriaAdd')?.value || "",
-          service_phone: document.getElementById('servicePhone1')?.value || "",
-
-          service_address_street: document.getElementById('serviceAddressStreet1')?.value || "",
-          service_city: document.getElementById('ServicecityAddressAdd')?.value || "",
-          service_state: document.getElementById('serviceStateAdd')?.value || "",
-          service_zip: document.getElementById('serviceZipAdd')?.value || "",
-
-          service_counties: getSelectedKeywords("divOuterCountiesRegAdd") || [],
-          service_keywords: getSelectedKeywords("divOuterKeywordsRegAdd") || []
-        }
-        // strAddServiceName = document.getElementById('serviceNameAdd').value
-        // strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
-        // strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
-        // strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
-        // strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
-        // strAddServicePhoneNumber = document.getElementById('servicePhone1').value
-        // strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
-        // strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
-        // strAddServiceAddressState = document.getElementById('serviceStateAdd').value
-        // strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
-        // strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
-        // strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
-        // strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
-        // strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
-        // strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
-        // strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
-        // console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
+        strAddServiceName = document.getElementById('serviceNameAdd').value
+        strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
+        strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
+        strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
+        strAddServicePhoneNumber = document.getElementById('servicePhone1').value
+        strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
+        strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
+        strAddServiceAddressState = document.getElementById('serviceStateAdd').value
+        strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
+        strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
+        strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
+        strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
+        strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
+        strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
+        strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
+        console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
 
         //SENDING TO THE DATABASE
         try{
@@ -970,17 +938,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const result = await response.json();
           console.log('Data sent successfully:', result);
 
-          // sending to emailJS to construct email
-          const emailResponse = await emailjs.send(
-            "service_9byagl9",
-            "template_ad1m3hq",{
-            first_name: result.firstName,
-            last_name: result.lastName,
-            email: result.email,
-            phone_number: result.phone,
-            message: result.message,
-            id: result.id,
-          });
         }catch(err){
           console.error("ERROR:", err);
         }
@@ -1005,7 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('serviceEndHourEdit').value = ''
           document.getElementById('serviceEndAMPMEdit').value = ''
           document.getElementById('selectService').value = ''
-          document.getElementById("form-step-4").reset();
+          // document.getElementById("form-step-4").reset();
 
           document.getElementById('serviceNameAdd').value = ''
           document.getElementById('serviceDescriptionAdd').value = ''
@@ -1381,8 +1338,10 @@ async function addService(orgArray, serviceArray) {
           "organization_hours": `${serviceArray[11]}`,
         } 
       }
-    // console.log(data)
-    const response = await fetchApi(`/request-create-service`, {
+
+    console.log(data)
+
+    const response = await fetchApi("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-service", {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json', // Sending JSON
@@ -1390,14 +1349,24 @@ async function addService(orgArray, serviceArray) {
       },
       body: JSON.stringify(data)
     });
+    
+    console.log("RESPONSE: ",response)
 
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    // sending to emailJS to construct email
+    const emailResponse = await emailjs.send("service_9byagl9","template_204azdh",{
+      type: "Edit",
+      orgID: response.payload.organization.id,
+      serviceID: response.payload.organization.id,
+    })
 
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
+    console.log('Email sent successfully:', emailResponse);
 
   } catch (objError){
     console.log('Error sending request', objError)

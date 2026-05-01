@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const formStep3 = document.getElementById('form-step-3');
   if (formStep3) {
-    formStep3.addEventListener('submit', e => {
+    formStep3.addEventListener('submit', async (e) => {
       e.preventDefault();
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
@@ -485,9 +485,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orgArray = [strOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
         serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
-        addService(orgArray, serviceArray)
+        
+        let orgID = await addOrganization(orgArray)
+        console.log("[ln490] orgID: ", orgID)
+        console.log("[491] ORG PAYLOAD:", orgID.payload);
+        addService(orgID.id, serviceArray)
+
+
+
+        // logFormData
         Swal.fire({
-          title: "Success",
+          title: "Success Final",
           text: "Your request has been submitted. It is pending review.",
           icon: "success"
         }).then((result) => {
@@ -695,106 +703,108 @@ fetchAndPopulateAllData();
 
 //EMAIL JS - COLLECT INFORMATION AND SEND EMAIL
 
-function logFormData() { // collects form data and returns unique ID for email linking
-  const orgData = {
-    // id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
+// function logFormData() { // collects form data and returns unique ID for email linking
+//   const orgData = {
+//     // id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
 
-    // --- ORG PUBLIC ---
-    company_name: document.querySelector('[data-name="Company Name Input"]')?.value,
-    organization_description: document.querySelector('[data-name="Organization Description Input"]')?.value,
-    phone: document.getElementById("phone")?.value,
-    website: document.getElementById("website")?.value,
-    address1: document.getElementById("physicalAddress")?.value,
-    city_public: document.getElementById("cityPublic")?.value,
-    state_public: document.getElementById("statePublic")?.value,
-    zip_public: document.getElementById("zipPublic")?.value,
+//     // --- ORG PUBLIC ---
+//     company_name: document.querySelector('[data-name="Company Name Input"]')?.value,
+//     organization_description: document.querySelector('[data-name="Organization Description Input"]')?.value,
+//     phone: document.getElementById("phone")?.value,
+//     website: document.getElementById("website")?.value,
+//     address1: document.getElementById("physicalAddress")?.value,
+//     city_public: document.getElementById("cityPublic")?.value,
+//     state_public: document.getElementById("statePublic")?.value,
+//     zip_public: document.getElementById("zipPublic")?.value,
 
-    // --- CONTACTS ---
-    primary_name: document.getElementById("primaryName")?.value,
-    primary_email: document.getElementById("primaryEmail")?.value,
-    primary_phone: document.getElementById("primaryPhone")?.value,
-    primary_position: document.getElementById("primaryPosition")?.value,
+//     // --- CONTACTS ---
+//     primary_name: document.getElementById("primaryName")?.value,
+//     primary_email: document.getElementById("primaryEmail")?.value,
+//     primary_phone: document.getElementById("primaryPhone")?.value,
+//     primary_position: document.getElementById("primaryPosition")?.value,
 
-    secondary_name: document.getElementById("secondaryName")?.value,
-    secondary_email: document.getElementById("secondaryEmail")?.value,
-    secondary_phone: document.getElementById("secondaryPhone")?.value,
-    secondary_position: document.getElementById("secondaryPosition")?.value,
-  }
+//     secondary_name: document.getElementById("secondaryName")?.value,
+//     secondary_email: document.getElementById("secondaryEmail")?.value,
+//     secondary_phone: document.getElementById("secondaryPhone")?.value,
+//     secondary_position: document.getElementById("secondaryPosition")?.value,
+//   }
 
-  // IF ID MADE IN DATABASE THEN ANOTHER FETCH FUNCTION TO GET ORGANIZATION ID AND USE IT AS FOREIGN KEY FOR SERVICE
+//   // IF ID MADE IN DATABASE THEN ANOTHER FETCH FUNCTION TO GET ORGANIZATION ID AND USE IT AS FOREIGN KEY FOR SERVICE
 
-  const serviceData = {
-    company_id: orgData.id, // Foreign Key - Link service to org using org ID
+//   const serviceData = {
+//     company_id: orgData.id, // Foreign Key - Link service to org using org ID
 
-    // --- SERVICE (FIRST BLOCK) ---
-    service_name: document.getElementById("serviceName")?.value,
-    service_description: document.getElementById("serviceDescription")?.value,
-    service_criteria: document.getElementById("serviceCriteria")?.value,
+//     // --- SERVICE (FIRST BLOCK) ---
+//     service_name: document.getElementById("serviceName")?.value,
+//     service_description: document.getElementById("serviceDescription")?.value,
+//     service_criteria: document.getElementById("serviceCriteria")?.value,
 
-    service_phone: document.getElementById("servicePhone1")?.value,
-    service_address_street: document.getElementById("serviceAddressStreet1")?.value,
-    service_city: document.getElementById("serviceCity1")?.value,
-    service_state: document.getElementById("serviceState1")?.value,
-    service_zip: document.getElementById("serviceZip1")?.value,
+//     service_phone: document.getElementById("servicePhone1")?.value,
+//     service_address_street: document.getElementById("serviceAddressStreet1")?.value,
+//     service_city: document.getElementById("serviceCity1")?.value,
+//     service_state: document.getElementById("serviceState1")?.value,
+//     service_zip: document.getElementById("serviceZip1")?.value,
 
-    // --- FILE ---
-    logo_file: document.getElementById("upload")?.files[0]?.name || "No file"
-  };
+//     // --- FILE ---
+//     logo_file: document.getElementById("upload")?.files[0]?.name || "No file"
+//   };
   
-  console.log("============================");
-  console.log("Organization Data to be sent to DB:", orgData);
-  console.log("Service Data to be sent to DB:", serviceData);
-  console.log("============================");
+//   console.log("============================");
+//   console.log("Organization Data to be sent to DB:", orgData);
+//   console.log("Service Data to be sent to DB:", serviceData);
+//   console.log("============================");
 
+//   let orgID = addOrganization(orgData)
+//   addService = (orgID, serviceData)
 
   // sends to database
   // addOrgToPendingDB(orgData) 
   // addServiceToPendingDB(serviceData) 
 
-  fetch(`/api/index.php/route=request-create-service`,{
-    method: "POST",
-    headers:{
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-    organization: orgData,
-    // {
-    //   id: "NS123",
-    //   company_name: "Example Org",
-    //   organization_description: "Org description",
-    //   phone: "(931) 555-1111",
-    //   website: "https://example.org",
-    //   address1: "123 Main St",
-    //   city_public: "Cookeville",
-    //   state_public: "TN",
-    //   zip_public: "38501",
-    //   primary_email: "contact@example.org"
-    // },
-    service: serviceData
-    // {
-    //   company_id: "NS123",
-    //   service_name: "Example Service",
-    //   service_description: "Service description",
-    //   service_criteria: "Eligibility notes",
-    //   service_phone: "(931) 555-2222",
-    //   service_address_street: "456 Oak Ave",
-    //   service_city: "Cookeville",
-    //   service_state: "TN",
-    //   service_zip: "38501",
-    //   service_counties: ["Putnam"],
-    //   service_keywords: ["Food"]
-    // }
-  })
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log("Pending request created:", data);
-  });
+  // fetch(`"http://s1092595647.onlinehome.us/api/index.php?route=/request-create-service`,{
+  //   method: "POST",
+  //   headers:{
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify({
+  //   organization: orgData,
+  //   // {
+  //   //   id: "NS123",
+  //   //   company_name: "Example Org",
+  //   //   organization_description: "Org description",
+  //   //   phone: "(931) 555-1111",
+  //   //   website: "https://example.org",
+  //   //   address1: "123 Main St",
+  //   //   city_public: "Cookeville",
+  //   //   state_public: "TN",
+  //   //   zip_public: "38501",
+  //   //   primary_email: "contact@example.org"
+  //   // },
+  //   service: serviceData
+  //   // {
+  //   //   company_id: "NS123",
+  //   //   service_name: "Example Service",
+  //   //   service_description: "Service description",
+  //   //   service_criteria: "Eligibility notes",
+  //   //   service_phone: "(931) 555-2222",
+  //   //   service_address_street: "456 Oak Ave",
+  //   //   service_city: "Cookeville",
+  //   //   service_state: "TN",
+  //   //   service_zip: "38501",
+  //   //   service_counties: ["Putnam"],
+  //   //   service_keywords: ["Food"]
+  //   // }
+  // })
+  // })
+  // .then(res => res.json())
+  // .then(data => {
+  //   console.log("Pending request created:", data);
+  // });
 
-  return data.id; // Return the new ID for email linking
-}
+//   return data.id; // Return the new ID for email linking
+// }
 
-// SENDING SERVICE TO DATABASE + SENDING EMAIL
+// // SENDING SERVICE TO DATABASE + SENDING EMAIL
 // document.getElementById("form-step-3").addEventListener("submit", function (e) {
 //     e.preventDefault();
 //     const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
@@ -807,8 +817,6 @@ function logFormData() { // collects form data and returns unique ID for email l
 //       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
 //       {id: newServiceID}  // sends service ID so EmailJS can use it to create link to service page in email
 //     )
-
-
 
 //     Swal.fire({
 //       icon: "success",
@@ -828,11 +836,12 @@ function logFormData() { // collects form data and returns unique ID for email l
 //     });
 //   });
 
-  async function addService(orgArray, serviceArray) {
+//ADDING A SERVICE
+async function addOrganization(orgArray){
   try{
-    let data = {
+    // console.log(document.getElementById('referLastName').value)
+    const data = {
         "organization": {
-          "id": `${orgArray[0]}`,
           "company_name": `${orgArray[1]}`,
           "organization_description": `${orgArray[2]}`,
           "phone": `${orgArray[3]}`,
@@ -841,7 +850,7 @@ function logFormData() { // collects form data and returns unique ID for email l
           "city_public": `${orgArray[6]}`,
           "state_public": `${orgArray[7]}`,
           "zip_public": `${orgArray[8]}`,
-          "logo": `${orgArray[9]}`,
+          "logo_file": `${orgArray[9]}`,
           "primary_name": `${orgArray[10]}`,
           "primary_email": `${orgArray[11]}`,
           "primary_phone": `${orgArray[12]}`,
@@ -849,10 +858,46 @@ function logFormData() { // collects form data and returns unique ID for email l
           "secondary_name": `${orgArray[14]}`,
           "secondary_email": `${orgArray[15]}`,
           "secondary_phone": `${orgArray[16]}`,
-          "secondary_orgposition": `${orgArray[17]}`
-        },
+          "secondary_orgposition": `${orgArray[17]}`,
+        }
+      }
+    //sending to database
+    // console.log("orgData: ", data)
+    const response = await fetch("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-organization", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    // console.log(response)
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('orgData sent successfully:', result);
+    
+    console.log("ORG PAYLOAD:", result.payload);
+
+    return result
+  }catch(err){
+    console.error("ERROR:", err);
+  }
+}
+// ADDING AN ORGANIZATION
+async function addService(orgID, serviceArray) {
+  try{
+
+    console.log('orgID', orgID)
+    console.log('serviceArray', serviceArray)
+    console.log("service array: ", serviceArray)
+
+    const data = {
+        "organization_id": `${orgID}`,
         "service": {
-          "company_id": `${orgArray[0]}`,
           "service_name": `${serviceArray[0]}`,
           "service_description": `${serviceArray[1]}`,
           "service_criteria": `${serviceArray[2]}`,
@@ -867,24 +912,43 @@ function logFormData() { // collects form data and returns unique ID for email l
           "organization_hours": `${serviceArray[11]}`,
         } 
       }
-    // console.log(data)
-    const response = await fetchApi(`/request-create-service`, {
+    console.log(orgID, JSON.stringify(data))
+
+    const response = await fetchApi("/request-create-service", {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json', // Sending JSON
-          'Accept': 'application/json'
+        'Content-Type': 'application/json', // Sending JSON
+        // 'Accept': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(orgID,data)
     });
+
+    const text = await response.text();
+    console.log("SERVER RESPONSE:", text);
 
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
+
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
+    //asdf
 
+     // SENDING ID TO EMAIL JS TO CREATE LINK
+    // const emailResponse = await emailjs.send(
+    //   "service_9byagl9",   // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
+    //   "template_204azdh",{ // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
+    //     type: "Edit",
+    //     serviceID: result.payload.organization,
+    //     orgID: result.payload.organization,
+    //   });
+    // emailjs.send("service_9byagl9","template_204azdh",{
+    //   type: "a",
+    //   serviceID: "a",
+    //   orgID: "a",
+    // });
   } catch (objError){
     console.log('Error sending request', objError)
   }

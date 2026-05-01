@@ -111,8 +111,8 @@ async function sendDBAndEmail(){
 
     // sending to emailJS to construct email
     const emailResponse = await emailjs.send(
-      "service_9byagl9",
-      "template_ad1m3hq",{
+      "service_9byagl9",   // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
+      "template_ad1m3hq",{ // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
       first_name: result.firstName,
       last_name: result.lastName,
       email: result.email,
