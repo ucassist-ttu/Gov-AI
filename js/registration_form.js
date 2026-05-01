@@ -118,55 +118,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   populateHourSelects();
 
-  // NEW: Event delegation for ALL checkboxes (phone, address, hours)
-  function setupCheckboxEventDelegation() {
-    document.addEventListener('change', function(e) {
-      const checkbox = e.target;
-      
-      // Separate phone checkbox
-      if (checkbox.matches('input[id^="separatePhone"]')) {
-        const serviceBlock = checkbox.closest('.service-block');
-        if (!serviceBlock) return;
-        const phoneContainer = serviceBlock.querySelector('.service-phone-container');
-        if (phoneContainer) {
-          phoneContainer.style.display = checkbox.checked ? 'block' : 'none';
-          if (!checkbox.checked) {
-            const phoneInput = phoneContainer.querySelector('input[type="tel"]');
-            if (phoneInput) phoneInput.value = '';
-          }
-        }
-      }
-      
-      // Separate address checkbox
-      else if (checkbox.matches('input[id^="separateAddress"]')) {
-        const serviceBlock = checkbox.closest('.service-block');
-        if (!serviceBlock) return;
-        const addressContainer = serviceBlock.querySelector('.service-address-container');
-        if (addressContainer) {
-          addressContainer.style.display = checkbox.checked ? 'block' : 'none';
-          if (!checkbox.checked) {
-            addressContainer.querySelectorAll('input, select').forEach(field => {
-              field.value = '';
-            });
-          }
-        }
-      }
-      
-      // Separate hours checkbox ✅ THIS WILL NOW WORK!
-      else if (checkbox.matches('input[id^="separateHours"]')) {
-        const serviceBlock = checkbox.closest('.service-block') || document;
-        if (!serviceBlock) return;
-        const hoursContainer = serviceBlock.querySelector('.service-hours-container');
-        if (hoursContainer) {
-          hoursContainer.style.display = checkbox.checked ? 'block' : 'none';
-          if (!checkbox.checked) {
-            hoursContainer.querySelectorAll('select').forEach(sel => sel.value = '');
-          }
-        }
-      }
-    });
-  }
-  setupCheckboxEventDelegation();
+  document.querySelector("#separatePhone1").addEventListener('click', () => {
+    if (document.querySelector("#separatePhone1").checked == true) {
+      document.querySelector('#divDiffPhoneNumber').style.display = 'block'
+    }
+    else {
+      document.querySelector('#divDiffPhoneNumber').style.display = 'none'
+    }
+  })
+
+  document.querySelector("#separateAddress1").addEventListener('click', () => {
+    if (document.querySelector("#separateAddress1").checked == true) {
+      document.querySelector('#divDiffAddress').style.display = 'inline-block'
+    }
+    else {
+      document.querySelector('#divDiffAddress').style.display = 'none'
+    }
+  })
 
   // Unified dropdown toggle setup
   function setupDropdownTogglePairs(pairs) {
@@ -260,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
       populateHourSelects();
       setupDropdownTogglePairs([
         { buttonId: `btnCountiesReg${serviceCount}`, containerId: `divOuterCountiesReg${serviceCount}` },
-        { buttonId: `btnKeywordsReg${serviceCount}`, containerId: `divOuterKeywordsReg${serviceCount}` }
+        { buttonId: `btnKeywordsReg1${serviceCount}`, containerId: `divOuterKeywordsReg1${serviceCount}` }
       ]);
 
       const newAddBtn = newService.querySelector('.add-hours');
@@ -414,6 +382,110 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
+        strOrgID = 'Fake Org ID'
+        strCompanyName = document.querySelector('#companyName').value
+        strOrgDescription = document.querySelector('#orgDescription').value
+        strPhoneNumber = document.querySelector('#phone').value
+        strWebsite = document.querySelector('#website').value
+        strPhysicalAddress = document.querySelector('#addressPublic').value
+        strAddressCity = document.querySelector('#cityPublic').value
+        strAddressState = document.querySelector('#statePublic').value
+        strAddressZip = document.querySelector('#zipPublic').value
+        if (document.getElementById('oldUpload').value === ''){
+          strLogo = 'N/A'
+        }
+        else {
+          strLogo = document.querySelector('#oldUpload').value
+        }
+        strPrimaryName = document.querySelector('#primaryName').value
+        strPrimaryEmail = document.querySelector('#primaryEmail').value
+        strPrimaryPhoneNumber = document.querySelector('#primaryPhone').value
+        if (document.getElementById('primaryPosition').value === ''){
+          strPrimaryOrgPosition = 'N/A'
+        }
+        else {
+          strPrimaryOrgPosition = document.querySelector('#primaryPosition').value
+        }
+        if (document.getElementById('secondaryName').value === ''){
+          strSecondaryName = 'N/A'
+        }
+        else {
+          strSecondaryName = document.querySelector('#secondaryName').value
+        }
+        if (document.getElementById('secondaryEmail').value === ''){
+          strSecondaryEmail = 'N/A'
+        }
+        else {
+          strSecondaryEmail  = document.querySelector('#secondaryEmail').value
+        }
+        if (document.getElementById('secondaryPhone').value === ''){
+          strSecondaryPhoneNumber = 'N/A'
+        }
+        else {
+          strSecondaryPhoneNumber = document.querySelector('#secondaryPhone').value
+        }
+        if (document.getElementById('secondaryPosition').value === ''){
+          strSecondaryOrgPosition = 'N/A'
+        }
+        else {
+          strSecondaryOrgPosition  = document.querySelector('#secondaryPosition').value
+        }
+        strAddServiceName = document.querySelector('#serviceName').value
+        strAddServiceDescription = document.querySelector('#serviceDescription').value 
+        if (document.getElementById('serviceCriteria').value === ''){
+          strAddServiceElegibility = 'N/A'
+        }
+        else {
+          strAddServiceElegibility = document.querySelector('#serviceCriteria').value
+        }
+        strAddServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+        strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsReg1")
+        if (document.getElementById('servicePhone1').value === ''){
+          strAddServicePhoneNumber = strPhoneNumber
+        }
+        else {
+          strAddServicePhoneNumber = document.querySelector('#servicePhone1').value
+        }
+        if (document.getElementById('serviceAddressStreet1').value === ''){
+          strAddServicePhysicalAddress = strPhysicalAddress
+        }
+        else {
+          strAddServicePhysicalAddress = document.querySelector('#serviceAddressStreet1').value
+        } 
+        if (document.getElementById('serviceAddressCity1').value === ''){
+          strAddServiceAddressCity = strAddressCity
+        }
+        else {
+          strAddServiceAddressCity = document.querySelector('#serviceAddressCity1').value
+        } 
+        if (document.getElementById('serviceState1').value === ''){
+          strAddServiceAddressState = strAddressState
+        }
+        else {
+          strAddServiceAddressState = document.querySelector('#serviceState1').value
+        } 
+        if (document.getElementById('serviceZip1').value === ''){
+          strAddServiceAddressZip = strAddressZip
+        }
+        else {
+          strAddServiceAddressZip = document.querySelector('#serviceZip1').value
+        } 
+        if (document.getElementById('addWebsite').value === ''){
+          strAddServiceWebsite = 'N/A'
+        }
+        else {
+          strAddServiceWebsite = document.querySelector('#addWebsite').value
+        }
+        if (document.getElementById('addServiceHours').value === ''){
+          strHoursAdd = 'N/A'
+        }
+        else {
+          strHoursAdd = document.querySelector('#addServiceHours').value
+        }
+
+        orgArray = [strOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
+        serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
+        addService(orgArray, serviceArray)
         Swal.fire({
           title: "Success",
           text: "Your request has been submitted. It is pending review.",
@@ -723,36 +795,104 @@ function logFormData() { // collects form data and returns unique ID for email l
 }
 
 // SENDING SERVICE TO DATABASE + SENDING EMAIL
-document.getElementById("form-step-3").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
+// document.getElementById("form-step-3").addEventListener("submit", function (e) {
+//     e.preventDefault();
+//     const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
 
-    console.log("New Service ID for EmailJS linking:", newServiceID);
+//     console.log("New Service ID for EmailJS linking:", newServiceID);
 
-    // SENDING ID TO EMAIL JS TO CREATE LINK
-    emailjs.send(
-      "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
-      "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-      {id: newServiceID}  // sends service ID so EmailJS can use it to create link to service page in email
-    )
+//     // SENDING ID TO EMAIL JS TO CREATE LINK
+//     emailjs.send(
+//       "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
+//       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
+//       {id: newServiceID}  // sends service ID so EmailJS can use it to create link to service page in email
+//     )
 
 
 
-    Swal.fire({
-      icon: "success",
-      title: "Submitted!",
-      text: "Your registration has been received.",
-      // confirmButtonColor: "#0d6efd"
+//     Swal.fire({
+//       icon: "success",
+//       title: "Submitted!",
+//       text: "Your registration has been received.",
+//       // confirmButtonColor: "#0d6efd"
+//     });
+//     // document.getElementById("form-step-3").reset();
+//   })
+//   .catch(function (error) {
+//     console.error("EmailJS Error:", error);
+
+//     Swal.fire({
+//       icon: "error",
+//       title: "Error",
+//       text: "Something went wrong. Please try again."
+//     });
+//   });
+
+  async function addService(orgArray, serviceArray) {
+  try{
+    let data = {
+        "organization": {
+          "id": `${orgArray[0]}`,
+          "company_name": `${orgArray[1]}`,
+          "organization_description": `${orgArray[2]}`,
+          "phone": `${orgArray[3]}`,
+          "website": `${orgArray[4]}`,
+          "address1": `${orgArray[5]}`,
+          "city_public": `${orgArray[6]}`,
+          "state_public": `${orgArray[7]}`,
+          "zip_public": `${orgArray[8]}`,
+          "logo": `${orgArray[9]}`,
+          "primary_name": `${orgArray[10]}`,
+          "primary_email": `${orgArray[11]}`,
+          "primary_phone": `${orgArray[12]}`,
+          "primary_orgposition": `${orgArray[13]}`,
+          "secondary_name": `${orgArray[14]}`,
+          "secondary_email": `${orgArray[15]}`,
+          "secondary_phone": `${orgArray[16]}`,
+          "secondary_orgposition": `${orgArray[17]}`
+        },
+        "service": {
+          "company_id": `${orgArray[0]}`,
+          "service_name": `${serviceArray[0]}`,
+          "service_description": `${serviceArray[1]}`,
+          "service_criteria": `${serviceArray[2]}`,
+          "service_counties": `${serviceArray[3]}`,
+          "service_keywords": `${serviceArray[4]}`,
+          "service_phone": `${serviceArray[5]}`,
+          "service_address_street": `${serviceArray[6]}`,
+          "service_city": `${serviceArray[7]}`,
+          "service_state": `${serviceArray[8]}`,
+          "service_zip": `${serviceArray[9]}`,
+          "service_website": `${serviceArray[10]}`,
+          "organization_hours": `${serviceArray[11]}`,
+        } 
+      }
+    // console.log(data)
+    const response = await fetchApi(`/request-create-service`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', // Sending JSON
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify(data)
     });
 
-    // document.getElementById("form-step-3").reset();
-  })
-  .catch(function (error) {
-    console.error("EmailJS Error:", error);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Something went wrong. Please try again."
-    });
-  });
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+
+  } catch (objError){
+    console.log('Error sending request', objError)
+  }
+}
+
+// Returns an array of all selected check boxed from a container
+function getSelectedKeywords(containerId) {
+    return Array.from(
+        document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
+    ).map(el => el.value);
+}

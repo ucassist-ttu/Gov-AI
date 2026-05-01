@@ -11,13 +11,17 @@ let strPhysicalAddress
 let strAddressCity
 let strAddressState
 let strAddressZip
-let strKeywords
-let strStartDay
-let strStartHour
-let strStartAMPM
-let strEndHour
-let strEndAMPM
 let strLogo
+
+let strPreOrgID = 'Test Org ID'
+let strPreOrgDescription = 'Test Org Discription'
+let strPrePhoneNumber = 'Test Org Phone Number'
+let strPreWebsite = 'Test Org Website'
+let strPrePhysicalAddress = 'Test Org Physical Address'
+let strPreAddressCity = 'Test Org City'
+let strPreAddressState = 'Test Org State'
+let strPreAddressZip ='Test Org Zip'
+let strPreLogo = 'Test Org Logo'
 
 let strPrimaryName
 let strPrimaryEmail
@@ -27,6 +31,11 @@ let strSecondaryName
 let strSecondaryEmail
 let strSecondaryPhoneNumber
 let strSecondaryOrgPosition
+
+let strPreSecondaryName = 'Test Secondary Contact Name'
+let strPreSecondaryEmail = 'Test Secondary Contact Email'
+let strPreSecondaryPhoneNumber = 'Test Secondary Contact Phone'
+let strPreSecondaryOrgPosition = 'Test Secondary Contact Org Position'
 
 let strEditServiceName
 let strEditServiceDescription
@@ -39,11 +48,20 @@ let strEditServiceAddressCity
 let strEditServiceAddressState
 let strEditServiceAddressZip
 let strEditServiceWebsite
-let strEditServiceStartDay
-let strEditServiceStartHour
-let strEditServiceStartAMPM
-let strEditServiceEndHour
-let strEditServiceEndAMPM
+let strEditServiceHours
+
+let strPreEditServiceName = 'Test Service Name'
+let strPreEditServiceDescription = 'Test Service Description'
+let strPreEditServiceElegibility = 'Test Service Elegibility'
+let strPreEditServiceCounties = ['Putnam']
+let strPreEditServiceKeywords = ['abuse']
+let strPreEditServicePhoneNumber = 'Test Service Phone Number'
+let strPreEditServicePhysicalAddress = 'Test Service Address'
+let strPreEditServiceAddressCity = 'Test Service City'
+let strPreEditServiceAddressState = 'Test Service State'
+let strPreEditServiceAddressZip = 'Test Zip'
+let strPreEditServiceWebsite = 'Test Service Website'
+let strPreEditServiceHours = 'Test Service Hours'
 
 let strAddServiceName
 let strAddServiceDescription
@@ -56,12 +74,10 @@ let strAddServiceAddressCity
 let strAddServiceAddressState
 let strAddServiceAddressZip
 let strAddServiceWebsite
-let strAddServiceStartDay
-let strAddServiceStartHour
-let strAddServiceStartAMPM
-let strAddServiceEndHour
-let strAddServiceEndAMPM
+let strHoursAdd
 
+let orgArray = []
+let serviceArray = []
 
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
@@ -270,14 +286,14 @@ document.addEventListener('DOMContentLoaded', () => {
       handler(); 
     }
 
-    document.querySelector("#separateHours1").addEventListener('click', () => {
-      if (document.querySelector("#separateHours1").checked = true) {
-        document.querySelector('#divServiceHoursAdd').style.display = 'inline-block'
-      }
-      else {
-        document.querySelector('#divServiceHoursAdd').style.display = 'none'
-      }
-    })
+    // document.querySelector("#separateHours1").addEventListener('click', () => {
+    //   if (document.querySelector("#separateHours1").checked = true) {
+    //     document.querySelector('#divServiceHoursAdd').style.display = 'inline-block'
+    //   }
+    //   else {
+    //     document.querySelector('#divServiceHoursAdd').style.display = 'none'
+    //   }
+    // })
   }
 
   function setupAddHours(button, container, rangeSelector) {
@@ -453,8 +469,12 @@ document.addEventListener('DOMContentLoaded', () => {
         strEditorName = document.getElementById('editorName').value
         strEditorEmail = document.getElementById('editorEmail').value
         strEditorPhoneNumber = document.getElementById('editorPhone').value
-        strEditorOrgPosition = document.getElementById('editorPosition').value
-        console.log(strEditorName, strEditorEmail, strEditorPhoneNumber, strEditorOrgPosition)
+        if (document.getElementById('orgDescription').value === ''){
+          strEditorOrgPosition = 'N/A'
+        }
+        else {
+          strEditorOrgPosition = document.getElementById('editorPosition').value
+        }
         currentStep = 1;
         showStep(currentStep);
       } else {
@@ -474,28 +494,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const formStep2 = document.getElementById('form-step-2');
-  if (formStep2) {
+  if (formStep2) { 
     formStep2.addEventListener('submit', e => {
       e.preventDefault();
       formStep2.classList.add('was-validated');
       const errors = collectFormErrors(formStep2);
       if (errors.length === 0) {
         strCompanyName = document.getElementById('companyName').value
-        strOrgDescription = document.getElementById('orgDescription').value
-        strPhoneNumber = document.getElementById('phoneNumber').value
-        strWebsite = document.getElementById('website').value
-        strPhysicalAddress = document.getElementById('physicalAddress').value
-        strAddressCity = document.getElementById('cityAddress').value
-        strAddressState = document.getElementById('statePublic').value
-        strAddressZip = document.getElementById('zipPublic').value
-        strKeywords = getSelectedKeywords('divOuterKeywordsReg1')
-        strStartDay = document.getElementById('startDay').value
-        strStartHour = document.getElementById('startHour').value
-        strStartAMPM = document.getElementById('startAMPM').value
-        strEndHour = document.getElementById('endHour').value
-        strEndAMPM = document.getElementById('endAMPM').value
-        strLogo = document.getElementById('oldUpload').value
-        console.log(strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strKeywords, strStartDay, strStartHour, strStartAMPM, strEndHour, strEndAMPM, strLogo)
+        if (document.getElementById('orgDescription').value === ''){
+          strOrgDescription = strPreOrgDescription
+        }
+        else {
+          strOrgDescription = document.getElementById('orgDescription').value
+        }
+        if (document.getElementById('phoneNumber').value == ''){
+          strPhoneNumber = strPrePhoneNumber
+        }
+        else {
+          strPhoneNumber = document.getElementById('phoneNumber').value
+        }
+        if (document.getElementById('website').value == ''){
+          strWebsite = strPreWebsite
+        }
+        else {
+          strWebsite = document.getElementById('website').value
+        }
+        if (document.getElementById('physicalAddress').value == ''){
+          strPhysicalAddress = strPrePhysicalAddress
+        }
+        else {
+          strPhysicalAddress = document.getElementById('physicalAddress').value
+        }
+        if (document.getElementById('cityAddress').value == ''){
+          strAddressCity = strPreAddressCity
+        }
+        else {
+          strAddressCity = document.getElementById('cityAddress').value
+        }
+        if (document.getElementById('statePublic').value == ''){
+          strAddressState = strPreAddressState
+        }
+        else {
+          strAddressState = document.getElementById('statePublic').value
+        }
+        if (document.getElementById('zipPublic').value == ''){
+          strAddressZip = strPreAddressZip
+        }
+        else {
+          strAddressZip = document.getElementById('zipPublic').value
+        }
+        if (document.getElementById('oldUpload').value == ''){
+          strLogo = strPreLogo
+        }
+        else {
+          strLogo = document.getElementById('oldUpload').value
+        }
         currentStep = 2;
         showStep(currentStep);
       } else {
@@ -521,15 +574,46 @@ document.addEventListener('DOMContentLoaded', () => {
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
       if (errors.length === 0) {
+        count = 0
         strPrimaryName = document.getElementById('primaryName').value
         strPrimaryEmail = document.getElementById('primaryEmail').value
         strPrimaryPhoneNumber = document.getElementById('primaryPhone').value
-        strPrimaryOrgPosition = document.getElementById('primaryPosition').value
-        strSecondaryName = document.getElementById('secondaryName').value
-        strSecondaryEmail = document.getElementById('secondaryEmail').value
-        strSecondaryPhoneNumber = document.getElementById('secondaryPhone').value
-        strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
-        console.log(strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition)
+        if (document.getElementById('primaryPosition').value == ''){
+          strPrimaryOrgPosition = 'N/A'
+        }
+        else {
+          strPrimaryOrgPosition = document.getElementById('primaryPosition').value
+        }
+        if (document.getElementById('secondaryName').value == ''){
+          strSecondaryName = strPreSecondaryName
+        }
+        else {
+          strSecondaryName = document.getElementById('secondaryName').value
+          count ++
+        }
+        if (document.getElementById('secondaryEmail').value == ''){
+          strSecondaryEmail = strPreSecondaryEmail
+        }
+        else {
+          strSecondaryEmail = document.getElementById('secondaryEmail').value
+          count ++
+        }
+        if (document.getElementById('secondaryPhone').value == ''){
+          strSecondaryPhoneNumber = strPreSecondaryPhoneNumber
+        }
+        else {
+          strSecondaryPhoneNumber = document.getElementById('secondaryPhone').value
+          count ++
+        }
+        if (document.getElementById('secondaryPosition').value == ''){
+          strSecondaryOrgPosition = strPreSecondaryOrgPosition
+        }
+        else if (document.getElementById('secondaryPosition').value == '' && count == 3) {
+          strSecondaryOrgPosition = 'N/A'
+        }
+        else {
+          strSecondaryOrgPosition = document.getElementById('secondaryPosition').value
+        }
         currentStep = 3;
         showStep(currentStep);
       } else {
@@ -558,43 +642,152 @@ document.addEventListener('DOMContentLoaded', () => {
       if (button.id == 'btnUpdateService') {
         errors = []
       }
+      else {
+        countyLength = getSelectedKeywords("divOuterCountiesRegAdd")
+        if (countyLength.length == 0) {
+          errors.push('Counties Offered In')
+        }
+        keyLength = getSelectedKeywords("divOuterKeywordsRegAdd")
+        if (keyLength.length == 0) {
+          errors.push('Keywords')
+        }
+      }
       if (errors.length === 0) {
-        strEditServiceName = document.getElementById('serviceNameEdit').value
-        strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
-        strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
-        strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
-        strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
-        strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
-        strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
-        strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
-        strEditServiceAddressState = document.getElementById('serviceStateEdit').value
-        strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
-        strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
-        strEditServiceStartDay = document.getElementById('serviceStartDayEdit').value
-        strEditServiceStartHour = document.getElementById('serviceStartHourEdit').value
-        strEditServiceStartAMPM = document.getElementById('serviceStartAMPMEdit').value
-        strEditServiceEndHour = document.getElementById('serviceEndHourEdit').value
-        strEditServiceEndAMPM = document.getElementById('serviceEndAMPMEdit').value
-        console.log(strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceStartDay, strEditServiceStartHour, strEditServiceStartAMPM, strEditServiceEndHour, strEditServiceEndAMPM)
-        
+        if (document.getElementById('serviceNameEdit').value == ''){
+          strEditServiceName = strPreEditServiceName
+        }
+        else {
+          strEditServiceName = document.getElementById('serviceNameEdit').value
+        }
+        if (document.getElementById('serviceDescriptionEdit').value == ''){
+          strEditServiceDescription = strPreEditServiceDescription
+        }
+        else {
+          strEditServiceDescription = document.getElementById('serviceDescriptionEdit').value
+        }
+        if (document.getElementById('serviceCriteriaEdit').value == ''){
+          strEditServiceElegibility = strPreEditServiceElegibility
+        }
+        else {
+          strEditServiceElegibility = document.getElementById('serviceCriteriaEdit').value
+        }
+        countyLength = getSelectedKeywords("divOuterCountiesReg")
+        if (countyLength.length == 0){
+          strEditServiceCounties = strPreEditServiceCounties
+        }
+        else {
+          strEditServiceCounties = getSelectedKeywords("divOuterCountiesReg")
+        }
+        keyLength = getSelectedKeywords("divOuterKeywordsReg")
+        if (keyLength.length == 0){
+          strEditServiceKeywords = strPreEditServiceKeywords
+        }
+        else {
+          strEditServiceKeywords = getSelectedKeywords("divOuterKeywordsReg")
+        }
+        if (document.getElementById('servicePhoneEdit').value == ''){
+          strEditServicePhoneNumber = strPreEditServicePhoneNumber
+        }
+        else {
+          strEditServicePhoneNumber = document.getElementById('servicePhoneEdit').value
+        }
+        if (document.getElementById('servicePhysicalAddressEdit').value == ''){
+          strEditServicePhysicalAddress = strPreEditServicePhysicalAddress
+        }
+        else {
+          strEditServicePhysicalAddress = document.getElementById('servicePhysicalAddressEdit').value
+        }
+        if (document.getElementById('ServicecityAddressEdit').value == ''){
+          strEditServiceAddressCity = strPreEditServiceAddressCity
+        }
+        else {
+          strEditServiceAddressCity = document.getElementById('ServicecityAddressEdit').value
+        }
+        if (document.getElementById('serviceStateEdit').value == ''){
+          strEditServiceAddressState = strPreEditServiceAddressState
+        }
+        else {
+          strEditServiceAddressState = document.getElementById('serviceStateEdit').value
+        }
+        if (document.getElementById('serviceZipEdit').value == ''){
+          strEditServiceAddressZip = strPreEditServiceAddressZip
+        }
+        else {
+          strEditServiceAddressZip = document.getElementById('serviceZipEdit').value
+        }
+        if (document.getElementById('serviceWebisteEdit').value == ''){
+          strEditServiceWebsite = strPreEditServiceWebsite
+        }
+        else {
+          strEditServiceWebsite = document.getElementById('serviceWebisteEdit').value
+        }
+        if (document.getElementById('updateServiceHours').value == ''){
+          strEditServiceHours = strPreEditServiceHours
+        }
+        else {
+          strEditServiceHours = document.getElementById('updateServiceHours').value
+        }
         strAddServiceName = document.getElementById('serviceNameAdd').value
         strAddServiceDescription = document.getElementById('serviceDescriptionAdd').value
-        strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        if (document.getElementById('serviceCriteriaAdd').value === ''){
+          strAddServiceElegibility = 'N/A'
+        }
+        else {
+          strAddServiceElegibility = document.getElementById('serviceCriteriaAdd').value
+        }
         strAddServiceCounties = getSelectedKeywords("divOuterCountiesRegAdd")
         strAddServiceKeywords = getSelectedKeywords("divOuterKeywordsRegAdd")
-        strAddServicePhoneNumber = document.getElementById('servicePhone1').value
-        strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
-        strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
-        strAddServiceAddressState = document.getElementById('serviceStateAdd').value
-        strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
-        strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
-        strAddServiceStartDay = document.getElementById('serviceStartDayAdd').value
-        strAddServiceStartHour = document.getElementById('serviceStartHourAdd').value
-        strAddServiceStartAMPM = document.getElementById('serviceStartAMPMAdd').value
-        strAddServiceEndHour = document.getElementById('serviceEndHourAdd').value
-        strAddServiceEndAMPM = document.getElementById('serviceEndAMPMAdd').value
-        console.log(strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strAddServiceStartDay, strAddServiceStartHour, strAddServiceStartAMPM, strAddServiceEndHour, strAddServiceEndAMPM)
-
+        if (document.getElementById('servicePhone1').value === ''){
+          strAddServicePhoneNumber = strPhoneNumber
+        }
+        else {
+          strAddServicePhoneNumber = document.getElementById('servicePhone1').value
+        }
+        if (document.getElementById('serviceAddressStreet1').value === ''){
+          strAddServicePhysicalAddress = strPhysicalAddress
+        }
+        else {
+          strAddServicePhysicalAddress = document.getElementById('serviceAddressStreet1').value
+        }
+        if (document.getElementById('ServicecityAddressAdd').value === ''){
+          strAddServiceAddressCity = strAddressCity
+        }
+        else {
+          strAddServiceAddressCity = document.getElementById('ServicecityAddressAdd').value
+        }
+        if (document.getElementById('serviceStateAdd').value === ''){
+          strAddServiceAddressState = strAddressState
+        }
+        else {
+          strAddServiceAddressState = document.getElementById('serviceStateAdd').value
+        }
+        if (document.getElementById('serviceZipAdd').value === ''){
+          strAddServiceAddressZip = strAddressZip
+        }
+        else {
+          strAddServiceAddressZip = document.getElementById('serviceZipAdd').value
+        }
+        if (document.getElementById('serviceWebisteAdd').value === ''){
+          strAddServiceWebsite = 'N/A'
+        }
+        else {
+          strAddServiceWebsite = document.getElementById('serviceWebisteAdd').value
+        }
+        if (document.getElementById('addServiceHours').value === ''){
+          strHoursAdd = 'N/A'
+        }
+        else {
+          strHoursAdd = document.getElementById('addServiceHours').value
+        }
+        orgArray = [strPreOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
+        if (button.id == 'btnUpdateService') {
+          serviceArray = [strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceHours]
+          addService(orgArray, serviceArray)
+        }
+        else {
+          serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
+          addService(orgArray, serviceArray)
+        }
         Swal.fire({
           title: "Success",
           text: "Your request has been submitted. It is pending review.",
@@ -609,11 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('serviceStateEdit').value = ''
           document.getElementById('serviceZipEdit').value = ''
           document.getElementById('serviceWebisteEdit').value = ''
-          document.getElementById('serviceStartDayEdit').value = ''
-          document.getElementById('serviceStartHourEdit').value = ''
-          document.getElementById('serviceStartAMPMEdit').value = ''
-          document.getElementById('serviceEndHourEdit').value = ''
-          document.getElementById('serviceEndAMPMEdit').value = ''
+          document.getElementById('updateServiceHours').value = ''
           document.getElementById('selectService').value = ''
           document.getElementById("form-step-4").reset();
 
@@ -626,11 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('serviceStateAdd').value = ''
           document.getElementById('serviceZipAdd').value = ''
           document.getElementById('serviceWebisteAdd').value = ''
-          document.getElementById('serviceStartDayAdd').value = ''
-          document.getElementById('serviceStartHourAdd').value = ''
-          document.getElementById('serviceStartAMPMAdd').value = ''
-          document.getElementById('serviceEndHourAdd').value = ''
-          document.getElementById('serviceEndAMPMAdd').value = ''
+          document.getElementById('addServiceHours').value = ''
           formStep4.classList.remove('was-validated');
 
           let activeForm = document.getElementById("divPage4AddServiceInfo");
@@ -1156,3 +1341,65 @@ function getSelectedKeywords(containerId) {
 //   }
 // });
 });
+
+async function addService(orgArray, serviceArray) {
+  try{
+    let data = {
+        "organization": {
+          "id": `${orgArray[0]}`,
+          "company_name": `${orgArray[1]}`,
+          "organization_description": `${orgArray[2]}`,
+          "phone": `${orgArray[3]}`,
+          "website": `${orgArray[4]}`,
+          "address1": `${orgArray[5]}`,
+          "city_public": `${orgArray[6]}`,
+          "state_public": `${orgArray[7]}`,
+          "zip_public": `${orgArray[8]}`,
+          "logo": `${orgArray[9]}`,
+          "primary_name": `${orgArray[10]}`,
+          "primary_email": `${orgArray[11]}`,
+          "primary_phone": `${orgArray[12]}`,
+          "primary_orgposition": `${orgArray[13]}`,
+          "secondary_name": `${orgArray[14]}`,
+          "secondary_email": `${orgArray[15]}`,
+          "secondary_phone": `${orgArray[16]}`,
+          "secondary_orgposition": `${orgArray[17]}`
+        },
+        "service": {
+          "company_id": `${orgArray[0]}`,
+          "service_name": `${serviceArray[0]}`,
+          "service_description": `${serviceArray[1]}`,
+          "service_criteria": `${serviceArray[2]}`,
+          "service_counties": `${serviceArray[3]}`,
+          "service_keywords": `${serviceArray[4]}`,
+          "service_phone": `${serviceArray[5]}`,
+          "service_address_street": `${serviceArray[6]}`,
+          "service_city": `${serviceArray[7]}`,
+          "service_state": `${serviceArray[8]}`,
+          "service_zip": `${serviceArray[9]}`,
+          "service_website": `${serviceArray[10]}`,
+          "organization_hours": `${serviceArray[11]}`,
+        } 
+      }
+    // console.log(data)
+    const response = await fetchApi(`/request-create-service`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', // Sending JSON
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+
+  } catch (objError){
+    console.log('Error sending request', objError)
+  }
+}
