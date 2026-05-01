@@ -1,5 +1,4 @@
 // button handlers
-// console.log("[iNeed] Delegated listener active");
 
 // shortened variable names for the categories
 const keywordCategories = {
@@ -14,7 +13,6 @@ const keywordCategories = {
   "Health": "Health and Wellness",
   "Education": "Education and Workforce Development",
   "Business": "Small Business and Entrepreneur",
-  "Tourism": "Tourism and Events",
   "Community": "Economic and Community Development"
 };
 // dictionary of keywordCategories and their database sub categories
@@ -30,8 +28,7 @@ const oldKeywordLookUp = {
   "Health": ["Health Care","In Home Services","Primary Care","Special Needs" ,"Wellness", "Pregnancy", "Mental Health", "Disabilities", "Substance Abuse & Addiction","Wellness/Support Groups"],
   "Education": ["Education","Employment","Workforce Development"],
   "Business": ["Small Business", "Entrepreneur", "Economic Development"],
-  "Tourism": ["Recreation","Tourism and Recreation","Calendar of Events"],
-  "Community": ["Community Development"]
+  "Community": ["Community Development", "Recreation"]
 }
 // empty list of all IDs sorted by keywordCategories
 let sortedIDCategories = {
@@ -46,7 +43,6 @@ let sortedIDCategories = {
   "Health": [],
   "Education": [],
   "Business": [],
-  "Tourism": [],
   "Community": []
 }
 
@@ -87,7 +83,6 @@ document.addEventListener("click", (e) => {
     });
     // Add "selected" to the clicked card
     clickedCard.classList.add("selected");
-    console.log("[iNeed] Clicked card ID:", clickedCard.id.replace("pillINeed", ""));
     loadCardsByCategory(clickedCard.id.replace("pillINeed", ""));
 
     const descriptionContainer = document.getElementById("wrapperINeedContent");
@@ -111,7 +106,6 @@ function createPills(keyword, fullword){
   img.alt = fullword;
   img.style.maxHeight = "100px";
   img.style.objectFit = "cover";
-  // img.src = getImgSrc(keyword);
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
 
 
@@ -125,7 +119,6 @@ function createPills(keyword, fullword){
   // makes card clickable
   const btn = document.createElement("a");
   btn.className = "stretched-link";
-  // btn.href = "#";
 
   col.appendChild(img);
   body.appendChild(content);
@@ -175,15 +168,11 @@ function createCard(service, category) {
       <div class="card-body d-flex flex-column">
         ${getCounties(service)}
         <h5 class="card-title">${service.NameOfService}</h5>
-        <div class="mt-auto service m-0" style="margin-bottom: 15px;">
+        <div class="mt-auto service ps-0 pe-0 m-0" style="margin-bottom: 15px;">
           <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
         </div>
       </div>`;
 
-      // col.querySelector('.service button').addEventListener('click', () => {
-      //   serveID = service.ID
-      //   callServicePage(serveID)
-      // })
 
   
   return col;
@@ -223,9 +212,6 @@ function sortIDsByKeyword(arrKeywords, id){
     if (category in sortedIDCategories) {
       sortedIDCategories[category].push(id); 
     }
-    // else (
-    //   // console.log("[sortIDsByKeyword] Unknown category for id: ", id," and keyword:", keyword)
-    // )
   })
 }
 
@@ -242,7 +228,6 @@ function getImgSrc(keyword) {
     "Health": "iNeedHealth.jpg",
     "Education": "iNeedEducation.jpg",
     "Business": "iNeedBusiness.jpg",
-    "Tourism": "iNeedTourism.jpg",
     "Community": "iNeedCommunity.jpg"
   }
 
@@ -258,23 +243,16 @@ async function loadCardsByCategory(category) {
   let uniqueIDs = [...new Set(arrIDs)];
   const container = document.getElementById("divINeedContent");
 
-  // console.log("[loadCardsByCategory] Sorted IDs for category", category, ":", uniqueIDs);
-
   if (!container) {
     return;
   }
 
-  container.innerHTML = "<p>Loading services...</p>";
-
-  // console.log("[loadCardsByCategory] Loading category:", category);
+  container.innerHTML = "<p style='color: white'>Loading services...</p>";
 
   try {
 
     const requests = uniqueIDs.map(id => {
       const url = `/service?id=${id}`;
-      // console.log("[loadCardsByCategory] Fetching service ID:", id, "with URL:", url);
-
-      // console.log("[loadCardsByCategory] Fetching service ID:", id);
 
       return fetchApi(url)
         .then(res => {
@@ -289,8 +267,6 @@ async function loadCardsByCategory(category) {
     let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
-      // console.log("[loadCardsByCategory] Created card for service ID:", service.ID, "with html:", newCard)
-      // if(count < 7){
         if (newCard == null){
           return;
         } else{
@@ -315,10 +291,8 @@ function isInCounty(service){
 
   if(strCounties.includes(userSelectedCounty)){
     if (strCounties.includes("all counties")){
-      console.log("[isInCounty] all counties:", strCounties)
       return false;
     }
-    console.log("[isInCounty] NOT all counties:", strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
@@ -338,10 +312,6 @@ function isInCounty(service){
   let exCounty
 
   let userSelectedCounty = sessionStorage.getItem("currCounty")
-
-  // if(!strCounties.includes(userSelectedCounty)){
-  //   return;
-  // }
 
   arrCounties.forEach(county => {
     if (count < 1){ // displays max three counties
@@ -377,7 +347,6 @@ function isInCounty(service){
 
 // Shows more information on a service by calling service.html  
 function callServicePage (page_id) {
-  console.log("ID being passed:", page_id);
     fetchApi(`/add-monthly-view?service_id=${page_id}`)
     window.location.href = `/html/pages/service.html?id=${page_id}`;
 }
@@ -389,7 +358,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.png`;
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.jpg`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
@@ -438,8 +407,6 @@ function getCategoryDescription(category) {
       return "These services connect individuals with educational opportunities, job training, and workforce development programs. The goal is to help people build skills and find meaningful employment.";
     case "Business":
       return "These services support local entrepreneurs and small business owners with resources, mentorship, and economic development opportunities. These services help businesses grow and thrive in the Upper Cumberland community.";
-    case "Tourism":
-      return "These services highlight local recreation, events, and tourism opportunities in the area to help residents and visitors discover activities and community happenings.";
     case "Community":
       return "These services focus on strengthening and developing the local community through organized initiatives and programs encouraging civic engagement and neighborhood improvement.";
     default:
