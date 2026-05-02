@@ -542,12 +542,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('orgData sent successfully:', result);
         
         console.log("ORG PAYLOAD:", result.payload);
+        console.log("APPROVAL URL:", result.approvalUrl);
         // SENDING ID TO EMAIL JS TO CREATE LINK
         const emailResponse = await emailjs.send(
           "service_9byagl9",
           "template_204azdh",{
           type: "New",
-          
+          link: result.approvalUrl,
         }); 
       } catch(err){
         console.error("ERROR: ", err)
@@ -555,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         Swal.fire({
-          title: "Success Final",
+          title: "Success",
           text: "Your request has been submitted. It is pending review.",
           icon: "success"
         }).then((result) => {

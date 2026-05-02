@@ -114,6 +114,14 @@ async function sendToDB(org, service){
   }catch(err){
     console.error("ERROR:", err);
   }
+
+  Swal.fire({
+          title: "Success",
+          text: "This service had been approved and will now be available for people to access.",
+          icon: "success"
+        }).then((result) => {
+          window.location.href = `registration_landing.html`
+        })
 }
 
 
