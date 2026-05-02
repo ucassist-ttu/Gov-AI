@@ -82,8 +82,8 @@ async function getServices() {
     }
 
     // Remove all duplicate instances from each array
-    uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-    uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
+    uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
     uniqueOrgNames = [...new Set(arrOrgName.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
     
     // Create the filters
