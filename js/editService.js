@@ -41,6 +41,7 @@ let strPreSecondaryEmail
 let strPreSecondaryPhoneNumber
 let strPreSecondaryOrgPosition
 
+let strEditServiceID
 let strEditServiceName
 let strEditServiceDescription
 let strEditServiceElegibility
@@ -666,7 +667,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       if (errors.length === 0) {
-        strEditServiceID = serviceID
         if (document.getElementById('serviceNameEdit').value == ''){
           strEditServiceName = strPreEditServiceName
         }
@@ -1211,6 +1211,7 @@ async function addService(orgArray,editArray, serviceArray, type) {
           "position": `${editArray[3]}`
         },
         "service": {
+          "company_id": `${orgArray[0]}`,
           "service_name": `${serviceArray[0]}`,
           "service_description": `${serviceArray[1]}`,
           "service_criteria": `${serviceArray[2]}`,
@@ -1265,7 +1266,7 @@ async function addService(orgArray,editArray, serviceArray, type) {
           } 
         }
       }
-    // console.log(data)
+    console.log(data)
     const response = await fetchApi(`/${type}`, {
       method: 'POST',
       headers: {
@@ -1542,6 +1543,7 @@ document.getElementById('selectService').addEventListener('change', (e) => {
 
     document.getElementById('updateServiceHours').value = editSelectedService.service_hours
     strPreEditServiceHours = editSelectedService.service_hours
+    strEditServiceID = editSelectedService.ID
 
     activeForm.style.display = "block"; 
     remove.style.display = "block"; 
