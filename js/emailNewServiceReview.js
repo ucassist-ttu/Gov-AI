@@ -1,145 +1,120 @@
 // ASK FOR CHANGED ENDPOINTS - no more pending organization and services
-
 const params = new URLSearchParams(window.location.search);
-const serviceId = params.get("id");
+const serviceId = params.get('uuid');
+
+console.log("hello")
+console.log(serviceId)
 
 // CALL ENDPOINT TO ADD TO DATABASE
 document.addEventListener('DOMContentLoaded', () => {
   // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
-  // getOrgForService(serviceId).then((organization) => {
-  const orgResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=pending-organization?uuid=${serviceId}`)
-  .then(res => res.json())
-  .then(organization => {
-    console.log("Found organization:", organization);
-
-    document.getElementById('newCompanyName').value = organization.company_name;
-    document.getElementById('newOrgDescription').value = organization.organization_description;
-    document.getElementById('newPhone').value = organization.phone;
-    document.getElementById('newWebsite').value = organization.website;
-    document.getElementById('newPhysicalAddress').value = organization.address1;
-    document.getElementById('newCityPublic').value = organization.city_public;
-    document.getElementById('newStatePublic').value = organization.state_public;
-    document.getElementById('newZipPublic').value = organization.zip_public;
-    document.getElementById('newOrgKeywords').value = organization.organization_description;
-    document.getElementById('newOrgHours').value = organization.phone;
-
-    document.getElementById('newPrimaryName').value = organization.primary_name;
-    document.getElementById('newPrimaryEmail').value = organization.primary_email;
-    document.getElementById('newPrimaryPhone').value = organization.primary_phone;
-    document.getElementById('newPrimaryPosition').value = organization.primary_position;
-
-    document.getElementById('newSecondaryName').value = organization.secondary_name;
-    document.getElementById('newSecondaryEmail').value = organization.secondary_email;
-    document.getElementById('newSecondaryPhone').value = organization.secondary_phone;
-    document.getElementById('newSecondaryPosition').value = organization.secondary_position;
-  })
-
-  // getServiceForReview(serviceId).then((service) => {
-  const serviceResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=pending-service?uuid=${serviceId}`)
-    .then(res => res.json())
-    .then(service => {
-      document.getElementById('newServiceName').value = service.service_name;
-      document.getElementById('newServiceDescription').value = service.service_description;
-      document.getElementById('newServiceCriteria').value = service.service_criteria;
-      document.getElementById('newServiceCounties').value = service.service_county;
-      document.getElementById('newServiceKeywords').value = service.service_keywords;
-      document.getElementById('newServicePhone1').value = service.service_phone;
-      document.getElementById('newServiceAddressStreet1').value = service.service_address_street;
-      document.getElementById('newServiceCity1').value = service.service_city;
-      document.getElementById('newServiceState1').value = service.service_state;
-      document.getElementById('newServiceZip1').value = service.service_zip;
-      document.getElementById('newServiceHours').value = service.service_phone;
-      document.getElementById('newLogoFile').value = service.logo_file;
+  // getOrgForService(serviceId).then((organization) => { http://s1092595647.onlinehome.us/api/index.php?route=/create-service-with-organization&uuid=NOSd976337be3274fb4
+  // const orgResponse = fetchAPI(`/create-service-with-organization&uuid=NOSd976337be3274fb4`)
+  // console.log(orgResponse)
+  const data = loadService()
+  const serviceData = data.service
+  const orgData = data.organization
+  // adds service to database once aprove button is clicked
+  document.getElementById('btnUpdateDatabase').addEventListener('click', async (e) => {
+    sendToDB(orgData,serviceData)
   });
+})
 
+
+async function loadService() {
+  const response = await fetch(
+    `http://s1092595647.onlinehome.us/api/index.php?route=/create-service-with-organization&uuid=${serviceId}`
+  );
+
+  const data = await response.json();
+  const service = data.services
+  const org = data.organization
+  console.log(data)
+  console.log(service);
+  console.log(org);
+  // DISPLAYING NEW INFORMATION
+  // company information
+  document.getElementById('newCompanyName').value = org.company_name;
+  document.getElementById('newOrgDescription').value = org.organization_description;
+  document.getElementById('newPhone').value = org.phone;
+  document.getElementById('newWebsite').value = org.website;
+  document.getElementById('newPhysicalAddress').value = org.address1;
+  document.getElementById('newCityPublic').value = org.city_public;
+  document.getElementById('newStatePublic').value = org.state_public;
+  document.getElementById('newZipPublic').value = org.zip_public;
+  document.getElementById('newOrgKeywords').value = org.organization_description;
+  document.getElementById('newOrgHours').value = org.phone;
+
+  document.getElementById('newPrimaryName').value = org.primary_name;
+  document.getElementById('newPrimaryEmail').value = org.primary_email;
+  document.getElementById('newPrimaryPhone').value = org.primary_phone;
+  document.getElementById('newPrimaryPosition').value = org.primary_position;
+
+  document.getElementById('newSecondaryName').value = org.secondary_name;
+  document.getElementById('newSecondaryEmail').value = org.secondary_email;
+  document.getElementById('newSecondaryPhone').value = org.secondary_phone;
+  document.getElementById('newSecondaryPosition').value = org.secondary_position;
+  
+  // service organization
+  document.getElementById('newServiceName').value = service[0].service_name;
+  document.getElementById('newServiceDescription').value = service[0].service_description;
+  document.getElementById('newServiceCriteria').value = service[0].service_criteria;
+  document.getElementById('newServiceCounties').value = service[0].service_county;
+  document.getElementById('newServiceKeywords').value = service[0].service_keywords;
+  document.getElementById('newServicePhone1').value = service[0].service_phone;
+  document.getElementById('newServiceAddressStreet1').value = service[0].service_address_street;
+  document.getElementById('newServiceCity1').value = service[0].service_city;
+  document.getElementById('newServiceState1').value = service[0].service_state;
+  document.getElementById('newServiceZip1').value = service[0].service_zip;
+  document.getElementById('newServiceHours').value = service[0].service_phone;
+  document.getElementById('newLogoFile').value = service[0].logo_file;
+
+  return data
+}
+
+
+// service = id
+// org id = 
+
+
+async function sendToDB(org, service){
   try{
-    console.log(document.getElementById('referLastName').value)
-    const data = {
-      firstName: getValue("referFirstName"),
-      lastName: getValue("referLastName"),
-      email: getValue("referEmail"),
-      message: getValue("referMessage"),
-      phone: ""
-    };
-    
     //sending to database
-    console.log("fN: ", data)
-    const response = await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    console.log(response)
+    const response = await fetchApi(
+      `/create-service-with-organization?uuid=${serviceId}`,
+      { method: "POST" }
+    );
+    // const orgResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=/create-organization`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(org)
+    // })
+    // console.log(orgResponse)
 
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
+
+    // const serviceResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=/create-service&uuid=${org.id}`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(service)
+    // })
+    // console.log(serviceResponse)
+
+    // // Parse the JSON response
+    // const finalResult =  await serviceResponse.json();
+    // console.log('Data sent successfully:', finalResult);
+
+
   }catch(err){
     console.error("ERROR:", err);
   }
-
-  // adds service to database once aprove button is clicked
-  document.getElementById('btnUpdateDatabase').addEventListener('click', async (e) => {
-    e.preventDefault();
-    try{
-
-      // await addServiceToServicesDB(serviceId)
-
-      // marks services as ACTIVE
-      await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`)
-
-      swal("Success", "Service(s) submitted successfully!", "success");
-      form.reset();
-      form.classList.remove('was-validated');
-    } catch (err) {
-      swal("Error", "Something went wrong saving the service(s).", "error");
-      console.error(err);
-    }
-  });
-})
-
-// async function sendDBAndEmail(){
-//   try{
-//     console.log(document.getElementById('referLastName').value)
-//     const data = {
-//       firstName: getValue("referFirstName"),
-//       lastName: getValue("referLastName"),
-//       email: getValue("referEmail"),
-//       message: getValue("referMessage"),
-//       phone: ""
-//     };
-//     //sending to database
-//     console.log("fN: ", data)
-//     const response = await fetch(`http://s1092595647.onlinehome.us/api/index.php/route=create-service`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       body: JSON.stringify(data)
-//     })
-//     console.log(response)
-
-//     // Parse the JSON response
-//     const result = await response.json();
-//     console.log('Data sent successfully:', result);
-//   }catch(err){
-//     console.error("ERROR:", err);
-//   }
-// }
-
-
-
-    // console.log(data)
-    // const response = await fetchApi("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-service", {
-    //   method: 'POST',
-    //   headers: {
-    //       'Content-Type': 'application/json', // Sending JSON
-    //       'Accept': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // });
+}
 
 
 
@@ -193,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //     if (errors.length === 0) {
 //       try{
 
-//         await addServiceToServicesDB(serviceId)
+//          addServiceToServicesDB(serviceId)
 
 //         swal("Success", "Service(s) submitted successfully!", "success");
 //         form.reset();

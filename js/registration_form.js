@@ -1,3 +1,5 @@
+// BACKEND WORKING _ ONLY COMMENT OUT STUFF AND REMOVE COMMENTS
+
 //CHANGE THESE IDs AS SOON
   emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
     
@@ -486,14 +488,72 @@ document.addEventListener('DOMContentLoaded', () => {
         orgArray = [strOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
         serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
         
-        let orgID = await addOrganization(orgArray)
-        console.log("[ln490] orgID: ", orgID)
-        console.log("[491] ORG PAYLOAD:", orgID.payload);
-        addService(orgID.id, serviceArray)
+        // let orgID = await addOrganization(orgArray)
+        // console.log("[ln490] orgID: ", orgID)
+        // console.log("[491] ORG PAYLOAD:", orgID.payload);
+        // addService(orgID.id, serviceArray)
+
+        try{
+          const response = await fetchApi("/request-create-service-with-organization", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              "organization": {
+                "company_name": `${orgArray[1]}`,
+                "organization_description": `${orgArray[2]}`,
+                "phone": `${orgArray[3]}`,
+                "website": `${orgArray[4]}`,
+                "address1": `${orgArray[5]}`,
+                "city_public": `${orgArray[6]}`,
+                "state_public": `${orgArray[7]}`,
+                "zip_public": `${orgArray[8]}`,
+                "logo_file": `${orgArray[9]}`,
+                "primary_name": `${orgArray[10]}`,
+                "primary_email": `${orgArray[11]}`,
+                "primary_phone": `${orgArray[12]}`,
+                "primary_orgposition": `${orgArray[13]}`,
+                "secondary_name": `${orgArray[14]}`,
+                "secondary_email": `${orgArray[15]}`,
+                "secondary_phone": `${orgArray[16]}`,
+                "secondary_orgposition": `${orgArray[17]}`,
+              },
+              "service": {
+                "service_name": `${serviceArray[0]}`,
+                "service_description": `${serviceArray[1]}`,
+                "service_criteria": `${serviceArray[2]}`,
+                "service_counties": `${serviceArray[3]}`,
+                "service_keywords": `${serviceArray[4]}`,
+                "service_phone": `${serviceArray[5]}`,
+                "service_address_street": `${serviceArray[6]}`,
+                "service_city": `${serviceArray[7]}`,
+                "service_state": `${serviceArray[8]}`,
+                "service_zip": `${serviceArray[9]}`,
+                "service_website": `${serviceArray[10]}`,
+                "organization_hours": `${serviceArray[11]}`,
+              } 
+            })
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON response
+        const result = await response.json();
+        console.log('orgData sent successfully:', result);
+        
+        console.log("ORG PAYLOAD:", result.payload);
+        // SENDING ID TO EMAIL JS TO CREATE LINK
+        const emailResponse = await emailjs.send(
+          "service_9byagl9",
+          "template_204azdh",{
+          type: "New",
+          
+        }); 
+      } catch(err){
+        console.error("ERROR: ", err)
+      }
 
 
-
-        // logFormData
         Swal.fire({
           title: "Success Final",
           text: "Your request has been submitted. It is pending review.",
@@ -837,122 +897,129 @@ fetchAndPopulateAllData();
 //   });
 
 //ADDING A SERVICE
-async function addOrganization(orgArray){
-  try{
-    // console.log(document.getElementById('referLastName').value)
-    const data = {
-        "organization": {
-          "company_name": `${orgArray[1]}`,
-          "organization_description": `${orgArray[2]}`,
-          "phone": `${orgArray[3]}`,
-          "website": `${orgArray[4]}`,
-          "address1": `${orgArray[5]}`,
-          "city_public": `${orgArray[6]}`,
-          "state_public": `${orgArray[7]}`,
-          "zip_public": `${orgArray[8]}`,
-          "logo_file": `${orgArray[9]}`,
-          "primary_name": `${orgArray[10]}`,
-          "primary_email": `${orgArray[11]}`,
-          "primary_phone": `${orgArray[12]}`,
-          "primary_orgposition": `${orgArray[13]}`,
-          "secondary_name": `${orgArray[14]}`,
-          "secondary_email": `${orgArray[15]}`,
-          "secondary_phone": `${orgArray[16]}`,
-          "secondary_orgposition": `${orgArray[17]}`,
-        }
-      }
-    //sending to database
-    // console.log("orgData: ", data)
-    const response = await fetch("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-organization", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-    // console.log(response)
+// async function addOrganization(orgArray){
+//   try{
+//     // console.log(document.getElementById('referLastName').value)
+//     const data = {
+//         "organization": {
+//           "company_name": `${orgArray[1]}`,
+//           "organization_description": `${orgArray[2]}`,
+//           "phone": `${orgArray[3]}`,
+//           "website": `${orgArray[4]}`,
+//           "address1": `${orgArray[5]}`,
+//           "city_public": `${orgArray[6]}`,
+//           "state_public": `${orgArray[7]}`,
+//           "zip_public": `${orgArray[8]}`,
+//           "logo_file": `${orgArray[9]}`,
+//           "primary_name": `${orgArray[10]}`,
+//           "primary_email": `${orgArray[11]}`,
+//           "primary_phone": `${orgArray[12]}`,
+//           "primary_orgposition": `${orgArray[13]}`,
+//           "secondary_name": `${orgArray[14]}`,
+//           "secondary_email": `${orgArray[15]}`,
+//           "secondary_phone": `${orgArray[16]}`,
+//           "secondary_orgposition": `${orgArray[17]}`,
+//         }
+//       }
+//     //sending to database
+//     // console.log("orgData: ", data)
+//     const response = await fetch("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-organization", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify(data)
+//     });
+//     // console.log(response)
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+//     if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
 
-    // Parse the JSON response
-    const result = await response.json();
-    console.log('orgData sent successfully:', result);
+//     // Parse the JSON response
+//     const result = await response.json();
+//     console.log('orgData sent successfully:', result);
     
-    console.log("ORG PAYLOAD:", result.payload);
+//     console.log("ORG PAYLOAD:", result.payload);
 
-    return result
-  }catch(err){
-    console.error("ERROR:", err);
-  }
-}
-// ADDING AN ORGANIZATION
-async function addService(orgID, serviceArray) {
-  try{
+//     return result
+//   }catch(err){
+//     console.error("ERROR:", err);
+//   }
+// }
+// // ADDING AN ORGANIZATION
+// async function addService(orgID, serviceArray) {
+//   try{
 
-    console.log('orgID', orgID)
-    console.log('serviceArray', serviceArray)
-    console.log("service array: ", serviceArray)
+//     console.log('orgID', orgID)
+//     console.log('serviceArray', serviceArray)
+//     console.log("service array: ", serviceArray)
 
-    const data = {
-        "organization_id": `${orgID}`,
-        "service": {
-          "service_name": `${serviceArray[0]}`,
-          "service_description": `${serviceArray[1]}`,
-          "service_criteria": `${serviceArray[2]}`,
-          "service_counties": `${serviceArray[3]}`,
-          "service_keywords": `${serviceArray[4]}`,
-          "service_phone": `${serviceArray[5]}`,
-          "service_address_street": `${serviceArray[6]}`,
-          "service_city": `${serviceArray[7]}`,
-          "service_state": `${serviceArray[8]}`,
-          "service_zip": `${serviceArray[9]}`,
-          "service_website": `${serviceArray[10]}`,
-          "organization_hours": `${serviceArray[11]}`,
-        } 
-      }
-    console.log(orgID, JSON.stringify(data))
+//     const data = {
+//         "service": {
+//           "service_name": `${serviceArray[0]}`,
+//           "service_description": `${serviceArray[1]}`,
+//           "service_criteria": `${serviceArray[2]}`,
+//           "service_counties": `${serviceArray[3]}`,
+//           "service_keywords": `${serviceArray[4]}`,
+//           "service_phone": `${serviceArray[5]}`,
+//           "service_address_street": `${serviceArray[6]}`,
+//           "service_city": `${serviceArray[7]}`,
+//           "service_state": `${serviceArray[8]}`,
+//           "service_zip": `${serviceArray[9]}`,
+//           "service_website": `${serviceArray[10]}`,
+//           "organization_hours": `${serviceArray[11]}`,
+//         } 
+//       }
+//     console.log(orgID, JSON.stringify(data))
 
-    const response = await fetchApi("/request-create-service", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Sending JSON
-        // 'Accept': 'application/json'
-      },
-      body: JSON.stringify(orgID,data)
-    });
+//     const response = await fetchApi("/request-create-service", {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json', // Sending JSON
+//         // 'Accept': 'application/json'
+//       },
+//       body: JSON.stringify(orgID,data)
+//     });
 
-    const text = await response.text();
-    console.log("SERVER RESPONSE:", text);
+//     const text = await response.text();
+//     console.log("SERVER RESPONSE:", text);
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+//     if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
 
 
-    // Parse the JSON response
-    const result = await response.json();
-    console.log('Data sent successfully:', result);
-    //asdf
+//     // Parse the JSON response
+//     const result = await response.json();
+//     console.log('Data sent successfully:', result);
+//     //asdf
 
-     // SENDING ID TO EMAIL JS TO CREATE LINK
-    // const emailResponse = await emailjs.send(
-    //   "service_9byagl9",   // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
-    //   "template_204azdh",{ // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-    //     type: "Edit",
-    //     serviceID: result.payload.organization,
-    //     orgID: result.payload.organization,
-    //   });
-    // emailjs.send("service_9byagl9","template_204azdh",{
-    //   type: "a",
-    //   serviceID: "a",
-    //   orgID: "a",
-    // });
-  } catch (objError){
-    console.log('Error sending request', objError)
-  }
-}
+//     console.log("review URL:", result.reviewUrl);
+
+//      // SENDING ID TO EMAIL JS TO CREATE LINK
+//     const emailResponse = await emailjs.send(
+//       "service_9byagl9",
+//       "template_204azdh",{
+//       type: "New",
+//       }); 
+    
+//     // emailjs.send(
+//     //   "service_9byagl9",   // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
+//     //   "template_204azdh",{ // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
+//     //     type: "New",
+//     //     link: result.reviewUrl,
+//     //   });
+//     console.log('Email sent successfully:', emailResponse); // /api/index.php?route=/create-service-with-organization&uuid=NOS720ac5dd168b3310
+//     // emailjs.send("service_9byagl9","template_204azdh",{
+//     //   type: "a",
+//     //   serviceID: "a",
+//     //   orgID: "a",
+//     // });
+//   } catch (objError){
+//     console.log('Error sending request', objError)
+//   }
+// }
 
 // Returns an array of all selected check boxed from a container
 function getSelectedKeywords(containerId) {
