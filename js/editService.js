@@ -54,18 +54,18 @@ let strEditServiceAddressZip
 let strEditServiceWebsite
 let strEditServiceHours
 
-let strPreEditServiceName = 'Test Service Name'
-let strPreEditServiceDescription = 'Test Service Description'
-let strPreEditServiceElegibility = 'Test Service Elegibility'
-let strPreEditServiceCounties = ['Putnam']
-let strPreEditServiceKeywords = ['abuse']
-let strPreEditServicePhoneNumber = 'Test Service Phone Number'
-let strPreEditServicePhysicalAddress = 'Test Service Address'
-let strPreEditServiceAddressCity = 'Test Service City'
-let strPreEditServiceAddressState = 'Test Service State'
-let strPreEditServiceAddressZip = 'Test Zip'
-let strPreEditServiceWebsite = 'Test Service Website'
-let strPreEditServiceHours = 'Test Service Hours'
+let strPreEditServiceName
+let strPreEditServiceDescription
+let strPreEditServiceElegibility
+let strPreEditServiceCounties
+let strPreEditServiceKeywords
+let strPreEditServicePhoneNumber
+let strPreEditServicePhysicalAddress
+let strPreEditServiceAddressCity
+let strPreEditServiceAddressState
+let strPreEditServiceAddressZip
+let strPreEditServiceWebsite
+let strPreEditServiceHours
 
 let strAddServiceName
 let strAddServiceDescription
@@ -871,6 +871,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showStep(currentStep);
   });
   document.querySelector('#step-4 .cancel-btn-1')?.addEventListener('click', () => {
+    document.getElementById('selectService').value = ''
     let activeForm = document.getElementById("divPage4AddServiceInfo");
     let remove = document.getElementById("btnRemoveServiceBtn");
     let inactiveForm = document.getElementById("divPage4EditServiceInfo");
@@ -936,10 +937,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Create checkboxes for counties/keywords
   function createCheckbox(labelText, container, suffix) {
     const value = labelText.toLowerCase().replace(/\s+/g, "-");
+
     const wrapper = document.createElement("div");
-    wrapper.className = "checkbox mb-1";
+    wrapper.className = "checkbox";
+
     const input = document.createElement("input");
     input.type = "checkbox";
+
     input.className = "form-check-input";
     input.id = `${value}-checkbox${suffix}`;
     input.value = labelText.toLowerCase();
@@ -986,9 +990,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      
+      const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
+      const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
       // Step 1 city
       const cityStep1 = document.getElementById('cityPublic');
       if (cityStep1) {
@@ -1071,28 +1074,6 @@ document.addEventListener('DOMContentLoaded', () => {
       target.value = value;
     }
   });
-  let serviceID
-  document.getElementById('selectService').addEventListener('change', (e) => {
-  let activeForm = document.getElementById("divPage4EditServiceInfo");
-  let remove = document.getElementById("btnRemoveServiceBtn");
-  let inactiveForm = document.getElementById("divPage4AddServiceInfo");
-  let btns = document.getElementById("divFinalSubCanBtn");
-  console.log(e.target.value)
-  serviceID = e.target.value
-  if (e.target.value != '') {
-    activeForm.style.display = "block"; 
-    remove.style.display = "block"; 
-    inactiveForm.style.display = "none"; 
-    btns.classList.add("d-none");
-  }
-  else {
-    activeForm.style.display = "none"; 
-    remove.style.display = "none"; 
-    inactiveForm.style.display = "none"; 
-    btns.classList.remove("d-none");
-    btns.classList.add("d-flex");
-  }
-})
 
 document.querySelector('#btnRemoveServiceBtn').addEventListener("click", (e) => {
   Swal.fire({
@@ -1120,6 +1101,7 @@ document.querySelector('#btnRemoveServiceBtn').addEventListener("click", (e) => 
 })
 
 document.querySelector('#addServiceBtn').addEventListener("click", (e) => {
+  document.getElementById('selectService').value = ''
   let activeForm = document.getElementById("divPage4AddServiceInfo");
   let remove = document.getElementById("btnRemoveServiceBtn");
   let inactiveForm = document.getElementById("divPage4EditServiceInfo");
@@ -1320,7 +1302,6 @@ async function findOrg(orgName) {
 
     // Parse the JSON response
     const result = await response.json();
-    console.log('Data sent successfully:', result);
     
     arrOrgs = result
     if (arrOrgs.length === 0) {
@@ -1412,10 +1393,9 @@ async function findOrg(orgName) {
         document.getElementById('secondaryPosition').value = editSelectedOrg.secondary_position
         strPreSecondaryOrgPosition = editSelectedOrg.secondary_position
 
-        console.log(editSelectedOrg)
-
         document.querySelector('#btnFindOrg').style.display = 'none'
         document.querySelector('#divStep2OrgInfo').style.display = 'block'
+        getOrgServices(strPreOrgID)
         return editSelectedOrg
       })
     }
@@ -1482,9 +1462,122 @@ async function findOrg(orgName) {
 
       document.querySelector('#btnFindOrg').style.display = 'none'
       document.querySelector('#divStep2OrgInfo').style.display = 'block'
+      getOrgServices(strPreOrgID)
       return editSelectedOrg
     }
   } catch (objError){
     console.log('Error sending request', objError)
   }
+}
+
+let serviceID
+document.getElementById('selectService').addEventListener('change', (e) => {
+  let activeForm = document.getElementById("divPage4EditServiceInfo");
+  let remove = document.getElementById("btnRemoveServiceBtn");
+  let inactiveForm = document.getElementById("divPage4AddServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
+  console.log(e.target.value)
+  serviceID = e.target.value
+  if (e.target.value != '') {
+    editSelectedService = arrOrgServices[serviceID]
+    console.log(editSelectedService)
+
+    document.getElementById('serviceNameEdit').value = editSelectedService.service_name
+    strPreEditServiceName = editSelectedService.service_name
+
+    document.getElementById('serviceDescriptionEdit').value = editSelectedService.ServiceDescription
+    strPreEditServiceDescription = editSelectedService.ServiceDescription
+
+    document.getElementById('serviceCriteriaEdit').value = editSelectedService.service_criteria
+    strPreEditServiceElegibility = editSelectedService.service_criteria
+
+    let arrCounty =  editSelectedService.service_counties
+    arrCounty = JSON.parse(arrCounty.replace(/'/g, '"'))
+
+    arrCounty.forEach (county => {
+      county = county.toLowerCase()
+      county = county.replace(/ /g, '-')
+      let checkbox = document.querySelector(`#${county}-checkbox-step3-1`)
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    })
+    strPreEditServiceCounties = arrCounty
+
+    let arrKey =  editSelectedService.service_keywords
+    arrKey = JSON.parse(arrKey.replace(/'/g, '"'))
+
+    arrKey.forEach (key => {
+      key = key.toLowerCase()
+      key = key.replace(/ /g, '-')
+      console.log(key)
+      let checkbox = document.querySelector(`#${key}-checkbox-step3-1`)
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    })
+    strPreEditServiceCounties = arrKey
+
+    // strPreEditServiceKeywords
+
+    document.getElementById('servicePhoneEdit').value = editSelectedService.service_phone
+    strPreEditServicePhoneNumber = editSelectedService.service_phone
+
+    document.getElementById('servicePhysicalAddressEdit').value = editSelectedService.ServiceAddress
+    strPreEditServicePhysicalAddress = editSelectedService.ServiceAddress
+
+    document.getElementById('ServicecityAddressEdit').value = editSelectedService.service_city
+    strPreEditServiceAddressCity = editSelectedService.service_city
+
+    document.getElementById('serviceStateEdit').value = editSelectedService.service_state
+    strPreEditServiceAddressState = editSelectedService.service_state
+
+    document.getElementById('serviceZipEdit').value = editSelectedService.service_zip
+    strPreEditServiceAddressZip = editSelectedService.service_zip
+
+    document.getElementById('serviceWebisteEdit').value = editSelectedService.service_website
+    strPreEditServiceWebsite = editSelectedService.service_website
+
+    document.getElementById('updateServiceHours').value = editSelectedService.service_hours
+    strPreEditServiceHours = editSelectedService.service_hours
+
+    activeForm.style.display = "block"; 
+    remove.style.display = "block"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.add("d-none");
+  }
+  else {
+    activeForm.style.display = "none"; 
+    remove.style.display = "none"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
+  }
+})
+
+let arrOrgServices
+async function getOrgServices(orgID) {
+  try{
+    const response = await fetchApi(`/services?organization_id=${orgID}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+    count = 0
+    result.forEach(service => {
+      document.querySelector('#selectService').innerHTML += `<option value="${count}">${service.service_name}</option>`
+      count += 1
+    })
+
+    arrOrgServices = result
+
+    return arrOrgServices
+    } catch (objError){
+      console.log('Error sending request', objError)
+    }
 }
