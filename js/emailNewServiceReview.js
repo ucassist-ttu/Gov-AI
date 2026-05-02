@@ -8,9 +8,6 @@ console.log(serviceId)
 // CALL ENDPOINT TO ADD TO DATABASE
 document.addEventListener('DOMContentLoaded', () => {
   // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
-  // getOrgForService(serviceId).then((organization) => { http://s1092595647.onlinehome.us/api/index.php?route=/create-service-with-organization&uuid=NOSd976337be3274fb4
-  // const orgResponse = fetchAPI(`/create-service-with-organization&uuid=NOSd976337be3274fb4`)
-  // console.log(orgResponse)
   const data = loadService()
   const serviceData = data.service
   const orgData = data.organization
@@ -72,11 +69,6 @@ async function loadService() {
   return data
 }
 
-
-// service = id
-// org id = 
-
-
 async function sendToDB(org, service){
   try{
     //sending to database
@@ -84,32 +76,10 @@ async function sendToDB(org, service){
       `/create-service-with-organization?uuid=${serviceId}`,
       { method: "POST" }
     );
-    // const orgResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=/create-organization`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(org)
-    // })
-    // console.log(orgResponse)
 
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
-
-    // const serviceResponse = await fetch(`http://s1092595647.onlinehome.us/api/index.php?route=/create-service&uuid=${org.id}`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(service)
-    // })
-    // console.log(serviceResponse)
-
-    // // Parse the JSON response
-    // const finalResult =  await serviceResponse.json();
-    // console.log('Data sent successfully:', finalResult);
-
 
   }catch(err){
     console.error("ERROR:", err);
@@ -123,73 +93,3 @@ async function sendToDB(org, service){
           window.location.href = `registration_landing.html`
         })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { addServiceToPendingDB, addServiceToServicesDB, getServiceForReview} from "../backend/fake_backend/dbNewServices.js";
-
-// async function addServiceToDB(id) {  
-//     //LOADING TO DATABASE
-//     addServiceToServicesDB(id);
-
-//     // connect service to organization foreign key maybe???
-//     //   formData.id
-
-//     console.log("Service added to database:", formData);
-
-//     // remove later
-//     localStorage.setItem(
-//     "pendingService",
-//     JSON.stringify(formData)
-//     );
-// }
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const form = document.querySelector('main form');
-
-//   // collecting information 
-//   getServiceForReview(serviceId).then((service) => {
-//       console.log("Found service:", service);
-  
-//       document.getElementById('emailFirstName').value = service.firstName;
-//       document.getElementById('emailLastName').value = service.lastName;
-//       document.getElementById('emailEmail').value = service.email;
-//       document.getElementById('emailPhone').value = service.phone;
-//       document.getElementById('emailMessage').value = service.message;
-//     });
-
-// document.getElementById('btnUpdateDatabase').addEventListener('click', async (e) => {
-//     e.preventDefault();
-//     form.classList.add('was-validated');
-//     const errors = collectFormErrors(form);
-//     if (errors.length === 0) {
-//       try{
-
-//          addServiceToServicesDB(serviceId)
-
-//         swal("Success", "Service(s) submitted successfully!", "success");
-//         form.reset();
-//         form.classList.remove('was-validated');
-//       } catch (err) {
-//         swal("Error", "Something went wrong saving the service(s).", "error");
-//         console.error(err);
-//       }
-//     } else {
-//       const errorList = errors.map(err => `• ${err}`).join('\n');
-//       swal("Missing Information", `Please complete the following:\n\n${errorList}`, "error");
-//       // const firstInvalid = form.querySelector(':invalid');
-//       // if (firstInvalid) firstInvalid.focus();
-//     }
-//   });
-// });

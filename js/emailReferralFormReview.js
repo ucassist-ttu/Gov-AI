@@ -18,11 +18,3 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('emailMessage').value = service.message;
     });
 })
-
-
-// `/referral?"firstName"=${"Jane"},
-//     "lastName"=${"Doe"},
-//     "email"=${"jane@example.com"},
-//     "phone"=${"(931) 555-0000"},
-//     "message"=${"Referral message"}`)
-//     console.log("Found service:", service);
