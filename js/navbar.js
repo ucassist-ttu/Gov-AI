@@ -64,10 +64,6 @@ function getCoordinates() {
 }
 
 async function getCountyName(position) {
-
-  console.log("Latitude: " + position.coords.latitude +
-  "Longitude: " + position.coords.longitude)
-
   const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`);
   const geoData = await response.json()
   let strCountyName = geoData.localityInfo.administrative[3].name
@@ -114,7 +110,6 @@ function getCountyManually() {
         result.value = 'all'
       }
       location.reload();
-      console.log(result.value); // this will be 'value1', 'value2', etc
       sessionStorage.setItem("currCounty", result.value)
 
       displayCounty()

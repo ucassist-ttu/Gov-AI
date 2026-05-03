@@ -16,15 +16,15 @@ let strAddressState
 let strAddressZip
 let strLogo
 
-let strPreOrgID = 'Test Org ID'
-let strPreOrgDescription = 'Test Org Discription'
-let strPrePhoneNumber = 'Test Org Phone Number'
-let strPreWebsite = 'Test Org Website'
-let strPrePhysicalAddress = 'Test Org Physical Address'
-let strPreAddressCity = 'Test Org City'
-let strPreAddressState = 'Test Org State'
-let strPreAddressZip ='Test Org Zip'
-let strPreLogo = 'Test Org Logo'
+let strPreOrgID
+let strPreOrgDescription
+let strPrePhoneNumber
+let strPreWebsite
+let strPrePhysicalAddress
+let strPreAddressCity
+let strPreAddressState
+let strPreAddressZip
+let strPreLogo
 
 let strPrimaryName
 let strPrimaryEmail
@@ -35,11 +35,16 @@ let strSecondaryEmail
 let strSecondaryPhoneNumber
 let strSecondaryOrgPosition
 
-let strPreSecondaryName = 'Test Secondary Contact Name'
-let strPreSecondaryEmail = 'Test Secondary Contact Email'
-let strPreSecondaryPhoneNumber = 'Test Secondary Contact Phone'
-let strPreSecondaryOrgPosition = 'Test Secondary Contact Org Position'
+let strPrePrimaryName
+let strPrePrimaryEmail
+let strPrePrimaryPhoneNumber
+let strPrePrimaryOrgPosition
+let strPreSecondaryName
+let strPreSecondaryEmail
+let strPreSecondaryPhoneNumber
+let strPreSecondaryOrgPosition
 
+let strEditServiceID
 let strEditServiceName
 let strEditServiceDescription
 let strEditServiceElegibility
@@ -53,18 +58,18 @@ let strEditServiceAddressZip
 let strEditServiceWebsite
 let strEditServiceHours
 
-let strPreEditServiceName = 'Test Service Name'
-let strPreEditServiceDescription = 'Test Service Description'
-let strPreEditServiceElegibility = 'Test Service Elegibility'
-let strPreEditServiceCounties = ['Putnam']
-let strPreEditServiceKeywords = ['abuse']
-let strPreEditServicePhoneNumber = 'Test Service Phone Number'
-let strPreEditServicePhysicalAddress = 'Test Service Address'
-let strPreEditServiceAddressCity = 'Test Service City'
-let strPreEditServiceAddressState = 'Test Service State'
-let strPreEditServiceAddressZip = 'Test Zip'
-let strPreEditServiceWebsite = 'Test Service Website'
-let strPreEditServiceHours = 'Test Service Hours'
+let strPreEditServiceName
+let strPreEditServiceDescription
+let strPreEditServiceElegibility
+let strPreEditServiceCounties
+let strPreEditServiceKeywords
+let strPreEditServicePhoneNumber
+let strPreEditServicePhysicalAddress
+let strPreEditServiceAddressCity
+let strPreEditServiceAddressState
+let strPreEditServiceAddressZip
+let strPreEditServiceWebsite
+let strPreEditServiceHours
 
 let strAddServiceName
 let strAddServiceDescription
@@ -81,6 +86,7 @@ let strHoursAdd
 
 let orgArray = []
 let serviceArray = []
+let editArray = []
 
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
@@ -478,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
           strEditorOrgPosition = document.getElementById('editorPosition').value
         }
+        editArray = [strEditorName, strEditorEmail, strEditorPhoneNumber, strEditorOrgPosition]
         currentStep = 1;
         showStep(currentStep);
       } else {
@@ -496,6 +503,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let editSelectedOrg
+  document.querySelector('#btnFindOrg').addEventListener('click', async () => {
+    const strCompanyName = document.getElementById('companyName').value;
+    const selectedOrg = await processOrg(strCompanyName);
+  });
+
+  let arrOrgs = []
   const formStep2 = document.getElementById('form-step-2');
   if (formStep2) { 
     formStep2.addEventListener('submit', e => {
@@ -784,12 +798,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         orgArray = [strPreOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
         if (button.id == 'btnUpdateService') {
-          serviceArray = [strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceHours]
-          addService(orgArray, serviceArray)
+          serviceArray = [strEditServiceName, strEditServiceDescription, strEditServiceElegibility, strEditServiceCounties, strEditServiceKeywords, strEditServicePhoneNumber, strEditServicePhysicalAddress, strEditServiceAddressCity, strEditServiceAddressState, strEditServiceAddressZip, strEditServiceWebsite, strEditServiceHours, strEditServiceID]
+          addService(orgArray, editArray, serviceArray, 'request-update-service')
         }
         else {
           serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
-          addService(orgArray, serviceArray)
+          addService(orgArray, editArray, serviceArray, 'request-create-service')
         }
         Swal.fire({
           title: "Success",
@@ -860,6 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showStep(currentStep);
   });
   document.querySelector('#step-4 .cancel-btn-1')?.addEventListener('click', () => {
+    document.getElementById('selectService').value = ''
     let activeForm = document.getElementById("divPage4AddServiceInfo");
     let remove = document.getElementById("btnRemoveServiceBtn");
     let inactiveForm = document.getElementById("divPage4EditServiceInfo");
@@ -1043,10 +1058,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Create checkboxes for counties/keywords
   function createCheckbox(labelText, container, suffix) {
     const value = labelText.toLowerCase().replace(/\s+/g, "-");
+
     const wrapper = document.createElement("div");
-    wrapper.className = "checkbox mb-1";
+    wrapper.className = "checkbox";
+
     const input = document.createElement("input");
     input.type = "checkbox";
+
     input.className = "form-check-input";
     input.id = `${value}-checkbox${suffix}`;
     input.value = labelText.toLowerCase();
@@ -1093,9 +1111,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim()))].sort((a, b) => a.localeCompare(b));
-      
+      const uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
+      const uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
       // Step 1 city
       const cityStep1 = document.getElementById('cityPublic');
       if (cityStep1) {
@@ -1178,26 +1195,6 @@ document.addEventListener('DOMContentLoaded', () => {
       target.value = value;
     }
   });
-  document.getElementById('selectService').addEventListener('change', (e) => {
-  let activeForm = document.getElementById("divPage4EditServiceInfo");
-  let remove = document.getElementById("btnRemoveServiceBtn");
-  let inactiveForm = document.getElementById("divPage4AddServiceInfo");
-  let btns = document.getElementById("divFinalSubCanBtn");
-  console.log(e.target.value)
-  if (e.target.value != '') {
-    activeForm.style.display = "block"; 
-    remove.style.display = "block"; 
-    inactiveForm.style.display = "none"; 
-    btns.classList.add("d-none");
-  }
-  else {
-    activeForm.style.display = "none"; 
-    remove.style.display = "none"; 
-    inactiveForm.style.display = "none"; 
-    btns.classList.remove("d-none");
-    btns.classList.add("d-flex");
-  }
-})
 
 document.querySelector('#btnRemoveServiceBtn').addEventListener("click", (e) => {
   Swal.fire({
@@ -1224,6 +1221,7 @@ document.querySelector('#btnRemoveServiceBtn').addEventListener("click", (e) => 
   });
 })
 document.querySelector('#addServiceBtn').addEventListener("click", (e) => {
+  document.getElementById('selectService').value = ''
   let activeForm = document.getElementById("divPage4AddServiceInfo");
   let remove = document.getElementById("btnRemoveServiceBtn");
   let inactiveForm = document.getElementById("divPage4EditServiceInfo");
@@ -1299,9 +1297,13 @@ function getSelectedKeywords(containerId) {
 // });
 });
 
-async function addService(orgArray, serviceArray) {
+async function addService(orgArray,editArray, serviceArray, type) {
   try{
-    let data = {
+    let data
+    if (type === 'request-update-service') {
+      data = {
+        "company_id": `${orgArray[0]}`,
+        "service_id": `${serviceArray[12]}`,
         "organization": {
           "id": `${orgArray[0]}`,
           "company_name": `${orgArray[1]}`,
@@ -1322,6 +1324,12 @@ async function addService(orgArray, serviceArray) {
           "secondary_phone": `${orgArray[16]}`,
           "secondary_orgposition": `${orgArray[17]}`
         },
+        editor: {
+          "name": `${editArray[0]}`,
+          "email": `${editArray[1]}`,
+          "phone": `${editArray[2]}`,
+          "position": `${editArray[3]}`
+        },
         "service": {
           "company_id": `${orgArray[0]}`,
           "service_name": `${serviceArray[0]}`,
@@ -1338,10 +1346,48 @@ async function addService(orgArray, serviceArray) {
           "organization_hours": `${serviceArray[11]}`,
         } 
       }
-
+    }
+    else {
+      data = {
+          "organization": {
+            "id": `${orgArray[0]}`,
+            "company_name": `${orgArray[1]}`,
+            "organization_description": `${orgArray[2]}`,
+            "phone": `${orgArray[3]}`,
+            "website": `${orgArray[4]}`,
+            "address1": `${orgArray[5]}`,
+            "city_public": `${orgArray[6]}`,
+            "state_public": `${orgArray[7]}`,
+            "zip_public": `${orgArray[8]}`,
+            "logo": `${orgArray[9]}`,
+            "primary_name": `${orgArray[10]}`,
+            "primary_email": `${orgArray[11]}`,
+            "primary_phone": `${orgArray[12]}`,
+            "primary_orgposition": `${orgArray[13]}`,
+            "secondary_name": `${orgArray[14]}`,
+            "secondary_email": `${orgArray[15]}`,
+            "secondary_phone": `${orgArray[16]}`,
+            "secondary_orgposition": `${orgArray[17]}`
+          },
+          "service": {
+            "company_id": `${orgArray[0]}`,
+            "service_name": `${serviceArray[0]}`,
+            "service_description": `${serviceArray[1]}`,
+            "service_criteria": `${serviceArray[2]}`,
+            "service_counties": `${serviceArray[3]}`,
+            "service_keywords": `${serviceArray[4]}`,
+            "service_phone": `${serviceArray[5]}`,
+            "service_address_street": `${serviceArray[6]}`,
+            "service_city": `${serviceArray[7]}`,
+            "service_state": `${serviceArray[8]}`,
+            "service_zip": `${serviceArray[9]}`,
+            "service_website": `${serviceArray[10]}`,
+            "organization_hours": `${serviceArray[11]}`,
+          } 
+        }
+      }
     console.log(data)
-
-    const response = await fetchApi("http://s1092595647.onlinehome.us/api/index.php?route=/request-create-service", {
+    const response = await fetchApi(`/${type}`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json', // Sending JSON
@@ -1366,9 +1412,303 @@ async function addService(orgArray, serviceArray) {
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
-    console.log('Email sent successfully:', emailResponse);
 
   } catch (objError){
     console.log('Error sending request', objError)
   }
+}
+
+function processOrg (strCompanyName) {
+  findOrg(strCompanyName)
+}
+
+async function findOrg(orgName) {
+  try{
+    const response = await fetchApi(`/organizations?name=${orgName}`);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    
+    arrOrgs = result
+    if (arrOrgs.length === 0) {
+      Swal.fire({
+        title: "Organization not found",
+        icon: "error",
+        html: `
+          <div>
+            We couldn't find this organization. Please check the name and try again.
+          </div>
+        `
+      });
+    }
+    else if (arrOrgs.length > 1) {
+      selectStatement = `<select id="swalOrg" name="swalOrg" class="form-select form-control border-2 rounded p-2 px-3 mt-3 mb-2" aria-label="State">`
+      selectStatement += `<option value="" disabled selected>Choose Organization</option>`
+      count = 0
+      arrOrgs.forEach(org => {
+        selectStatement += `<option value="${count}">${org.company_name}</option>`
+        count += 1
+      })
+      selectStatement += `</select>`
+      Swal.fire({
+        title: "Multiple organizations found",
+        icon: "warning",
+        html: `
+          <div>
+            Multiple organizations matched your search. Please select your organization.
+            ${selectStatement}
+          </div>
+        `
+      }).then((result) => {
+        selectedOrgID = document.querySelector('#swalOrg').value
+        editSelectedOrg = arrOrgs[selectedOrgID]
+        document.getElementById('companyName').value = editSelectedOrg.company_name
+        document.getElementById('companyName').disabled = true;
+
+        strPreOrgID = editSelectedOrg.id
+        strCompanyName = editSelectedOrg.company_name
+
+        document.getElementById('orgDescription').value = editSelectedOrg.organization_description
+        strPreOrgDescription = editSelectedOrg.organization_description
+        
+        document.getElementById('phoneNumber').value = editSelectedOrg.phone
+        strPrePhoneNumber = editSelectedOrg.phone
+
+        document.getElementById('website').value = editSelectedOrg.website
+        strPreWebsite = editSelectedOrg.website
+
+        document.getElementById('physicalAddress').value = editSelectedOrg.address1
+        strPrePhysicalAddress = editSelectedOrg.address1
+
+        document.getElementById('cityAddress').value = editSelectedOrg.city_public
+        strPreAddressCity = editSelectedOrg.city_public
+
+        document.getElementById('statePublic').value = editSelectedOrg.state_public
+        strPreAddressState = editSelectedOrg.state_public
+
+        document.getElementById('zipPublic').value = editSelectedOrg.zip_public
+        strPreAddressZip = editSelectedOrg.zip_public
+
+        strPreLogo = editSelectedOrg.logo
+        if(strPreLogo != 'N/A') {
+          document.querySelector('#divOldLogo').innerHTML += `<img src="${strPreLogo}" alt="${strCompanyName}" onerror="this.onerror=null;this.src='/assets/images/placeholder-img.png';" style="max-height: 150px">`
+          document.querySelector('#divOldLogo').style.display = 'block'
+        }
+
+        document.getElementById('primaryName').value = editSelectedOrg.primary_name
+        strPrePrimaryName = editSelectedOrg.primary_name
+
+        document.getElementById('primaryEmail').value = editSelectedOrg.primary_email
+        strPrePrimaryEmail = editSelectedOrg.primary_email
+        
+        document.getElementById('primaryPhone').value = editSelectedOrg.primary_phone
+        strPrePrimaryPhoneNumber = editSelectedOrg.primary_phone
+
+        document.getElementById('primaryPosition').value = editSelectedOrg.primary_position
+        strPrePrimaryOrgPosition = editSelectedOrg.primary_position
+
+        document.getElementById('secondaryName').value = editSelectedOrg.secondary_name
+        strPreSecondaryName = editSelectedOrg.secondary_name
+
+        document.getElementById('secondaryEmail').value = editSelectedOrg.secondary_email
+        strPreSecondaryEmail = editSelectedOrg.secondary_email
+
+        document.getElementById('secondaryPhone').value = editSelectedOrg.secondary_phone
+        strPreSecondaryPhoneNumber = editSelectedOrg.secondary_phone
+
+        document.getElementById('secondaryPosition').value = editSelectedOrg.secondary_position
+        strPreSecondaryOrgPosition = editSelectedOrg.secondary_position
+
+        document.querySelector('#btnFindOrg').style.display = 'none'
+        document.querySelector('#divStep2OrgInfo').style.display = 'block'
+        getOrgServices(strPreOrgID)
+        return editSelectedOrg
+      })
+    }
+    else {
+      editSelectedOrg = result[0]
+      document.getElementById('companyName').value = editSelectedOrg.company_name
+      document.getElementById('companyName').disabled = true;
+
+      strPreOrgID = editSelectedOrg.id
+      strCompanyName = editSelectedOrg.company_name
+
+      document.getElementById('orgDescription').value = editSelectedOrg.organization_description
+      strPreOrgDescription = editSelectedOrg.organization_description
+      
+      document.getElementById('phoneNumber').value = editSelectedOrg.phone
+      strPrePhoneNumber = editSelectedOrg.phone
+
+      document.getElementById('website').value = editSelectedOrg.website
+      strPreWebsite = editSelectedOrg.website
+
+      document.getElementById('physicalAddress').value = editSelectedOrg.address1
+      strPrePhysicalAddress = editSelectedOrg.address1
+
+      document.getElementById('cityAddress').value = editSelectedOrg.city_public
+      strPreAddressCity = editSelectedOrg.city_public
+
+      document.getElementById('statePublic').value = editSelectedOrg.state_public
+      strPreAddressState = editSelectedOrg.state_public
+
+      document.getElementById('zipPublic').value = editSelectedOrg.zip_public
+      strPreAddressZip = editSelectedOrg.zip_public
+
+      strPreLogo = editSelectedOrg.logo
+      if(strPreLogo != 'N/A') {
+        document.querySelector('#divOldLogo').innerHTML += `<img src="${strPreLogo}" alt="${strCompanyName}" onerror="this.onerror=null;this.src='/assets/images/placeholder-img.png';" style="max-height: 150px">`
+        document.querySelector('#divOldLogo').style.display = 'block'
+      }
+
+      document.getElementById('primaryName').value = editSelectedOrg.primary_name
+      strPrePrimaryName = editSelectedOrg.primary_name
+
+      document.getElementById('primaryEmail').value = editSelectedOrg.primary_email
+      strPrePrimaryEmail = editSelectedOrg.primary_email
+      
+      document.getElementById('primaryPhone').value = editSelectedOrg.primary_phone
+      strPrePrimaryPhoneNumber = editSelectedOrg.primary_phone
+
+      document.getElementById('primaryPosition').value = editSelectedOrg.primary_position
+      strPrePrimaryOrgPosition = editSelectedOrg.primary_position
+
+      document.getElementById('secondaryName').value = editSelectedOrg.secondary_name
+      strPreSecondaryName = editSelectedOrg.secondary_name
+
+      document.getElementById('secondaryEmail').value = editSelectedOrg.secondary_email
+      strPreSecondaryEmail = editSelectedOrg.secondary_email
+
+      document.getElementById('secondaryPhone').value = editSelectedOrg.secondary_phone
+      strPreSecondaryPhoneNumber = editSelectedOrg.secondary_phone
+
+      document.getElementById('secondaryPosition').value = editSelectedOrg.secondary_position
+      strPreSecondaryOrgPosition = editSelectedOrg.secondary_position
+
+      console.log(editSelectedOrg)
+
+      document.querySelector('#btnFindOrg').style.display = 'none'
+      document.querySelector('#divStep2OrgInfo').style.display = 'block'
+      getOrgServices(strPreOrgID)
+      return editSelectedOrg
+    }
+  } catch (objError){
+    console.log('Error sending request', objError)
+  }
+}
+
+let serviceID
+document.getElementById('selectService').addEventListener('change', (e) => {
+  let activeForm = document.getElementById("divPage4EditServiceInfo");
+  let remove = document.getElementById("btnRemoveServiceBtn");
+  let inactiveForm = document.getElementById("divPage4AddServiceInfo");
+  let btns = document.getElementById("divFinalSubCanBtn");
+  console.log(e.target.value)
+  serviceID = e.target.value
+  if (e.target.value != '') {
+    editSelectedService = arrOrgServices[serviceID]
+    console.log(editSelectedService)
+
+    document.getElementById('serviceNameEdit').value = editSelectedService.service_name
+    strPreEditServiceName = editSelectedService.service_name
+
+    document.getElementById('serviceDescriptionEdit').value = editSelectedService.ServiceDescription
+    strPreEditServiceDescription = editSelectedService.ServiceDescription
+
+    document.getElementById('serviceCriteriaEdit').value = editSelectedService.service_criteria
+    strPreEditServiceElegibility = editSelectedService.service_criteria
+
+    let arrCounty =  editSelectedService.service_counties
+    arrCounty = JSON.parse(arrCounty.replace(/'/g, '"'))
+
+    arrCounty.forEach (county => {
+      county = county.toLowerCase()
+      county = county.replace(/ /g, '-')
+      let checkbox = document.querySelector(`#${county}-checkbox-step3-1`)
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    })
+    strPreEditServiceCounties = arrCounty
+
+    let arrKey =  editSelectedService.service_keywords
+    arrKey = JSON.parse(arrKey.replace(/'/g, '"'))
+
+    arrKey.forEach (key => {
+      key = key.toLowerCase()
+      key = key.replace(/ /g, '-')
+      console.log(key)
+      let checkbox = document.querySelector(`#${key}-checkbox-step3-1`)
+        if (checkbox) {
+            checkbox.checked = true;
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    })
+    strPreEditServiceCounties = arrKey
+
+    // strPreEditServiceKeywords
+
+    document.getElementById('servicePhoneEdit').value = editSelectedService.service_phone
+    strPreEditServicePhoneNumber = editSelectedService.service_phone
+
+    document.getElementById('servicePhysicalAddressEdit').value = editSelectedService.ServiceAddress
+    strPreEditServicePhysicalAddress = editSelectedService.ServiceAddress
+
+    document.getElementById('ServicecityAddressEdit').value = editSelectedService.service_city
+    strPreEditServiceAddressCity = editSelectedService.service_city
+
+    document.getElementById('serviceStateEdit').value = editSelectedService.service_state
+    strPreEditServiceAddressState = editSelectedService.service_state
+
+    document.getElementById('serviceZipEdit').value = editSelectedService.service_zip
+    strPreEditServiceAddressZip = editSelectedService.service_zip
+
+    document.getElementById('serviceWebisteEdit').value = editSelectedService.service_website
+    strPreEditServiceWebsite = editSelectedService.service_website
+
+    document.getElementById('updateServiceHours').value = editSelectedService.service_hours
+    strPreEditServiceHours = editSelectedService.service_hours
+    strEditServiceID = editSelectedService.ID
+
+    activeForm.style.display = "block"; 
+    remove.style.display = "block"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.add("d-none");
+  }
+  else {
+    activeForm.style.display = "none"; 
+    remove.style.display = "none"; 
+    inactiveForm.style.display = "none"; 
+    btns.classList.remove("d-none");
+    btns.classList.add("d-flex");
+  }
+})
+
+let arrOrgServices
+async function getOrgServices(orgID) {
+  try{
+    const response = await fetchApi(`/services?organization_id=${orgID}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response
+    const result = await response.json();
+    console.log('Data sent successfully:', result);
+    count = 0
+    result.forEach(service => {
+      document.querySelector('#selectService').innerHTML += `<option value="${count}">${service.service_name}</option>`
+      count += 1
+    })
+
+    arrOrgServices = result
+
+    return arrOrgServices
+    } catch (objError){
+      console.log('Error sending request', objError)
+    }
 }
