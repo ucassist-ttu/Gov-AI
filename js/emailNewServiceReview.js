@@ -2,9 +2,6 @@
 const params = new URLSearchParams(window.location.search);
 const serviceId = params.get('uuid');
 
-console.log("hello")
-console.log(serviceId)
-
 // CALL ENDPOINT TO ADD TO DATABASE
 document.addEventListener('DOMContentLoaded', () => {
   // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
@@ -17,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })
 
-
 async function loadService() {
   const response = await fetch(
     `http://s1092595647.onlinehome.us/api/index.php?route=/create-service-with-organization&uuid=${serviceId}`
@@ -26,9 +22,7 @@ async function loadService() {
   const data = await response.json();
   const service = data.services
   const org = data.organization
-  console.log(data)
-  console.log(service);
-  console.log(org);
+
   // DISPLAYING NEW INFORMATION
   // company information
   document.getElementById('newCompanyName').value = org.company_name;
@@ -79,7 +73,7 @@ async function sendToDB(org, service){
 
     // Parse the JSON response
     const result = await response.json();
-    console.log('Data sent successfully:', result);
+    console.log('Data sent successfully');
 
   }catch(err){
     console.error("ERROR:", err);

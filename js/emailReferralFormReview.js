@@ -6,7 +6,6 @@ const serviceId = params.get("id");
 // CALL ENDPOINT TO UPDATE DATABASE
 document.addEventListener('DOMContentLoaded', () => {
   // CALL REFERRAL SERVICE ENDPOINT TO GET SERVICE ID
-  // getReferralByID(serviceId).then((service) => { http://s1092595647.onlinehome.us/api/index.php?route=/
   fetch(`http://s1092595647.onlinehome.us/api/index.php?route=/referral&id=${serviceId}`)
     .then(response => response.json())
     .then(service => {

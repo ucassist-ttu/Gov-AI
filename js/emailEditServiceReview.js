@@ -6,10 +6,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         await callServicePage(serviceId);
     }
 
+    //submit button
     const btnUpdate = document.getElementById('btnUpdateDatabase');
 
     btnUpdate.addEventListener('click', async () => {
-        await fetchApi("/request-create-service", {
+        const data = {
+
+        }
+
+        // calling update endpoint
+        await fetchApi("/request-update-service", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -17,24 +23,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             body: JSON.stringify(data)
         });
 
-        await fetchApi("/request-create-organization", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
+        // await fetchApi("/request-create-organization", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(data)
+        // });
     });
 });
 
 async function callServicePage(service_id) {
     try {
+        // populate editor & updated information
+        const servEditFormResponse = await fetchApi(`/api/index.php?route=/service-request&uuid=${service_id}`);
+        const servEditFormData = await servEditFormResponse.json();
+        const editorInfo = servEditFormData.editor
+        const updatedServiceInfo = servEditFormData.service;
+        const servUpdatedData =[]
+
+        if (servEditFormData.organization) {
+            servUpdatedData.push(servEditFormData.organization);
+        }
+        if (servEditFormData.service) {
+            servUpdatedData.push(servEditFormData.service);
+        }
+
+        // get current service information
         const servResponse = await fetchApi(`/service?id=${service_id}`);
         const servCurrData = await servResponse.json();
 
-        const servUpdatedResponse = await fetchApi(`/service-request?id=${service_id}`);
-        const servUpdatedData = await servUpdatedResponse.json();
 
+        // GET /api/index.php?route=/service-request&uuid=<uuid>
         displayform(servCurrData, servUpdatedData);
 
     } catch (err) {
@@ -43,6 +63,8 @@ async function callServicePage(service_id) {
 }
 
 function displayform(currInfo, newInfo) {
+
+    console.log(currInfo, newInfo);
     document.getElementById("oldCompanyName").value = currInfo.company_name;
     document.getElementById("oldOrgDescription").value = currInfo.organization_description;
     document.getElementById("oldPhone").value = currInfo.phone;
@@ -76,38 +98,39 @@ function displayform(currInfo, newInfo) {
     document.getElementById("oldServiceZip1").value = currInfo.service_zip;
     document.getElementById("oldServiceHours").value = currInfo.organization_hours;
 
-    document.getElementById("updatedCompanyName").value = newInfo.company_name;
-    document.getElementById("updatedOrgDescription").value = newInfo.organization_description;
-    document.getElementById("updatedPhone").value = newInfo.phone;
-    document.getElementById("updatedWebsite").value = newInfo.website;
-    document.getElementById("updatedPhysicalAddress").value = newInfo.address1;
-    document.getElementById("updatedCityPublic").value = newInfo.city_public;
-    document.getElementById("updatedStatePublic").value = newInfo.state_public;
-    document.getElementById("updatedZipPublic").value = newInfo.zip_public;
-    document.getElementById("updatedOrgKeywords").value = newInfo.keywords || "";
-    document.getElementById("updatedOrgHours").value = newInfo.organization_hours || "";
+    if (newInfo.length == 2){ // IF there are two sets of new information - service & organization
+        document.getElementById("updatedCompanyName").value = newInfo[1].company_name;
+        document.getElementById("updatedOrgDescription").value = newInfo[1].organization_description;
+        document.getElementById("updatedPhone").value = newInfo[1].phone;
+        document.getElementById("updatedWebsite").value = newInfo[1].website;
+        document.getElementById("updatedPhysicalAddress").value = newInfo[1].address1;
+        document.getElementById("updatedCityPublic").value = newInfo[1].city_public;
+        document.getElementById("updatedStatePublic").value = newInfo[1].state_public;
+        document.getElementById("updatedZipPublic").value = newInfo[1].zip_public;
+        document.getElementById("updatedOrgKeywords").value = newInfo[1].keywords || "";
+        document.getElementById("updatedOrgHours").value = newInfo[1].organization_hours || "";
 
-    document.getElementById("updatedPrimaryName").value = newInfo.primary_name;
-    document.getElementById("updatedPrimaryEmail").value = newInfo.primary_email;
-    document.getElementById("updatedPrimaryPhone").value = newInfo.primary_phone;
-    document.getElementById("updatedPrimaryPosition").value = newInfo.primary_orgposition;
+        document.getElementById("updatedPrimaryName").value = newInfo[1].primary_name;
+        document.getElementById("updatedPrimaryEmail").value = newInfo[1].primary_email;
+        document.getElementById("updatedPrimaryPhone").value = newInfo[1].primary_phone;
+        document.getElementById("updatedPrimaryPosition").value = newInfo[1].primary_orgposition;
 
-    document.getElementById("updatedSecondaryName").value = newInfo.secondary_name;
-    document.getElementById("updatedSecondaryEmail").value = newInfo.secondary_email;
-    document.getElementById("updatedSecondaryPhone").value = newInfo.secondary_phone;
-    document.getElementById("updatedSecondaryPosition").value = newInfo.secondary_orgposition;
-
-    document.getElementById("updatedServiceName").value = newInfo.service_name;
-    document.getElementById("updatedServiceDescription").value = newInfo.service_description;
-    document.getElementById("updatedServiceCriteria").value = newInfo.service_criteria;
-    document.getElementById("updatedServiceCounties").value = newInfo.service_counties;
-    document.getElementById("updatedServiceKeywords").value = newInfo.service_keywords;
-    document.getElementById("updatedServicePhone1").value = newInfo.service_phone;
-    document.getElementById("updatedServiceAddressStreet1").value = newInfo.service_address_street;
-    document.getElementById("updatedServiceCity1").value = newInfo.service_city;
-    document.getElementById("updatedServiceState1").value = newInfo.service_state;
-    document.getElementById("updatedServiceZip1").value = newInfo.service_zip;
-    document.getElementById("updatedServiceHours").value = newInfo.organization_hours;
+        document.getElementById("updatedSecondaryName").value = newInfo[1].secondary_name;
+        document.getElementById("updatedSecondaryEmail").value = newInfo[1].secondary_email;
+        document.getElementById("updatedSecondaryPhone").value = newInfo[1].secondary_phone;
+        document.getElementById("updatedSecondaryPosition").value = newInfo[1].secondary_orgposition;
+    }
+    document.getElementById("updatedServiceName").value = newInfo[0].service_name;
+    document.getElementById("updatedServiceDescription").value = newInfo[0].service_description;
+    document.getElementById("updatedServiceCriteria").value = newInfo[0].service_criteria;
+    document.getElementById("updatedServiceCounties").value = newInfo[0].service_counties;
+    document.getElementById("updatedServiceKeywords").value = newInfo[0].service_keywords;
+    document.getElementById("updatedServicePhone1").value = newInfo[0].service_phone;
+    document.getElementById("updatedServiceAddressStreet1").value = newInfo[0].service_address_street;
+    document.getElementById("updatedServiceCity1").value = newInfo[0].service_city;
+    document.getElementById("updatedServiceState1").value = newInfo[0].service_state;
+    document.getElementById("updatedServiceZip1").value = newInfo[0].service_zip;
+    document.getElementById("updatedServiceHours").value = newInfo[0].organization_hours;
 }
 
 
@@ -118,7 +141,52 @@ function displayform(currInfo, newInfo) {
 
 
 
-
+// service_id: 568,
+//     company_id: 453,
+ 
+//     editor: {
+//       name: "Ashley Porter",
+//       email: "ashley@example.com",
+//       phone: "931-555-0100",
+//       position: "Program Coordinator"
+//     },
+ 
+//     service: {
+//       company_id: 453,
+//       service_name: "Updated Service Name",
+//       service_description: "Updated service description",
+//       service_criteria: "Updated eligibility criteria",
+//       service_counties: "Putnam, Cumberland",
+//       service_keywords: "housing, utilities, assistance",
+//       service_phone: "931-555-0199",
+//       service_address_street: "123 Main St",
+//       service_city: "Cookeville",
+//       service_state: "TN",
+//       service_zip: "38501",
+//       service_website: "https://example.org",
+//       organization_hours: "Mon-Fri 8 AM-5 PM"
+//     }
+ 
+    // Include only if org info is also being updated:
+    // organization: {
+    //   id: 453,
+    //   company_name: "Updated Organization Name",
+    //   organization_description: "Updated organization description",
+    //   phone: "931-555-0111",
+    //   website: "https://example.org",
+    //   address1: "123 Main St",
+    //   city_public: "Cookeville",
+    //   state_public: "TN",
+    //   zip_public: "38501",
+    //   logo: "https://example.org/logo.png",
+    //   primary_name: "Primary Contact",
+    //   primary_email: "primary@example.org",
+    //   primary_phone: "931-555-0123",
+    //   primary_orgposition: "Director",
+    //   secondary_name: "Secondary Contact",
+    //   secondary_email: "secondary@example.org",
+    //   secondary_phone: "931-555-0124",
+    //   secondary_orgposition: "Assistant Director"
 
 
 
