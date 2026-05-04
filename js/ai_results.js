@@ -1,4 +1,4 @@
-    import {getCounties} from "../js/iNeed.js"
+import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
 let printed = false;
 

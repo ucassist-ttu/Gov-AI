@@ -1,5 +1,4 @@
-//CHANGE THESE IDs AS SOON
-  emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
+emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
     
 document.addEventListener('DOMContentLoaded', () => {
   const steps = ['step-1', 'step-2', 'step-3'];
@@ -377,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const formStep3 = document.getElementById('form-step-3');
   if (formStep3) {
-    formStep3.addEventListener('submit', e => {
+    formStep3.addEventListener('submit', async (e) => {
       e.preventDefault();
       formStep3.classList.add('was-validated');
       const errors = collectFormErrors(formStep3);
@@ -485,7 +484,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orgArray = [strOrgID, strCompanyName, strOrgDescription, strPhoneNumber, strWebsite, strPhysicalAddress, strAddressCity, strAddressState, strAddressZip, strLogo, strPrimaryName, strPrimaryEmail, strPrimaryPhoneNumber, strPrimaryOrgPosition, strSecondaryName, strSecondaryEmail, strSecondaryPhoneNumber, strSecondaryOrgPosition]
         serviceArray = [strAddServiceName, strAddServiceDescription, strAddServiceElegibility, strAddServiceCounties, strAddServiceKeywords, strAddServicePhoneNumber, strAddServicePhysicalAddress, strAddServiceAddressCity, strAddServiceAddressState, strAddServiceAddressZip, strAddServiceWebsite, strHoursAdd]
-        addService(orgArray, serviceArray)
+        
+        try{
+          const response = await fetchApi("/request-create-service-with-organization", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              "organization": {
+                "company_name": `${orgArray[1]}`,
+                "organization_description": `${orgArray[2]}`,
+                "phone": `${orgArray[3]}`,
+                "website": `${orgArray[4]}`,
+                "address1": `${orgArray[5]}`,
+                "city_public": `${orgArray[6]}`,
+                "state_public": `${orgArray[7]}`,
+                "zip_public": `${orgArray[8]}`,
+                "logo_file": `${orgArray[9]}`,
+                "primary_name": `${orgArray[10]}`,
+                "primary_email": `${orgArray[11]}`,
+                "primary_phone": `${orgArray[12]}`,
+                "primary_orgposition": `${orgArray[13]}`,
+                "secondary_name": `${orgArray[14]}`,
+                "secondary_email": `${orgArray[15]}`,
+                "secondary_phone": `${orgArray[16]}`,
+                "secondary_orgposition": `${orgArray[17]}`,
+              },
+              "service": {
+                "service_name": `${serviceArray[0]}`,
+                "service_description": `${serviceArray[1]}`,
+                "service_criteria": `${serviceArray[2]}`,
+                "service_counties": `${serviceArray[3]}`,
+                "service_keywords": `${serviceArray[4]}`,
+                "service_phone": `${serviceArray[5]}`,
+                "service_address_street": `${serviceArray[6]}`,
+                "service_city": `${serviceArray[7]}`,
+                "service_state": `${serviceArray[8]}`,
+                "service_zip": `${serviceArray[9]}`,
+                "service_website": `${serviceArray[10]}`,
+                "organization_hours": `${serviceArray[11]}`,
+              } 
+            })
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON response
+        const result = await response.json();
+        console.log('orgData sent successfully:', result);
+        console.log(result.id)
+        console.log("REVIEW URL:", result.reviewUrl);
+        // SENDING ID TO EMAIL JS TO CREATE LINK
+        const emailResponse = await emailjs.send("service_9byagl9","template_204azdh",{
+          type: "New",
+          reviewLink: result.reviewUrl,
+        })
+      } catch(err){
+        console.error("ERROR: ", err)
+      }
+
+
         Swal.fire({
           title: "Success",
           text: "Your request has been submitted. It is pending review.",
@@ -690,160 +748,6 @@ fetchAndPopulateAllData();
     }
   });
 });
-
-
-
-//EMAIL JS - COLLECT INFORMATION AND SEND EMAIL
-
-function logFormData() { // collects form data and returns unique ID for email linking
-  const orgData = {
-    id: "NS" + new Date().getTime(), // Using timestamp as unique ID - NS = New Service
-
-    // --- ORG PUBLIC ---
-    company_name: document.querySelector('[data-name="Company Name Input"]')?.value,
-    organization_description: document.querySelector('[data-name="Organization Description Input"]')?.value,
-    phone: document.getElementById("phone")?.value,
-    website: document.getElementById("website")?.value,
-    address1: document.getElementById("physicalAddress")?.value,
-    city_public: document.getElementById("cityPublic")?.value,
-    state_public: document.getElementById("statePublic")?.value,
-    zip_public: document.getElementById("zipPublic")?.value,
-
-    // --- CONTACTS ---
-    primary_name: document.getElementById("primaryName")?.value,
-    primary_email: document.getElementById("primaryEmail")?.value,
-    primary_phone: document.getElementById("primaryPhone")?.value,
-    primary_position: document.getElementById("primaryPosition")?.value,
-
-    secondary_name: document.getElementById("secondaryName")?.value,
-    secondary_email: document.getElementById("secondaryEmail")?.value,
-    secondary_phone: document.getElementById("secondaryPhone")?.value,
-    secondary_position: document.getElementById("secondaryPosition")?.value,
-  }
-
-  const serviceData = {
-    company_id: orgData.id, // Foreign Key - Link service to org using org ID
-
-    // --- SERVICE (FIRST BLOCK) ---
-    service_name: document.getElementById("serviceName")?.value,
-    service_description: document.getElementById("serviceDescription")?.value,
-    service_criteria: document.getElementById("serviceCriteria")?.value,
-
-    service_phone: document.getElementById("servicePhone1")?.value,
-    service_address_street: document.getElementById("serviceAddressStreet1")?.value,
-    service_city: document.getElementById("serviceCity1")?.value,
-    service_state: document.getElementById("serviceState1")?.value,
-    service_zip: document.getElementById("serviceZip1")?.value,
-
-    // --- FILE ---
-    logo_file: document.getElementById("upload")?.files[0]?.name || "No file"
-  };
-  
-  console.log("============================");
-  console.log("Organization Data to be sent to DB:", orgData);
-  console.log("Service Data to be sent to DB:", serviceData);
-  console.log("============================");
-
-  addOrgToPendingDB(orgData) // sends to database
-  addServiceToPendingDB(serviceData) 
-  return data.id; // Return the new ID for email linking
-}
-
-// SENDING SERVICE TO DATABASE + SENDING EMAIL
-// document.getElementById("form-step-3").addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     const newServiceID = logFormData(); // collects data before sending to pendingServiceDB
-
-//     console.log("New Service ID for EmailJS linking:", newServiceID);
-
-//     // SENDING ID TO EMAIL JS TO CREATE LINK
-//     emailjs.send(
-//       "service_9byagl9",  // EmailJS service ID - found on https://dashboard.emailjs.com/admin under UCAssist Test
-//       "template_204azdh", // EmailJS template ID - found on https://dashboard.emailjs.com/admin/templates under Auto-Reply
-//       {id: newServiceID}  // sends service ID so EmailJS can use it to create link to service page in email
-//     )
-
-
-
-//     Swal.fire({
-//       icon: "success",
-//       title: "Submitted!",
-//       text: "Your registration has been received.",
-//       // confirmButtonColor: "#0d6efd"
-//     });
-//     // document.getElementById("form-step-3").reset();
-//   })
-//   .catch(function (error) {
-//     console.error("EmailJS Error:", error);
-
-//     Swal.fire({
-//       icon: "error",
-//       title: "Error",
-//       text: "Something went wrong. Please try again."
-//     });
-//   });
-
-  async function addService(orgArray, serviceArray) {
-  try{
-    let data = {
-        "organization": {
-          "id": `${orgArray[0]}`,
-          "company_name": `${orgArray[1]}`,
-          "organization_description": `${orgArray[2]}`,
-          "phone": `${orgArray[3]}`,
-          "website": `${orgArray[4]}`,
-          "address1": `${orgArray[5]}`,
-          "city_public": `${orgArray[6]}`,
-          "state_public": `${orgArray[7]}`,
-          "zip_public": `${orgArray[8]}`,
-          "logo": `${orgArray[9]}`,
-          "primary_name": `${orgArray[10]}`,
-          "primary_email": `${orgArray[11]}`,
-          "primary_phone": `${orgArray[12]}`,
-          "primary_orgposition": `${orgArray[13]}`,
-          "secondary_name": `${orgArray[14]}`,
-          "secondary_email": `${orgArray[15]}`,
-          "secondary_phone": `${orgArray[16]}`,
-          "secondary_orgposition": `${orgArray[17]}`
-        },
-        "service": {
-          "company_id": `${orgArray[0]}`,
-          "service_name": `${serviceArray[0]}`,
-          "service_description": `${serviceArray[1]}`,
-          "service_criteria": `${serviceArray[2]}`,
-          "service_counties": `${serviceArray[3]}`,
-          "service_keywords": `${serviceArray[4]}`,
-          "service_phone": `${serviceArray[5]}`,
-          "service_address_street": `${serviceArray[6]}`,
-          "service_city": `${serviceArray[7]}`,
-          "service_state": `${serviceArray[8]}`,
-          "service_zip": `${serviceArray[9]}`,
-          "service_website": `${serviceArray[10]}`,
-          "organization_hours": `${serviceArray[11]}`,
-        } 
-      }
-    // console.log(data)
-    const response = await fetchApi(`/request-create-service`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json', // Sending JSON
-          'Accept': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    // Parse the JSON response
-    const result = await response.json();
-    console.log('Data sent successfully:', result);
-
-  } catch (objError){
-    console.log('Error sending request', objError)
-  }
-}
 
 // Returns an array of all selected check boxed from a container
 function getSelectedKeywords(containerId) {

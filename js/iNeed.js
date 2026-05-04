@@ -107,6 +107,7 @@ function createPills(keyword, fullword){
   img.style.maxHeight = "100px";
   img.style.objectFit = "cover";
   img.src = `assets/images/iNeed/iNeed${keyword}.jpg`;
+  
 
 
   const body = document.createElement("div");
@@ -155,7 +156,7 @@ function createCard(service, category) {
 
   // replaces missing or invalid photos with category placeholder photo
   if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
-    imgPhoto = getImgSrc(category);
+    imgPhoto =`assets/images/iNeed/iNeed${category}.jpg`;
   }
 
 
@@ -290,9 +291,11 @@ function isInCounty(service){
 
 
   if(strCounties.includes(userSelectedCounty)){
-    if (strCounties.includes("all counties")){
+    if (strCounties.length() == 14){
+      console.log("[isInCounty] all counties(",strCounties.length(),"):", strCounties)
       return false;
     }
+    console.log("[isInCounty] NOT all counties(",strCounties.length(),"):",strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
