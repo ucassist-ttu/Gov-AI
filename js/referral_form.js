@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //sweet alert for successful sending
         Swal.fire({
-          title: "Missing Information",
-          icon: "error",
+          title: "Thank You",
+          icon: "success",
           html: `
             <div style="text-align: left;">
-              Please complete the following:<br><br>
+              UCAssist will contact the person you recommeneded.
             </div>
           `
         });
