@@ -2,7 +2,7 @@ const params = new URLSearchParams(window.location.search);
 const serviceId = params.get("id");
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // CALL ORGANIZATION ENDPOINT TO GET INFORMATION - ?id=api/index.php?route=/update-service&uuid=USf55e056d586e7643
+    // CALL ORGANIZATION ENDPOINT TO GET INFORMATION
     // calling new information
     const newResponse = await fetch( // US68f12a8c1800246b
         `http://s1092595647.onlinehome.us/api/index.php?route=/update-service&uuid=USf55e056d586e7643`
@@ -24,10 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     loadNew(currData, newData) // populating the content into the forms
 
-    // if (serviceId) {
-    //     await callServicePage(serviceId);
-    // }
-
     //submit button
     const btnUpdate = document.getElementById('btnUpdateDatabase');
 
@@ -44,18 +40,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             },
             body: JSON.stringify(data)
         });
-
-        // await fetchApi("/request-create-organization", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(data)
-        // });
     });
 });
 
-async function callServicePage(service_id) { // http://127.0.0.1:5500/Gov-AI/html/pages/email{{type}}ServiceReview.html?id={{link}}
+async function callServicePage(service_id) {
     try {
         // populate editor & updated information
         const servEditFormResponse = await fetchApi(`/api/index.php?route=/service-request&uuid=${service_id}`);
@@ -75,8 +63,6 @@ async function callServicePage(service_id) { // http://127.0.0.1:5500/Gov-AI/htm
         const servResponse = await fetchApi(`/service?id=${service_id}`);
         const servCurrData = await servResponse.json();
 
-
-        // GET /api/index.php?route=/service-request&uuid=<uuid>
         displayform(servCurrData, servUpdatedData);
 
     } catch (err) {
@@ -85,8 +71,6 @@ async function callServicePage(service_id) { // http://127.0.0.1:5500/Gov-AI/htm
 }
 
 function loadNewService(currInfo, newInfo) {
-    //?id=api/index.php?route=/update-service&uuid=USf55e056d586e7643
-
     console.log(currInfo, newInfo);
     document.getElementById("oldCompanyName").value = currInfo.company_name;
     document.getElementById("oldOrgDescription").value = currInfo.organization_description;
@@ -155,79 +139,3 @@ function loadNewService(currInfo, newInfo) {
     document.getElementById("updatedServiceZip1").value = newInfo[0].service_zip;
     document.getElementById("updatedServiceHours").value = newInfo[0].organization_hours;
 }
-
-
-
-
-
-
-
-
-
-// service_id: 568,
-//     company_id: 453,
- 
-//     editor: {
-//       name: "Ashley Porter",
-//       email: "ashley@example.com",
-//       phone: "931-555-0100",
-//       position: "Program Coordinator"
-//     },
- 
-//     service: {
-//       company_id: 453,
-//       service_name: "Updated Service Name",
-//       service_description: "Updated service description",
-//       service_criteria: "Updated eligibility criteria",
-//       service_counties: "Putnam, Cumberland",
-//       service_keywords: "housing, utilities, assistance",
-//       service_phone: "931-555-0199",
-//       service_address_street: "123 Main St",
-//       service_city: "Cookeville",
-//       service_state: "TN",
-//       service_zip: "38501",
-//       service_website: "https://example.org",
-//       organization_hours: "Mon-Fri 8 AM-5 PM"
-//     }
- 
-    // Include only if org info is also being updated:
-    // organization: {
-    //   id: 453,
-    //   company_name: "Updated Organization Name",
-    //   organization_description: "Updated organization description",
-    //   phone: "931-555-0111",
-    //   website: "https://example.org",
-    //   address1: "123 Main St",
-    //   city_public: "Cookeville",
-    //   state_public: "TN",
-    //   zip_public: "38501",
-    //   logo: "https://example.org/logo.png",
-    //   primary_name: "Primary Contact",
-    //   primary_email: "primary@example.org",
-    //   primary_phone: "931-555-0123",
-    //   primary_orgposition: "Director",
-    //   secondary_name: "Secondary Contact",
-    //   secondary_email: "secondary@example.org",
-    //   secondary_phone: "931-555-0124",
-    //   secondary_orgposition: "Assistant Director"
-
-
-
-// import { getReferralByID } from "../backend/fake_backend/dbReferrals.js";
-
-// const params = new URLSearchParams(window.location.search);
-// const serviceId = params.get("id");
-
-// // CALL ENDPOINT TO UPDATE DATABASE
-// document.addEventListener('DOMContentLoaded', () => {
-//   // CALL REFERRAL SERVICE ENDPOINT TO GET SERVICE ID
-//   getReferralByID(serviceId).then((service) => {
-//     console.log("Found service:", service);
-
-//     document.getElementById('emailFirstName').value = service.firstName;
-//     document.getElementById('emailLastName').value = service.lastName;
-//     document.getElementById('emailEmail').value = service.email;
-//     document.getElementById('emailPhone').value = service.phone;
-//     document.getElementById('emailMessage').value = service.message;
-//   });
-// })

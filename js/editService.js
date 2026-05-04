@@ -1242,63 +1242,6 @@ function getSelectedKeywords(containerId) {
         document.querySelectorAll(`#${containerId} input[type="checkbox"]:checked`)
     ).map(el => el.value);
 }
-
-// document.querySelector('#editOptions').addEventListener("click", (e) => {
-//   const name = document.getElementById('primaryName');
-//   const email = document.getElementById('primaryEmail');
-//   const phone = document.getElementById('primaryPhone');
-//   const position = document.getElementById('primaryPosition');
-//   const isChecked = document.getElementById('editOptions').checked;
-//   console.log(isChecked)
-//   if (isChecked) {
-//     console(name.value, email.value, phone.value, position.value)
-//     name.value = strEditorName;
-//     email.value = strEditorEmail;
-//     phone.value = strEditorPhoneNumber;
-//     position.value = strEditorOrgPosition;
-
-//     // Disable inputs
-//     name.disabled = true;
-//     email.disabled = true;
-//     phone.disabled = true;
-//     position.disabled = true;
-//   }
-// })
-
-// document.getElementById('same-info-checkbox').addEventListener('change', (e) => {
-//   const name = document.getElementById('primaryContactName');
-//   const email = document.getElementById('primaryContactEmail');
-//   const phone = document.getElementById('primaryContactPhone');
-//   const position = document.getElementById('primaryContactPosition');
-//   const isChecked = e.target.checked;
-
-//   if (isChecked) {
-//     // Fill inputs
-//     name.value = strEditorName;
-//     email.value = strEditorEmail;
-//     phone.value = strEditorPhoneNumber;
-//     position.value = strEditorOrgPosition;
-
-//     // Disable inputs
-//     name.disabled = true;
-//     email.disabled = true;
-//     phone.disabled = true;
-//     position.disabled = true;
-
-//   } else {
-//     // Restore previous values
-//     name.value = originalValues.name || "";
-//     email.value = originalValues.email || "";
-//     phone.value = originalValues.phone || "";
-//     position.value = originalValues.position || "";
-
-//     // Re-enable inputs
-//     name.disabled = false;
-//     email.disabled = false;
-//     phone.disabled = false;
-//     position.disabled = false;
-//   }
-// });
 });
 
 async function addService(orgArray,editArray, serviceArray, type) {
