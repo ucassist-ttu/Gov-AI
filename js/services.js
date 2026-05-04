@@ -71,7 +71,6 @@ async function getServices() {
             });
         });
     } catch (objError){
-        console.log('Error fetching objData', objError)
         strDiv =   `<div class="service">
                     <h3>Error loading services</h3>
                     <button id="btnReload">Reload Services</button>
@@ -83,8 +82,8 @@ async function getServices() {
     }
 
     // Remove all duplicate instances from each array
-    uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
-    uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
+    uniqueCounties = [...new Set(arrCounties.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
+    uniqueServiceTypes = [...new Set(arrServiceType.filter(c => typeof c === "string" && c.trim().length >= 1).map(c => c.trim().toLowerCase()))].map(c =>c.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')).sort((a, b) => a.localeCompare(b))
     uniqueOrgNames = [...new Set(arrOrgName.filter(c => typeof c === "string" && c.trim().length >= 1))].sort((a, b) => a.localeCompare(b));
     
     // Create the filters
@@ -105,7 +104,6 @@ function checkUserLocation () {
     }
     else if (currCounty == "van_buren") {
         let currCountyVan = "van-buren"
-        console.log(currCountyVan)
         const checkbox = document.querySelector(`#${currCountyVan}-checkbox`);
 
         if (checkbox) {
@@ -189,16 +187,6 @@ function createServiceCard(arrCards) {
                 const serviceCard = button.closest('.service');
 
                 let serviceId = serviceCard.dataset.id
-                // Log user has clicked on a service for analytics
-                // if (boolSearched) {
-                //     boolResourceFound = true
-                //     console.log("Service Found", {
-                //         page: window.location.pathname,
-                //         timestamp: new Date().toISOString(),
-                //         dataSearch: dataSearch,
-                //         boolResourceFound: boolResourceFound
-                //     })
-                // }
                 callServicePage(serviceId)
             });
         })
@@ -238,17 +226,6 @@ function getCountyList(service) {
 
 // Searches for services with information matching the users input
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
-
-    // If user searches a second time without clicking a service
-    // if (boolSearched && !boolResourceFound) {
-    //     console.log("Service Not Found, Searching Again", {
-    //         page: window.location.pathname,
-    //         timestamp: new Date().toISOString(),
-    //         dataSearch: dataSearch,
-    //         boolResourceFound: boolResourceFound
-    //     })
-    // }
-
     selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
     selectedCheckboxes.forEach(box => {
         box.checked = false;
@@ -306,13 +283,6 @@ document.querySelector("#btnSearchServices").addEventListener("click", () => {
             arrCurrentServices = arrAllServices
             renderSidebarServices(arrCurrentServices)
         })
-        // Analytics for 0 search results
-        // console.log("0 Result Search", {
-        //     page: window.location.pathname,
-        //     timestamp: new Date().toISOString(),
-        //     dataSearch: dataSearch,
-        //     boolResourceFound: boolResourceFound
-        // })
     }
     else {
         arrCurrentServices = uniqueSearch
@@ -487,7 +457,6 @@ function getSelectedCheckboxes(containerId) {
 document.getElementById('divAllFilter').addEventListener('change', (e) => {
     if (!e.target.matches('input[type="checkbox"]')) return;
     const selectedCounties = getSelectedCheckboxes("divOuterCounties").map(c => c.toLowerCase());
-    console.log(selectedCounties)
     const selectedServiceTypes = getSelectedCheckboxes("divOuterServiceTypes").map(s => s.toLowerCase());
 
     //Reset the FilteredServices
@@ -621,26 +590,6 @@ document.querySelector('#btnLearnServices').addEventListener("click", (e) => {
   });
 })
 
-/*
-    4 cases for analytics logging:
-        1. User searches and finds a resource (logged when clicking learn more on a service)
-        2. User searches and does not find a resource (logged when user searches and leaves page without clicking on a service)
-        3. User searches and has to search again (logged when searching again without clicking on a service)
-        4. User searches and finds zero results (also logs either 2 or 3 depending on how the user continues)
-*/
-
-// Log if user has searched and didnt find a resource
-// window.addEventListener('beforeunload', () => {
-//     if (boolSearched && !boolResourceFound) {
-//         console.log("Service Not Found, Leaving Page", {
-//             page: window.location.pathname,
-//             timestamp: new Date().toISOString(),
-//             dataSearch: dataSearch,
-//             boolResourceFound: boolResourceFound
-//         })
-//     }
-// })
-
 async function sendDatabaseSearchAnalytics(strSearch, uniqueSearch, selectedCheckboxes) {
     const payload = {
         searchType: "Database",
@@ -650,7 +599,6 @@ async function sendDatabaseSearchAnalytics(strSearch, uniqueSearch, selectedChec
         county: sessionStorage.getItem("currCounty"),
         checked: JSON.stringify(Array.from(selectedCheckboxes).map(el => el.value))
     };
-    console.log(JSON.stringify(payload))
     try {
         const response = await fetchApi("/add-search-analytics", {
             method: "POST",
@@ -661,7 +609,6 @@ async function sendDatabaseSearchAnalytics(strSearch, uniqueSearch, selectedChec
         });
 
         const text = await response.text();
-        console.log("RAW RESPONSE:", text);
 
         let data = null;
         if (text) {

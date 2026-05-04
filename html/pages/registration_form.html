@@ -65,17 +65,15 @@
           <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" required data-name="Organization Website Input" />
         </div>
         <fieldset class="mb-2" data-name="Organization Physical Address Group">
-          <label class="fw-semibold dark-navy" data-name="Organization Physical Address Label">Address <span class="text-danger">*</span></label>
-          <input type="text" name="address1" id="physicalAddress" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." required aria-required="true" data-name="Organization Street Address Input" />
-          <label class="fw-semibold dark-navy" data-name="Organization Physical Address Label">Address <span class="text-danger">*</span></label>
-          <input type="text" name="cityPublic" id="cityPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St."  required data-name="Organization Address Input"/>
+          <label class="fw-semibold dark-navy" data-name="Organization Physical Address Label">Physical Address <span class="text-danger">*</span></label>
+          <input type="text" name="addressPublic" id="addressPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St."  required data-name="Organization Address Input"/>
           <div class="row g-2 mb-2" data-name="Organization Address Input Row">
             <div class="col" data-name="Organization City Input Column">
               <input type="text" name="cityPublic" id="cityPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="City"  required data-name="Organization Address Input"/>
             </div>
             <div class="col-auto" style="min-width: 110px;" data-name="Organization State Input Column">
               <select id="statePublic" name="statePublic" class="form-select form-control border-2 rounded p-2 px-3 mb-2" aria-label="State" required data-name="Organization State Select">
-                <option value="TN" disabled selected>Tennesee</option>
+                <option value="TN" disabled selected>State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -133,210 +131,8 @@
             <input type="text" id="zipPublic" name="zipPublic" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="Zip Code" required aria-required="true" data-name="Organization Zip Code Input" />
           </div>
         </fieldset>
-        <!-- <div class="mb-3" data-name="Service Keywords Section">
-          <div class="mb-3" data-name="Service Keywords Section">
-            <label class="fw-semibold dark-navy" data-name="Service Keywords Label">
-              Keywords <span class="text-danger">*</span>
-            </label>
-            <div id="divKeywordsReg1" class="form-check" data-name="Service Keywords List">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectAbuse" value="Abuse">
-                <label class="form-check-label" for="multiSelectAbuse">Abuse</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectCrisisHotlines" value="Crisis Hotlines">
-                <label class="form-check-label" for="multiSelectCrisisHotlines">Crisis Hotlines</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEmergencyShelter" value="Emergency Shelter">
-                <label class="form-check-label" for="multiSelectEmergencyShelter">Emergency Shelter</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectHousing" value="Housing">
-                <label class="form-check-label" for="multiSelectHousing">Housing</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectInHomeServices" value="In Home Services">
-                <label class="form-check-label" for="multiSelectInHomeServices">In Home Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectMeals" value="Meals">
-                <label class="form-check-label" for="multiSelectMeals">Meals</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectToiletries" value="Toiletries">
-                <label class="form-check-label" for="multiSelectToiletries">Toiletries</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectClothing" value="Clothing">
-                <label class="form-check-label" for="multiSelectClothing">Clothing</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectAnimals" value="Animals">
-                <label class="form-check-label" for="multiSelectAnimals">Animals</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectLegalAssistance" value="Legal Assistance">
-                <label class="form-check-label" for="multiSelectLegalAssistance">Legal Assistance</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectFinancialHousing" value="Financial Assistance (Housing)">
-                <label class="form-check-label" for="multiSelectFinancialHousing">Financial Assistance (Housing)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectFinancialUtilities" value="Financial Assistance (Utilities)">
-                <label class="form-check-label" for="multiSelectFinancialUtilities">Financial Assistance (Utilities)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectTransportation" value="Transportation">
-                <label class="form-check-label" for="multiSelectTransportation">Transportation</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectDriversED" value="Drivers ED/DUI Classes">
-                <label class="form-check-label" for="multiSelectDriversED">Drivers ED/DUI Classes</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectChildCare" value="Child Care">
-                <label class="form-check-label" for="multiSelectChildCare">Child Care</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectParenting" value="Parenting">
-                <label class="form-check-label" for="multiSelectParenting">Parenting</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectYouthServices" value="Youth Services">
-                <label class="form-check-label" for="multiSelectYouthServices">Youth Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectOlderPersons" value="Older Persons">
-                <label class="form-check-label" for="multiSelectOlderPersons">Older Persons</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectVeterans" value="Veterans">
-                <label class="form-check-label" for="multiSelectVeterans">Veterans</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectVeteranServices" value="Veteran Services">
-                <label class="form-check-label" for="multiSelectVeteranServices">Veteran Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectHealthCare" value="Health Care">
-                <label class="form-check-label" for="multiSelectHealthCare">Health Care</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectWellness" value="Wellness">
-                <label class="form-check-label" for="multiSelectWellness">Wellness</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectPregnancy" value="Pregnancy/Prenatal">
-                <label class="form-check-label" for="multiSelectPregnancy">Pregnancy/Prenatal</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectMentalHealth" value="Mental Health">
-                <label class="form-check-label" for="multiSelectMentalHealth">Mental Health</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectDisabilities" value="Disabilities">
-                <label class="form-check-label" for="multiSelectDisabilities">Disabilities</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSpecialNeeds" value="Special Needs">
-                <label class="form-check-label" for="multiSelectSpecialNeeds">Special Needs</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSubstanceAbuse" value="Substance Abuse & Addiction">
-                <label class="form-check-label" for="multiSelectSubstanceAbuse">Substance Abuse & Addiction</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSupportGroups" value="Wellness/Support Groups">
-                <label class="form-check-label" for="multiSelectSupportGroups">Wellness/Support Groups</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEducation" value="Education">
-                <label class="form-check-label" for="multiSelectEducation">Education</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEmployment" value="Employment">
-                <label class="form-check-label" for="multiSelectEmployment">Employment</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSmallBusiness" value="Small Business/Entrepreneur">
-                <label class="form-check-label" for="multiSelectSmallBusiness">Small Business/Entrepreneur</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEconomicDev" value="Economic Development">
-                <label class="form-check-label" for="multiSelectEconomicDev">Economic Development</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectCommunityDev" value="Community Development">
-                <label class="form-check-label" for="multiSelectCommunityDev">Community Development</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectRecreation" value="Recreation">
-                <label class="form-check-label" for="multiSelectRecreation">Recreation</label>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <div class="mb-3" data-name="Organization Hours Section">
-          <div class="time-ranges" data-name="Organization Hours Input Wrapper">
-            <label class="fw-semibold dark-navy" data-name="Organization Hours Label">Hours of Operation <span class="text-danger">*</span></label>
-            <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Organization Hours Input Row">
-              <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" required data-name="Organization Hours Day Select">
-                <option value="" disabled selected>Day</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours Start Time Select">
-                <option value="" disabled selected>Start</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours Start AM/PM Select">
-                <option value="" disabled selected>AM/PM</option>
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-              <span class="me-2" data-name="Organization Hours Time Range Separator">-</span>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours End Time Select">
-                <option value="" disabled selected>End</option>
-              </select>
-              <select class="form-select form-control border-2 rounded p-2 px-3" required data-name="Organization Hours End AM/PM Select">
-                <option value="" disabled selected>AM/PM</option>
-                <option value="AM">AM</option>
-                <option value="PM">PM</option>
-              </select>
-              <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Remove Organization Hours Button">Remove</button>
-            </div>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Add More Hours Button">+ Add Hours</button>
-        </div>
-   <div class="mb-4" data-name="Organization Logo Upload Section">
-  <label class="fw-semibold" data-name="Organization Logo Label">
-    Logo <small class="text-muted mt-1 fst-italic" data-name="Organization Logo Upload Note">(Please keep in mind the logo will be placed on a dark navy background)</small>
-  </label>
-
-  <label for="upload"
-         class="custom-dark-border form-control d-block p-3 text-center fw-semibold rounded-3 user-select-none cursor-pointer"
-         tabindex="0" role="button" aria-label="Upload logo file" data-name="Organization Logo Upload Area">
-    Drag and drop your file here<br>or<br>
-    <a href="#" class="clr-dark-navy fw-semibold text-decoration-underline"
-       onclick="document.getElementById('upload').click(); return false;" data-name="Choose Logo File Link">
-       upload from your computer
-    </a>
-  </label>
-
-  <input type="file" id="upload" name="upload" class="d-none" accept="image/*" aria-label="Logo file upload" data-name="Organization Logo File Input" />
-
-  <div id="logo-preview" class="mt-3 text-center d-none" data-name="Organization Logo Preview Container">
-    <img id="logo-image" src="" alt="Logo Preview" class="img-fluid w-75 h-50" data-name="Organization Logo Preview Image" />
-    <br>
-    <button type="button" id="clear-logo" class="btn btn-sm btn-outline-secondary mt-2" data-name="Remove Logo Image Button">Remove Image</button>
-  </div>
-</div>
+        <label for="oldUpload">Logo Upload</label>
+        <input type="file" id="oldUpload" class="form-control mb-4" aria-label="input example">
 
     <div class="d-flex gap-3 mt-3" data-name="Organization Information Public Actions">
       <button type="submit" class="submit-btn" data-name="Go to Step 2 Button">Next</button>
@@ -418,7 +214,7 @@
           <textarea id="serviceDescription" name="serviceDescription" class="form-control border-2 rounded p-2 px-3" placeholder="Please give a brief description of the service provided" required aria-required="true" rows="4" data-name="Service Description Input"></textarea>
         </div>
         <div class="mb-3" data-name="Service Criteria Section">
-          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Requirements to Qualify</label>
+          <label class="fw-semibold dark-navy" data-name="Service Criteria Label">Service Eligibility</label>
           <input type="text" id="serviceCriteria" name="serviceCriteria" class="form-control border-2 rounded p-2 px-3" data-name="Service Criteria Input" />
         </div>
         <div class="mb-3" data-name="Service Counties Offered Section">
@@ -427,227 +223,18 @@
           <div id="divOuterCountiesReg" class="form-check outer-layer" data-name="Service Counties Options Container">
             <hr />
             <div id="divCountiesReg" class="form-check" data-name="Service Counties List">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="all" value="all">
-                  <label class="form-check-label" for="all">All Counties</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="cannon" value="cannon">
-                  <label class="form-check-label" for="cannon">Cannon County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="clay" value="clay">
-                  <label class="form-check-label" for="clay">Clay County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="cumberland" value="cumberland">
-                  <label class="form-check-label" for="cumberland">Cumberland County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="dekalb" value="dekalb">
-                  <label class="form-check-label" for="dekalb">DeKalb County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="fentress" value="fentress">
-                  <label class="form-check-label" for="fentress">Fentress County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="jackson" value="jackson">
-                  <label class="form-check-label" for="jackson">Jackson County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="macon" value="macon">
-                  <label class="form-check-label" for="macon">Macon County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="overton" value="overton">
-                  <label class="form-check-label" for="overton">Overton County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="pickett" value="pickett">
-                  <label class="form-check-label" for="pickett">Pickett County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="putnam" value="putnam">
-                  <label class="form-check-label" for="putnam">Putnam County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="smith" value="smith">
-                  <label class="form-check-label" for="smith">Smith County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="van_buren" value="van_buren">
-                  <label class="form-check-label" for="van_buren">Van Buren County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="warren" value="warren">
-                  <label class="form-check-label" for="warren">Warren County</label>
-                </div>
-
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="white" value="white">
-                  <label class="form-check-label" for="white">White County</label>
-                </div>
-
               </div>
             </div>
           </div>
         </div>
         <div class="mb-3" data-name="Service Keywords Section">
           <div class="mb-3" data-name="Service Keywords Section">
-            <label class="fw-semibold dark-navy" data-name="Service Keywords Label">
-              Keywords <span class="text-danger">*</span>
-            </label>
-            <div id="divKeywordsReg1" class="form-check" data-name="Service Keywords List">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectAbuse" value="Abuse">
-                <label class="form-check-label" for="multiSelectAbuse">Abuse</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectCrisisHotlines" value="Crisis Hotlines">
-                <label class="form-check-label" for="multiSelectCrisisHotlines">Crisis Hotlines</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEmergencyShelter" value="Emergency Shelter">
-                <label class="form-check-label" for="multiSelectEmergencyShelter">Emergency Shelter</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectHousing" value="Housing">
-                <label class="form-check-label" for="multiSelectHousing">Housing</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectInHomeServices" value="In Home Services">
-                <label class="form-check-label" for="multiSelectInHomeServices">In Home Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectMeals" value="Meals">
-                <label class="form-check-label" for="multiSelectMeals">Meals</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectToiletries" value="Toiletries">
-                <label class="form-check-label" for="multiSelectToiletries">Toiletries</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectClothing" value="Clothing">
-                <label class="form-check-label" for="multiSelectClothing">Clothing</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectAnimals" value="Animals">
-                <label class="form-check-label" for="multiSelectAnimals">Animals</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectLegalAssistance" value="Legal Assistance">
-                <label class="form-check-label" for="multiSelectLegalAssistance">Legal Assistance</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectFinancialHousing" value="Financial Assistance (Housing)">
-                <label class="form-check-label" for="multiSelectFinancialHousing">Financial Assistance (Housing)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectFinancialUtilities" value="Financial Assistance (Utilities)">
-                <label class="form-check-label" for="multiSelectFinancialUtilities">Financial Assistance (Utilities)</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectTransportation" value="Transportation">
-                <label class="form-check-label" for="multiSelectTransportation">Transportation</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectDriversED" value="Drivers ED/DUI Classes">
-                <label class="form-check-label" for="multiSelectDriversED">Drivers ED/DUI Classes</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectChildCare" value="Child Care">
-                <label class="form-check-label" for="multiSelectChildCare">Child Care</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectParenting" value="Parenting">
-                <label class="form-check-label" for="multiSelectParenting">Parenting</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectYouthServices" value="Youth Services">
-                <label class="form-check-label" for="multiSelectYouthServices">Youth Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectOlderPersons" value="Older Persons">
-                <label class="form-check-label" for="multiSelectOlderPersons">Older Persons</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectVeterans" value="Veterans">
-                <label class="form-check-label" for="multiSelectVeterans">Veterans</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectVeteranServices" value="Veteran Services">
-                <label class="form-check-label" for="multiSelectVeteranServices">Veteran Services</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectHealthCare" value="Health Care">
-                <label class="form-check-label" for="multiSelectHealthCare">Health Care</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectWellness" value="Wellness">
-                <label class="form-check-label" for="multiSelectWellness">Wellness</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectPregnancy" value="Pregnancy/Prenatal">
-                <label class="form-check-label" for="multiSelectPregnancy">Pregnancy/Prenatal</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectMentalHealth" value="Mental Health">
-                <label class="form-check-label" for="multiSelectMentalHealth">Mental Health</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectDisabilities" value="Disabilities">
-                <label class="form-check-label" for="multiSelectDisabilities">Disabilities</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSpecialNeeds" value="Special Needs">
-                <label class="form-check-label" for="multiSelectSpecialNeeds">Special Needs</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSubstanceAbuse" value="Substance Abuse & Addiction">
-                <label class="form-check-label" for="multiSelectSubstanceAbuse">Substance Abuse & Addiction</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSupportGroups" value="Wellness/Support Groups">
-                <label class="form-check-label" for="multiSelectSupportGroups">Wellness/Support Groups</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEducation" value="Education">
-                <label class="form-check-label" for="multiSelectEducation">Education</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEmployment" value="Employment">
-                <label class="form-check-label" for="multiSelectEmployment">Employment</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectSmallBusiness" value="Small Business/Entrepreneur">
-                <label class="form-check-label" for="multiSelectSmallBusiness">Small Business/Entrepreneur</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectEconomicDev" value="Economic Development">
-                <label class="form-check-label" for="multiSelectEconomicDev">Economic Development</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectCommunityDev" value="Community Development">
-                <label class="form-check-label" for="multiSelectCommunityDev">Community Development</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="multiSelectRecreation" value="Recreation">
-                <label class="form-check-label" for="multiSelectRecreation">Recreation</label>
-              </div>
+            <label class="fw-semibold dark-navy" data-name="Service Keywords Label">Keywords <span class="text-danger">*</span></label>
+            <div id="btnKeywordsReg1" class="form-control d-flex justify-content-between align-items-center border-2 p-2 px-3 mb-2" data-name="Service Keywords Dropdown"><span>Check All That Apply </span><i class="bi bi-caret-down-fill"></i></div>
+            <div id="divOuterKeywordsReg1" class="form-check" data-name="Service Keywords List">
+            <hr />
+            <div id="divKeywordsReg1" class="form-check" data-name="Service Counties List">
+            </div>
             </div>
           </div>
         </div>
@@ -656,7 +243,7 @@
   <input type="checkbox" class="form-check-input" id="separatePhone1" name="separatePhone1" data-name="Use Separate Phone for This Service Checkbox" />
   <label for="separatePhone1" class="form-check-label dark-navy" data-name="Use Separate Phone for This Service Label">Separate phone number for this service?</label>
 </div>
-<div class="service-phone-container mb-3" style="display: none;" data-name="Service Phone Number Input Container">
+<div id="divDiffPhoneNumber" class="service-phone-container mb-3" style="display: none;" data-name="Service Phone Number Input Container">
   <label class="fw-semibold dark-navy" data-name="Service Phone Number Label">Phone Number</label>
   <input type="tel" id="servicePhone1" name="servicePhone1" class="form-control border-2 rounded p-2 px-3" placeholder="(123) 456-7890" data-name="Service Phone Number Input" />
 </div>
@@ -666,18 +253,16 @@
   <input type="checkbox" class="form-check-input" id="separateAddress1" name="separateAddress1" data-name="Use Separate Address for This Service Checkbox" />
   <label for="separateAddress1" class="form-check-label dark-navy" data-name="Use Separate Address for This Service Label">Separate address for this service?</label>
 </div>
-<div class="service-address-container mb-3" style="display: none;" data-name="Service Address Input Container">
+<div id="divDiffAddress" class="service-address-container mb-3" style="display: none;" data-name="Service Address Input Container">
   <label class="fw-semibold dark-navy" data-name="Service Address Label">Physical Address</label>
   <input type="text" id="serviceAddressStreet1" name="serviceAddressStreet1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="123 Anywhere St." data-name="Service Street Address Input" />
   <div class="row g-2" data-name="Service Address Input Row">
     <div class="col-md-6" data-name="Service City Input Column">
-      <select id="serviceCity1" name="serviceCity1" class="form-control border-2 rounded p-2 px-3 service-city-select" data-name="Service City Select">
-        <option value="" disabled selected>Select City</option>
-      </select>
+      <input type="text" id="serviceAddressCity1" name="serviceAddressCity1" class="form-control border-2 rounded p-2 px-3 mb-2" placeholder="City" data-name="Service City Address Input" />
     </div>
     <div class="col-md-3" data-name="Service State Input Column">
       <select id="serviceState1" name="serviceState1" class="form-control border-2 rounded p-2 px-3" data-name="Service State Select">
-                <option value="TN" disabled selected>Tennessee</option>
+                <option value="TN" disabled selected>State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -737,56 +322,20 @@
   </div>
 </div>
 <div class="mb-3" data-name="Service Website Section">
-    <label class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
-    <input type="url" id="website" name="website" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
+    <label for="addWebsite" class="fw-semibold dark-navy" data-name="Service Website Label">Website / URL</label>
+    <input type="url" id="addWebsite" name="addWebsite" class="form-control border-2 rounded p-2 px-3" data-name="Service Website Input" />
   </div>
 
 <!-- Hours Section -->
-<div class="checkbox mb-3" style="padding-left: 0;" data-name="Service Hours Override Option">
-  <input type="checkbox" class="form-check-input" id="separateHours1" name="separateHours1" data-name="Use Separate Hours for This Service Checkbox" />
-  <label for="separateHours1" class="form-check-label dark-navy" data-name="Use Separate Hours for This Service Label">Do service hours of operation differ from organization hours of operation?
-    <small class="text-muted d-block mt-1 fst-italic" data-name="Service Hours Format Example">
-      ex: Monday 8am - 2pm
-    </small>
-  </label>
-</div>
-<div class="service-hours-container mb-3" style="display: none;" data-name="Service Hours Input Container">
+<div class="service-hours-container mb-3" style="display: block;" data-name="Service Hours Input Container">
   <label class="fw-semibold dark-navy" data-name="Service Hours Label">Hours of Operation</label>
-  <div class="time-ranges" data-name="Service Hours Input Wrapper">
-    <div class="time-range d-flex flex-wrap flex-md-nowrap align-items-center gap-2 mb-2" data-name="Service Hours Input Row">
-      <select class="form-select form-control border-2 rounded p-2 px-3 fs-6" data-name="Service Hours Day Select" >
-        <option value="" disabled selected>Day</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Thursday">Thursday</option>
-        <option value="Friday">Friday</option>
-        <option value="Saturday">Saturday</option>
-        <option value="Sunday">Sunday</option>
-      </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours Start Time Select" >
-        <option value="" disabled selected>Start</option>
-      </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours Start AM/PM Select" >
-        <option value="" disabled selected>AM/PM</option>
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
-      <span class="me-2" data-name="Service Hours Time Range Separator">-</span>
-      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours End Time Select" >
-        <option value="" disabled selected>End</option>
-      </select>
-      <select class="form-select form-control border-2 rounded p-2 px-3" data-name="Service Hours End AM/PM Select">
-        <option value="" disabled selected>AM/PM</option>
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
-      <button type="button" class="btn btn-sm btn-outline-danger remove-range ms-2" data-name="Remove Service Hours Button">Remove</button>
+    <div class="time-ranges" data-name="Organization Hours Input Wrapper">
+      <small class="text-muted mt-1 d-block fst-italic" data-name="Update Hours of Operation Description">
+        Provide the hours for each day (use commas to separate them).
+      </small>
+      <textarea id="addServiceHours" name="addServiceHours" class="form-control border-2 rounded p-2 px-3" placeholder="S: closed, M: 08:00-9:00, T: 08:00-9:00, W: 08:00-9:00, R: 08:00-9:00, F: 08:00-9:00, S: closed" rows="4" data-name="Step 3 Service Hours Input"></textarea>
     </div>
   </div>
-  <button type="button" class="btn btn-sm btn-outline-secondary add-hours" data-name="Add More Service Hours Button">+ Add Hours</button>
-  </div>
-      <button type="button" class="btn btn-outline-secondary mb-3 accent-btn" id="addServiceBtn" data-name="Add Another Service Button">+ Add Another Service</button>
       <div class="d-flex gap-3 mt-3" data-name="Register Services Actions">
         <button type="submit" class="submit-btn" data-name="Submit Registration Button">Submit</button>
         <button type="button" class="btn btn-light cancel-btn fw-bold" data-name="Back to Step 2 Button">Previous</button>

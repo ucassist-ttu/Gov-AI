@@ -1,4 +1,4 @@
-    import {getCounties} from "../js/iNeed.js"
+import {getCounties} from "../js/iNeed.js"
 let strHeader = null;
 let printed = false;
 
@@ -12,12 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     // grabs prompt from session storage
     const prompt = sessionStorage.getItem("user_prompt");
-    console.log("[ai_results.js] prompt: ", prompt)
 
     //this should never happen beacuse of the sweet alert on index.js:ln 12
     if (!prompt) {
         strHeader.innerHTML = "<h1>Oops! Looks like you didn't enter anything.</h1>"
-        console.log("No prompt found in sessionStorage.");
         AIContainer.innerHTML = `<p class="mt-3 text-dark">Please return to home and try again.</p>`; //error message
         return;
     }
@@ -49,14 +47,10 @@ async function getAIRecommendations(userPrompt) {
     }
 
     //placeholder text while loading the ai results
-
     AIContainer.innerHTML = `<p class="loading text-dark">Loading suggestions...</p>`; 
     
     //calls ai api
-    try{
-        // console.log("Sending response:", data);
-        // res.json(data);
-        
+    try{        
         const servResponse = await fetchApi(`/prompt`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
@@ -68,7 +62,6 @@ async function getAIRecommendations(userPrompt) {
             throw new Error(`HTTP error! status: ${servResponse.status}`);
         }
         let aiData = await servResponse.json()
-        console.log("RAW RESPONSE:", aiData);
 
 
         AIContainer.innerHTML = ""; //clears away loading placeholder text
@@ -81,7 +74,6 @@ async function getAIRecommendations(userPrompt) {
         } else {
             aiData = [];
         }
-        console.log(aiData);
         
         let txtHTML = "";
         let intCount = 1;  // for numbering the services on the html
@@ -90,12 +82,9 @@ async function getAIRecommendations(userPrompt) {
             let strResourceName = element.NameOfService || "Untitled service";
             let strCompany = element.OrganizationName || "Unknown organization";
             let strDescription = element.ServiceDescription || "No description available.";
-            // let strPhone = element.TelephoneContact || "No Phone Number available.";
             let rawPhone = element.TelephoneContact || "";
             let strPhone = rawPhone ? rawPhone.replace(/[^\d+]/g, '') : "";
-            // let strAddress = element.ServiceAddress || "No Address available.";
             let strEmail = element.EmailContact || "No Email available.";
-            console.log(strResourceName);
 
             txtHTML +=`<div class="flex-row text-dark">`;
             txtHTML +=`    <h4 class="ai-title mt-3">${intCount}. <a onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer"><u>${strResourceName}</u></a></h4>`;
@@ -127,8 +116,6 @@ async function getAIRecommendations(userPrompt) {
             else{
                 txtHTML +=`<p><i class="bi bi-pin-map"></i>No Address available.</p>`
             }
-            // callServicePage(serviceId)
-            // txtHTML +=`<button class="btn btn-primary text-dark" onclick="fetchApi('/add-monthly-view?service_id=${element.ID}'); window.location.href='/html/pages/service.html?id=${element.ID}';" style="cursor: pointer">More Details</button>`;
             if (intCount != 3) {
                 txtHTML += `<hr class="hr-gold"/>`
             }
@@ -141,19 +128,11 @@ async function getAIRecommendations(userPrompt) {
             headerEl.innerHTML = "We couldn't find matching resources right now.";
             AIContainer.innerHTML = `<p class="mt-5 mb-4 text-dark">Please try rephrasing your question or browse all available services on the Find Services page.</p>
                                      <a href="./services.html" class=" rounded-pill p-2 border h5 ts-5 mt-5 mt-5 text-decoration-none text-nowrap">Find Services <i class="bi bi-caret-right-fill"></i></a>`;
-
-            // console.log("0 Result AI Search", {
-            //     page: window.location.pathname,
-            //     timestamp: new Date().toISOString()
-            // });
-
             return;
         }
 
         AIContainer.innerHTML = txtHTML;
     } catch (objError){
-        console.log('Error fetching aiData: ', objError)
-
         if (headerEl) {
             headerEl.innerHTML = "<h1>Oops! We're having trouble answering your request.</h1>";
         }
@@ -163,61 +142,10 @@ async function getAIRecommendations(userPrompt) {
     }
 }
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     let AIContainer = document.querySelector('#suggestedResources');
-//     strHeader = document.querySelector("#txtHeader");
-
-//     if (!AIContainer || !strHeader) {
-//         console.error("Required AI results elements are missing from the page.");
-//         return;
-//     }
-
-//     const prompt = sessionStorage.getItem("user_prompt"); // Get prompt
-//     if (!prompt) {
-//         strHeader.innerHTML = "Oops! Looks like you didn't enter anything."
-//         console.log("No prompt found in sessionStorage.");
-//         AIContainer.innerHTML = `<p class="mt-3 ">Please return to home and try again.</p>`; //error message
-//         return;
-//     }
-//     else{ getAIRecommendations(prompt)}
-// });
-
-
-// document.querySelector("#btnHome").addEventListener("click", (e) => {
-//     swal.fire("Wait!", {
-//         title: "Before you go",
-//         text: "If you leave before printing the page, you will lose your recommended resources. Are you sure you want to leave?",
-//         icon: "warning",
-//         buttons: ["Leave page", "Stay and print"],
-//     })
-//     .then((travelHome) => {
-//         if (!travelHome) {
-//             window.location.href = "index.html"; // carries to ai_results page
-//         } 
-//         else {
-//             swal.fire("Your imaginary file is safe!");
-//         }
-//     });
-// })
-
 document.querySelector("#btnPrintAIResults").addEventListener("click", (e) => {
     printed = true;
     window.print();
 })
-// document.addEventListener("click", (e) => {
-//     if (e.target.closest("#btnPrintAIResults")) {
-//         printed = true;
-//         window.print();
-//     }
-// });
-
-// window.addEventListener('beforeunload', () => {
-//     console.log("AI Results Page Left", {
-//         page: window.location.pathname,
-//         timestamp: new Date().toISOString(),
-//         printed: printed
-//     });
-// });
 
 async function sendSearchAnalytics(userPrompt, aiData) {
     const payload = {
@@ -239,7 +167,6 @@ async function sendSearchAnalytics(userPrompt, aiData) {
         });
 
         const text = await response.text();
-        console.log("RAW RESPONSE:", text);
 
         let data = null;
         if (text) {
