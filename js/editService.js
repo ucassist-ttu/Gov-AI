@@ -1352,7 +1352,7 @@ async function addService(orgArray,editArray, serviceArray, type) {
     // sending to emailJS to construct email
     const emailResponse = await emailjs.send("service_9byagl9","template_204azdh",{
       type: "Edit",
-      reviewLlink: serviceResponse.reviewUrl,
+      reviewLink: serviceResponse.reviewUrl,
     })
 
     console.log("EMAIL RESPONSE: ", emailResponse);

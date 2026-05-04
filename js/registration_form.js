@@ -535,16 +535,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Parse the JSON response
         const result = await response.json();
         console.log('orgData sent successfully:', result);
-        
-        console.log("ORG PAYLOAD:", result.payload);
-        console.log("APPROVAL URL:", result.approvalUrl);
+        console.log(result.id)
+        console.log("REVIEW URL:", result.reviewUrl);
         // SENDING ID TO EMAIL JS TO CREATE LINK
-        const emailResponse = await emailjs.send(
-          "service_9byagl9",
-          "template_204azdh",{
+        const emailResponse = await emailjs.send("service_9byagl9","template_204azdh",{
           type: "New",
-          link: result.approvalUrl,
-        }); 
+          reviewLink: result.reviewUrl,
+        })
       } catch(err){
         console.error("ERROR: ", err)
       }
