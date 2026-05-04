@@ -1,6 +1,3 @@
-// BACKEND WORKING _ ONLY COMMENT OUT STUFF AND REMOVE COMMENTS
-
-//CHANGE THESE IDs AS SOON
 emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
     
 document.addEventListener('DOMContentLoaded', () => {
