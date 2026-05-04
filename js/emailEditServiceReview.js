@@ -2,9 +2,31 @@ const params = new URLSearchParams(window.location.search);
 const serviceId = params.get("id");
 
 document.addEventListener('DOMContentLoaded', async () => {
-    if (serviceId) {
-        await callServicePage(serviceId);
-    }
+    // CALL ORGANIZATION ENDPOINT TO GET INFORMATION - ?id=api/index.php?route=/update-service&uuid=USf55e056d586e7643
+    // calling new information
+    const newResponse = await fetch( // US68f12a8c1800246b
+        `http://s1092595647.onlinehome.us/api/index.php?route=/update-service&uuid=USf55e056d586e7643`
+    );
+    const newData = await newResponse.json();
+    const editorData = newData.editor // editor information
+    const UpdatedOrgData = newData.organization // updated organization information
+    const UpdatedServiceData = newData.organization // updated service information
+    // calling old information
+    const oldResponse = await fetch(
+        `http://s1092595647.onlinehome.us/api/index.php?route=/service&id=570`
+    );
+    const currData = await oldResponse.json();
+    const currOrgData = currData.organization // updated organization information
+    const currServiceData = currData.organization // updated service information
+
+    console.log(currData)
+    console.log(newData)
+
+    loadNew(currData, newData) // populating the content into the forms
+
+    // if (serviceId) {
+    //     await callServicePage(serviceId);
+    // }
 
     //submit button
     const btnUpdate = document.getElementById('btnUpdateDatabase');
@@ -33,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-async function callServicePage(service_id) {
+async function callServicePage(service_id) { // http://127.0.0.1:5500/Gov-AI/html/pages/email{{type}}ServiceReview.html?id={{link}}
     try {
         // populate editor & updated information
         const servEditFormResponse = await fetchApi(`/api/index.php?route=/service-request&uuid=${service_id}`);
@@ -62,7 +84,8 @@ async function callServicePage(service_id) {
     }
 }
 
-function displayform(currInfo, newInfo) {
+function loadNewService(currInfo, newInfo) {
+    //?id=api/index.php?route=/update-service&uuid=USf55e056d586e7643
 
     console.log(currInfo, newInfo);
     document.getElementById("oldCompanyName").value = currInfo.company_name;

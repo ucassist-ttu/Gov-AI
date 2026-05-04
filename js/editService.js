@@ -1,5 +1,7 @@
 // WORKS FINE DONT TOUCH
 // NVM CHANGE TO DYNAMICALLY GETTING VALUES FROM DB
+emailjs.init("6IcAOL0TqI6UDHL-b");// EmailJS public key - found on https://dashboard.emailjs.com/admin/account
+
 
 let strEditorName
 let strEditorEmail
@@ -897,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btns.classList.add("d-flex");
   });
 
-  document.getElementById('#btnSubmitService')?.addEventListener('click', (e) => {
+  document.getElementById('#btnSubmitService')?.addEventListener('click', async (e) => {
     e.preventDefault();
     const errors = collectFormErrors(formStep4);
       if (errors.length === 0) {
@@ -956,6 +958,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }catch(err){
           console.error("ERROR:", err);
         }
+
+        let emailresponse = 
 
         Swal.fire({
           title: "Success",
@@ -1396,18 +1400,19 @@ async function addService(orgArray,editArray, serviceArray, type) {
       body: JSON.stringify(data)
     });
     
-    console.log("RESPONSE: ",response)
+    const serviceResponse = await response.json();
+    console.log("RESPONSE: ",serviceResponse)
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
+    console.log("REVIEW URL: ", serviceResponse.reviewUrl);
+    console.log("REVIEW LINK: ", serviceResponse.reviewUrl);
+    console.log("SENDING EMAIL")
     // sending to emailJS to construct email
     const emailResponse = await emailjs.send("service_9byagl9","template_204azdh",{
       type: "Edit",
-      orgID: response.payload.organization.id,
-      serviceID: response.payload.organization.id,
+      reviewLlink: serviceResponse.reviewUrl,
     })
+
+    console.log("EMAIL RESPONSE: ", emailResponse);
 
     // Parse the JSON response
     const result = await response.json();
