@@ -1,5 +1,3 @@
-// button handlers
-
 // shortened variable names for the categories
 const keywordCategories = {
 //"oneWord": "Long category name"
@@ -22,9 +20,9 @@ const oldKeywordLookUp = {
   "Housing": ["Housing", "Housing - Financial Assistance","Utilities - Financial Assistance","Home Repair","In Home Services","Utilities","Emergency Shelter","Homeless"], 
   "BasicNeeds": ["Meals","Food","Toiletries","Veteran Services","Veterans","Food Financial Assistance","Food Pantry","Clothing","Animals"], 
   "Financial": ["Budgeting","Financial Assistance","Legal"],
-  "Transportation": ["Transportation","Public Transportaion","Drivers ED/DUI Classes"], 
+  "Transportation": ["Transportation","Public Transportation","Drivers ED/DUI Classes"], 
   "Youth": ["Child Care","Parenting","Youth Services"],
-  "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilties/Special Needs"],
+  "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilities/Special Needs"],
   "Health": ["Health Care","In Home Services","Primary Care","Special Needs" ,"Wellness", "Pregnancy", "Mental Health", "Disabilities", "Substance Abuse & Addiction","Wellness/Support Groups"],
   "Education": ["Education","Employment","Workforce Development"],
   "Business": ["Small Business", "Entrepreneur", "Economic Development"],
@@ -46,7 +44,7 @@ let sortedIDCategories = {
   "Community": []
 }
 
-export function initINeed() {
+export async function initINeed() {
   const container = document.getElementById("divINeedPills");
   const pillsContainer = document.getElementById("divINeedPills");
   const scrollLeftPills = document.getElementById("scrollLeftPills");
@@ -58,7 +56,7 @@ export function initINeed() {
     return;
   }
 
-  getUniqueKeywords();
+  await getUniqueKeywords();
 
   Object.entries(keywordCategories).forEach(([keyword, fullword]) => {
     container.innerHTML += createPills(keyword, fullword);
@@ -136,6 +134,20 @@ function createCard(service, category) {
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
+  // replaces missing or invalid photos with category placeholder photo
+  if (!imgPhoto) {
+    imgPhoto = getDefaultImgSrc(category);
+  }
+  // Some placeholder images are very long and look bad when resized to fit the card, so we add extra 
+  // padding to those specific logos to make them look better.
+  let imgStyle = "";
+  if (imgPhoto.includes("BasicNeeds") || imgPhoto.includes("Education") || imgPhoto.includes("Crisis")){
+    imgStyle = "height: 150px; width: 100%; overflow: hidden; background: white;"; // css for placeholder images to prevent distortion when resized to fit the card
+  }
+  else {
+    imgStyle = "max-height: 100%; max-width: 100%; object-fit: contain;"; // css for regular images to fit the card without distortion
+  }
+
   if(!isInCounty(service)){
     return null;
   }
@@ -154,30 +166,35 @@ function createCard(service, category) {
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
   }
 
-  // replaces missing or invalid photos with category placeholder photo
-  if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
-    imgPhoto =`assets/images/iNeed/iNeed${category}.jpg`;
-  }
-
-
 
   col.innerHTML = `
     <div class="card-body d-flex flex-column">
-      <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 150px; overflow: hidden;">
-        <img src="${imgPhoto}" alt="${service.OrganizationName}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+      
+      <div class="card-img-top d-flex align-items-center justify-content-center" 
+          style="height: 150px; overflow: hidden;">
+        <img src="${imgPhoto}" 
+            alt="${service.OrganizationName}" 
+            style="${imgStyle}">
       </div>
-      <div class="card-body d-flex flex-column">
-        ${getCounties(service)}
-        <h5 class="card-title">${service.NameOfService}</h5>
-        <div class="mt-auto service ps-0 pe-0 m-0" style="margin-bottom: 15px;">
-          <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
-        </div>
-      </div>`;
 
+      ${getCounties(service)}
 
-  
+      <h5 class="card-title">${service.NameOfService}</h5>
+
+      <div class="mt-auto service ps-0 pe-0 m-0" style="margin-bottom: 15px;">
+        <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); 
+        window.location.href='html/pages/service.html?id=${service.ID}';">
+          Learn More <i class="bi bi-caret-right-fill"></i>
+        </button>
+      </div>
+
+    </div>
+  `;
+
   return col;
 }
+
+
 
 async function getUniqueKeywords(){
   try{
@@ -216,13 +233,13 @@ function sortIDsByKeyword(arrKeywords, id){
   })
 }
 
-function getImgSrc(keyword) {
+function getDefaultImgSrc(keyword) {
   let basePath = "assets/images/iNeed/"
   let imgSrcLookUp = {
     "Crisis": "iNeedCrisis.jpg",
     "Housing": "iNeedHousing.jpg", 
     "BasicNeeds": "iNeedBasicNeeds.jpg", 
-    "Financial": "iNeedFinacial.jpg",
+    "Financial": "iNeedFinancial.jpg", 
     "Transportation": "iNeedTransportation.jpg", 
     "Youth": "iNeedYouth.jpg",
     "Seniors": "iNeedSeniors.jpg",
@@ -232,7 +249,6 @@ function getImgSrc(keyword) {
     "Community": "iNeedCommunity.jpg"
   }
 
-
   return basePath + imgSrcLookUp[keyword]
 }
 
@@ -240,7 +256,7 @@ function getImgSrc(keyword) {
 
 // gets information from the database api for the cards
 async function loadCardsByCategory(category) {
-  const arrIDs = sortedIDCategories[category];
+  const arrIDs = sortedIDCategories[category]  || [];
   let uniqueIDs = [...new Set(arrIDs)];
   const container = document.getElementById("divINeedContent");
 
@@ -253,14 +269,13 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = uniqueIDs.map(id => {
-      const url = `/service?id=${id}`;
-
-      return fetchApi(url)
+      const url = `http://s1092595647.onlinehome.us/api/index.php?route=/service&id=${id}`;
+      return fetch(url)
         .then(res => {
           return res.json();
         });
     });
-
+    
     const services = await Promise.all(requests);
 
     container.innerHTML = "";
@@ -274,7 +289,6 @@ async function loadCardsByCategory(category) {
           count ++
           container.appendChild(newCard)
         }
-      // }
     });
     document.getElementById("divINeedContent").innerHTML = container.innerHTML
   } catch (error) {
@@ -284,18 +298,14 @@ async function loadCardsByCategory(category) {
 }
 
 function isInCounty(service){
+  try {
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
 
-  const userSelectedCounty = sessionStorage.getItem("currCounty")
+  const userSelectedCounty = sessionStorage.getItem("currCounty") || "all"
 
 
   if(strCounties.includes(userSelectedCounty)){
-    if (strCounties.length() == 14){
-      console.log("[isInCounty] all counties(",strCounties.length(),"):", strCounties)
-      return false;
-    }
-    console.log("[isInCounty] NOT all counties(",strCounties.length(),"):",strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
@@ -304,6 +314,10 @@ function isInCounty(service){
   else {
     return false;
   }
+} catch (error) {
+  console.error("[isInCounty] Error checking county:", error);
+  return false;
+}
 }
 
 
@@ -361,14 +375,29 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.jpg`;
 
-  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+  // invalid values
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+    return "";
+  }
+
+  // full URLs / paths
+  if (
+    logo.startsWith("http://") ||
+    logo.startsWith("https://") ||
+    logo.startsWith("/") ||
+    logo.startsWith("./") ||
+    logo.startsWith("../")
+  ) {
     return logo;
   }
+
+  // www links
   if (logo.startsWith("www.")) {
     return `https://${logo}`;
   }
+
+  // local image
   return `/assets/images/${logo}`;
 }
 
