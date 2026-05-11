@@ -14,11 +14,3 @@ document.querySelector('#btnLearnSearchBar').addEventListener("click", (e) => {
     icon: "question"
   });
 })
-
-//TAB SUBMIT FOR AI SEARCH BAR
-document.querySelector("#txtSearch").addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.querySelector('#btnYourButton').click()
-  }
-});
