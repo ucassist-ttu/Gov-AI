@@ -174,8 +174,7 @@ function createCard(service, category) {
         </div>
       </div>`;
 
-
-  
+  console.log("iNeed 177 col: ", col)
   return col;
 }
 
@@ -253,20 +252,22 @@ async function loadCardsByCategory(category) {
   try {
 
     const requests = uniqueIDs.map(id => {
-      const url = `/service?id=${id}`;
-
-      return fetchApi(url)
+      const url = `http://s1092595647.onlinehome.us/api/index.php?route=/service&id=${id}`;
+      console.log(`[iNeed] Fetching service: ${url}`);
+      return fetch(url)
         .then(res => {
           return res.json();
         });
     });
-
+    
     const services = await Promise.all(requests);
+    console.log(`[iNeed] All service data:`, services);
 
     container.innerHTML = "";
 
     let count = 0
     services.forEach(service => {
+      console.log(`[iNeed] Service data:`, service);
       let newCard = createCard(service, category)
         if (newCard == null){
           return;
@@ -284,6 +285,7 @@ async function loadCardsByCategory(category) {
 }
 
 function isInCounty(service){
+  try {
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
 
@@ -291,11 +293,6 @@ function isInCounty(service){
 
 
   if(strCounties.includes(userSelectedCounty)){
-    if (strCounties.length() == 14){
-      console.log("[isInCounty] all counties(",strCounties.length(),"):", strCounties)
-      return false;
-    }
-    console.log("[isInCounty] NOT all counties(",strCounties.length(),"):",strCounties)
     return true;
   } 
   else if (userSelectedCounty == 'all'){
@@ -304,6 +301,10 @@ function isInCounty(service){
   else {
     return false;
   }
+} catch (error) {
+  console.error("[isInCounty] Error checking county:", error);
+  return false;
+}
 }
 
 
