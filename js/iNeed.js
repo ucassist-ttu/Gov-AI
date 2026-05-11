@@ -1,5 +1,3 @@
-// button handlers
-
 // shortened variable names for the categories
 const keywordCategories = {
 //"oneWord": "Long category name"
@@ -22,9 +20,9 @@ const oldKeywordLookUp = {
   "Housing": ["Housing", "Housing - Financial Assistance","Utilities - Financial Assistance","Home Repair","In Home Services","Utilities","Emergency Shelter","Homeless"], 
   "BasicNeeds": ["Meals","Food","Toiletries","Veteran Services","Veterans","Food Financial Assistance","Food Pantry","Clothing","Animals"], 
   "Financial": ["Budgeting","Financial Assistance","Legal"],
-  "Transportation": ["Transportation","Public Transportaion","Drivers ED/DUI Classes"], 
+  "Transportation": ["Transportation","Public Transportation","Drivers ED/DUI Classes"], 
   "Youth": ["Child Care","Parenting","Youth Services"],
-  "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilties/Special Needs"],
+  "Seniors": ["Seniors","Senior Activities","Veteran Services","Disabilities/Special Needs"],
   "Health": ["Health Care","In Home Services","Primary Care","Special Needs" ,"Wellness", "Pregnancy", "Mental Health", "Disabilities", "Substance Abuse & Addiction","Wellness/Support Groups"],
   "Education": ["Education","Employment","Workforce Development"],
   "Business": ["Small Business", "Entrepreneur", "Economic Development"],
@@ -46,7 +44,7 @@ let sortedIDCategories = {
   "Community": []
 }
 
-export function initINeed() {
+export async function initINeed() {
   const container = document.getElementById("divINeedPills");
   const pillsContainer = document.getElementById("divINeedPills");
   const scrollLeftPills = document.getElementById("scrollLeftPills");
@@ -58,7 +56,7 @@ export function initINeed() {
     return;
   }
 
-  getUniqueKeywords();
+  await getUniqueKeywords();
 
   Object.entries(keywordCategories).forEach(([keyword, fullword]) => {
     container.innerHTML += createPills(keyword, fullword);
@@ -159,22 +157,30 @@ function createCard(service, category) {
     imgPhoto =`assets/images/iNeed/iNeed${category}.jpg`;
   }
 
-
-
   col.innerHTML = `
     <div class="card-body d-flex flex-column">
-      <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 150px; overflow: hidden;">
-        <img src="${imgPhoto}" alt="${service.OrganizationName}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+      
+      <div class="card-img-top d-flex align-items-center justify-content-center" 
+          style="height: 150px; overflow: hidden;">
+        <img src="${imgPhoto}" 
+            alt="${service.OrganizationName}" 
+            style="max-height: 100%; max-width: 100%; object-fit: contain;">
       </div>
-      <div class="card-body d-flex flex-column">
-        ${getCounties(service)}
-        <h5 class="card-title">${service.NameOfService}</h5>
-        <div class="mt-auto service ps-0 pe-0 m-0" style="margin-bottom: 15px;">
-          <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); window.location.href='html/pages/service.html?id=${service.ID}';" >Learn More <i class="bi bi-caret-right-fill"></i></button>
-        </div>
-      </div>`;
 
-  console.log("iNeed 177 col: ", col)
+      ${getCounties(service)}
+
+      <h5 class="card-title">${service.NameOfService}</h5>
+
+      <div class="mt-auto service ps-0 pe-0 m-0" style="margin-bottom: 15px;">
+        <button onclick="fetchApi('/add-monthly-view?service_id=${service.ID}'); 
+        window.location.href='html/pages/service.html?id=${service.ID}';">
+          Learn More <i class="bi bi-caret-right-fill"></i>
+        </button>
+      </div>
+
+    </div>
+  `;
+
   return col;
 }
 
@@ -239,7 +245,7 @@ function getImgSrc(keyword) {
 
 // gets information from the database api for the cards
 async function loadCardsByCategory(category) {
-  const arrIDs = sortedIDCategories[category];
+  const arrIDs = sortedIDCategories[category]  || [];
   let uniqueIDs = [...new Set(arrIDs)];
   const container = document.getElementById("divINeedContent");
 
@@ -267,15 +273,14 @@ async function loadCardsByCategory(category) {
 
     let count = 0
     services.forEach(service => {
-      console.log(`[iNeed] Service data:`, service);
       let newCard = createCard(service, category)
+      console.log(`[iNeed 296] Created card:`, newCard)
         if (newCard == null){
           return;
         } else{
           count ++
           container.appendChild(newCard)
         }
-      // }
     });
     document.getElementById("divINeedContent").innerHTML = container.innerHTML
   } catch (error) {
@@ -289,7 +294,7 @@ function isInCounty(service){
   const strCounties = service.CountiesAvailable.toLowerCase();
   let arrCounties = strCounties.replace(/["'\[\]]/g, '').split(",").map(county => county.trim());
 
-  const userSelectedCounty = sessionStorage.getItem("currCounty")
+  const userSelectedCounty = sessionStorage.getItem("currCounty") || "all"
 
 
   if(strCounties.includes(userSelectedCounty)){
@@ -362,7 +367,7 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/assets/images/iNeed/placeholder-img.jpg`;
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.jpg`;
 
   if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
     return logo;
