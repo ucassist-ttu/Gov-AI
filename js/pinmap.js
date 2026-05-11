@@ -257,6 +257,10 @@ async function loadAndMaskCounties() {
       layer.on({
         click: () => {
           zoomToCounty(layer, feature)
+
+          // Opens filter bar when a county is selected
+          document.getElementById("mySidenav").style.width = "375px";
+          overlay.classList.add("active");
         },
         // set styling when mouse over
         mouseover: () => {

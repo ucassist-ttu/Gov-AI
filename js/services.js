@@ -224,6 +224,14 @@ function getCountyList(service) {
     }
 }
 
+// ENTER KEY (correct element)
+document.querySelector("#txtSearchServices").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.querySelector("#btnSearchServices").click();
+  }
+});
+
 // Searches for services with information matching the users input
 document.querySelector("#btnSearchServices").addEventListener("click", () => {
     selectedCheckboxes = document.querySelectorAll(`#divAllFilter input[type="checkbox"]:checked`)
