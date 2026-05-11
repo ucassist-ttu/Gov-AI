@@ -134,6 +134,20 @@ function createCard(service, category) {
   let websiteBtn = "";
   let imgPhoto = getLogoSrc(service.ProviderLogo);
 
+  // replaces missing or invalid photos with category placeholder photo
+  if (!imgPhoto) {
+    imgPhoto = getDefaultImgSrc(category);
+  }
+  // Some placeholder images are very long and look bad when resized to fit the card, so we add extra 
+  // padding to those specific logos to make them look better.
+  let imgStyle = "";
+  if (imgPhoto.includes("BasicNeeds") || imgPhoto.includes("Education") || imgPhoto.includes("Crisis")){
+    imgStyle = "height: 150px; width: 100%; overflow: hidden; background: white;"; // css for placeholder images to prevent distortion when resized to fit the card
+  }
+  else {
+    imgStyle = "max-height: 100%; max-width: 100%; object-fit: contain;"; // css for regular images to fit the card without distortion
+  }
+
   if(!isInCounty(service)){
     return null;
   }
@@ -152,10 +166,6 @@ function createCard(service, category) {
     websiteBtn = `<a href="${strhref}" target="_blank" class="btn btn-outline-dark mt-3">Learn More</a>`;
   }
 
-  // replaces missing or invalid photos with category placeholder photo
-  if (imgPhoto.toLowerCase() === "none" || imgPhoto === "" || imgPhoto.toLowerCase() === "n/a") {
-    imgPhoto =`assets/images/iNeed/iNeed${category}.jpg`;
-  }
 
   col.innerHTML = `
     <div class="card-body d-flex flex-column">
@@ -164,7 +174,7 @@ function createCard(service, category) {
           style="height: 150px; overflow: hidden;">
         <img src="${imgPhoto}" 
             alt="${service.OrganizationName}" 
-            style="max-height: 100%; max-width: 100%; object-fit: contain;">
+            style="${imgStyle}">
       </div>
 
       ${getCounties(service)}
@@ -183,6 +193,8 @@ function createCard(service, category) {
 
   return col;
 }
+
+
 
 async function getUniqueKeywords(){
   try{
@@ -221,13 +233,13 @@ function sortIDsByKeyword(arrKeywords, id){
   })
 }
 
-function getImgSrc(keyword) {
+function getDefaultImgSrc(keyword) {
   let basePath = "assets/images/iNeed/"
   let imgSrcLookUp = {
     "Crisis": "iNeedCrisis.jpg",
     "Housing": "iNeedHousing.jpg", 
     "BasicNeeds": "iNeedBasicNeeds.jpg", 
-    "Financial": "iNeedFinacial.jpg",
+    "Financial": "iNeedFinancial.jpg", 
     "Transportation": "iNeedTransportation.jpg", 
     "Youth": "iNeedYouth.jpg",
     "Seniors": "iNeedSeniors.jpg",
@@ -236,7 +248,6 @@ function getImgSrc(keyword) {
     "Business": "iNeedBusiness.jpg",
     "Community": "iNeedCommunity.jpg"
   }
-
 
   return basePath + imgSrcLookUp[keyword]
 }
@@ -259,7 +270,6 @@ async function loadCardsByCategory(category) {
 
     const requests = uniqueIDs.map(id => {
       const url = `http://s1092595647.onlinehome.us/api/index.php?route=/service&id=${id}`;
-      console.log(`[iNeed] Fetching service: ${url}`);
       return fetch(url)
         .then(res => {
           return res.json();
@@ -267,14 +277,12 @@ async function loadCardsByCategory(category) {
     });
     
     const services = await Promise.all(requests);
-    console.log(`[iNeed] All service data:`, services);
 
     container.innerHTML = "";
 
     let count = 0
     services.forEach(service => {
       let newCard = createCard(service, category)
-      console.log(`[iNeed 296] Created card:`, newCard)
         if (newCard == null){
           return;
         } else{
@@ -367,14 +375,29 @@ function getLogoSrc(rawLogo) {
   if (!logo) return "";
 
   const lowered = logo.toLowerCase();
-  if (["n/a", "none", "null", "undefined"].includes(lowered)) return `/Gov-AI/assets/images/iNeed/placeholder-img.jpg`;
 
-  if (logo.startsWith("http://") || logo.startsWith("https://") || logo.startsWith("/") || logo.startsWith("./") || logo.startsWith("../")) {
+  // invalid values
+  if (["n/a", "none", "null", "undefined"].includes(lowered)) {
+    return "";
+  }
+
+  // full URLs / paths
+  if (
+    logo.startsWith("http://") ||
+    logo.startsWith("https://") ||
+    logo.startsWith("/") ||
+    logo.startsWith("./") ||
+    logo.startsWith("../")
+  ) {
     return logo;
   }
+
+  // www links
   if (logo.startsWith("www.")) {
     return `https://${logo}`;
   }
+
+  // local image
   return `/assets/images/${logo}`;
 }
 
