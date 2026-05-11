@@ -10,7 +10,7 @@ async function addReferralToDB() {
   }
   addReferral(formData);
 
-  console.log("Referral added to database:", formData);
+  console.log("Referral added to database");
 
   // remove later
   localStorage.setItem(
@@ -40,12 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     return errors;
   }
-  console.log("i work")
   document.getElementById('referSubmit').addEventListener('click', async (e) => {
     e.preventDefault();
     form.classList.add('was-validated');
     const errors = collectFormErrors(form);
-    console.log
     if (errors.length === 0) {
       try{
         //SEND EMAIL JS
@@ -53,11 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //sweet alert for successful sending
         Swal.fire({
-          title: "Missing Information",
-          icon: "error",
+          title: "Thank You",
+          icon: "success",
           html: `
             <div style="text-align: left;">
-              Please complete the following:<br><br>
+              UCAssist will contact the person you recommeneded.
             </div>
           `
         });
@@ -85,7 +83,6 @@ const getValue = (id) => {
 
 async function sendDBAndEmail(){
   try{
-    console.log(document.getElementById('referLastName').value)
     const data = {
       firstName: getValue("referFirstName"),
       lastName: getValue("referLastName"),
@@ -94,7 +91,6 @@ async function sendDBAndEmail(){
       phone: ""
     };
     //sending to database
-    console.log("fN: ", data)
     const response = await fetch("http://s1092595647.onlinehome.us/api/index.php?route=/referral", {
       method: "POST",
       headers: {
@@ -102,8 +98,6 @@ async function sendDBAndEmail(){
       },
       body: JSON.stringify(data)
     })
-    console.log(response)
-
     // Parse the JSON response
     const result = await response.json();
     console.log('Data sent successfully:', result);
